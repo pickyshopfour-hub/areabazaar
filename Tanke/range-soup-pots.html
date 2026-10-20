@@ -1,0 +1,4014 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>KWALITI Cyber Kitchen -</title>
+    <meta name="robots" content="noindex, follow" />
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="../assetsecm/images/kwaliti-icon-monochrome-chartreuse.png" />
+
+    <!-- CSS
+    ============================================ -->
+
+    <!-- Vendor CSS (Contain Bootstrap, Icon Fonts) -->
+    <link rel="stylesheet" href="../assetsecm/css/vendor/font-awesome.min.css" />
+    <link rel="stylesheet" href="../assetsecm/css/vendor/Pe-icon-7-stroke.css" />
+
+    <!-- Plugin CSS (Global Plugins Files) -->
+    <link rel="stylesheet" href="../assetsecm/css/plugins/animate.css">
+    <link rel="stylesheet" href="../assetsecm/css/plugins/jquery-ui.min.css">
+    <link rel="stylesheet" href="../assetsecm/css/plugins/swiper-bundle.min.css">
+    <link rel="stylesheet" href="../assetsecm/css/plugins/nice-select.css">
+    <link rel="stylesheet" href="../assetsecm/css/plugins/magnific-popup.min.css" />
+
+    <!-- Minify Version -->
+    <!-- <link rel="stylesheet" href="../assetsecm/css/vendor/vendor.min.css"> -->
+    <!-- <link rel="stylesheet" href="../assetsecm/css/plugins/plugins.min.css"> -->
+    <script src="script.js" type="text/javascript"></script>
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="../assetsecm/css/style.css">
+    <!-- <link rel="stylesheet" href="../assetsecm/css/style.min.css"> -->
+
+    <!-- iziModal CSS -->
+    <link href="../assetsecm/css/plugins/iziModal.min.css" rel="stylesheet"> 
+    <!-- //iziModal CSS-->
+
+    <!-- iziToast CSS -->
+    <link href="../assetsecm/css/plugins/iziToast.min.css" rel="stylesheet"> 
+    <!-- //iziToast CSS-->
+
+
+    <style>
+        
+
+        .blog-item:hover .blog-content .btn-dark {
+            background-color: #ff8c00;
+            border-color: #7c7a7a9f;
+
+        }
+
+        .blog-item:hover .blog-content .title a {
+            color: #ff8c00;
+            
+
+        }
+
+
+
+        input.item-subtotal {
+            max-width: 9em;
+        }
+
+        .add-to-cart a {
+            font-size: 1em;
+        }
+
+        .product-name {
+            font-weight: bold;
+            color:#ff8c00 ;
+        }
+
+        .top-gif {
+            height: 12em;
+            padding-left: 10%;
+        }
+
+        .variant-item {
+            margin-top: 3em;
+        }
+
+        .btn-primary, .footer-bottom , .header-sticky {
+            background-color:#ff8c00 ;
+        }
+
+         .sticky{
+            background-color:#ff8c0067 ;
+        }
+
+        .btn-primary:hover , .sticky:hover , .header-sticky:hover, .footer-bottom:hover {
+            background-color: #7c7a7a9f; 
+        }
+
+        .product-list-item , .product-item {
+            background-color: #7c7a7a2d;
+        }
+
+        h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 , .title {
+            color: #ff8c00;
+        }
+
+        
+                .top-btn {
+                    background-color: #ed3237b2;
+                }
+        
+                .top-btn:hover {
+                    background-color: #7c7a7a;
+                    font-weight: bold;
+                }
+        
+                .popup-btn {
+                    opacity: 75%;
+                    min-height: 350px;
+                }
+        
+                .popup-btn:hover {
+                    opacity: 100%;
+                   
+                }
+        
+                .wave-btn > .icon>i {
+                    font-size: 1.8em;
+                    color: #ed3237b2;
+                    text-align: center;
+                    vertical-align: middle;
+                }
+        
+                .product-list-item , .product-item {
+                   /* background-color: #f7f8eb36; */
+        
+                    font-size: 0.9em !important;
+                    background-color: none;
+                    border: o.5px solid rgb(225, 250, 222);
+        
+                }
+        
+                
+        
+                .product-style-2 .product-item {
+                    border: 0.5px solid #eef9d0;
+                    background-color: rgba(255, 255, 255, 0.212);
+                }
+        
+                .product-list-item .product-content {
+                    width: calc(100% - 50px);
+                    padding: 0 0 0 10px;
+                    border: 0;
+                    text-align: left; 
+                    
+                }
+        
+                .product-list-item .product-name {
+                    font-size: 0.9em;
+                    margin-bottom: 5px;
+                    display: block;
+                }
+        
+                .price-box span {
+                    font-size: 0.9em;
+                }
+        
+                
+        
+                a.disabled , button.disabled, .btn.disabled {
+                    background-color: #e3dc6d;
+                    color:beige ;
+                }
+        
+                .blog-content {
+                    background-color: #f5f6fb;
+                    padding: 5px 5px 5px 15px;
+                }
+        
+                .intro-item {
+                    padding: 15px 15px;
+                }
+        
+                h2.title {
+                    color:rgb(243, 247, 241) ;
+                }
+        
+                .section-title.title-bg {
+                    background-image: url(../assetsecm/images/alvero/restaur-title-bg.png); 
+                    background-position: center; 
+                    background-size: cover; 
+                    background-repeat: no-repeat; 
+                    margin-bottom: 0.5em; 
+                    padding-bottom: 0.8em; 
+                    padding-left: 2em;
+                    padding-right: 0.7em;
+                    text-align: right ;
+                }
+        
+                h2.title.sxn-title  {
+                   
+                    font-size: 1.2em;
+                    float:none;
+                    
+                }
+        
+                .sxn-icon {
+                   
+                    background-position: center; 
+                    background-size: cover; 
+                    background-repeat: no-repeat;
+                    max-height: 75px ;
+                    display: block;
+                    float: left;
+                    
+                }
+        
+                .btn-custom-size.lg-size {
+                width: 170px;
+                height: 2.5em;
+                line-height: 2em;
+                font-size: 0.9em;
+                }
+
+                .btn-fade {
+                    background-color: #f8e9e91e !important; 
+                    color:#ffffffc0 !important;
+                }
+
+                
+        
+                .about-banner {
+                    padding-bottom: 1.5em;
+                }
+        
+                .about-banner-content .short-desc {
+                    color: #626262;
+                    line-height: 1.5em;
+                    font-size: 0.8em;
+                }
+
+
+                .intro-item {
+                    border-radius: 6%;
+
+                }
+
+                .intro-item:hover{
+                    filter: drop-shadow(0px 2px 5px rgba(98, 98, 113, 0.43));
+                }
+
+        
+        
+        
+            </style>
+        
+
+</head>
+
+<body>
+
+    <div class="main-wrapper">
+
+
+        <!-- HEADER AREA with MEGA-MENU + STICKY NAV     [[ TO BE USED - (with adjustments) ]] -->
+        <header class="main-header_area position-relative">
+            <!--<div class="header-top border-bottom d-none d-md-block">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-3">
+                            <div class="header-top-left">
+                                <ul class="dropdown-wrap text-matterhorn">
+                                
+                                    <li>
+                                        Call Us
+                                        <a href="tel://09031426643">090 314 266 43</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-9">
+                            <div class="header-top-right text-matterhorn">
+                                <img src="../assetsecm/images/misc/mtr-sfd-adbanner-topband-01.png"   class="seeMod"  data-buttonMarker = "#GivingForward" data-linkMod="#standwithme"    alt="stand with me"   style="max-height: 3em;"  >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+            
+
+
+            <div class="main-header header-sticky" >
+
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="header-middle-wrap">
+
+
+                                <div class="container">
+                                    <div class="section-title text-center">
+                                        <!--<span class="sub-title">See Our Latest</span>-->
+                                        <h2 class="title mb-0" style="color: #0e0e0e;">LATEST SOUP POTS</h2>
+                                    </div>
+
+                                    <div class="row">
+
+
+                                        
+
+
+                                    </div>           
+
+
+                                </div>
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            
+            
+            <div class="global-overlay"></div>
+        </header>
+        <!-- HEADER AREA ENDS HERE -->
+
+
+        <!-- Begin JS-HYPE Slider Area -->
+        <div class="slider-area">
+
+            <!-- Main Slider -->
+            
+
+           
+
+            <div class="container" >
+                <div class="row pt-8">
+                    <div class="col-lg-12">
+                        <div class="swiper-container brand-slider">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <a class="brand-item" href="javascript:void(0)">
+                                        <label for="myModal-3" >
+                                            <img src="../assetsecm/images/soups/chicken-stew-roundbowl.png" alt="Brand Image">
+                                        </label>
+                                    </a>
+                                </div>
+                                <div class="swiper-slide">
+                                    <a class="brand-item" href="javascript:void(0)">
+                                        <label for="myModal-12" >
+                                        <img src="../assetsecm/images/soups/egusi-soup-roundbowl.png" alt="Brand Image">
+                                        </label>
+                                    </a>
+                                </div>
+                                <div class="swiper-slide">
+                                    <a class="brand-item" href="javascript:void(0)">
+                                        <label for="myModal-8" >
+                                        <img src="../assetsecm/images/soups/banga-soup-roundbowl.png" alt="Brand Image">
+                                        </label>
+                                    </a>
+                                </div>
+                                <div class="swiper-slide">
+                                    <a class="brand-item" href="javascript:void(0)">
+                                        <label for="myModal-2" >
+                                        <img src="../assetsecm/images/soups/atama-soup-roundbowl.png" alt="Brand Image">
+                                        </label>
+                                    </a>
+                                </div>
+                                <div class="swiper-slide">
+                                    <a class="brand-item" href="javascript:void(0)">
+                                        <label for="myModal" >
+                                        <img src="../assetsecm/images/soups/afang-soup-roundbowl.png" alt="Brand Image">
+                                        </label>
+                                    </a>
+                                </div>
+                                <div class="swiper-slide">
+                                    <a class="brand-item" href="javascript:void(0)">
+                                        <label for="myModal-5" >
+                                        <img src="../assetsecm/images/soups/fried-fish-stew-roundbowl.png" alt="Brand Image">
+                                        </label>
+                                    </a>
+                                </div>
+                                <div class="swiper-slide">
+                                    <a class="brand-item" href="javascript:void(0)">
+                                        <label for="myModal-6" >
+                                        <img src="../assetsecm/images/soups/bitterleaf-soup-roundbowl.png" alt="Brand Image">
+                                        </label>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!--  JS-HYPE Slider Area End Here -->
+
+
+
+
+        <!-- Begin  KWABAZ AD-BANNER -FULL-WIDTH [[ NON-SWIPPING -]] -->
+        <div class="breadcrumb-area mt-4" data-bg-image="">
+            <img src="../assetsecm/images/alvero/restaur-banner-register-01.png" width="100%"     class="seeMod" data-buttonMarker = "Prce-1 Section" data-linkMod="#alv-reg"    href="javascript:void(0)" >
+            
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="breadcrumb-item">
+                            
+                    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--   KWABAZ AD-BANNER -FULL-WIDTH Area End Here -->
+
+
+
+
+        <!-- Begin Product Area    [[ NON-SWIPPING - FULL-SIZE - FOUR-IN-ROW ]] class="seeMod-sxnLoad" data-buttonMarker = "Prce-1 Section" data-linkMod="#sxn-loadMod"    href="ortho" -->
+        
+        <div class="product-area product-style-2"    data-xScrollAnchor="#seeSoup"     style="margin-top: 2em;" >
+            <div class="container">
+    
+                
+    
+                <div class="row">
+                    <div class="col-xl-3 col-lg-4 col-sm-6 pt-6">
+                        
+                        <div class="product-item">
+                            <div class="product-img img-zoom-effect">
+                                <label     for="myModal" >
+    
+                                    <img class="img-full" src="../assetsecm/images/soups/afang-soup-roundbowl.png" alt="Afang Soup Pots">
+    
+    
+    
+                                </label>
+                                <div class="product-add-action" style="background-color: rgba(247, 216, 138, 0.37); color:#000">
+                                    <p style="text-align: center; ">CLICK TO SELECT YOUR SIZE <br> You will surely Like this!! <br>  </p>
+                                    
+                                </div>
+                            </div>
+                            <div class="product-content">
+                                <a class="product-name" href="javascript:void(0)">AFANG Soup Pots</a>
+                                <div class="price-box pb-1">From
+                                    <span class="new-price">&#8358 1,800.00</span>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-sm-6 pt-6">
+                        <div class="product-item">
+                            <div class="product-img img-zoom-effect">
+                                <label      for="myModal-2" >
+    
+                                    <img class="img-full" src="../assetsecm/images/soups/banga-soup-roundbowl.png" alt="Banga Soup Pots">
+    
+    
+    
+                                </label>
+                                <div class="product-add-action" style="background-color: rgba(247, 216, 138, 0.37); color:#000">
+                                    <p style="text-align: center; ">CLICK TO SELECT YOUR SIZE <br> You will surely Like this!! <br>  </p>
+                                    
+                                </div>
+                            </div>
+                            <label      for="myModal-2" ><div class="product-content">
+                                <a class="product-name" href="javascript:void(0)">BANGA Soup Pots</a>
+                                <div class="price-box pb-1">
+                                    From
+                                    <span class="new-price">&#8358 1,800.00</span>
+                                </div>
+                                
+                            </div></label>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-sm-6 pt-6">
+                        <div class="product-item">
+                            <div class="product-img img-zoom-effect">
+                                <label  for="myModal-3" >
+    
+                                    <img class="img-full" src="../assetsecm/images/soups/chicken-stew-roundbowl.png" alt="Chicken Stew Pots">
+    
+    
+    
+                                </label>
+                                <div class="product-add-action" style="background-color: rgba(247, 216, 138, 0.37); color:#000">
+                                    <p style="text-align: center; ">CLICK TO SELECT YOUR SIZE <br> You will surely Like this!! <br>  </p>
+                                    
+                                </div>
+                            </div>
+                            <label    for="myModal-3" >
+                            <div class="product-content">
+                                <a class="product-name" href="javascript:void(0)">CHICKEN STEW Pots</a>
+                                <div class="price-box pb-1">
+                                    From
+                                    <span class="new-price">&#8358 2,800.00</span>
+                                </div>
+                                
+                            </div></label>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-sm-6 pt-6">
+                        <div class="product-item">
+                            <div class="product-img img-zoom-effect">
+                                <label  for="myModal-4" class="openPopup" data-href="https://kwaliti.com.ng/uwanbuy/index.php/product-category/foodies/" data-title="Egusi Elefo Soup" >
+    
+                                    <img class="img-full" src="../assetsecm/images/soups/egusi-elefo-roundbowl.png" alt="Egusi Elefo Soup Pots">
+    
+    
+    
+                                </label>
+                                <div class="product-add-action" style="background-color: rgba(247, 216, 138, 0.37); color:#000">
+                                    <p style="text-align: center; ">CLICK TO SELECT YOUR SIZE <br> You will surely Like this!! <br>  </p>
+                                    
+                                </div>
+                            </div>
+                            <div class="product-content">
+                                <a class="product-name" href="javascript:void(0)">EGUSI-ELEFO Soup</a>
+                                <div class="price-box pb-1">
+                                    <span class="new-price">&#8358 1,800.00</span>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+    
+    
+    
+                    <div class="col-xl-3 col-lg-4 col-sm-6 pt-6">
+                        <div class="product-item">
+                            <div class="product-img img-zoom-effect">
+                                <label     for="myModal-5" >
+    
+                                    <img class="img-full" src="../assetsecm/images/soups/fried-fish-stew-roundbowl.png" alt="Fried-Fish Soup Pots">
+    
+    
+    
+                                </label>
+                                <div class="product-add-action" style="background-color: rgba(247, 216, 138, 0.37); color:#000">
+                                    <p style="text-align: center; ">CLICK TO SELECT YOUR SIZE <br> You will surely Like this!! <br>  </p>
+                                    
+                                </div>
+                            </div>
+                            <div class="product-content">
+                                <a class="product-name" href="javascript:void(0)">FRIED-FISH Stew Pots</a>
+                                <div class="price-box pb-1">From
+                                    <span class="new-price">&#8358 2,800.00</span>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-sm-6 pt-6">
+                        <div class="product-item">
+                            <div class="product-img img-zoom-effect">
+                                <label      for="myModal-6" >
+    
+                                    <img class="img-full" src="../assetsecm/images/soups/bitterleaf-soup-roundbowl.png" alt="Bitter-Leaf Soup Pots">
+    
+    
+    
+                                </label>
+                                <div class="product-add-action" style="background-color: rgba(247, 216, 138, 0.37); color:#000">
+                                    <p style="text-align: center; ">CLICK TO SELECT YOUR SIZE <br> You will surely Like this!! <br>  </p>
+                                    
+                                </div>
+                            </div>
+                            <label      for="myModal-2" ><div class="product-content">
+                                <a class="product-name" href="javascript:void(0)">ONUGBU BitterLeaf Soup</a>
+                                <div class="price-box pb-1">
+                                    From
+                                    <span class="new-price">&#8358 1,800.00</span>
+                                </div>
+                                
+                            </div></label>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-sm-6 pt-6">
+                        <div class="product-item">
+                            <div class="product-img img-zoom-effect">
+                                <label  for="myModal-7" >
+    
+                                    <img class="img-full" src="../assetsecm/images/soups/goatmeat-stew-roundbowl.png" alt="Goat-Meat Stew Pots">
+    
+    
+    
+                                </label>
+                                <div class="product-add-action" style="background-color: rgba(247, 216, 138, 0.37); color:#000">
+                                    <p style="text-align: center; ">CLICK TO SELECT YOUR SIZE <br> You will surely Like this!! <br>  </p>
+                                    
+                                </div>
+                            </div>
+                            <label    for="myModal-3" >
+                            <div class="product-content">
+                                <a class="product-name" href="javascript:void(0)">GOAT-MEAT Stew Pots</a>
+                                <div class="price-box pb-1">
+                                    From
+                                    <span class="new-price">&#8358 2,800.00</span>
+                                </div>
+                                
+                            </div></label>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-sm-6 pt-6">
+                        <div class="product-item">
+                            <div class="product-img img-zoom-effect">
+                                <label  for="myModal-8" class="openPopup" data-href="https://kwaliti.com.ng/uwanbuy/index.php/product-category/foodies/" data-title="Atama Soup" >
+    
+                                    <img class="img-full" src="../assetsecm/images/soups/atama-soup-roundbowl.png" alt="Atama Soup Pots">
+    
+    
+    
+                                </label>
+                                <div class="product-add-action" style="background-color: rgba(247, 216, 138, 0.37); color:#000">
+                                    <p style="text-align: center; ">CLICK TO SELECT YOUR SIZE <br> You will surely Like this!! <br>  </p>
+                                    
+                                </div>
+                            </div>
+                            <div class="product-content">
+                                <a class="product-name" href="javascript:void(0)">ATAMA Soup Pots</a>
+                                <div class="price-box pb-1">
+                                    <span class="new-price">&#8358 1,800.00</span>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+    
+    
+    
+                    <div class="col-xl-3 col-lg-4 col-sm-6 pt-6">
+                        <div class="product-item">
+                            <div class="product-img img-zoom-effect">
+                                <label     for="myModal-9" >
+    
+                                    <img class="img-full" src="../assetsecm/images/soups/bitterleaf-egusi-soup-roundbowl.png" alt="Bitter-Leaf-Egusi Soup Pots">
+    
+    
+    
+                                </label>
+                                <div class="product-add-action" style="background-color: rgba(247, 216, 138, 0.37); color:#000">
+                                    <p style="text-align: center; ">CLICK TO SELECT YOUR SIZE <br> You will surely Like this!! <br>  </p>
+                                    
+                                </div>
+                            </div>
+                            <div class="product-content">
+                                <a class="product-name" href="javascript:void(0)">ONUGBU-EGUSI Soup</a>
+                                <div class="price-box pb-1">From
+                                    <span class="new-price">&#8358 1,800.00</span>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-sm-6 pt-6">
+                        <div class="product-item">
+                            <div class="product-img img-zoom-effect">
+                                <label      for="myModal-10" >
+    
+                                    <img class="img-full" src="../assetsecm/images/soups/gbegiri-soup-roundbowl.png" alt="Gbegiri Soup Pots">
+    
+    
+    
+                                </label>
+                                <div class="product-add-action" style="background-color: rgba(247, 216, 138, 0.37); color:#000">
+                                    <p style="text-align: center; ">CLICK TO SELECT YOUR SIZE <br> You will surely Like this!! <br>  </p>
+                                    
+                                </div>
+                            </div>
+                            <label      for="myModal-2" ><div class="product-content">
+                                <a class="product-name" href="javascript:void(0)">GBEGIRI Soup Pots</a>
+                                <div class="price-box pb-1">
+                                    From
+                                    <span class="new-price">&#8358 1,800.00</span>
+                                </div>
+                                
+                            </div></label>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-sm-6 pt-6">
+                        <div class="product-item">
+                            <div class="product-img img-zoom-effect">
+                                <label  for="myModal-11" >
+    
+                                    <img class="img-full" src="../assetsecm/images/soups/plain-okra-soup-roundbowl.png" alt="Plain Okra Soup Pots">
+    
+    
+    
+                                </label>
+                                <div class="product-add-action" style="background-color: rgba(247, 216, 138, 0.37); color:#000">
+                                    <p style="text-align: center; ">CLICK TO SELECT YOUR SIZE <br> You will surely Like this!! <br>  </p>
+                                    
+                                </div>
+                            </div>
+                            <label    for="myModal-3" >
+                            <div class="product-content">
+                                <a class="product-name" href="javascript:void(0)">PLAIN OKRA Soup</a>
+                                <div class="price-box pb-1">
+                                    From
+                                    <span class="new-price">&#8358 2,800.00</span>
+                                </div>
+                                
+                            </div></label>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-sm-6 pt-6">
+                        <div class="product-item">
+                            <div class="product-img img-zoom-effect">
+                                <label  for="myModal-12" class="openPopup" data-href="https://kwaliti.com.ng/uwanbuy/index.php/product-category/foodies/" data-title="Egusi Soup" >
+    
+                                    <img class="img-full" src="../assetsecm/images/soups/egusi-soup-roundbowl.png" alt="Rich Egusi Soup Pots">
+    
+    
+    
+                                </label>
+                                <div class="product-add-action" style="background-color: rgba(247, 216, 138, 0.37); color:#000">
+                                    <p style="text-align: center; ">CLICK TO SELECT YOUR SIZE <br> You will surely Like this!! <br>  </p>
+                                    
+                                </div>
+                            </div>
+                            <div class="product-content">
+                                <a class="product-name" href="javascript:void(0)">RICH EGUSI Soup Pots</a>
+                                <div class="price-box pb-1">
+                                    <span class="new-price">&#8358 1,800.00</span>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+    
+    
+                </div>
+    
+               <div style="width: 100%;   background-image: url(../assetsecm/images/alvero/restaur-title-bg.png); background-position: center; background-size: cover;  height: 20px; margin-top: 1.5em; margin-bottom: 2em;"></div>
+    
+            </div>
+        </div>
+        <!--        Product Area End Here -->
+
+
+
+
+                
+            
+
+                
+
+        
+
+
+
+        
+
+
+
+        
+
+
+        <!-- Begin  KWABAZ AD-BANNER -THIRD-WIDTH [[ NON-SWIPPING -]] -->
+        <div class="breadcrumb-area mt-3" data-bg-image="">
+            
+            
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-4 col-lg-4 col-md-4 mb-3">
+                        <img src="../assetsecm/images/kwa-misc/kwabaz-ad-slide-500-sample-04.png" width="100%">
+                    </div>
+
+                    <div class="col-xl-4 col-lg-4 col-md-4 mb-3">
+                        <img src="../assetsecm/images/kwa-misc/kwabaz-ad-slide-500-sample-01.png" width="100%">
+                    </div>
+
+                    <div class="col-xl-4 col-lg-4 col-md-4 mb-3">
+                        <img src="../assetsecm/images/kwa-misc/kwabaz-ad-slide-500-sample-05.png" width="100%">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--   KWABAZ AD-BANNER -THIRD-WIDTH Area End Here -->
+
+
+        
+
+
+
+        
+
+          
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+<!--    ###########################     MODALS SECTION          #######################    -->
+
+
+<!--    ###########################  ############################## #######################    -->
+
+
+<!--    ###########################  ############################## #######################    -->
+
+
+
+             <!-- %%%%%%%%%%%%%%%% REGISTRATION FORM MODAL-->
+
+             <div id="sxn-loadMod" >
+
+                
+
+             </div>
+ 
+ 
+             <!-- %%%%%%%%%%%%%%%% REGISTRATION FORM MODAL-->
+ 
+             <div id="alv-reg" >
+ 
+             </div>
+ 
+ 
+             <!-- %%%%%%%%%%%%%%%% PRODUCTS VARIANTS MODAL-->
+             <div id="variantModal" >
+ 
+ 
+                 <div data-varMod-name="$name" class="varMod-header modal-header" style="margin-top: 2em; background-image: url(&quot;../assetsecm/images/1-1-1920x598-fd.png&quot;); background-size: cover; background-repeat: no-repeat; max-height: 150px; overflow-y: hidden;">
+                     <label type="button" class="varMod-close close" data-iziModal-close="varMod" aria-label="Close" ><span aria-hidden="true">×</span></label>
+                     <img class="top-gif img-zoom-effect" src="../assetsecm/images/kwa-misc/product-placeholder-04.png"  height=70% alt="" />
+                     <h4 class="varMod-title" >AFANG Soup Pot Options<a class="anchorjs-link" href="javascript:void(0)"><span class="anchorjs-icon"></span></a></h4>
+                 </div>
+                 
+                 <div class="varMod-body modal-body">
+                     <div class="container"> 
+                         <!--  <div class="row" >-->
+                 
+                              <div data-varMod-topBand="$name" class="col-12"  style="background-image: url( ); background-size: cover; background-repeat: no-repeat; ">
+                                  
+                 
+                              </div>
+                 
+                              <div data-varMod-topIntro="$name"  class="col-12 top-intro">
+                                  <span class="top-intro" style="font-size: 0.9em; line-height: 1.2em;">
+                                      This is the short catchy intro to the variants of the products being centered on in the modal.
+                                  </span>
+                 
+                              </div>
+                 
+                          <!-- </div>-->
+                      
+                             <hr>
+                      
+                 
+                 
+                 
+                             <div data-varMod-ItemsWrap="$name"  class="product-list-view row">
+                 
+                 
+                                 <div data-var-itemInstance="0" data-varID="$varID" data-varPrice="500" data-var-itemMeta="{}"  class="col-12 variant-item tempo sample d-none">
+                 
+                                     <div class="product-item">
+                                         <div class="product-img img-zoom-effect">
+                                             <a href="javascript:void(0)">
+                                                 <img class="img-full" src="../assetsecm/images/kwa-misc/product-variant-1k-pack.png" alt="">
+                                             </a>
+                                             <div class="product-add-action">
+                                                 
+                                             </div>
+                                         </div>
+                                         <div data-var-details="$varID" class="product-content align-self-center">
+                                             <a class="product-name pb-2" href="javascript:void(0)">Afang Soup - 1K Pack</a>
+                                             <div class="price-box pb-1">
+                                                 <span class="new-price">&#8358 1,800</span>
+                                             </div>
+                                             <div class="rating-box pb-2">
+                                                 <ul class="quantity-with-btn pb-7">
+                                                     <li class="quantity">
+                                                         <div class="cart-plus-minus">
+                                                             <input class="cart-plus-minus-box" value="1" type="text">
+                                                         </div>
+                                                     </li>
+                                                     
+                                                     <li class="item-subtotal">
+                                                         <input class="item-subtotal" value="00.00" type="text">                               
+                                                     </li>
+                                                     <br>
+                 
+                                                     <li class="add-to-cart">
+                                                         <a data-var-cartAdd="$varID" class="btn btn-primary btn-secondary-hover" href="javascript:void(0)" >ADD TO BASKET</a>
+                                                     </li>
+                                                 </ul>
+                                             </div>
+                                             <p data-var-intro="$varID" class="short-desc mb-0">
+                                                 Li Europan lingues es membres del sam familie. Lor separat existentie es un myth.
+                                                 <br>
+                                                 Por scientie, musica, sport etc, litot Europa usa li sam vocabular.
+                                                 <br>
+                                                 Li lingues differe solmen in li grammatica : commun vocabules. 
+                                                 <br>
+                                                 Omnicos directe al desirabilite : On refusa continuar payar custosi.
+                                             </p>
+                                         </div>
+                                     </div>
+                                 </div>
+     
+                                 
+                 
+                                 <div  data-var-itemInstance="0" data-varID="$varID" data-varPrice="1000"  data-var-itemMeta="{'var_pr_id':'$name-x2' , 'var_price' : '1000'}"  class="col-12 variant-item tempo">
+                                     <div class="product-item">
+                                         <div class="product-img img-zoom-effect">
+                                             <a href="javascript:void(0)">
+                                                 <img class="img-full" src="../assetsecm/images/kwa-misc/product-variant-1k-pack.png" alt="">
+                                             </a>
+                                             <div class="product-add-action">
+                                                 
+                                             </div>
+                                         </div>
+                                         <div class="product-content align-self-center">
+                                             <a class="product-name pb-2" href="javascript:void(0)">...Product Name - 1K Size</a>
+                                             <div class="price-box pb-1">
+                                                 <span class="new-price">&#8358 1,000</span>
+                                             </div>
+                                             <div class="rating-box pb-2">
+                                                 <ul class="quantity-with-btn pb-7">
+                                                     <li class="quantity">
+                                                         <div class="cart-plus-minus">
+                                                             <input class="cart-plus-minus-box" value="1" type="text">
+                                                         </div>
+                                                     </li>
+                                                     
+                                                     <li class="item-subtotal">
+                                                         <input class="item-subtotal" value="00.00" type="text">                              
+                                                     </li>
+                 
+                                                     <li class="add-to-cart">
+                                                         <a class="btn btn-primary btn-secondary-hover" href="javascript:void(0)"  >ADD TO BASKET</a>
+                                                     </li>
+                                                 </ul>
+                                             </div>
+                                             <p class="short-desc mb-0">
+                                                Li Europan lingues es membres del sam familie. Lor separat existentie es un myth.
+                                                <br>
+                                                Parameter Name  : XXXX value
+                                                <br>
+                                                Parameter Name  : XXXX value
+                                                <br>
+                                                Omnicos directe al desirabilite : On refusa continuar payar custosi.
+                                            </p>
+                                         </div>
+                                     </div>
+                                 </div>
+                 
+                 
+                                 <div  data-var-itemInstance="0" data-varID="$varID"  data-varPrice="3000" data-var-itemMeta="{'var_pr_id':'$name-x3' , 'var_price' : '3000'}"  class="col-12 variant-item tempo">
+                                     <div class="product-item">
+                                         <div class="product-img img-zoom-effect">
+                                             <a href="javascript:void(0)">
+                                                 <img class="img-full" src="../assetsecm/images/kwa-misc/product-variant-3k-pack.png" alt="">
+                                             </a>
+                                             <div class="product-add-action">
+                                                 
+                                             </div>
+                                         </div>
+                                         <div class="product-content align-self-center">
+                                             <a class="product-name pb-2" href="javascript:void(0)">...Product Name - 3K Size</a>
+                                             <div class="price-box pb-1">
+                                                 <span class="new-price">&#8358 3,000</span>
+                                             </div>
+                                             <div class="rating-box pb-2">
+                                                 <ul class="quantity-with-btn pb-7">
+                                                     <li class="quantity">
+                                                         <div class="cart-plus-minus">
+                                                             <input class="cart-plus-minus-box" value="1" type="text">
+                                                         </div>
+                                                     </li>
+                                                     
+                                                     <li class="item-subtotal">
+                                                         <input class="item-subtotal" value="00.00" type="text">                              
+                                                     </li>
+                 
+                                                     <li class="add-to-cart">
+                                                         <a class="btn btn-primary btn-secondary-hover" href="javascript:void(0)"  >ADD TO BASKET</a>
+                                                     </li>
+                                                 </ul>
+                                             </div>
+                                             <p class="short-desc mb-0">
+                                                 Li Europan lingues es membres del sam familie. Lor separat existentie es un myth.
+                                                 <br>
+                                                 Parameter Name  : XXXX value
+                                                 <br>
+                                                 Parameter Name  : XXXX value
+                                                 <br>
+                                                 Omnicos directe al desirabilite : On refusa continuar payar custosi.
+                                             </p>
+                                         </div>
+                                     </div>
+                                 </div>
+                 
+                                 <div  data-var-itemInstance="0" data-varID="$varID"  data-varPrice="5000" data-var-itemMeta="{'var_pr_id':'$name-x4' , 'var_price' : '5000'}"  class="col-12 variant-item tempo">
+                                     <div class="product-item">
+                                         <div class="product-img img-zoom-effect">
+                                             <a href="javascript:void(0)">
+                                                 <img class="img-full" src="../assetsecm/images/kwa-misc/product-variant-5k-pack.png" alt="">
+                                             </a>
+                                             <div class="product-add-action">
+                                                 
+                                             </div>
+                                         </div>
+                                         <div class="product-content align-self-center">
+                                             <a class="product-name pb-2" href="javascript:void(0)">...Product Name - 5K Size</a>
+                                             <div class="price-box pb-1">
+                                                 <span class="new-price">&#8358 5,000</span>
+                                             </div>
+                                             <div class="rating-box pb-2">
+                                                 <ul class="quantity-with-btn pb-7">
+                                                     <li class="quantity">
+                                                         <div class="cart-plus-minus">
+                                                             <input class="cart-plus-minus-box" value="1" type="text">
+                                                         </div>
+                                                     </li>
+                                                     
+                                                     <li class="item-subtotal">
+                                                         <input class="item-subtotal" value="00.00" type="text">                              
+                                                     </li>
+                 
+                                                     <li class="add-to-cart">
+                                                         <a class="btn btn-primary btn-secondary-hover" href="javascript:void(0)"  >ADD TO BASKET</a>
+                                                     </li>
+                                                 </ul>
+                                             </div>
+                                             <p class="short-desc mb-0">
+                                                Li Europan lingues es membres del sam familie. Lor separat existentie es un myth.
+                                                <br>
+                                                Parameter Name  : XXXX value
+                                                <br>
+                                                Parameter Name  : XXXX value
+                                                <br>
+                                                Omnicos directe al desirabilite : On refusa continuar payar custosi.
+                                            </p>
+                                         </div>
+                                     </div>
+                                 </div>
+                 
+                 
+                                 <div  data-var-itemInstance="0" data-varID="$varID"  data-varPrice="2000" data-var-itemMeta="{'var_pr_id':'$name-x5' , 'var_price' : '20000'}"  class="col-12 variant-item tempo">
+                                     <div class="product-item">
+                                         <div class="product-img img-zoom-effect">
+                                             <a href="javascript:void(0)">
+                                                 <img class="img-full" src="../assetsecm/images/kwa-misc/product-variant-20k-pack.png" alt="">
+                                             </a>
+                                             <div class="product-add-action">
+                                                 
+                                             </div>
+                                         </div>
+                                         <div class="product-content align-self-center">
+                                             <a class="product-name pb-2" href="javascript:void(0)">...Product Name - 20K Size</a>
+                                             <div class="price-box pb-1">
+                                                 <span class="new-price">&#8358 20,000</span>
+                                             </div>
+                                             <div class="rating-box pb-2">
+                                                 <ul class="quantity-with-btn pb-7">
+                                                     <li class="quantity">
+                                                         <div class="cart-plus-minus">
+                                                             <input class="cart-plus-minus-box" value="1" type="text">
+                                                         </div>
+                                                     </li>
+                                                     
+                                                     <li class="item-subtotal">
+                                                         <input class="item-subtotal" value="00.00" type="text">                              
+                                                     </li>
+                 
+                                                     <li class="add-to-cart">
+                                                         <a class="btn btn-primary btn-secondary-hover" href="javascript:void(0)"  >ADD TO BASKET</a>
+                                                     </li>
+                                                 </ul>
+                                             </div>
+                                             <p class="short-desc mb-0">
+                                                Li Europan lingues es membres del sam familie. Lor separat existentie es un myth.
+                                                <br>
+                                                Parameter Name  : XXXX value
+                                                <br>
+                                                Parameter Name  : XXXX value
+                                                <br>
+                                                Omnicos directe al desirabilite : On refusa continuar payar custosi.
+                                            </p>
+                                         </div>
+                                     </div>
+                                 </div>
+                 
+                 
+                                 <div  data-var-itemInstance="0" data-varID="$varID" data-varPrice="30000"  data-var-itemMeta="{'var_pr_id':'$name-x6' , 'var_price' : '30000'}"  class="col-12 variant-item tempo">
+                                     <div class="product-item">
+                                         <div class="product-img img-zoom-effect">
+                                             <a href="javascript:void(0)">
+                                                 <img class="img-full" src="../assetsecm/images/kwa-misc/product-variant-30k-pack.png" alt="">
+                                             </a>
+                                             <div class="product-add-action">
+                                                 
+                                             </div>
+                                         </div>
+                                         <div class="product-content align-self-center">
+                                             <a class="product-name pb-2" href="javascript:void(0)">...Product Name - 30K Size</a>
+                                             <div class="price-box pb-1">
+                                                 <span class="new-price">&#8358 30,000</span>
+                                             </div>
+                                             <div class="rating-box pb-2">
+                                                 <ul class="quantity-with-btn pb-7">
+                                                     <li class="quantity">
+                                                         <div class="cart-plus-minus">
+                                                             <input class="cart-plus-minus-box" value="1" type="text">
+                                                         </div>
+                                                     </li>
+                                                     
+                                                     <li class="item-subtotal">
+                                                         <input class="item-subtotal" value="00.00" type="text">                              
+                                                     </li>
+                 
+                                                     <li class="add-to-cart">
+                                                         <a class="btn btn-primary btn-secondary-hover" href="javascript:void(0)"  >ADD TO BASKET</a>
+                                                     </li>
+                                                 </ul>
+                                             </div>
+                                             <p class="short-desc mb-0">
+                                                Li Europan lingues es membres del sam familie. Lor separat existentie es un myth.
+                                                <br>
+                                                Parameter Name  : XXXX value
+                                                <br>
+                                                Parameter Name  : XXXX value
+                                                <br>
+                                                Omnicos directe al desirabilite : On refusa continuar payar custosi.
+                                            </p>
+                                         </div>
+                                     </div>
+                                 </div>
+                 
+                                 <div  data-var-itemInstance="0" data-varID="$varID" data-varPrice="50000"  data-var-itemMeta="{'var_pr_id':'$name-x7' , 'var_price' : '50000'}"  class="col-12 variant-item tempo">
+                                     <div class="product-item">
+                                         <div class="product-img img-zoom-effect">
+                                             <a href="javascript:void(0)">
+                                                 <img class="img-full" src="../assetsecm/images/kwa-misc/product-variant-50k-pack.png" alt="">
+                                             </a>
+                                             <div class="product-add-action">
+                                                 
+                                             </div>
+                                         </div>
+                                         <div class="product-content align-self-center">
+                                             <a class="product-name pb-2" href="javascript:void(0)">...Product Name - 50K Size</a>
+                                             <div class="price-box pb-1">
+                                                 <span class="new-price">&#8358 50,000</span>
+                                             </div>
+                                             <div class="rating-box pb-2">
+                                                 <ul class="quantity-with-btn pb-7">
+                                                     <li class="quantity">
+                                                         <div class="cart-plus-minus">
+                                                             <input class="cart-plus-minus-box" value="1" type="text">
+                                                         </div>
+                                                     </li>
+                                                     
+                                                     <li class="item-subtotal">
+                                                         <input class="item-subtotal" value="00.00" type="text">                              
+                                                     </li>
+                 
+                                                     <li class="add-to-cart">
+                                                         <a class="btn btn-primary btn-secondary-hover" href="javascript:void(0)"  >ADD TO BASKET</a>
+                                                     </li>
+                                                 </ul>
+                                             </div>
+                                             <p class="short-desc mb-0">
+                                                Li Europan lingues es membres del sam familie. Lor separat existentie es un myth.
+                                                <br>
+                                                Parameter Name  : XXXX value
+                                                <br>
+                                                Parameter Name  : XXXX value
+                                                <br>
+                                                Omnicos directe al desirabilite : On refusa continuar payar custosi.
+                                            </p>
+                                         </div>
+                                     </div>
+                                 </div>
+                 
+                 
+                                 
+                             </div>
+                     </div>
+                 
+                 </div>
+                 <div class="modal-footer">
+                     <label type="button" class="btn btn-default" data-iziModal-close="$name">Close</label>
+                     <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                 </div>
+     
+     
+             </div>
+
+
+ <!--    ###########################   END OF  MODALS SECTION          #######################    -->
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+ 
+ 
+ <!--    ###########################   CYBER-KITCHEN MODALS  MODALS SECTION          #######################    -->
+ 
+<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  -->
+
+
+
+<!-- MODAL DIV Section Starts     [[ TO BE USED - (with adjustments) ]] -->
+<input type="checkbox" id="myModal" name="myModal" data-toggle="modal">
+<div id="" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+    <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header" style="margin-top: 2em;">
+            <label type="button" class="close" data-dismiss="modal" aria-label="Close" for="myModal"><span aria-hidden="true">×</span></label>
+            <h4 class="modal-title [ container text-center ]" id="myModalLabel">AFANG Soup Pot Options<a class="anchorjs-link" href="#myModalLabel"><span class="anchorjs-icon"></span></a></h4>
+        </div>
+        <div class="modal-body">
+            <div class="container"> 
+                <!--  <div class="row" >-->
+
+                     <div class="col-12 top-gif"  style="background-image: url(&quot;../assetsecm/images/soups/fb-cov-area-kwaliti-cyberkitchen-01.png&quot;); background-size: cover; background-repeat: no-repeat; ">
+                         <img class="top-gif img-zoom-effect" src="../assetsecm/images/soups/afang-soup-roundbowl.png" alt="" />
+
+                     </div>
+
+                     <div class="col-12 top-intro">
+                         <span class="top-intro" style="font-size: 0.9em; line-height: 1.2em;">
+                             This is the short catchy intro to the variants of the products being centered on in the modal.
+                         </span>
+
+                     </div>
+
+                 <!-- </div>-->
+             </div>
+             <div><br><hr><br></div>
+             
+
+
+
+            <div class="product-list-view row">
+
+
+                <div class="col-12 variant-item">
+                    <div class="product-item">
+                        <div class="product-img img-zoom-effect">
+                            <a href="javascript:void(0)">
+                                <img class="img-full" src="../assetsecm/images/soups/variants/stand-4L-var-afang.png" alt="afang soup 4L pot">
+                            </a>
+                            <div class="product-add-action">
+                                
+                            </div>
+                        </div>
+                        <div class="product-content align-self-center">
+                            <a class="product-name pb-2" href="single-product-afang-4l.html">Afang Soup - 4L Pot</a>
+                            <div class="price-box pb-1">
+                                <span class="new-price">&#8358 8,000</span>
+                            </div>
+                            <div class="rating-box pb-2">
+                                <ul class="quantity-with-btn pb-7">
+                                    <li class="quantity">
+                                        <div class="cart-plus-minus">
+                                            <input class="cart-plus-minus-box" value="1" type="text">
+                                        </div>
+                                    </li>
+                                    
+                                    <!--<li class="item-subtotal">
+                                        <input class="item-subtotal" value="80.00" type="text">
+                                        
+                                    </li>-->
+                                    <li class="add-to-cart">
+                                        <a class="btn btn-primary btn-secondary-hover" href="" data-calc="prod-var-sku">ADD TO BASKET</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <p class="short-desc mb-0">Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 variant-item">
+                    <div class="product-item">
+                        <div class="product-img img-zoom-effect">
+                            <a href="javascript:void(0)">
+                                <img class="img-full" src="../assetsecm/images/soups/variants/stand-2L-var-afang.png" alt="afang soup 2L pot">
+                            </a>
+                            <div class="product-add-action">
+                                
+                            </div>
+                        </div>
+                        <div class="product-content align-self-center">
+                            <a class="product-name pb-2" href="single-product-afang-2l.html">Afang Soup - 2L Pot</a>
+                            <div class="price-box pb-1">
+                                <span class="new-price">&#8358 4,500</span>
+                            </div>
+                            <div class="rating-box pb-2">
+                                <ul class="quantity-with-btn pb-7">
+                                    <li class="quantity">
+                                        <div class="cart-plus-minus">
+                                            <input class="cart-plus-minus-box" value="1" type="text">
+                                        </div>
+                                    </li>
+                                    
+                                    <!--<li class="item-subtotal">
+                                        <input class="item-subtotal" value="80.00" type="text">
+                                        
+                                    </li>-->
+                                    <li class="add-to-cart">
+                                        <a class="btn btn-primary btn-secondary-hover" href="" data-calc="prod-var-sku">ADD TO BASKET</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <p class="short-desc mb-0">Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi.</p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-12 variant-item">
+                    <div class="product-item">
+                        <div class="product-img img-zoom-effect">
+                            <a href="javascript:void(0)">
+                                <img class="img-full" src="../assetsecm/images/soups/variants/stand-1L-var-afang.png" alt="afang soup 1L pot">
+                            </a>
+                            <div class="product-add-action">
+                                
+                            </div>
+                        </div>
+                        <div class="product-content align-self-center">
+                            <a class="product-name pb-2" href="single-product-afang-4l.html">Afang Soup - 1L Pot</a>
+                            <div class="price-box pb-1">
+                                <span class="new-price">&#8358 2,500</span>
+                            </div>
+                            <div class="rating-box pb-2">
+                                <ul class="quantity-with-btn pb-7">
+                                    <li class="quantity">
+                                        <div class="cart-plus-minus">
+                                            <input class="cart-plus-minus-box" value="1" type="text">
+                                        </div>
+                                    </li>
+                                    
+                                    <!--<li class="item-subtotal">
+                                        <input class="item-subtotal" value="80.00" type="text">
+                                        
+                                    </li>-->
+                                    <li class="add-to-cart">
+                                        <a class="btn btn-primary btn-secondary-hover" href="" data-calc="prod-var-sku">ADD TO BASKET</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <p class="short-desc mb-0">Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi.</p>
+                        </div>
+                    </div>
+                </div>
+
+
+                
+            </div>
+
+    
+        </div>
+        <div class="modal-footer">
+            <label type="button" class="btn btn-default" for="myModal">Close</label>
+            <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+        </div>
+    </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div>
+<!-- MODAL DIV Section Ends 
+</div>-->
+
+
+
+<!-- MODAL DIV Section Starts     [[ TO BE USED - (with adjustments) ]] -->
+<input type="checkbox" id="myModal-2" name="myModal-2" data-toggle="modal">
+<div id="" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel-2" aria-hidden="false">
+<div class="modal-dialog">
+<div class="modal-content">
+    <div class="modal-header" style="margin-top: 2em;">
+        <label type="button" class="close" data-dismiss="modal" aria-label="Close" for="myModal-2"><span aria-hidden="true">×</span></label>
+        <h4 class="modal-title [ container text-center ]" id="myModalLabel-2">BANGA Soup Pot Options<a class="anchorjs-link" href="#myModalLabel-2"><span class="anchorjs-icon"></span></a></h4>
+    </div>
+    <div class="modal-body">
+        <div class="container"> 
+            <!--  <div class="row" >-->
+
+                 <div class="col-12 top-gif"  style="background-image: url(&quot;../assetsecm/images/soups/fb-cov-area-kwaliti-cyberkitchen-01.png&quot;); background-size: cover; background-repeat: no-repeat; ">
+                     <img class="top-gif img-zoom-effect" src="../assetsecm/images/soups/banga-soup-roundbowl.png" alt="" />
+
+                 </div>
+
+                 <div class="col-12 top-intro">
+                     <span class="top-intro" style="font-size: 0.9em; line-height: 1.2em;">
+                         This is the short catchy intro to the variants of the products being centered on in the modal.
+                     </span>
+
+                 </div>
+
+             <!-- </div>-->
+         </div>
+         <div><br><hr><br></div>
+         
+
+
+
+        <div class="product-list-view row">
+
+
+            <div class="col-12 variant-item">
+                <div class="product-item">
+                    <div class="product-img img-zoom-effect">
+                        <a href="javascript:void(0)">
+                            <img class="img-full" src="../assetsecm/images/soups/variants/stand-4L-var-banga.png" alt="banga soup 4L pot">
+                        </a>
+                        <div class="product-add-action">
+                            
+                        </div>
+                    </div>
+                    <div class="product-content align-self-center">
+                        <a class="product-name pb-2" href="single-product-banga-4l.html">Banga Soup - 4L Pot</a>
+                        <div class="price-box pb-1">
+                            <span class="new-price">&#8358 8,000</span>
+                        </div>
+                        <div class="rating-box pb-2">
+                            <ul class="quantity-with-btn pb-7">
+                                <li class="quantity">
+                                    <div class="cart-plus-minus">
+                                        <input class="cart-plus-minus-box" value="1" type="text">
+                                    </div>
+                                </li>
+                                
+                                <!--<li class="item-subtotal">
+                                    <input class="item-subtotal" value="80.00" type="text">
+                                    
+                                </li>-->
+                                <li class="add-to-cart">
+                                    <a class="btn btn-primary btn-secondary-hover" href="" data-calc="prod-var-sku">ADD TO BASKET</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <p class="short-desc mb-0">Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 variant-item">
+                <div class="product-item">
+                    <div class="product-img img-zoom-effect">
+                        <a href="javascript:void(0)">
+                            <img class="img-full" src="../assetsecm/images/soups/variants/stand-2L-var-banga.png" alt="banga soup 2L pot">
+                        </a>
+                        <div class="product-add-action">
+                            
+                        </div>
+                    </div>
+                    <div class="product-content align-self-center">
+                        <a class="product-name pb-2" href="single-product-banga-2l.html">Banga Soup - 2L Pot</a>
+                        <div class="price-box pb-1">
+                            <span class="new-price">&#8358 4,500</span>
+                        </div>
+                        <div class="rating-box pb-2">
+                            <ul class="quantity-with-btn pb-7">
+                                <li class="quantity">
+                                    <div class="cart-plus-minus">
+                                        <input class="cart-plus-minus-box" value="1" type="text">
+                                    </div>
+                                </li>
+                                
+                                <!--<li class="item-subtotal">
+                                    <input class="item-subtotal" value="80.00" type="text">
+                                    
+                                </li>-->
+                                <li class="add-to-cart">
+                                    <a class="btn btn-primary btn-secondary-hover" href="" data-calc="prod-var-sku">ADD TO BASKET</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <p class="short-desc mb-0">Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi.</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-12 variant-item">
+                <div class="product-item">
+                    <div class="product-img img-zoom-effect">
+                        <a href="javascript:void(0)">
+                            <img class="img-full" src="../assetsecm/images/soups/variants/stand-1L-var-banga.png" alt="banga soup 1L pot">
+                        </a>
+                        <div class="product-add-action">
+                            
+                        </div>
+                    </div>
+                    <div class="product-content align-self-center">
+                        <a class="product-name pb-2" href="single-product-banga-1l.html">Banga Soup - 1L Pot</a>
+                        <div class="price-box pb-1">
+                            <span class="new-price">&#8358 2,500</span>
+                        </div>
+                        <div class="rating-box pb-2">
+                            <ul class="quantity-with-btn pb-7">
+                                <li class="quantity">
+                                    <div class="cart-plus-minus">
+                                        <input class="cart-plus-minus-box" value="1" type="text">
+                                    </div>
+                                </li>
+                                
+                                <!--<li class="item-subtotal">
+                                    <input class="item-subtotal" value="80.00" type="text">
+                                    
+                                </li>-->
+                                <li class="add-to-cart">
+                                    <a class="btn btn-primary btn-secondary-hover" href="" data-calc="prod-var-sku">ADD TO BASKET</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <p class="short-desc mb-0">Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi.</p>
+                    </div>
+                </div>
+            </div>
+
+
+            
+        </div>
+
+
+    </div>
+    <div class="modal-footer">
+        <label type="button" class="btn btn-default" for="myModal-2">Close</label>
+        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+    </div>
+</div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div>
+<!-- MODAL DIV Section Ends 
+</div>-->
+
+
+
+
+<!-- MODAL DIV Section Starts     [[ TO BE USED - (with adjustments) ]] -->
+<input type="checkbox" id="myModal-3" name="myModal-3" data-toggle="modal">
+<div id="" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel-3" aria-hidden="false">
+<div class="modal-dialog">
+<div class="modal-content">
+    <div class="modal-header" style="margin-top: 2em;">
+        <label type="button" class="close" data-dismiss="modal" aria-label="Close" for="myModal-3"><span aria-hidden="true">×</span></label>
+        <h4 class="modal-title [ container text-center ]" id="myModalLabel-3">CHICKEN STEW Options<a class="anchorjs-link" href="#myModalLabel-3"><span class="anchorjs-icon"></span></a></h4>
+    </div>
+    <div class="modal-body">
+        <div class="container"> 
+            <!--  <div class="row" >-->
+
+                 <div class="col-12 top-gif"  style="background-image: url(&quot;../assetsecm/images/soups/fb-cov-area-kwaliti-cyberkitchen-01.png&quot;); background-size: cover; background-repeat: no-repeat; ">
+                     <img class="top-gif img-zoom-effect" src="../assetsecm/images/soups/chicken-stew-roundbowl.png" alt="" />
+
+                 </div>
+
+                 <div class="col-12 top-intro">
+                     <span class="top-intro" style="font-size: 0.9em; line-height: 1.2em;">
+                         This is the short catchy intro to the variants of the products being centered on in the modal.
+                     </span>
+
+                 </div>
+
+             <!-- </div>-->
+         </div>
+         <div><br><hr><br></div>
+         
+
+
+
+        <div class="product-list-view row">
+
+
+            <div class="col-12 variant-item">
+                <div class="product-item">
+                    <div class="product-img img-zoom-effect">
+                        <a href="javascript:void(0)">
+                            <img class="img-full" src="../assetsecm/images/soups/variants/stand-4L-var-chicken-stew.png" alt="chicken stew 4L pot">
+                        </a>
+                        <div class="product-add-action">
+                            
+                        </div>
+                    </div>
+                    <div class="product-content align-self-center">
+                        <a class="product-name pb-2" href="single-product-chicken-stew-4l.html">Chicken Stew - 4L Pot</a>
+                        <div class="price-box pb-1">
+                            <span class="new-price">&#8358 8,000</span>
+                        </div>
+                        <div class="rating-box pb-2">
+                            <ul class="quantity-with-btn pb-7">
+                                <li class="quantity">
+                                    <div class="cart-plus-minus">
+                                        <input class="cart-plus-minus-box" value="1" type="text">
+                                    </div>
+                                </li>
+                                
+                                <!--<li class="item-subtotal">
+                                    <input class="item-subtotal" value="80.00" type="text">
+                                    
+                                </li>-->
+                                <li class="add-to-cart">
+                                    <a class="btn btn-primary btn-secondary-hover" href="" data-calc="prod-var-sku">ADD TO BASKET</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <p class="short-desc mb-0">Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 variant-item">
+                <div class="product-item">
+                    <div class="product-img img-zoom-effect">
+                        <a href="javascript:void(0)">
+                            <img class="img-full" src="../assetsecm/images/soups/variants/stand-2L-var-chicken-stew.png" alt="chicken stew 2L pot">
+                        </a>
+                        <div class="product-add-action">
+                            
+                        </div>
+                    </div>
+                    <div class="product-content align-self-center">
+                        <a class="product-name pb-2" href="single-product-chicken-stew-2l.html">Chicken Stew - 2L Pot</a>
+                        <div class="price-box pb-1">
+                            <span class="new-price">&#8358 4,500</span>
+                        </div>
+                        <div class="rating-box pb-2">
+                            <ul class="quantity-with-btn pb-7">
+                                <li class="quantity">
+                                    <div class="cart-plus-minus">
+                                        <input class="cart-plus-minus-box" value="1" type="text">
+                                    </div>
+                                </li>
+                                
+                                <!--<li class="item-subtotal">
+                                    <input class="item-subtotal" value="80.00" type="text">
+                                    
+                                </li>-->
+                                <li class="add-to-cart">
+                                    <a class="btn btn-primary btn-secondary-hover" href="" data-calc="prod-var-sku">ADD TO BASKET</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <p class="short-desc mb-0">Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi.</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-12 variant-item">
+                <div class="product-item">
+                    <div class="product-img img-zoom-effect">
+                        <a href="javascript:void(0)">
+                            <img class="img-full" src="../assetsecm/images/soups/variants/stand-1L-var-chicken-stew.png" alt="Chicken Stew 1L pot">
+                        </a>
+                        <div class="product-add-action">
+                            
+                        </div>
+                    </div>
+                    <div class="product-content align-self-center">
+                        <a class="product-name pb-2" href="single-product-chicken-stew-1l.html">Chicken Stew - 1L Pot</a>
+                        <div class="price-box pb-1">
+                            <span class="new-price">&#8358 2,500</span>
+                        </div>
+                        <div class="rating-box pb-2">
+                            <ul class="quantity-with-btn pb-7">
+                                <li class="quantity">
+                                    <div class="cart-plus-minus">
+                                        <input class="cart-plus-minus-box" value="1" type="text">
+                                    </div>
+                                </li>
+                                
+                                <!--<li class="item-subtotal">
+                                    <input class="item-subtotal" value="80.00" type="text">
+                                    
+                                </li>-->
+                                <li class="add-to-cart">
+                                    <a class="btn btn-primary btn-secondary-hover" href="" data-calc="prod-var-sku">ADD TO BASKET</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <p class="short-desc mb-0">Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi.</p>
+                    </div>
+                </div>
+            </div>
+
+
+            
+        </div>
+
+
+    </div>
+    <div class="modal-footer">
+        <label type="button" class="btn btn-default" for="myModal-3">Close</label>
+        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+    </div>
+</div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div>
+<!-- MODAL DIV Section Ends 
+</div>-->
+
+
+
+
+<!-- MODAL DIV Section Starts     [[ TO BE USED - (with adjustments) ]] -->
+<input type="checkbox" id="myModal-4" name="myModal-4" data-toggle="modal">
+<div id="" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel-4" aria-hidden="false">
+<div class="modal-dialog">
+<div class="modal-content">
+    <div class="modal-header" style="margin-top: 2em;">
+        <label type="button" class="close" data-dismiss="modal" aria-label="Close" for="myModal-4"><span aria-hidden="true">×</span></label>
+        <h4 class="modal-title [ container text-center ]" id="myModalLabel-4">EGUSI-ELEFO Soup Pot Options<a class="anchorjs-link" href="#myModalLabel-4"><span class="anchorjs-icon"></span></a></h4>
+    </div>
+    <div class="modal-body">
+        <div class="container"> 
+            <!--  <div class="row" >-->
+
+                 <div class="col-12 top-gif"  style="background-image: url(&quot;../assetsecm/images/soups/fb-cov-area-kwaliti-cyberkitchen-01.png&quot;); background-size: cover; background-repeat: no-repeat; ">
+                     <img class="top-gif img-zoom-effect" src="../assetsecm/images/soups/egusi-elefo-roundbowl.png" alt="" />
+
+                 </div>
+
+                 <div class="col-12 top-intro">
+                     <span class="top-intro" style="font-size: 0.9em; line-height: 1.2em;">
+                         This is the short catchy intro to the variants of the products being centered on in the modal.
+                     </span>
+
+                 </div>
+
+             <!-- </div>-->
+         </div>
+         <div><br><hr><br></div>
+         
+
+
+
+        <div class="product-list-view row">
+
+
+            <div class="col-12 variant-item">
+                <div class="product-item">
+                    <div class="product-img img-zoom-effect">
+                        <a href="javascript:void(0)">
+                            <img class="img-full" src="../assetsecm/images/soups/variants/stand-4L-var-egusi-ugwu.png" alt="Egusi-Elefo soup 4L pot">
+                        </a>
+                        <div class="product-add-action">
+                            
+                        </div>
+                    </div>
+                    <div class="product-content align-self-center">
+                        <a class="product-name pb-2" href="single-product-egusi-elefo-4l.html">Egusi-Elefo Soup - 4L Pot</a>
+                        <div class="price-box pb-1">
+                            <span class="new-price">&#8358 8,000</span>
+                        </div>
+                        <div class="rating-box pb-2">
+                            <ul class="quantity-with-btn pb-7">
+                                <li class="quantity">
+                                    <div class="cart-plus-minus">
+                                        <input class="cart-plus-minus-box" value="1" type="text">
+                                    </div>
+                                </li>
+                                
+                                <!--<li class="item-subtotal">
+                                    <input class="item-subtotal" value="80.00" type="text">
+                                    
+                                </li>-->
+                                <li class="add-to-cart">
+                                    <a class="btn btn-primary btn-secondary-hover" href="" data-calc="prod-var-sku">ADD TO BASKET</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <p class="short-desc mb-0">Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 variant-item">
+                <div class="product-item">
+                    <div class="product-img img-zoom-effect">
+                        <a href="javascript:void(0)">
+                            <img class="img-full" src="../assetsecm/images/soups/variants/stand-2L-var-egusi-ugwu.png" alt="Egusi-Elefo soup 2L pot">
+                        </a>
+                        <div class="product-add-action">
+                            
+                        </div>
+                    </div>
+                    <div class="product-content align-self-center">
+                        <a class="product-name pb-2" href="single-product-egusi-elefo-2l.html">Egusi-Elefo - 2L Pot</a>
+                        <div class="price-box pb-1">
+                            <span class="new-price">&#8358 4,500</span>
+                        </div>
+                        <div class="rating-box pb-2">
+                            <ul class="quantity-with-btn pb-7">
+                                <li class="quantity">
+                                    <div class="cart-plus-minus">
+                                        <input class="cart-plus-minus-box" value="1" type="text">
+                                    </div>
+                                </li>
+                                
+                                <!--<li class="item-subtotal">
+                                    <input class="item-subtotal" value="80.00" type="text">
+                                    
+                                </li>-->
+                                <li class="add-to-cart">
+                                    <a class="btn btn-primary btn-secondary-hover" href="" data-calc="prod-var-sku">ADD TO BASKET</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <p class="short-desc mb-0">Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi.</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-12 variant-item">
+                <div class="product-item">
+                    <div class="product-img img-zoom-effect">
+                        <a href="javascript:void(0)">
+                            <img class="img-full" src="../assetsecm/images/soups/variants/stand-1L-var-egusi-ugwu.png" alt="Egusi-Elefo soup 1L pot">
+                        </a>
+                        <div class="product-add-action">
+                            
+                        </div>
+                    </div>
+                    <div class="product-content align-self-center">
+                        <a class="product-name pb-2" href="single-product-Egusi-Elefo-1l.html">Egusi-Elefo Soup - 1L Pot</a>
+                        <div class="price-box pb-1">
+                            <span class="new-price">&#8358 2,500</span>
+                        </div>
+                        <div class="rating-box pb-2">
+                            <ul class="quantity-with-btn pb-7">
+                                <li class="quantity">
+                                    <div class="cart-plus-minus">
+                                        <input class="cart-plus-minus-box" value="1" type="text">
+                                    </div>
+                                </li>
+                                
+                                <!--<li class="item-subtotal">
+                                    <input class="item-subtotal" value="80.00" type="text">
+                                    
+                                </li>-->
+                                <li class="add-to-cart">
+                                    <a class="btn btn-primary btn-secondary-hover" href="" data-calc="prod-var-sku">ADD TO BASKET</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <p class="short-desc mb-0">Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi.</p>
+                    </div>
+                </div>
+            </div>
+
+
+            
+        </div>
+
+
+    </div>
+    <div class="modal-footer">
+        <label type="button" class="btn btn-default" for="myModal-4">Close</label>
+        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+    </div>
+</div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div>
+
+
+
+
+
+<input type="checkbox" id="myModal-5" name="myModal-5" data-toggle="modal">
+<div id="" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel-5" aria-hidden="false">
+<div class="modal-dialog">
+<div class="modal-content">
+    <div class="modal-header" style="margin-top: 2em;">
+        <label type="button" class="close" data-dismiss="modal" aria-label="Close" for="myModal-5"><span aria-hidden="true">×</span></label>
+        <h4 class="modal-title [ container text-center ]" id="myModalLabel-5">FRIED-FISH Stew Options<a class="anchorjs-link" href="#myModalLabel"><span class="anchorjs-icon"></span></a></h4>
+    </div>
+    <div class="modal-body">
+        <div class="container"> 
+            <!--  <div class="row" >-->
+
+                 <div class="col-12 top-gif"  style="background-image: url(&quot;../assetsecm/images/soups/fb-cov-area-kwaliti-cyberkitchen-01.png&quot;); background-size: cover; background-repeat: no-repeat; ">
+                     <img class="top-gif img-zoom-effect" src="../assetsecm/images/soups/fried-fish-stew-roundbowl.png" alt="" />
+
+                 </div>
+
+                 <div class="col-12 top-intro">
+                     <span class="top-intro" style="font-size: 0.9em; line-height: 1.2em;">
+                         This is the short catchy intro to the variants of the products being centered on in the modal.
+                     </span>
+
+                 </div>
+
+             <!-- </div>-->
+         </div>
+         <div><br><hr><br></div>
+         
+
+
+
+        <div class="product-list-view row">
+
+
+            <div class="col-12 variant-item">
+                <div class="product-item">
+                    <div class="product-img img-zoom-effect">
+                        <a href="javascript:void(0)">
+                            <img class="img-full" src="../assetsecm/images/soups/variants/stand-4L-var-fried-fish-stew.png" alt="fried-fish stew 4L pot">
+                        </a>
+                        <div class="product-add-action">
+                            
+                        </div>
+                    </div>
+                    <div class="product-content align-self-center">
+                        <a class="product-name pb-2" href="single-product-fried-fish-stew-4l.html">Fried-Fish Stew - 4L Pot</a>
+                        <div class="price-box pb-1">
+                            <span class="new-price">&#8358 8,000</span>
+                        </div>
+                        <div class="rating-box pb-2">
+                            <ul class="quantity-with-btn pb-7">
+                                <li class="quantity">
+                                    <div class="cart-plus-minus">
+                                        <input class="cart-plus-minus-box" value="1" type="text">
+                                    </div>
+                                </li>
+                                
+                                <!--<li class="item-subtotal">
+                                    <input class="item-subtotal" value="80.00" type="text">
+                                    
+                                </li>-->
+                                <li class="add-to-cart">
+                                    <a class="btn btn-primary btn-secondary-hover" href="" data-calc="prod-var-sku">ADD TO BASKET</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <p class="short-desc mb-0">Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 variant-item">
+                <div class="product-item">
+                    <div class="product-img img-zoom-effect">
+                        <a href="javascript:void(0)">
+                            <img class="img-full" src="../assetsecm/images/soups/variants/stand-2L-var-fried-fish-stew.png" alt="fried-fish stew 2L pot">
+                        </a>
+                        <div class="product-add-action">
+                            
+                        </div>
+                    </div>
+                    <div class="product-content align-self-center">
+                        <a class="product-name pb-2" href="single-product-fried-fish-stew-2l.html">Fried-Fish Stew - 2L Pot</a>
+                        <div class="price-box pb-1">
+                            <span class="new-price">&#8358 4,500</span>
+                        </div>
+                        <div class="rating-box pb-2">
+                            <ul class="quantity-with-btn pb-7">
+                                <li class="quantity">
+                                    <div class="cart-plus-minus">
+                                        <input class="cart-plus-minus-box" value="1" type="text">
+                                    </div>
+                                </li>
+                                
+                                <!--<li class="item-subtotal">
+                                    <input class="item-subtotal" value="80.00" type="text">
+                                    
+                                </li>-->
+                                <li class="add-to-cart">
+                                    <a class="btn btn-primary btn-secondary-hover" href="" data-calc="prod-var-sku">ADD TO BASKET</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <p class="short-desc mb-0">Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi.</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-12 variant-item">
+                <div class="product-item">
+                    <div class="product-img img-zoom-effect">
+                        <a href="javascript:void(0)">
+                            <img class="img-full" src="../assetsecm/images/soups/variants/stand-1L-var-fried-fish-stew.png" alt="fried-fish Stew 1L pot">
+                        </a>
+                        <div class="product-add-action">
+                            
+                        </div>
+                    </div>
+                    <div class="product-content align-self-center">
+                        <a class="product-name pb-2" href="single-product-fried-fish-stew-1l.html">Fried-Fish Stew - 1L Pot</a>
+                        <div class="price-box pb-1">
+                            <span class="new-price">&#8358 2,500</span>
+                        </div>
+                        <div class="rating-box pb-2">
+                            <ul class="quantity-with-btn pb-7">
+                                <li class="quantity">
+                                    <div class="cart-plus-minus">
+                                        <input class="cart-plus-minus-box" value="1" type="text">
+                                    </div>
+                                </li>
+                                
+                                <!--<li class="item-subtotal">
+                                    <input class="item-subtotal" value="80.00" type="text">
+                                    
+                                </li>-->
+                                <li class="add-to-cart">
+                                    <a class="btn btn-primary btn-secondary-hover" href="" data-calc="prod-var-sku">ADD TO BASKET</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <p class="short-desc mb-0">Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi.</p>
+                    </div>
+                </div>
+            </div>
+
+
+            
+        </div>
+
+
+    </div>
+    <div class="modal-footer">
+        <label type="button" class="btn btn-default" for="myModal-5">Close</label>
+        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+    </div>
+</div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div>
+<!-- MODAL DIV Section Ends 
+</div>-->
+
+
+
+<!-- MODAL DIV Section Starts     [[ TO BE USED - (with adjustments) ]] -->
+<input type="checkbox" id="myModal-6" name="myModal-6" data-toggle="modal">
+<div id="" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel-6" aria-hidden="false">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header" style="margin-top: 2em;">
+    <label type="button" class="close" data-dismiss="modal" aria-label="Close" for="myModal-6"><span aria-hidden="true">×</span></label>
+    <h4 class="modal-title [ container text-center ]" id="myModalLabel-6">ONUGBU Bitter-Leaf Soup Options<a class="anchorjs-link" href="#myModalLabel-2"><span class="anchorjs-icon"></span></a></h4>
+</div>
+<div class="modal-body">
+    <div class="container"> 
+        <!--  <div class="row" >-->
+
+             <div class="col-12 top-gif"  style="background-image: url(&quot;../assetsecm/images/soups/fb-cov-area-kwaliti-cyberkitchen-01.png&quot;); background-size: cover; background-repeat: no-repeat; ">
+                 <img class="top-gif img-zoom-effect" src="../assetsecm/images/soups/bitterleaf-soup-roundbowl.png" alt="" />
+
+             </div>
+
+             <div class="col-12 top-intro">
+                 <span class="top-intro" style="font-size: 0.9em; line-height: 1.2em;">
+                     This is the short catchy intro to the variants of the products being centered on in the modal.
+                 </span>
+
+             </div>
+
+         <!-- </div>-->
+     </div>
+     <div><br><hr><br></div>
+     
+
+
+
+    <div class="product-list-view row">
+
+
+        <div class="col-12 variant-item">
+            <div class="product-item">
+                <div class="product-img img-zoom-effect">
+                    <a href="javascript:void(0)">
+                        <img class="img-full" src="../assetsecm/images/soups/variants/stand-4L-var-bitterleaf-onugbu.png" alt="bitterleaf soup 4L pot">
+                    </a>
+                    <div class="product-add-action">
+                        
+                    </div>
+                </div>
+                <div class="product-content align-self-center">
+                    <a class="product-name pb-2" href="single-product-bitterleaf-onugbu-4l.html">Bitter-Leaf Soup - 4L Pot</a>
+                    <div class="price-box pb-1">
+                        <span class="new-price">&#8358 8,000</span>
+                    </div>
+                    <div class="rating-box pb-2">
+                        <ul class="quantity-with-btn pb-7">
+                            <li class="quantity">
+                                <div class="cart-plus-minus">
+                                    <input class="cart-plus-minus-box" value="1" type="text">
+                                </div>
+                            </li>
+                            
+                            <!--<li class="item-subtotal">
+                                <input class="item-subtotal" value="80.00" type="text">
+                                
+                            </li>-->
+                            <li class="add-to-cart">
+                                <a class="btn btn-primary btn-secondary-hover" href="" data-calc="prod-var-sku">ADD TO BASKET</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <p class="short-desc mb-0">Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 variant-item">
+            <div class="product-item">
+                <div class="product-img img-zoom-effect">
+                    <a href="javascript:void(0)">
+                        <img class="img-full" src="../assetsecm/images/soups/variants/stand-2L-var-bitterleaf-onugbu.png" alt="bitterleaf-onugbu soup 2L pot">
+                    </a>
+                    <div class="product-add-action">
+                        
+                    </div>
+                </div>
+                <div class="product-content align-self-center">
+                    <a class="product-name pb-2" href="single-product-bitterleaf-onugbu-2l.html">Bitter-Leaf Soup - 2L Pot</a>
+                    <div class="price-box pb-1">
+                        <span class="new-price">&#8358 4,500</span>
+                    </div>
+                    <div class="rating-box pb-2">
+                        <ul class="quantity-with-btn pb-7">
+                            <li class="quantity">
+                                <div class="cart-plus-minus">
+                                    <input class="cart-plus-minus-box" value="1" type="text">
+                                </div>
+                            </li>
+                            
+                            <!--<li class="item-subtotal">
+                                <input class="item-subtotal" value="80.00" type="text">
+                                
+                            </li>-->
+                            <li class="add-to-cart">
+                                <a class="btn btn-primary btn-secondary-hover" href="" data-calc="prod-var-sku">ADD TO BASKET</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <p class="short-desc mb-0">Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi.</p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-12 variant-item">
+            <div class="product-item">
+                <div class="product-img img-zoom-effect">
+                    <a href="javascript:void(0)">
+                        <img class="img-full" src="../assetsecm/images/soups/variants/stand-1L-var-bitterleaf-onugbu.png" alt="bitterleaf-onugbu soup 1L pot">
+                    </a>
+                    <div class="product-add-action">
+                        
+                    </div>
+                </div>
+                <div class="product-content align-self-center">
+                    <a class="product-name pb-2" href="single-product-bitterleaf-onugbu-1l.html">Bitter-Leaf Soup - 1L Pot</a>
+                    <div class="price-box pb-1">
+                        <span class="new-price">&#8358 2,500</span>
+                    </div>
+                    <div class="rating-box pb-2">
+                        <ul class="quantity-with-btn pb-7">
+                            <li class="quantity">
+                                <div class="cart-plus-minus">
+                                    <input class="cart-plus-minus-box" value="1" type="text">
+                                </div>
+                            </li>
+                            
+                            <!--<li class="item-subtotal">
+                                <input class="item-subtotal" value="80.00" type="text">
+                                
+                            </li>-->
+                            <li class="add-to-cart">
+                                <a class="btn btn-primary btn-secondary-hover" href="" data-calc="prod-var-sku">ADD TO BASKET</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <p class="short-desc mb-0">Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi.</p>
+                </div>
+            </div>
+        </div>
+
+
+        
+    </div>
+
+
+</div>
+<div class="modal-footer">
+    <label type="button" class="btn btn-default" for="myModal-6">Close</label>
+    <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+</div>
+</div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div>
+<!-- MODAL DIV Section Ends 
+</div>-->
+
+
+
+
+<!-- MODAL DIV Section Starts     [[ TO BE USED - (with adjustments) ]] -->
+<input type="checkbox" id="myModal-7" name="myModal-7" data-toggle="modal">
+<div id="" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel-7" aria-hidden="false">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header" style="margin-top: 2em;">
+    <label type="button" class="close" data-dismiss="modal" aria-label="Close" for="myModal-7"><span aria-hidden="true">×</span></label>
+    <h4 class="modal-title [ container text-center ]" id="myModalLabel-7">GOAT-MEAT Stew Options<a class="anchorjs-link" href="#myModalLabel-3"><span class="anchorjs-icon"></span></a></h4>
+</div>
+<div class="modal-body">
+    <div class="container"> 
+        <!--  <div class="row" >-->
+
+             <div class="col-12 top-gif"  style="background-image: url(&quot;../assetsecm/images/soups/fb-cov-area-kwaliti-cyberkitchen-01.png&quot;); background-size: cover; background-repeat: no-repeat; ">
+                 <img class="top-gif img-zoom-effect" src="../assetsecm/images/soups/goatmeat-stew-roundbowl.png" alt="" />
+
+             </div>
+
+             <div class="col-12 top-intro">
+                 <span class="top-intro" style="font-size: 0.9em; line-height: 1.2em;">
+                     This is the short catchy intro to the variants of the products being centered on in the modal.
+                 </span>
+
+             </div>
+
+         <!-- </div>-->
+     </div>
+     <div><br><hr><br></div>
+     
+
+
+
+    <div class="product-list-view row">
+
+
+        <div class="col-12 variant-item">
+            <div class="product-item">
+                <div class="product-img img-zoom-effect">
+                    <a href="javascript:void(0)">
+                        <img class="img-full" src="../assetsecm/images/soups/variants/stand-4L-var-goatmeat-stew.png" alt="goatmeat stew 4L pot">
+                    </a>
+                    <div class="product-add-action">
+                        
+                    </div>
+                </div>
+                <div class="product-content align-self-center">
+                    <a class="product-name pb-2" href="single-product-goatmeat-stew-4l.html">Goat-Meat Stew - 4L Pot</a>
+                    <div class="price-box pb-1">
+                        <span class="new-price">&#8358 8,000</span>
+                    </div>
+                    <div class="rating-box pb-2">
+                        <ul class="quantity-with-btn pb-7">
+                            <li class="quantity">
+                                <div class="cart-plus-minus">
+                                    <input class="cart-plus-minus-box" value="1" type="text">
+                                </div>
+                            </li>
+                            
+                            <!--<li class="item-subtotal">
+                                <input class="item-subtotal" value="80.00" type="text">
+                                
+                            </li>-->
+                            <li class="add-to-cart">
+                                <a class="btn btn-primary btn-secondary-hover" href="" data-calc="prod-var-sku">ADD TO BASKET</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <p class="short-desc mb-0">Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 variant-item">
+            <div class="product-item">
+                <div class="product-img img-zoom-effect">
+                    <a href="javascript:void(0)">
+                        <img class="img-full" src="../assetsecm/images/soups/variants/stand-2L-var-goatmeat-stew.png" alt="goatmeat stew 2L pot">
+                    </a>
+                    <div class="product-add-action">
+                        
+                    </div>
+                </div>
+                <div class="product-content align-self-center">
+                    <a class="product-name pb-2" href="single-product-goatmeat-stew-2l.html">Goat-Meat Stew - 2L Pot</a>
+                    <div class="price-box pb-1">
+                        <span class="new-price">&#8358 4,500</span>
+                    </div>
+                    <div class="rating-box pb-2">
+                        <ul class="quantity-with-btn pb-7">
+                            <li class="quantity">
+                                <div class="cart-plus-minus">
+                                    <input class="cart-plus-minus-box" value="1" type="text">
+                                </div>
+                            </li>
+                            
+                            <!--<li class="item-subtotal">
+                                <input class="item-subtotal" value="80.00" type="text">
+                                
+                            </li>-->
+                            <li class="add-to-cart">
+                                <a class="btn btn-primary btn-secondary-hover" href="" data-calc="prod-var-sku">ADD TO BASKET</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <p class="short-desc mb-0">Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi.</p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-12 variant-item">
+            <div class="product-item">
+                <div class="product-img img-zoom-effect">
+                    <a href="javascript:void(0)">
+                        <img class="img-full" src="../assetsecm/images/soups/variants/stand-1L-var-goatmeat-stew.png" alt="goatmeat Stew 1L pot">
+                    </a>
+                    <div class="product-add-action">
+                        
+                    </div>
+                </div>
+                <div class="product-content align-self-center">
+                    <a class="product-name pb-2" href="single-product-goatmeat-stew-1l.html">Goat-Meat Stew - 1L Pot</a>
+                    <div class="price-box pb-1">
+                        <span class="new-price">&#8358 2,500</span>
+                    </div>
+                    <div class="rating-box pb-2">
+                        <ul class="quantity-with-btn pb-7">
+                            <li class="quantity">
+                                <div class="cart-plus-minus">
+                                    <input class="cart-plus-minus-box" value="1" type="text">
+                                </div>
+                            </li>
+                            
+                            <!--<li class="item-subtotal">
+                                <input class="item-subtotal" value="80.00" type="text">
+                                
+                            </li>-->
+                            <li class="add-to-cart">
+                                <a class="btn btn-primary btn-secondary-hover" href="" data-calc="prod-var-sku">ADD TO BASKET</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <p class="short-desc mb-0">Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi.</p>
+                </div>
+            </div>
+        </div>
+
+
+        
+    </div>
+
+
+</div>
+<div class="modal-footer">
+    <label type="button" class="btn btn-default" for="myModal-7">Close</label>
+    <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+</div>
+</div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div>
+<!-- MODAL DIV Section Ends 
+</div>-->
+
+
+
+
+<!-- MODAL DIV Section Starts     [[ TO BE USED - (with adjustments) ]] -->
+<input type="checkbox" id="myModal-8" name="myModal-8" data-toggle="modal">
+<div id="" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel-8" aria-hidden="false">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header" style="margin-top: 2em;">
+    <label type="button" class="close" data-dismiss="modal" aria-label="Close" for="myModal-8"><span aria-hidden="true">×</span></label>
+    <h4 class="modal-title [ container text-center ]" id="myModalLabel-8">ATAMA Soup Pot Options<a class="anchorjs-link" href="#myModalLabel-4"><span class="anchorjs-icon"></span></a></h4>
+</div>
+<div class="modal-body">
+    <div class="container"> 
+        <!--  <div class="row" >-->
+
+             <div class="col-12 top-gif"  style="background-image: url(&quot;../assetsecm/images/soups/fb-cov-area-kwaliti-cyberkitchen-01.png&quot;); background-size: cover; background-repeat: no-repeat; ">
+                 <img class="top-gif img-zoom-effect" src="../assetsecm/images/soups/atama-soup-roundbowl.png" alt="" />
+
+             </div>
+
+             <div class="col-12 top-intro">
+                 <span class="top-intro" style="font-size: 0.9em; line-height: 1.2em;">
+                     This is the short catchy intro to the variants of the products being centered on in the modal.
+                 </span>
+
+             </div>
+
+         <!-- </div>-->
+     </div>
+     <div><br><hr><br></div>
+     
+
+
+
+    <div class="product-list-view row">
+
+
+        <div class="col-12 variant-item">
+            <div class="product-item">
+                <div class="product-img img-zoom-effect">
+                    <a href="javascript:void(0)">
+                        <img class="img-full" src="../assetsecm/images/soups/variants/stand-4L-var-atama.png" alt="atama soup 4L pot">
+                    </a>
+                    <div class="product-add-action">
+                        
+                    </div>
+                </div>
+                <div class="product-content align-self-center">
+                    <a class="product-name pb-2" href="single-product-atama-4l.html">Atama Soup - 4L Pot</a>
+                    <div class="price-box pb-1">
+                        <span class="new-price">&#8358 8,000</span>
+                    </div>
+                    <div class="rating-box pb-2">
+                        <ul class="quantity-with-btn pb-7">
+                            <li class="quantity">
+                                <div class="cart-plus-minus">
+                                    <input class="cart-plus-minus-box" value="1" type="text">
+                                </div>
+                            </li>
+                            
+                            <!--<li class="item-subtotal">
+                                <input class="item-subtotal" value="80.00" type="text">
+                                
+                            </li>-->
+                            <li class="add-to-cart">
+                                <a class="btn btn-primary btn-secondary-hover" href="" data-calc="prod-var-sku">ADD TO BASKET</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <p class="short-desc mb-0">Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 variant-item">
+            <div class="product-item">
+                <div class="product-img img-zoom-effect">
+                    <a href="javascript:void(0)">
+                        <img class="img-full" src="../assetsecm/images/soups/variants/stand-2L-var-atama.png" alt="atama soup 2L pot">
+                    </a>
+                    <div class="product-add-action">
+                        
+                    </div>
+                </div>
+                <div class="product-content align-self-center">
+                    <a class="product-name pb-2" href="single-product-atama-2l.html">Atama Soup - 2L Pot</a>
+                    <div class="price-box pb-1">
+                        <span class="new-price">&#8358 4,500</span>
+                    </div>
+                    <div class="rating-box pb-2">
+                        <ul class="quantity-with-btn pb-7">
+                            <li class="quantity">
+                                <div class="cart-plus-minus">
+                                    <input class="cart-plus-minus-box" value="1" type="text">
+                                </div>
+                            </li>
+                            
+                            <!--<li class="item-subtotal">
+                                <input class="item-subtotal" value="80.00" type="text">
+                                
+                            </li>-->
+                            <li class="add-to-cart">
+                                <a class="btn btn-primary btn-secondary-hover" href="" data-calc="prod-var-sku">ADD TO BASKET</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <p class="short-desc mb-0">Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi.</p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-12 variant-item">
+            <div class="product-item">
+                <div class="product-img img-zoom-effect">
+                    <a href="javascript:void(0)">
+                        <img class="img-full" src="../assetsecm/images/soups/variants/stand-1L-var-atama.png" alt="atama soup 1L pot">
+                    </a>
+                    <div class="product-add-action">
+                        
+                    </div>
+                </div>
+                <div class="product-content align-self-center">
+                    <a class="product-name pb-2" href="single-product-atama-4l.html">Atama Soup - 1L Pot</a>
+                    <div class="price-box pb-1">
+                        <span class="new-price">&#8358 2,500</span>
+                    </div>
+                    <div class="rating-box pb-2">
+                        <ul class="quantity-with-btn pb-7">
+                            <li class="quantity">
+                                <div class="cart-plus-minus">
+                                    <input class="cart-plus-minus-box" value="1" type="text">
+                                </div>
+                            </li>
+                            
+                            <!--<li class="item-subtotal">
+                                <input class="item-subtotal" value="80.00" type="text">
+                                
+                            </li>-->
+                            <li class="add-to-cart">
+                                <a class="btn btn-primary btn-secondary-hover" href="" data-calc="prod-var-sku">ADD TO BASKET</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <p class="short-desc mb-0">Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi.</p>
+                </div>
+            </div>
+        </div>
+
+
+        
+    </div>
+
+
+</div>
+<div class="modal-footer">
+    <label type="button" class="btn btn-default" for="myModal-8">Close</label>
+    <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+</div>
+</div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div>
+
+
+
+
+
+
+<input type="checkbox" id="myModal-9" name="myModal-9" data-toggle="modal">
+<div id="" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel-9" aria-hidden="false">
+<div class="modal-dialog">
+<div class="modal-content">
+    <div class="modal-header" style="margin-top: 2em;">
+        <label type="button" class="close" data-dismiss="modal" aria-label="Close" for="myModal-9"><span aria-hidden="true">×</span></label>
+        <h4 class="modal-title [ container text-center ]" id="myModalLabel-9">ONUGBU-EGUSI Soup Pot Options<a class="anchorjs-link" href="#myModalLabel"><span class="anchorjs-icon"></span></a></h4>
+    </div>
+    <div class="modal-body">
+        <div class="container"> 
+            <!--  <div class="row" >-->
+
+                 <div class="col-12 top-gif"  style="background-image: url(&quot;../assetsecm/images/soups/fb-cov-area-kwaliti-cyberkitchen-01.png&quot;); background-size: cover; background-repeat: no-repeat; ">
+                     <img class="top-gif img-zoom-effect" src="../assetsecm/images/soups/bitterleaf-egusi-soup-roundbowl.png" alt="" />
+
+                 </div>
+
+                 <div class="col-12 top-intro">
+                     <span class="top-intro" style="font-size: 0.9em; line-height: 1.2em;">
+                         This is the short catchy intro to the variants of the products being centered on in the modal.
+                     </span>
+
+                 </div>
+
+             <!-- </div>-->
+         </div>
+         <div><br><hr><br></div>
+         
+
+
+
+        <div class="product-list-view row">
+
+
+            <div class="col-12 variant-item">
+                <div class="product-item">
+                    <div class="product-img img-zoom-effect">
+                        <a href="javascript:void(0)">
+                            <img class="img-full" src="../assetsecm/images/soups/variants/stand-4L-var-bitterleaf-egusi.png" alt="bitterleaf-egusi soup 4L pot">
+                        </a>
+                        <div class="product-add-action">
+                            
+                        </div>
+                    </div>
+                    <div class="product-content align-self-center">
+                        <a class="product-name pb-2" href="single-product-bitterleaf-egusi-4l.html">Bitter-Leaf-Egusi Soup - 4L Pot</a>
+                        <div class="price-box pb-1">
+                            <span class="new-price">&#8358 8,000</span>
+                        </div>
+                        <div class="rating-box pb-2">
+                            <ul class="quantity-with-btn pb-7">
+                                <li class="quantity">
+                                    <div class="cart-plus-minus">
+                                        <input class="cart-plus-minus-box" value="1" type="text">
+                                    </div>
+                                </li>
+                                
+                                <!--<li class="item-subtotal">
+                                    <input class="item-subtotal" value="80.00" type="text">
+                                    
+                                </li>-->
+                                <li class="add-to-cart">
+                                    <a class="btn btn-primary btn-secondary-hover" href="" data-calc="prod-var-sku">ADD TO BASKET</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <p class="short-desc mb-0">Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 variant-item">
+                <div class="product-item">
+                    <div class="product-img img-zoom-effect">
+                        <a href="javascript:void(0)">
+                            <img class="img-full" src="../assetsecm/images/soups/variants/stand-2L-var-bitterleaf-egusi.png" alt="bitterleaf-egusi soup 2L pot">
+                        </a>
+                        <div class="product-add-action">
+                            
+                        </div>
+                    </div>
+                    <div class="product-content align-self-center">
+                        <a class="product-name pb-2" href="single-product-bitterleaf-egusi-2l.html">Bitter-Leaf-Egusi Soup - 2L Pot</a>
+                        <div class="price-box pb-1">
+                            <span class="new-price">&#8358 4,500</span>
+                        </div>
+                        <div class="rating-box pb-2">
+                            <ul class="quantity-with-btn pb-7">
+                                <li class="quantity">
+                                    <div class="cart-plus-minus">
+                                        <input class="cart-plus-minus-box" value="1" type="text">
+                                    </div>
+                                </li>
+                                
+                                <!--<li class="item-subtotal">
+                                    <input class="item-subtotal" value="80.00" type="text">
+                                    
+                                </li>-->
+                                <li class="add-to-cart">
+                                    <a class="btn btn-primary btn-secondary-hover" href="" data-calc="prod-var-sku">ADD TO BASKET</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <p class="short-desc mb-0">Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi.</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-12 variant-item">
+                <div class="product-item">
+                    <div class="product-img img-zoom-effect">
+                        <a href="javascript:void(0)">
+                            <img class="img-full" src="../assetsecm/images/soups/variants/stand-1L-var-bitterleaf-egusi.png" alt="bitterleaf-egusi soup 1L pot">
+                        </a>
+                        <div class="product-add-action">
+                            
+                        </div>
+                    </div>
+                    <div class="product-content align-self-center">
+                        <a class="product-name pb-2" href="single-product-bitterleaf-egusi-1l.html">Bitter-Leaf-Egusi Soup - 1L Pot</a>
+                        <div class="price-box pb-1">
+                            <span class="new-price">&#8358 2,500</span>
+                        </div>
+                        <div class="rating-box pb-2">
+                            <ul class="quantity-with-btn pb-7">
+                                <li class="quantity">
+                                    <div class="cart-plus-minus">
+                                        <input class="cart-plus-minus-box" value="1" type="text">
+                                    </div>
+                                </li>
+                                
+                                <!--<li class="item-subtotal">
+                                    <input class="item-subtotal" value="80.00" type="text">
+                                    
+                                </li>-->
+                                <li class="add-to-cart">
+                                    <a class="btn btn-primary btn-secondary-hover" href="" data-calc="prod-var-sku">ADD TO BASKET</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <p class="short-desc mb-0">Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi.</p>
+                    </div>
+                </div>
+            </div>
+
+
+            
+        </div>
+
+
+    </div>
+    <div class="modal-footer">
+        <label type="button" class="btn btn-default" for="myModal-9">Close</label>
+        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+    </div>
+</div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div>
+<!-- MODAL DIV Section Ends 
+</div>-->
+
+
+
+<!-- MODAL DIV Section Starts     [[ TO BE USED - (with adjustments) ]] -->
+<input type="checkbox" id="myModal-10" name="myModal-10" data-toggle="modal">
+<div id="" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel-10" aria-hidden="false">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header" style="margin-top: 2em;">
+    <label type="button" class="close" data-dismiss="modal" aria-label="Close" for="myModal-10"><span aria-hidden="true">×</span></label>
+    <h4 class="modal-title [ container text-center ]" id="myModalLabel-10">GBEGIRI Soup Pot Options<a class="anchorjs-link" href="#myModalLabel-2"><span class="anchorjs-icon"></span></a></h4>
+</div>
+<div class="modal-body">
+    <div class="container"> 
+        <!--  <div class="row" >-->
+
+             <div class="col-12 top-gif"  style="background-image: url(&quot;../assetsecm/images/soups/fb-cov-area-kwaliti-cyberkitchen-01.png&quot;); background-size: cover; background-repeat: no-repeat; ">
+                 <img class="top-gif img-zoom-effect" src="../assetsecm/images/soups/gbegiri-soup-roundbowl.png" alt="" />
+
+             </div>
+
+             <div class="col-12 top-intro">
+                 <span class="top-intro" style="font-size: 0.9em; line-height: 1.2em;">
+                     This is the short catchy intro to the variants of the products being centered on in the modal.
+                 </span>
+
+             </div>
+
+         <!-- </div>-->
+     </div>
+     <div><br><hr><br></div>
+     
+
+
+
+    <div class="product-list-view row">
+
+
+        <div class="col-12 variant-item">
+            <div class="product-item">
+                <div class="product-img img-zoom-effect">
+                    <a href="javascript:void(0)">
+                        <img class="img-full" src="../assetsecm/images/soups/variants/stand-4L-var-gbegiri.png" alt="gbegiri soup 4L pot">
+                    </a>
+                    <div class="product-add-action">
+                        
+                    </div>
+                </div>
+                <div class="product-content align-self-center">
+                    <a class="product-name pb-2" href="single-product-gbegiri-4l.html">Gbegiri Soup - 4L Pot</a>
+                    <div class="price-box pb-1">
+                        <span class="new-price">&#8358 8,000</span>
+                    </div>
+                    <div class="rating-box pb-2">
+                        <ul class="quantity-with-btn pb-7">
+                            <li class="quantity">
+                                <div class="cart-plus-minus">
+                                    <input class="cart-plus-minus-box" value="1" type="text">
+                                </div>
+                            </li>
+                            
+                            <!--<li class="item-subtotal">
+                                <input class="item-subtotal" value="80.00" type="text">
+                                
+                            </li>-->
+                            <li class="add-to-cart">
+                                <a class="btn btn-primary btn-secondary-hover" href="" data-calc="prod-var-sku">ADD TO BASKET</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <p class="short-desc mb-0">Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 variant-item">
+            <div class="product-item">
+                <div class="product-img img-zoom-effect">
+                    <a href="javascript:void(0)">
+                        <img class="img-full" src="../assetsecm/images/soups/variants/stand-2L-var-gbegiri.png" alt="gbegiri soup 2L pot">
+                    </a>
+                    <div class="product-add-action">
+                        
+                    </div>
+                </div>
+                <div class="product-content align-self-center">
+                    <a class="product-name pb-2" href="single-product-gbegiri-2l.html">Gbegiri Soup - 2L Pot</a>
+                    <div class="price-box pb-1">
+                        <span class="new-price">&#8358 4,500</span>
+                    </div>
+                    <div class="rating-box pb-2">
+                        <ul class="quantity-with-btn pb-7">
+                            <li class="quantity">
+                                <div class="cart-plus-minus">
+                                    <input class="cart-plus-minus-box" value="1" type="text">
+                                </div>
+                            </li>
+                            
+                            <!--<li class="item-subtotal">
+                                <input class="item-subtotal" value="80.00" type="text">
+                                
+                            </li>-->
+                            <li class="add-to-cart">
+                                <a class="btn btn-primary btn-secondary-hover" href="" data-calc="prod-var-sku">ADD TO BASKET</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <p class="short-desc mb-0">Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi.</p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-12 variant-item">
+            <div class="product-item">
+                <div class="product-img img-zoom-effect">
+                    <a href="javascript:void(0)">
+                        <img class="img-full" src="../assetsecm/images/soups/variants/stand-1L-var-gbegiri.png" alt="gbegiri soup 1L pot">
+                    </a>
+                    <div class="product-add-action">
+                        
+                    </div>
+                </div>
+                <div class="product-content align-self-center">
+                    <a class="product-name pb-2" href="single-product-gbegiri-1l.html">Gbegiri Soup - 1L Pot</a>
+                    <div class="price-box pb-1">
+                        <span class="new-price">&#8358 2,500</span>
+                    </div>
+                    <div class="rating-box pb-2">
+                        <ul class="quantity-with-btn pb-7">
+                            <li class="quantity">
+                                <div class="cart-plus-minus">
+                                    <input class="cart-plus-minus-box" value="1" type="text">
+                                </div>
+                            </li>
+                            
+                            <!--<li class="item-subtotal">
+                                <input class="item-subtotal" value="80.00" type="text">
+                                
+                            </li>-->
+                            <li class="add-to-cart">
+                                <a class="btn btn-primary btn-secondary-hover" href="" data-calc="prod-var-sku">ADD TO BASKET</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <p class="short-desc mb-0">Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi.</p>
+                </div>
+            </div>
+        </div>
+
+
+        
+    </div>
+
+
+</div>
+<div class="modal-footer">
+    <label type="button" class="btn btn-default" for="myModal-10">Close</label>
+    <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+</div>
+</div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div>
+<!-- MODAL DIV Section Ends 
+</div>-->
+
+
+
+
+<!-- MODAL DIV Section Starts     [[ TO BE USED - (with adjustments) ]] -->
+<input type="checkbox" id="myModal-11" name="myModal-11" data-toggle="modal">
+<div id="" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel-11" aria-hidden="false">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header" style="margin-top: 2em;">
+    <label type="button" class="close" data-dismiss="modal" aria-label="Close" for="myModal-11"><span aria-hidden="true">×</span></label>
+    <h4 class="modal-title [ container text-center ]" id="myModalLabel-11">PLAIN OKRA Soup Options<a class="anchorjs-link" href="#myModalLabel-3"><span class="anchorjs-icon"></span></a></h4>
+</div>
+<div class="modal-body">
+    <div class="container"> 
+        <!--  <div class="row" >-->
+
+             <div class="col-12 top-gif"  style="background-image: url(&quot;../assetsecm/images/soups/fb-cov-area-kwaliti-cyberkitchen-01.png&quot;); background-size: cover; background-repeat: no-repeat; ">
+                 <img class="top-gif img-zoom-effect" src="../assetsecm/images/soups/plain-okra-soup-roundbowl.png" alt="" />
+
+             </div>
+
+             <div class="col-12 top-intro">
+                 <span class="top-intro" style="font-size: 0.9em; line-height: 1.2em;">
+                     This is the short catchy intro to the variants of the products being centered on in the modal.
+                 </span>
+
+             </div>
+
+         <!-- </div>-->
+     </div>
+     <div><br><hr><br></div>
+     
+
+
+
+    <div class="product-list-view row">
+
+
+        <div class="col-12 variant-item">
+            <div class="product-item">
+                <div class="product-img img-zoom-effect">
+                    <a href="javascript:void(0)">
+                        <img class="img-full" src="../assetsecm/images/soups/variants/stand-4L-var-okra.png" alt="okra soup 4L pot">
+                    </a>
+                    <div class="product-add-action">
+                        
+                    </div>
+                </div>
+                <div class="product-content align-self-center">
+                    <a class="product-name pb-2" href="single-product-okra-4l.html">Plain Okra Soup - 4L Pot</a>
+                    <div class="price-box pb-1">
+                        <span class="new-price">&#8358 8,000</span>
+                    </div>
+                    <div class="rating-box pb-2">
+                        <ul class="quantity-with-btn pb-7">
+                            <li class="quantity">
+                                <div class="cart-plus-minus">
+                                    <input class="cart-plus-minus-box" value="1" type="text">
+                                </div>
+                            </li>
+                            
+                            <!--<li class="item-subtotal">
+                                <input class="item-subtotal" value="80.00" type="text">
+                                
+                            </li>-->
+                            <li class="add-to-cart">
+                                <a class="btn btn-primary btn-secondary-hover" href="" data-calc="prod-var-sku">ADD TO BASKET</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <p class="short-desc mb-0">Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 variant-item">
+            <div class="product-item">
+                <div class="product-img img-zoom-effect">
+                    <a href="javascript:void(0)">
+                        <img class="img-full" src="../assetsecm/images/soups/variants/stand-2L-var-okra.png" alt="okra soup 2L pot">
+                    </a>
+                    <div class="product-add-action">
+                        
+                    </div>
+                </div>
+                <div class="product-content align-self-center">
+                    <a class="product-name pb-2" href="single-product-okra-2l.html">Plain Okra Soup - 2L Pot</a>
+                    <div class="price-box pb-1">
+                        <span class="new-price">&#8358 4,500</span>
+                    </div>
+                    <div class="rating-box pb-2">
+                        <ul class="quantity-with-btn pb-7">
+                            <li class="quantity">
+                                <div class="cart-plus-minus">
+                                    <input class="cart-plus-minus-box" value="1" type="text">
+                                </div>
+                            </li>
+                            
+                            <!--<li class="item-subtotal">
+                                <input class="item-subtotal" value="80.00" type="text">
+                                
+                            </li>-->
+                            <li class="add-to-cart">
+                                <a class="btn btn-primary btn-secondary-hover" href="" data-calc="prod-var-sku">ADD TO BASKET</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <p class="short-desc mb-0">Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi.</p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-12 variant-item">
+            <div class="product-item">
+                <div class="product-img img-zoom-effect">
+                    <a href="javascript:void(0)">
+                        <img class="img-full" src="../assetsecm/images/soups/variants/stand-1L-var-okra.png" alt="okra soup 1L pot">
+                    </a>
+                    <div class="product-add-action">
+                        
+                    </div>
+                </div>
+                <div class="product-content align-self-center">
+                    <a class="product-name pb-2" href="single-product-okra-1l.html">Plain Okra Soup - 1L Pot</a>
+                    <div class="price-box pb-1">
+                        <span class="new-price">&#8358 2,500</span>
+                    </div>
+                    <div class="rating-box pb-2">
+                        <ul class="quantity-with-btn pb-7">
+                            <li class="quantity">
+                                <div class="cart-plus-minus">
+                                    <input class="cart-plus-minus-box" value="1" type="text">
+                                </div>
+                            </li>
+                            
+                            <!--<li class="item-subtotal">
+                                <input class="item-subtotal" value="80.00" type="text">
+                                
+                            </li>-->
+                            <li class="add-to-cart">
+                                <a class="btn btn-primary btn-secondary-hover" href="" data-calc="prod-var-sku">ADD TO BASKET</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <p class="short-desc mb-0">Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi.</p>
+                </div>
+            </div>
+        </div>
+
+
+        
+    </div>
+
+
+</div>
+<div class="modal-footer">
+    <label type="button" class="btn btn-default" for="myModal-11">Close</label>
+    <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+</div>
+</div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div>
+<!-- MODAL DIV Section Ends 
+</div>-->
+
+
+
+
+<!-- MODAL DIV Section Starts     [[ TO BE USED - (with adjustments) ]] -->
+<input type="checkbox" id="myModal-12" name="myModal-12" data-toggle="modal">
+<div id="" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel-12" aria-hidden="false">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header" style="margin-top: 2em;">
+    <label type="button" class="close" data-dismiss="modal" aria-label="Close" for="myModal-12"><span aria-hidden="true">×</span></label>
+    <h4 class="modal-title [ container text-center ]" id="myModalLabel-12">RICH EGUSI Soup Pot Options<a class="anchorjs-link" href="#myModalLabel-4"><span class="anchorjs-icon"></span></a></h4>
+</div>
+<div class="modal-body">
+    <div class="container"> 
+        <!--  <div class="row" >-->
+
+             <div class="col-12 top-gif"  style="background-image: url(&quot;../assetsecm/images/soups/fb-cov-area-kwaliti-cyberkitchen-01.png&quot;); background-size: cover; background-repeat: no-repeat; ">
+                 <img class="top-gif img-zoom-effect" src="../assetsecm/images/soups/egusi-soup-roundbowl.png" alt="" />
+
+             </div>
+
+             <div class="col-12 top-intro">
+                 <span class="top-intro" style="font-size: 0.9em; line-height: 1.2em;">
+                     This is the short catchy intro to the variants of the products being centered on in the modal.
+                 </span>
+
+             </div>
+
+         <!-- </div>-->
+     </div>
+     <div><br><hr><br></div>
+     
+
+
+
+    <div class="product-list-view row">
+
+
+        <div class="col-12 variant-item">
+            <div class="product-item">
+                <div class="product-img img-zoom-effect">
+                    <a href="javascript:void(0)">
+                        <img class="img-full" src="../assetsecm/images/soups/variants/stand-4L-var-egusi.png" alt="egusi soup 4L pot">
+                    </a>
+                    <div class="product-add-action">
+                        
+                    </div>
+                </div>
+                <div class="product-content align-self-center">
+                    <a class="product-name pb-2" href="single-product-okra-4l.html">Rich Egusi Soup - 4L Pot</a>
+                    <div class="price-box pb-1">
+                        <span class="new-price">&#8358 8,000</span>
+                    </div>
+                    <div class="rating-box pb-2">
+                        <ul class="quantity-with-btn pb-7">
+                            <li class="quantity">
+                                <div class="cart-plus-minus">
+                                    <input class="cart-plus-minus-box" value="1" type="text">
+                                </div>
+                            </li>
+                            
+                            <!--<li class="item-subtotal">
+                                <input class="item-subtotal" value="80.00" type="text">
+                                
+                            </li>-->
+                            <li class="add-to-cart">
+                                <a class="btn btn-primary btn-secondary-hover" href="" data-calc="prod-var-sku">ADD TO BASKET</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <p class="short-desc mb-0">Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 variant-item">
+            <div class="product-item">
+                <div class="product-img img-zoom-effect">
+                    <a href="javascript:void(0)">
+                        <img class="img-full" src="../assetsecm/images/soups/variants/stand-2L-var-egusi.png" alt="egusi soup 2L pot">
+                    </a>
+                    <div class="product-add-action">
+                        
+                    </div>
+                </div>
+                <div class="product-content align-self-center">
+                    <a class="product-name pb-2" href="single-product-egusi-2l.html">Rich Egusi Soup - 2L Pot</a>
+                    <div class="price-box pb-1">
+                        <span class="new-price">&#8358 4,500</span>
+                    </div>
+                    <div class="rating-box pb-2">
+                        <ul class="quantity-with-btn pb-7">
+                            <li class="quantity">
+                                <div class="cart-plus-minus">
+                                    <input class="cart-plus-minus-box" value="1" type="text">
+                                </div>
+                            </li>
+                            
+                            <!--<li class="item-subtotal">
+                                <input class="item-subtotal" value="80.00" type="text">
+                                
+                            </li>-->
+                            <li class="add-to-cart">
+                                <a class="btn btn-primary btn-secondary-hover" href="" data-calc="prod-var-sku">ADD TO BASKET</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <p class="short-desc mb-0">Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi.</p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-12 variant-item">
+            <div class="product-item">
+                <div class="product-img img-zoom-effect">
+                    <a href="javascript:void(0)">
+                        <img class="img-full" src="../assetsecm/images/soups/variants/stand-1L-var-egusi.png" alt="egusi soup 1L pot">
+                    </a>
+                    <div class="product-add-action">
+                        
+                    </div>
+                </div>
+                <div class="product-content align-self-center">
+                    <a class="product-name pb-2" href="single-product-egusi-1l.html">Rich Egusi Soup - 1L Pot</a>
+                    <div class="price-box pb-1">
+                        <span class="new-price">&#8358 2,500</span>
+                    </div>
+                    <div class="rating-box pb-2">
+                        <ul class="quantity-with-btn pb-7">
+                            <li class="quantity">
+                                <div class="cart-plus-minus">
+                                    <input class="cart-plus-minus-box" value="1" type="text">
+                                </div>
+                            </li>
+                            
+                            <!--<li class="item-subtotal">
+                                <input class="item-subtotal" value="80.00" type="text">
+                                
+                            </li>-->
+                            <li class="add-to-cart">
+                                <a class="btn btn-primary btn-secondary-hover" href="" data-calc="prod-var-sku">ADD TO BASKET</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <p class="short-desc mb-0">Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi.</p>
+                </div>
+            </div>
+        </div>
+
+
+        
+    </div>
+
+
+</div>
+<div class="modal-footer">
+    <label type="button" class="btn btn-default" for="myModal-12">Close</label>
+    <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+</div>
+</div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div>
+
+
+
+<!-- MODAL DIV Section Ends -->
+
+
+         
+ 
+ 
+<!--    ###########################   END OF  CYBER-KITCHEN MODALS SECTION          #######################    -->
+          
+     
+ 
+
+
+
+
+
+
+
+
+
+
+ 
+         <!-- Begin Footer Area   data-bg-color="#bac34e"   -->
+ 
+             <div class="footer-bottom py-3">
+                 <div class="container">
+                     <div class="row">
+                         <div class="col-lg-12">
+                             <div class="copyright">
+                                 <span ><a href="https://mtrbiztech.online" ><img src="../assetsecm/images/logo/mtr-logo-monochrome-white.png" height="55em"/></a> </span>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         <!-- Footer Area End Here -->
+ 
+                    <!-- Begin Scroll To Top -->
+         <a class="scroll-to-top" href="">
+             <i class="fa fa-chevron-up"></i>
+         </a>
+         <!-- Scroll To Top End Here -->
+ 
+ 
+     </div>
+     <!--  MAIN WRAPPER End Here -->
+         
+ 
+     <!-- Global Vendor, plugins JS -->
+ 
+     <!-- JS Files
+     ============================================ -->
+     <!-- Global Vendor, plugins JS -->
+ 
+     <!-- Vendor JS -->
+     <script src="../assetsecm/js/vendor/bootstrap.bundle.min.js"></script>
+     <script src="../assetsecm/js/vendor/jquery-3.5.1.min.js"></script>
+     <script src="../assetsecm/js/vendor/jquery-migrate-3.3.0.min.js"></script>
+     <script src="../assetsecm/js/vendor/modernizr-3.11.2.min.js"></script>
+     <script src="../assetsecm/js/vendor/jquery.waypoints.js"></script>
+ 
+     <!--Plugins JS-->
+     <script src="../assetsecm/js/plugins/wow.min.js"></script>
+     <script src="../assetsecm/js/plugins/jquery-ui.min.js"></script>
+     <script src="../assetsecm/js/plugins/swiper-bundle.min.js"></script>
+     <script src="../assetsecm/js/plugins/jquery.nice-select.js"></script>
+     <script src="../assetsecm/js/plugins/parallax.min.js"></script>
+     <script src="../assetsecm/js/plugins/jquery.magnific-popup.min.js"></script>
+ 
+     <!-- Minify Version -->
+     <!-- <script src="../assetsecm/js/vendor.min.js"></script> -->
+     <!-- <script src="../assetsecm/js/plugins.min.js"></script> -->
+ 
+     <!--Main JS (Common Activation Codes)-->
+     <script src="../assetsecm/js/main.js"></script>
+     <!-- <script src="../assetsecm/js/main.min.js"></script> -->
+     
+ 
+     <script type="text/javascript"> 
+ 
+ 
+ 
+     </script>
+ 
+     <script>
+     
+     
+
+
+
+
+     </script>
+ 
+ 
+     <!-- MTR CUSTOM js-->
+ 
+         <!-- iziModal js -->
+ 
+         <script src="../assetsecm/js/plugins/iziModal.min.js" type="text/javascript"></script>
+ 
+         <!-- //iziModal js -->
+ 
+         <!-- iziToast js -->
+ 
+     <script src="../assetsecm/js/plugins/iziToast.min.js" type="text/javascript"></script>
+ 
+     <!-- //iziToast js -->
+     
+     <script>
+ 
+ 
+          // SMooth Scroll  
+     
+          $('[data-xScrollTo]').on('click' , function(ev){
+                     ev.preventDefault() ;
+                     let t = ev.target ;
+                     let tg = $(t) ; 
+                     let des = $(`[data-xScrollAnchor="${tg.attr('data-xScrollTo')}"`) ;
+                     let desPos = des.offset().top ;
+                     
+                     $('html ,body'). animate ({ scrollTop : desPos -80} , 1500) ;
+                     
+     
+                 })
+ 
+ 
+ 
+ 
+ 
+         // SHOW MORE PRODUCTS   >>>>>>
+ 
+         $('.seeMore').on('click' , function(e){
+ 
+             e.preventDefault();
+ 
+             let t = e.target ;
+             let tg = $(t) ; 
+             let tp = tg.parents('.container') ;
+             
+             $('.more-products' , tp).show(6000);
+ 
+             tg.addClass('btn-fade');
+ 
+         }) ;
+                             
+ 
+ 
+ 
+ 
+         $('.js-more-btn' , '.js-more-box').on('click', function(ex){
+     
+             ex.preventDefault();
+             let t = ex.target ;
+             let tg = $(t) ; 
+             let tbx = tg.parents('.js-more-box') ;
+             $('.js-comp-more' , tbx).show(600); 
+         
+             tg.addClass('btn-fade');
+ 
+             }) ;
+ 
+ 
+ 
+         $('.js-more-close' , '.js-more-box').on('click' , function (e) {
+             e.preventDefault();
+             let t = e.target ;
+             let tg = $(t) ; 
+             let tbx = tg.parents('.js-more-box') ;
+             $('.js-comp-more' , tbx).hide(600); 
+         
+             $('.js-more-btn' , tbx).removeClass('btn-fade');
+                                             
+         
+             } ) ;
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+         // IZIMODAL SUPPORT 
+ 
+         $(document).on('ready', function (edr) {
+
+
+            
+     // DISABLE QUANTITY CHANGERS
+     $('.modal-content .cart-plus-minus input').attr('disabled' ,true) ;
+
+ 
+ 
+             // INITIALIZE >>>>>>>>>>>>>>>>>>>>>>>>>
+ 
+             // REGISTRATION FORM IFRAME MODAL
+             $('#alv-reg').iziModal({
+
+
+                    title: 'CUSTOMER REGISTRATION' ,
+                    headerColor : '#bac34e',
+                    width : '790px' ,
+                    iconColor: '#ed3237b2' ,
+
+                    top: '3%' ,
+                    bottom :'20%' ,
+                    
+                    fullscreen : true ,
+
+                 iframe: true,
+                 iframeHeight: 800,
+                 iframeURL: "https://docs.google.com/forms/d/e/1FAIpQLSfVW5efA7j1838k1VA1YVDgMJATmAbE0cZlFC3OzCuz-GTcaQ/viewform?embedded=true"
+             });
+             /**  <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfVW5efA7j1838k1VA1YVDgMJATmAbE0cZlFC3OzCuz-GTcaQ/viewform?embedded=true" width="640" height="3570" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe> 
+              * **/
+             $(document).on('closed','#alv-reg' , function(e){  e.preventDefault ();
+                                                 var lastP = $(this).attr('data-lastP') ;                                   
+                                                 $('html,body').animate({scrollTop : lastP} , 1500); 
+ 
+                                                             } ) ;
+ 
+ 
+ 
+             // SECTION AJAX MODAL modal unit
+     $('#sxn-loadMod').iziModal( );
+     
+     $(document).on('closed','#sxn-loadMod' , function(e){ e.preventDefault ();
+                                         var lastP = $(this).attr('data-lastP') ;                                   
+                                         $('html,body').animate({scrollTop : lastP} , 1500); 
+     
+                                                     } ) ;
+ 
+     
+ 
+             // VARIANT MODAL test card modal init
+             $('#variantModal').iziModal(
+                 {
+ 
+                    title: 'PRODUCT VARIANTS' ,
+                    headerColor : '#bac34e',
+                    width : '790px' ,
+                    iconColor: '#ed3237b2' ,
+
+                    top: '3%' ,
+                    bottom :'20%' ,
+                    
+                    fullscreen : true ,
+                     
+ 
+                     afterRender: function(){
+ 
+                         //console.log ( $(this).attr('data-prName') +'    '+  $(this).attr('data-pHLk') +'    '+ $(this).attr('data-priceDn')  )
+ 
+                         // CUSTOMIZE THE MODAL SHELL
+                         // title  .varMod-title   data-prName  
+                         $('.varMod-title' ,'#variantModal .container' ).html(`${ $('#variantModal').attr('data-prName')}`)
+ 
+ 
+                         // top icon   data-pHLk  .top-gif - src
+                         $('img.top-gif' ,'#variantModal .container' ).attr( 'src', `${ $('#variantModal').attr('data-pHLk')}`)
+ 
+                         // top intro   .top-intro  `Please browse through and select your choice. Price - ${  data-priceDn }`
+                         $('.top-intro' ,'#variantModal .container' ).html(`Please browse through the available package options and select your choice. Prices range - ${ $('#variantModal').attr('data-priceDn')}`) 
+ 
+ 
+ 
+ 
+                         // CUSTOMIZE THE MODAL CONTENTS 
+ 
+ 
+ 
+ 
+ 
+                         //  ***NOTE**** BEST TO PUT ALL METADATA AS AN ARRAY OF OBJECTS HERE
+                         
+                        // var metObj = { var_pr_id:'$name-x' , var_price : 1000 } ;
+ 
+                         
+                         /*----------------------------------------*/
+                         /*  QTY Button
+                         /*----------------------------------------*/
+                         $('.cart-plus-minus', '#variantModal').append(
+                             '<div class="dec qtybutton"><i class="fa fa-minus"></i></div><div class="inc qtybutton"><i class="fa fa-plus"></i></div>'
+                         );
+ 
+                         // Set the value in Subtotal  :
+                         var svi = $('input.item-subtotal', '#variantModal') ;
+ 
+                         svi.map(function(ix, el ){
+                             let pbx = $(el).parents('.variant-item') ;
+                             let qt = $('.cart-plus-minus-box' , pbx).val() ;
+                             
+                             // let upr =  JSON.parse( pbx.attr('data-var-itemMeta')).var_price ;
+                             let upr =  pbx.attr('data-varPrice') ;
+ 
+                            // console.log (pbx.attr('class')) ;
+ 
+                             $(el).val(qt*upr) ;       
+ 
+                         } ) ;
+                                                   
+                             // Set the value in Quantities To CART-QUANTITIES ***LATER***  :
+                             /*
+                             
+                             */
+ 
+                             // Change QUANTITY  PLUS  Recalculate SUBTOTAL when  -EVENT- Quantity changed:
+ 
+                         $('.qtybutton', '#variantModal').on('click', function () {
+                             var $button = $(this);
+                             var oldValue = $button.parent().find('input').val();
+                             if ($button.hasClass('inc')) {
+                                 var newVal = parseFloat(oldValue) + 1;
+                             } else {
+                                 // Don't allow decrementing below zero
+                                 if (oldValue > 1) {
+                                     var newVal = parseFloat(oldValue) - 1;
+                                 } else {
+                                     newVal = 1;
+                                 }
+                             }
+                             $button.parent().find('input').val(newVal);
+ 
+ 
+                             // Recalculate SUB-TOTAL  : when  -EVENT- Quantity changed:
+                             let pbx = $button.parents('.variant-item') ;
+ 
+                             let upr =  pbx.attr('data-varPrice') ;
+ 
+                             $('input.item-subtotal',pbx).val(newVal*upr) ;
+                         
+ 
+ 
+                         });
+                             
+ 
+ 
+                         // Set ADD-TO-CART  -EVENT- :
+                             /*
+ 
+                             // Fetch ItemID , Qnty 
+ 
+                             // Set Request Data
+ 
+                             // Make Ajax call
+ 
+                             // Toast on Success  >> Then Ask If : @:Open Cart ||  @:Open Checkout  || @:Continue
+ 
+                             // OR Alert on Failure 
+ 
+ 
+                           
+                             */
+ 
+ 
+                     }
+                 }
+             );
+ 
+                     
+             $(document).on('closed','#variantModal' , function(e){ e.preventDefault ();
+                                         var lastP = $(this).attr('data-lastP') ;                                   
+                                         $('html,body').animate({scrollTop : lastP} , 1500); 
+     
+                                                     } ) ;
+             
+             $(document).on('opened', '#variantModal', function (e) {
+ 
+                 console.log ( $(this).attr('data-prName') +'    '+  $(this).attr('data-pHLk') +'    '+ $(this).attr('data-priceDn')  )
+ 
+                 // CUSTOMIZE THE MODAL SHELL
+                 // title  .varMod-title   data-prName  
+                 $('.varMod-header h4.varMod-title' , $(this) ).html(`${ $('#variantModal').attr('data-prName')}`)
+ 
+ 
+                 // top icon   data-pHLk  .top-gif - src
+                 $('img.top-gif' , $(this) ).attr( 'src', $('#variantModal').attr('data-pHLk'))
+ 
+                 // top intro   .top-intro  `Please browse through and select your choice. Price - ${  data-priceDn }`
+                 $('.top-intro' ,'#variantModal .container' ).html(`Please browse through the available package options and select your choice. Prices range - ${ $('#variantModal').attr('data-priceDn')}`) 
+
+                 // disable the quantity and subtotal entries
+                 $('.product-content input', $(this) ).attr('disabled' , true) ;
+
+ 
+ 
+ 
+ 
+                 // CUSTOMIZE THE MODAL CONTENTS 
+ 
+         
+                                                 });
+ 
+ 
+ 
+                                                     
+             $(document).on('click', '.seeMod', function (e) {
+         
+                             e.preventDefault();
+                             let t = e.target ;
+                             let tg = $(t) ; 
+                             let gosxn = tg.attr('href') ;
+                             let mk = tg.attr('data-buttonMarker') ;
+                             
+ 
+                         // console.log(mk + '   ' + gosxn)
+ 
+                         // MODAL MARKER
+                         var modMak  =  tg.attr('data-linkMod') ;
+                             // Parent
+                         let tgP = tg.parents('.product-list-item') ;
+ 
+                             // Item Name
+                         let itNam = $('.product-name' , tgP).html() ;
+                         $(modMak).attr('data-prName' , itNam ) ;
+ 
+                             // Item photo link
+                         let itPhLk = $('.img-full' , tgP).attr('src') ;
+                         $(modMak).attr('data-pHLk' , itPhLk ) ;
+ 
+                             // Item FROM-PRICE
+                         let itPrice = $('.new-price' , tgP).html() ;
+                         $(modMak).attr('data-priceDn' , itPrice ) ;
+ 
+                         // Get the current position of the body
+                         bdTop = $(window).scrollTop () ;
+                         //  pass the data on the modal and show 
+                         $(modMak).attr('data-lastP' , bdTop ) ;
+                     
+                             //console.log($(this).attr('href'))
+                                 
+ 
+                             
+ 
+                                 // Open Modal and Scroll it up
+                         $(modMak).iziModal('open' ); 
+                                 // Set in The Ajax content 
+                         $("#sxn-loadMod .iziModal-content").load(`kwabaz-frm-pageHelper-01.php?loadsxn=${$(this).attr('href')}`) ;
+ 
+                             $(`${modMak} .iziModal-wrap`).animate({scrollTop:0}, 800);
+ 
+ 
+ 
+                                 
+                                     
+                     });                                                
+ 
+ 
+     
+     //  MODAL OPENER by .seeMod
+     
+     $(document).on('click', '.seeMod-gen' , function(e){
+     
+     e.preventDefault();
+      let t = e.target ;
+      let tg = $(t) ;
+      let mk = tg.attr('data-buttonMarker') ;
+      var modMak  =  tg.attr('data-linkMod') ;
+      // Get the current position of the body
+      bdTop = $(window).scrollTop () ;
+      //  pass the data on the modal and show 
+      $(modMak).attr('data-lastP' , bdTop ) ;
+  
+      $(modMak).iziModal('open' ); 
+  
+      $(`${modMak} .iziModal-wrap`).animate({scrollTop:0}, 800);
+  
+  
+          }) ; 
+ 
+ 
+ 
+     $(document).on('click', '.seeMod-sxnLoad', function (e) {
+         
+         e.preventDefault();
+         let t = e.target ;
+         let tg = $(t) ; 
+         let gosxn = tg.attr('href') ;
+         let mk = tg.attr('data-buttonMarker') ;
+         
+ 
+        // console.log(mk + '   ' + gosxn)
+ 
+        // MODAL MARKER
+      var modMak  =  tg.attr('data-linkMod') ;
+         
+ 
+      // Get the current position of the body
+      bdTop = $(window).scrollTop () ;
+      //  pass the data on the modal and show 
+      $(modMak).attr('data-lastP' , bdTop ) ;
+  
+         //console.log($(this).attr('href'))
+             
+ 
+            
+ 
+             // Open Modal and Scroll it up
+        $(modMak).iziModal('open' ); 
+             // Set in The Ajax content 
+        $("#sxn-loadMod .iziModal-content").load(`kwabaz-frm-pageHelper-01.php?loadsxn=${$(this).attr('href')}`) ;
+ 
+         $(`${modMak} .iziModal-wrap`).animate({scrollTop:0}, 800);
+ 
+ 
+ 
+             
+                 
+ });
+ 
+  
+  
+  
+  /*----------------------------------------*/
+          /* Toggle Function Active - FOR REGISTRATION MODAL
+          /*----------------------------------------*/
+          $('.js-more-btn' , '#sxn-LoadMod .container').on('click', function(ex){
+     
+     ex.preventDefault();
+     let t = ex.target ;
+     let tg = $(t) ; 
+     let tbx = tg.parents('.js-more-box') ;
+     $('.js-comp-more' , tbx).show(600); 
+ 
+     console.log('I deey O');
+ 
+     tg.addClass('btn-fade');
+     
+     }) ;
+     
+     
+     
+     $('.js-more-close'  , '#sxn-LoadMod .container').on('click' , function (e) {
+     e.preventDefault();
+     let t = e.target ;
+     let tg = $(t) ; 
+     let tbx = tg.parents('.js-more-box') ;
+     $('.js-comp-more' , tbx).hide(600); 
+     
+     $('.js-more-btn' , tbx).removeClass('btn-fade');
+                                     
+     
+     } ) ;
+ 
+                     
+ 
+ 
+                                             });
+ 
+                 
+                                             
+                                             
+         
+         
+ 
+ 
+ 
+         //   IZITOAST SUPPORT FUNCTIONS
+ 
+ 
+         $(document).on('ready', function (edr) {
+
+            
+
+                     // RE-Enable iziToast Input
+ 
+ 
+            
+                        /*
+                                     iziToast.show(
+                                         {
+                                             title: "Hey!" ,
+                                             message: "We gat you covered. Let's rock this town! ",
+                                             backgroundColor : "#b2d105" ,
+                                             position : "center" ,
+                                             tomeout : 10000
+                                         }
+                                     );
+                        */
+                                         
+ 
+                        //  TELL_ME TRIGGERS 
+ 
+                     
+                         $(".trigger-tellme").on('click', function (event) {
+                                 event.preventDefault();
+ 
+                                 iziToast.info({
+                                         timeout: 20000,
+                                         overlay: true,
+                                         displayMode: 1,
+                                         id: 'inputs',
+                                         zindex: 999,
+                                         title: 'Not Ready Yet.',
+                                         message: 'But we can Inform you when ready, -',
+                                         position: 'center',
+                                         drag: false,
+                                         onOpened : function() {
+                                            $('.iziToast-inputs input').attr('disabled' ,true) ;
+
+                                            $('.iziToast-inputs textarea').attr('disabled' ,true) ;
+
+                                            $(document).on('click' , '.iziToast-inputs textarea , .iziToast-inputs input' , function(ce){
+                                               $( ce.target).attr('disabled' ,false) ;
+
+                                            }) ;
+
+                                         } ,
+ 
+                                         inputs: [
+                                                 ['<input type="checkbox">', 'change', function (instance, toast, input, e) {
+                                                 console.info(input.checked);
+                                                 }],
+                                                 ['<input type="text" placeholder="Email Address" >', 'blur', function (instance, toast, input, e) {
+                                                 console.info(input.value);
+                                                 }, true],
+ 
+                                         ] ,
+ 
+ 
+                                         buttons: [
+                                                 ['<button><b>Notify Me</b></button>', function (instance, toast, button, e, inputs) {
+ 
+                                                 //console.info(button);
+                                                 //console.info(e);
+ 
+                                                 alert(inputs[1].value)
+ 
+                                                 instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+ 
+                                                 iziToast.success({
+                                                 id: 'success',
+                                                 zindex: 9999,
+                                                 timeout: 2000,
+                                                 title: 'Great!',
+                                                 overlay: true,
+                                                 message: 'Thank you , we will notify you when Ready.',
+                                                 position: 'topLeft'
+                                                 });
+ 
+                                                 }, false], 
+ 
+                                         ],
+ 
+ 
+                                 });
+ 
+                         });
+ 
+ 
+ 
+ 
+     
+                                             
+                                     
+                                     
+                                     
+                                     
+        }); 
+ 
+ 
+         // COUNTDOWN TIMER  SUPPORT  :
+         
+         $(document).on('ready', function (edr) {
+ 
+             // Set Determining Params : set by attr - data- : [cycle] { **single|**daily|weekly|monthly| others }); [countdown]{deadline Datetime (full expression format)} ; [percutoff] {(NOT applicable to "single" cycle)periodic cutoff time for each period : defaults : "00-00"(midnight) for daily , "0-00"(midnight-sunday) for weekly  , "01-00"(midnight,first day)for monthly, ... etc } ;  [peropen] { (NOT applicable to "single" cycle)periodic open time for each period : defaults : "00-01"(12:01 am) for daily , "1-01"(12:01 am-Monday) for weekly  , "01-01"(1:00 am,first day)for monthly, ... etc } ;
+ 
+             // NOTE : Only Single and Daily cycles treated here 
+ 
+             var ctd = $('.countdown-wrap>.countdown').attr('data-countdown') ;
+ 
+             var cycle = $('.countdown-wrap>.countdown').attr('data-cycle') ;
+ 
+ 
+ 
+             
+ 
+ 
+ 
+ 
+             var current = new Date() ;
+ 
+ 
+             if ($('.countdown-wrap>.countdown').attr('data-cycle') === 'daily'){
+ 
+                 // If the Cycle of Countdown is DAILY ::
+ 
+ 
+ 
+ 
+             var pcfdata = $('.countdown-wrap>.countdown').attr('data-percutoff') ;
+             var popendata= $('.countdown-wrap>.countdown').attr('data-peropen') ;
+             
+ 
+             var pcf =  pcfdata.split('-') ;
+             var popen =  popendata.split('-') ;
+             
+             var t2p = new Date(new Date().setHours(Number(pcf[0]),Number(pcf[1]),0)) ;
+ 
+             var topenHr = Number(popen[0]) , 
+                 topenMin = Number(popen[1]) ;
+ 
+ 
+             // if the time is later than 2pm
+             if ((current.getTime() - t2p.getTime()) > 0) { 
+ 
+              //  console.log(current.getTime() - t2p.getTime()) ;  //<TESTER>
+ 
+                     // if later than OpenTime (10pm)
+                 if (current.getTime() >= current.setHours(topenHr,topenMin,0)) {
+                     //set countdown to cutofftime (2pm ) tomorrow
+                     let t2ptm = new Date (t2p.setDate(t2p.getDate() + 1)) ;
+                     var nCTD = t2ptm.toString(); 
+                     $('.countdown-wrap>.countdown').attr('data-countdown' , nCTD) ; // changes countdown
+                     $('span.ctd.sub-title').html('Pre-Order before 2:00 PM Tomorrow  to win <br> Discounts and Bonuses.') ;  //changes day to tomorrow
+                     $('a.btn.ctd').removeAttr('disabled'); // enable the button
+ 
+ 
+                         
+ 
+ 
+                 }
+             else { // if time is between cutofftime (2pm ) and opentime ( 10 pm)
+                             // Announce delay till 10 pm
+                     $('.countdown-wrap').replaceWith('<div class="row" style="height:140px; background-image: url(../assetsecm/images/misc/vector-hourglass.png); background-position: center; background-size: contain; background-repeat: no-repeat;" ></div>') ; // changes countdown to hour glass
+                     $('span.ctd.sub-title').html('Pre-Order starting from   <i class="fa fa-clock-o" style="font-size:1.5em;"></i> '+ popendata.replace('-', ':') +', to win <br> Discounts and Bonuses.') ;  //changes preorder to topen (10pm )
+                     $('a.btn.ctd').attr('disabled' , true).addClass('disabled'); // disable the button
+ 
+             }
+ 
+ 
+             }
+             else {  // if time is not yet cutofftime (2pm ) :
+                // console.log(current.getTime() - t2p.getTime()) ;
+ 
+                     $('.countdown-wrap>.countdown').attr('data-countdown' , t2p.toString()) ; // changes countdown
+                     $('span.ctd.sub-title').html('Pre-Order before  <i class="fa fa-clock-o" style="font-size:1.5em;"></i> '+ pcfdata.replace('-', ':') +' , to win <br> Discounts and Bonuses.') ;  //Announce cutoff time
+                     $('a.btn.ctd').removeAttr('disabled').removeClass('disabled'); // enable the button
+             
+             }
+ 
+         } 
+ 
+                                     
+                                     
+                                                 }); 
+ 
+ 
+ 
+ 
+ 
+         // PAGE BUILDER  SUPPORT  :
+ 
+        
+ 
+     
+                                            
+ 
+ 
+     </script>   
+ 
+ 
+ 
+ 
+     <!--  //   MTR CUSTOM js-->
+
+
+
+
+</body>
+</html>

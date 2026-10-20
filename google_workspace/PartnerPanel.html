@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <base target="_top">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            padding: 16px;
+            background: #f8fafc;
+            color: #334155;
+        }
+
+        h3 {
+            font-size: 16px;
+            color: #1e293b;
+            margin-bottom: 4px;
+        }
+
+        .subtitle {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #64748b;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        select,
+        input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+            background: #fff;
+            color: #1e293b;
+        }
+
+        select:focus,
+        input:focus {
+            outline: none;
+            border-color: #8b5cf6;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+        }
+
+        .type-toggle {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .type-btn {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.2s;
+            background: #fff;
+        }
+
+        .type-btn.active {
+            border-color: #8b5cf6;
+            background: #f5f3ff;
+            color: #7c3aed;
+        }
+
+        .type-btn:hover {
+            border-color: #a78bfa;
+        }
+
+        .push-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: opacity 0.2s;
+        }
+
+        .push-btn:hover {
+            opacity: 0.9;
+        }
+
+        .push-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .info-box {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 12px;
+            color: #166534;
+            margin-bottom: 16px;
+        }
+
+        .status-msg {
+            margin-top: 12px;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 13px;
+            display: none;
+        }
+
+        .status-msg.success {
+            display: block;
+            background: #f0fdf4;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+
+        .status-msg.error {
+            display: block;
+            background: #fef2f2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+    </style>
+</head>
+
+<body>
+    <h3>🤝 Partner Onboarding</h3>
+    <p class="subtitle">Push partners from this template to AreaBazaar</p>
+
+    <div class="info-box">
+        ℹ️ Fill <strong>PartnerData</strong> sheet with partner details, then select type and push.
+    </div>
+
+    <div class="type-toggle">
+        <div class="type-btn active" id="btnSBA" onclick="selectType('SBA')">
+            📦 SBA<br><small>Supplier</small>
+        </div>
+        <div class="type-btn" id="btnZBDp" onclick="selectType('ZBDp')">
+            🚛 ZBDp<br><small>Transport</small>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Your Staff ID</label>
+        <input type="text" id="staffId" placeholder="e.g. ADM001">
+    </div>
+
+    <div class="form-group">
+        <label>Region (Optional)</label>
+        <select id="region">
+            <option value="">All Regions</option>
+            <option value="1">Ibadan Metro</option>
+            <option value="2">Lagos Island</option>
+            <option value="3">Lagos Mainland</option>
+            <option value="4">Abuja Central</option>
+        </select>
+    </div>
+
+    <button class="push-btn" id="pushBtn" onclick="doPush()">
+        Push SBA Partners →
+    </button>
+
+    <div class="status-msg" id="statusMsg"></div>
+
+    <script>
+        let selectedType = 'SBA';
+
+        function selectType(type) {
+            selectedType = type;
+            document.getElementById('btnSBA').classList.toggle('active', type === 'SBA');
+            document.getElementById('btnZBDp').classList.toggle('active', type === 'ZBDp');
+            document.getElementById('pushBtn').textContent = `Push ${type} Partners →`;
+        }
+
+        function doPush() {
+            const btn = document.getElementById('pushBtn');
+            const msg = document.getElementById('statusMsg');
+            btn.disabled = true;
+            btn.textContent = 'Pushing...';
+            msg.className = 'status-msg';
+
+            google.script.run
+                .withSuccessHandler(function (result) {
+                    btn.disabled = false;
+                    btn.textContent = `Push ${selectedType} Partners →`;
+                    msg.textContent = result.message || 'Push complete!';
+                    msg.className = 'status-msg success';
+                })
+                .withFailureHandler(function (err) {
+                    btn.disabled = false;
+                    btn.textContent = `Push ${selectedType} Partners →`;
+                    msg.textContent = 'Error: ' + err.message;
+                    msg.className = 'status-msg error';
+                })
+                .pushFromPanel({
+                    partnerType: selectedType,
+                    staffId: document.getElementById('staffId').value,
+                    region: document.getElementById('region').value
+                });
+        }
+    </script>
+</body>
+
+</html>

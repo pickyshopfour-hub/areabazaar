@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details | UwanBUY Hyperlocal</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="../assetsecm/images/uwanbuy-favicon-brief-color.png" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons & FontAwesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Plugins CSS (iziModal, iziToast) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.6.1/css/iziModal.min.css">
+
+    <style>
+        :root {
+            --uw-brand: #ff0000;
+            --uw-brand-hover: #b80000;
+            --uw-brand-light: #fff0f0;
+            --uw-dark: #0f172a;
+            --uw-muted: #64748b;
+            --uw-card-border: #e2e8f0;
+            --uw-radius: 16px;
+        }
+
+        body {
+            background-color: #f8fafc;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #1e293b;
+        }
+
+        h1, h2, h3, h4, h5, h6, .brand-font {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .top-hyperlocal-bar {
+            background: #0f172a;
+            color: #cbd5e1;
+            font-size: 0.85rem;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .location-pill {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            padding: 3px 12px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .location-pill:hover {
+            background: var(--uw-brand);
+            color: #ffffff;
+        }
+
+        .navbar-custom {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--uw-card-border);
+        }
+
+        .btn-brand {
+            background-color: var(--uw-brand);
+            color: #ffffff;
+            border: none;
+            font-weight: 600;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-brand:hover {
+            background-color: var(--uw-brand-hover);
+            color: #ffffff;
+        }
+
+        .product-gallery-box {
+            background: #ffffff;
+            border: 1px solid var(--uw-card-border);
+            border-radius: var(--uw-radius);
+            padding: 2.5rem;
+            text-align: center;
+            min-height: 420px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+        }
+
+        .product-gallery-box img {
+            max-height: 360px;
+            max-width: 100%;
+            object-fit: contain;
+        }
+
+        .specs-table th {
+            width: 35%;
+            color: #64748b;
+            font-weight: 600;
+            background: #f8fafc;
+        }
+
+        .specs-table td {
+            color: #0f172a;
+            font-weight: 500;
+        }
+
+        .qty-control-btn {
+            width: 42px;
+            height: 42px;
+            border: 1px solid #cbd5e1;
+            background: #ffffff;
+            font-weight: bold;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .qty-control-btn:hover {
+            background: #f1f5f9;
+        }
+
+        .iziModal {
+            border-radius: 16px !important;
+            overflow: hidden !important;
+        }
+    </style>
+</head>
+
+<body data-store="uwanbuy">
+
+    <!-- Top Hyperlocal Strip -->
+    <div class="top-hyperlocal-bar">
+        <div class="container d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <div class="d-flex align-items-center gap-2">
+                <span class="text-white-50"><i class="bi bi-geo-alt-fill text-danger"></i> Hyperlocal Hub:</span>
+                <span class="location-pill" id="btnChangeLocation">
+                    <span id="currentLocationLabel">Tanke Hub, Ilorin</span>
+                    <i class="bi bi-chevron-down small"></i>
+                </span>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+                <span id="liveBazaarBannerBadge" class="badge bg-danger rounded-pill px-3 py-2" style="display: none; cursor: pointer;">
+                    <i class="fa fa-bolt me-1"></i> LIVE BAZAAR ACTIVE
+                </span>
+                <span class="text-white-50 d-none d-md-inline">Hyperlocal Fulfillment Within 2-4 Hours</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="../assetsecm/images/uwanbuy-logo-long-full-color-01.png" alt="UwanBuy Logo" style="height: 38px; width: auto;">
+            </a>
+
+            <div class="d-flex ms-auto align-items-center gap-2">
+                <a href="category.html?category=all" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
+                    <i class="bi bi-arrow-left me-1"></i> Browse Categories
+                </a>
+                <div class="d-flex align-items-center gap-2 px-3 py-2 rounded-pill bg-light border cursor-pointer" id="btnNavWallet">
+                    <i class="bi bi-wallet2 text-danger"></i>
+                    <strong class="text-dark" id="wallet-balance-display">₦25,000.00</strong>
+                </div>
+                <button class="btn btn-brand position-relative shadow-sm px-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+                    <i class="bi bi-cart3"></i>
+                    <span id="cartBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark d-none">0</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Product Details Container -->
+    <main class="container py-4">
+
+        <!-- Breadcrumbs -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb small">
+                <li class="breadcrumb-item"><a href="index.html" class="text-decoration-none text-muted">Home</a></li>
+                <li class="breadcrumb-item"><a href="category.html?category=all" class="text-decoration-none text-muted" id="breadcrumbCategory">Department</a></li>
+                <li class="breadcrumb-item active text-danger fw-bold" id="breadcrumbProductTitle">Product Details</li>
+            </ol>
+        </nav>
+
+        <div class="row g-4 g-lg-5 mb-5" id="productDetailSection">
+            <!-- Left: Gallery Showcase -->
+            <div class="col-lg-6">
+                <div class="product-gallery-box position-relative">
+                    <span class="badge bg-danger position-absolute top-0 start-0 m-4 py-2 px-3 rounded-pill fw-bold" id="detailCategoryBadge">Department</span>
+                    <img id="detailMainImage" src="" alt="Product Image">
+                </div>
+            </div>
+
+            <!-- Right: Purchasing Specs & Actions -->
+            <div class="col-lg-6 d-flex flex-column">
+                <div class="mb-2 text-muted small">
+                    <span id="detailBrand" class="fw-bold text-dark">Brand</span> • 
+                    SKU: <span id="detailSku" class="text-secondary">SKU-001</span>
+                </div>
+
+                <h1 class="h2 fw-bold text-dark mb-2" id="detailTitle">Product Title</h1>
+
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <div class="text-warning small">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-half"></i>
+                        <span class="text-dark fw-bold ms-1" id="detailRating">4.9</span>
+                    </div>
+                    <span class="text-muted small">•</span>
+                    <span class="badge bg-success-subtle text-success fw-bold">Verified Hyperlocal Stock</span>
+                    <span class="text-muted small">•</span>
+                    <span class="text-success small fw-bold" id="detailStockPill"><i class="bi bi-check-circle-fill me-1"></i> In Stock</span>
+                </div>
+
+                <!-- Price Card -->
+                <div class="p-3 bg-white rounded-4 border mb-4 shadow-sm">
+                    <div class="d-flex align-items-baseline gap-2">
+                        <span class="h1 fw-800 text-danger mb-0" id="detailPrice">₦0</span>
+                        <span class="text-decoration-line-through text-muted fs-5" id="detailComparePrice">₦0</span>
+                        <span class="badge bg-danger-subtle text-danger ms-auto fw-bold" id="detailSavingsBadge">SAVE</span>
+                    </div>
+                    <div class="text-muted small mt-1">Package: <span id="detailUnitLabel" class="fw-bold text-dark">1 Unit</span></div>
+                </div>
+
+                <p class="text-muted mb-4" id="detailDescription">Product description...</p>
+
+                <!-- Hyperlocal Hub Guarantee Box -->
+                <div class="p-3 bg-light rounded-3 border mb-4">
+                    <div class="d-flex align-items-center gap-2 mb-1">
+                        <i class="bi bi-truck text-danger fs-5"></i>
+                        <strong class="text-dark small">Hyperlocal Fulfillment Center</strong>
+                    </div>
+                    <p class="small text-muted mb-0">Dispatched from <strong class="storefront-current-location">Tanke Hub, Ilorin</strong> directly to your street within 2 to 4 hours of payment confirmation.</p>
+                </div>
+
+                <!-- Quantity & Actions -->
+                <div class="d-flex align-items-center gap-3 mb-4">
+                    <label class="small fw-bold text-secondary">Quantity:</label>
+                    <div class="d-flex align-items-center gap-2">
+                        <button class="qty-control-btn" id="btnQtyMinus"><i class="bi bi-dash"></i></button>
+                        <input type="text" id="detailQtyInput" value="1" readonly class="form-control text-center fw-bold" style="width: 55px; height: 42px;">
+                        <button class="qty-control-btn" id="btnQtyPlus"><i class="bi bi-plus"></i></button>
+                    </div>
+                </div>
+
+                <div class="d-flex gap-3">
+                    <button class="btn btn-brand btn-lg flex-grow-1 py-3 shadow-sm fw-bold" id="btnDetailAddToCart">
+                        <i class="bi bi-cart-plus me-2"></i> Add To Cart
+                    </button>
+                    <button class="btn btn-dark btn-lg px-4 py-3 fw-bold" id="btnDetailBuyNow">
+                        Instant Checkout
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Exhaustive Technical Specifications Section -->
+        <div class="card border-0 rounded-4 shadow-sm p-4 p-md-5 mb-5 bg-white">
+            <h4 class="fw-bold text-dark mb-4"><i class="bi bi-card-checklist text-danger me-2"></i> Full Product Specifications</h4>
+            <div class="table-responsive">
+                <table class="table table-bordered align-middle specs-table mb-0">
+                    <tbody id="specsTableBody">
+                        <!-- Loaded dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-5 pb-4 mt-5">
+        <div class="container text-center small text-white-50">
+            <p>&copy; 2026 UwanBuy Hyperlocal Marketplace. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Cart Offcanvas -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="cartOffcanvas">
+        <div class="offcanvas-header border-bottom bg-light">
+            <h5 class="offcanvas-title fw-bold"><i class="bi bi-cart3 text-danger me-2"></i> Shopping Cart</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body d-flex flex-column p-3">
+            <div id="cartItemsContainer" class="flex-grow-1 overflow-auto"></div>
+            <div class="border-top pt-3">
+                <div class="d-flex justify-content-between fw-bold mb-3 fs-5">
+                    <span>Total:</span>
+                    <span id="cartTotalDisplay" class="text-danger">₦0</span>
+                </div>
+                <a href="index.html" class="btn btn-brand w-100 py-3 fw-bold">Proceed to Checkout</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Location Switcher Modal -->
+    <div id="modal-location-switcher">
+        <div class="p-4">
+            <h5 class="fw-bold mb-3"><i class="bi bi-geo-alt-fill text-danger me-2"></i> Select Shopping Hub</h5>
+            <div class="list-group">
+                <button type="button" class="list-group-item list-group-item-action p-3 hub-select-item" data-hub="Tanke Hub, Ilorin">
+                    <div class="fw-bold text-dark">Tanke Hub, Ilorin</div>
+                    <small class="text-success fw-bold">Live Session Running</small>
+                </button>
+                <button type="button" class="list-group-item list-group-item-action p-3 hub-select-item" data-hub="Ikeja Hub, Lagos">
+                    <div class="fw-bold text-dark">Ikeja Central Hub, Lagos</div>
+                </button>
+                <button type="button" class="list-group-item list-group-item-action p-3 hub-select-item" data-hub="Gwarinpa Hub, Abuja">
+                    <div class="fw-bold text-dark">Gwarinpa Hub, Abuja</div>
+                </button>
+                <button type="button" class="list-group-item list-group-item-action p-3 hub-select-item" data-hub="Rumuokwuta Hub, Port Harcourt">
+                    <div class="fw-bold text-dark">Rumuokwuta Hub, Port Harcourt</div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.6.1/js/iziModal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+    <script src="assets/js/storefront-core.js"></script>
+    <script src="assets/js/uwanbuy.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            const allProducts = window.AreaBazaarStorefront.UWANBUY_PRODUCTS;
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get('id') || 'uw-101';
+            const product = allProducts.find(p => p.id === productId) || allProducts[0];
+            let currentQty = 1;
+
+            $("#modal-location-switcher").iziModal({ title: 'Hyperlocal Hub Location', subtitle: 'Select your local fulfillment center', headerColor: '#0f172a', width: 520, radius: 14, padding: 0 });
+
+            // Populate Product Data
+            $('#breadcrumbCategory').text(product.categoryName).attr('href', `category.html?category=${product.category}`);
+            $('#breadcrumbProductTitle').text(product.name);
+            $('#detailCategoryBadge').text(product.categoryName);
+            $('#detailMainImage').attr('src', product.image).attr('alt', product.name);
+            $('#detailBrand').text(product.brand);
+            $('#detailSku').text(product.sku);
+            $('#detailTitle').text(product.name);
+            $('#detailRating').text(product.rating + ` (${product.reviewsCount} reviews)`);
+            $('#detailPrice').text(window.AreaBazaarStorefront.formatNaira(product.price));
+            if (product.compareAtPrice) {
+                $('#detailComparePrice').text(window.AreaBazaarStorefront.formatNaira(product.compareAtPrice));
+                const savings = product.compareAtPrice - product.price;
+                $('#detailSavingsBadge').text(`SAVE ${window.AreaBazaarStorefront.formatNaira(savings)}`);
+            } else {
+                $('#detailComparePrice').hide();
+                $('#detailSavingsBadge').hide();
+            }
+            $('#detailUnitLabel').text(product.unitLabel);
+            $('#detailDescription').text(product.description);
+
+            // Populate Specs Table
+            const $specsBody = $('#specsTableBody');
+            $specsBody.empty();
+            if (product.specifications) {
+                for (const [key, val] of Object.entries(product.specifications)) {
+                    const displayKey = key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
+                    const displayVal = Array.isArray(val) ? val.join(', ') : val;
+                    $specsBody.append(`
+                        <tr>
+                            <th>${displayKey}</th>
+                            <td>${displayVal}</td>
+                        </tr>
+                    `);
+                }
+            }
+
+            // Quantity Controls
+            $('#btnQtyMinus').on('click', function () {
+                if (currentQty > 1) {
+                    currentQty--;
+                    $('#detailQtyInput').val(currentQty);
+                }
+            });
+
+            $('#btnQtyPlus').on('click', function () {
+                if (currentQty < product.quantity) {
+                    currentQty++;
+                    $('#detailQtyInput').val(currentQty);
+                }
+            });
+
+            // Add to Cart
+            function addProductToCart(qty) {
+                let cart = JSON.parse(localStorage.getItem('uwanbuy_cart') || '[]');
+                const existing = cart.find(i => i.id === product.id);
+                if (existing) existing.qty += qty;
+                else cart.push({ ...product, qty });
+                localStorage.setItem('uwanbuy_cart', JSON.stringify(cart));
+                window.AreaBazaarStorefront.refresh();
+                iziToast.success({ message: `${product.name} (${qty}x) added to cart!`, position: 'topRight' });
+            }
+
+            $('#btnDetailAddToCart').on('click', () => addProductToCart(currentQty));
+            $('#btnDetailBuyNow').on('click', function () {
+                addProductToCart(currentQty);
+                window.location.href = 'index.html';
+            });
+
+            $('#btnChangeLocation').on('click', () => $('#modal-location-switcher').iziModal('open'));
+            $('.hub-select-item').on('click', function () {
+                const hub = $(this).data('hub');
+                window.AreaBazaarStorefront.setLocation(hub);
+                $('#modal-location-switcher').iziModal('close');
+                iziToast.success({ message: `Location updated to ${hub}`, position: 'topRight' });
+            });
+        });
+    </script>
+</body>
+
+</html>

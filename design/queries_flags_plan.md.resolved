@@ -1,0 +1,362 @@
+# Queries & Flags System — Implementation Plan (v2)
+
+## Background
+
+Current system: minimal `queries` table + single [addQuery()](file:///c:/xampp/htdocs/areabazaar/core/Controllers/QueryController.php#17-43) method. All dashboards call `api/queries/add`. The [AuthController](file:///c:/xampp/htdocs/areabazaar/core/Controllers/AuthController.php#11-85) returns JSON but implements no server-side session or cookie state. The `global_settings` table (key/value store) exists and is the hook for runtime feature flags.
+
+This plan expands the system in **6 phases**, with auth hardening as Phase 0.
+
+---
+
+## User Review Required
+
+> [!IMPORTANT]
+> **Caller Identity During Dev:** While auth sessions are built in Phase 0, every dashboard will immediately inject the current user's parameters as a PHP-injected JS variable (`window.currentUser`) during development — hardcoded per page, per role. This is replaced by session-derived values once Phase 0 is live.
+
+> [!NOTE]
+> **Notification Delivery:** In-app notifications are the default and are always active. Email and SMS notifications are wired up but **only fire** when their respective `global_settings` keys are set to `1`. Polling interval is also driven by `global_settings`, defaulting to 30 seconds.
+
+---
+
+## Proposed Data Schema Changes
+
+### ALTER `queries`
+```sql
+ALTER TABLE `queries`
+  ADD COLUMN `priority`       ENUM('Low','Normal','High','Critical') DEFAULT 'Normal',
+  ADD COLUMN `status`         ENUM('Open','Closed','Archived') DEFAULT 'Open',
+  ADD COLUMN `assigned_to`    INT UNSIGNED,
+  ADD COLUMN `assigned_role`  VARCHAR(50),
+  ADD COLUMN `closed_by`      INT UNSIGNED,
+  ADD COLUMN `close_reason`   TEXT,
+  ADD COLUMN `last_activity`  TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  ADD COLUMN `created_at`     TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+```
+
+### NEW: `query_responses`
+```sql
+CREATE TABLE `query_responses` (
+  `id`             BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  `query_id`       BIGINT UNSIGNED NOT NULL,
+  `responder_id`   INT UNSIGNED NOT NULL,
+  `responder_role` VARCHAR(50) NOT NULL,
+  `message`        TEXT NOT NULL,
+  `forwarded_to`   INT UNSIGNED,
+  `forwarded_role` VARCHAR(50),
+  `created_at`     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (`query_id`) REFERENCES `queries`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB;
+```
+
+### NEW: `query_response_notes`
+```sql
+CREATE TABLE `query_response_notes` (
+  `id`          BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  `response_id` BIGINT UNSIGNED NOT NULL,
+  `author_id`   INT UNSIGNED NOT NULL,
+  `author_role` VARCHAR(50) NOT NULL,
+  `note`        TEXT NOT NULL,
+  `created_at`  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (`response_id`) REFERENCES `query_responses`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB;
+```
+
+### NEW: `query_notifications`
+```sql
+CREATE TABLE `query_notifications` (
+  `id`             BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  `query_id`       BIGINT UNSIGNED NOT NULL,
+  `recipient_id`   INT UNSIGNED NOT NULL,
+  `recipient_role` VARCHAR(50) NOT NULL,
+  `type`           ENUM('NewAssignment','NewResponse','PriorityChange','ThreadClosed') NOT NULL,
+  `message`        TEXT,
+  `is_read`        TINYINT(1) DEFAULT 0,
+  `created_at`     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_recipient (`recipient_id`, `is_read`)
+) ENGINE=InnoDB;
+```
+
+### NEW: `query_audit_log`
+```sql
+CREATE TABLE `query_audit_log` (
+  `id`         BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  `query_id`   BIGINT UNSIGNED NOT NULL,
+  `actor_id`   INT UNSIGNED NOT NULL,
+  `actor_role` VARCHAR(50) NOT NULL,
+  `action`     VARCHAR(100) NOT NULL,
+  `detail`     TEXT,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+```
+
+### `global_settings` — New Keys to Seed
+```sql
+INSERT IGNORE INTO global_settings (setting_key, setting_value) VALUES
+  ('notif_poll_interval_seconds', '30'),
+  ('notif_email_enabled',         '0'),
+  ('notif_sms_enabled',           '0'),
+  ('notif_email_from',            'no-reply@areabazaar.com'),
+  ('notif_sms_gateway_url',       ''),
+  ('notif_sms_api_key',           ''),
+  ('session_lifetime_minutes',    '120'),
+  ('session_secure_cookie',       '1');
+```
+
+---
+
+## Backend — Routes, Controllers & Models
+
+### New Routes ([public/index.php](file:///c:/xampp/htdocs/areabazaar/public/index.php))
+```php
+// Auth (enhanced)
+$router->post('api/auth/staff-login',        ['AuthController', 'staffLogin']);
+$router->post('api/auth/staff-register',     ['AuthController', 'staffRegister']);
+$router->post('api/auth/logout',             ['AuthController', 'logout']);
+$router->get ('api/auth/check',              ['AuthController', 'checkSession']);
+$router->post('api/auth/verify-user',        ['AuthController', 'verifyUser']);    // future
+
+// Query Threads
+$router->get ('api/queries/list',            ['QueryController', 'listQueries']);
+$router->get ('api/queries/thread',          ['QueryController', 'getThread']);
+$router->post('api/queries/respond',         ['QueryController', 'submitResponse']);
+$router->post('api/queries/assign',          ['QueryController', 'assignQuery']);
+$router->post('api/queries/set-priority',    ['QueryController', 'setPriority']);
+$router->post('api/queries/close',           ['QueryController', 'closeQuery']);
+$router->post('api/queries/close-cold',      ['QueryController', 'closeColdQuery']);
+$router->post('api/queries/add-note',        ['QueryController', 'addResponseNote']);
+$router->post('api/queries/prune-archive',   ['QueryController', 'pruneToArchive']);
+$router->get ('api/queries/cold-audit',      ['QueryController', 'getColdThreads']);
+
+// Notifications
+$router->get ('api/notifications/unread',    ['QueryController', 'getUnreadNotifications']);
+$router->post('api/notifications/mark-read', ['QueryController', 'markNotificationsRead']);
+```
+
+### [AuthController.php](file:///c:/xampp/htdocs/areabazaar/core/Controllers/AuthController.php) — Upgraded Methods
+
+| Method | What Changes |
+|---|---|
+| `staffLogin()` *(new)* | Authenticates staff/partner, starts secure PHP session, sets `HttpOnly` + `Secure` + `SameSite=Strict` cookie (`ab_session`), redirects or returns user data |
+| `staffRegister()` *(new)* | Registers staff member, starts session, returns user data |
+| `logout()` *(new)* | Destroys session + expires cookie |
+| `checkSession()` *(new)* | Returns session state; used by frontend to gate protected pages |
+| `verifyUser()` *(future scaffold)* | Placeholder for OTP/email verification flow |
+| Existing [login()](file:///c:/xampp/htdocs/areabazaar/core/Controllers/AuthController.php#20-42) / [register()](file:///c:/xampp/htdocs/areabazaar/core/Controllers/AuthController.php#43-84) | Kept unchanged (customer-facing JSON API) |
+
+**Session structure** (`$_SESSION`):
+```php
+$_SESSION['user'] = [
+  'id'    => $userId,
+  'name'  => $name,
+  'role'  => 'Admin' | 'SeniorAdmin' | 'WHM' | 'SBA' | 'ZBDp' | 'Agent',
+  'type'  => 'staff' | 'partner',
+  'login_at' => time(),
+];
+```
+
+Cookie: `ab_session` — stores the PHP session ID with `HttpOnly`, `Secure`, `SameSite=Strict`, expiry = `session_lifetime_minutes` setting.
+
+**PHP helper functions** (added to [core/helpers/functions.php](file:///c:/xampp/htdocs/areabazaar/core/helpers/functions.php)):
+- `authGuard($allowedRoles)` — reads session; if invalid/expired, redirects to login
+- `currentUser()` — returns `$_SESSION['user']` or null
+- `forceLogin($redirectAfter)` — redirects to login page with return URL
+- `forceVerify()` — redirects to verification page (future)
+
+**PHP-injected JS variables** (on every dashboard page, top of `<script>` block, for dev use):
+```php
+<script>
+  window.currentUser = {
+    id:   <?= $sessionUser['id'] ?? 1 ?>,
+    name: "<?= $sessionUser['name'] ?? 'Admin' ?>",
+    role: "<?= $sessionUser['role'] ?? 'Admin' ?>"
+  };
+</script>
+```
+
+### [QueryController.php](file:///c:/xampp/htdocs/areabazaar/core/Controllers/QueryController.php) — All Methods
+
+| Method | Purpose | Access |
+|---|---|---|
+| [addQuery()](file:///c:/xampp/htdocs/areabazaar/core/Controllers/QueryController.php#17-43) *(refine)* | Create new query; uses `window.currentUser` params | All roles |
+| `listQueries()` | All open threads, filterable | Admin, SeniorAdmin |
+| `getThread()` | Full thread + responses + notes | Involved roles |
+| `submitResponse()` | Add response + optional forward + notify | Involved roles |
+| `assignQuery()` | Assign unassigned query + notify | Admin, SeniorAdmin |
+| `setPriority()` | Reset priority + reassign + notify | Admin, SeniorAdmin |
+| `closeQuery()` | Originator closes own thread + notify | Originator only |
+| `closeColdQuery()` | Force-close with password + audit log | Admin, SeniorAdmin |
+| `addResponseNote()` | Comment note on a response | Admin, SeniorAdmin |
+| `pruneToArchive()` | Archive closed threads >28 days | Admin, SeniorAdmin |
+| `getColdThreads()` | Open threads stale >4 days | Admin, SeniorAdmin |
+| `getUnreadNotifications()` | Poll unread for current user | All roles |
+| `markNotificationsRead()` | Dismiss notifications | All roles |
+
+Internal: `_notify($queryId, $recipientId, $recipientRole, $type, $message)`:
+1. Always inserts into `query_notifications` (in-app)
+2. If `notif_email_enabled = 1` → fire `NotificationService::sendEmail()`
+3. If `notif_sms_enabled = 1` → fire `NotificationService::sendSms()`
+
+### New Model Files
+- **`QueryResponseModel.php`** — [create()](file:///c:/xampp/htdocs/areabazaar/core/Models/Query.php#15-42), `findByQuery()`, `addNote()`
+- **`QueryNotificationModel.php`** — [create()](file:///c:/xampp/htdocs/areabazaar/core/Models/Query.php#15-42), `getUnread($recipientId)`, `markRead()`
+- **`QueryModel.php` additions** — `findAll()`, `findById()`, [update()](file:///c:/xampp/htdocs/areabazaar/core/Controllers/AuctionController.php#266-325), `getCold()`, `pruneOld()`
+
+### NEW: `core/Services/NotificationService.php`
+```php
+class NotificationService {
+  static function sendEmail($to, $subject, $body) { /* PHPMailer or mail() */ }
+  static function sendSms($phone, $message)        { /* HTTP POST to SMS gateway URL from settings */ }
+}
+```
+Both methods check their respective `global_settings` flag before executing. Failures are logged to PHP error log (non-fatal).
+
+---
+
+## Frontend — Per-Role Interfaces & JS
+
+### Shared Additions to [global.js](file:///c:/xampp/htdocs/areabazaar/assets/js/global.js)
+
+| Function | Description |
+|---|---|
+| `initNotifBell()` | Reads `window.currentUser`, renders bell in header, starts polling |
+| `pollNotifications()` | Polls `api/notifications/unread` on interval from `window.notifPollInterval` (set by PHP from `global_settings`); updates badge |
+| `openQueryThreadModal(queryId)` | Slide-in panel: full thread view |
+| `submitQueryResponse(queryId)` | POST to `api/queries/respond`; accepts optional forward-to selector |
+| `closeQueryThread(queryId)` | Originator closes → `api/queries/close` |
+
+Each dashboard page top `<script>` block also injects:
+```php
+window.notifPollInterval = <?= $notifPollInterval ?? 30 ?> * 1000;
+```
+
+### Notification Bell (all dashboards)
+A `<div id="notifBell">` bell icon with badge count injected at the top of each dashboard's header bar. On click: opens a dropdown panel of unread notifications with links to threads.
+
+### Admin & SeniorAdmin — New `admin_queries.php`
+
+Panels:
+1. **All Open Threads** — table (subject, creator, priority badge, status, assignee role, last-activity); filterable
+2. **Thread Detail** (slide-in) — initial note + full response chain + per-response admin notes
+3. **Cold Audit** — threads stale >4 days; sortable; action buttons per row
+4. **Prune Control** — button + result count
+
+**Admin JS Functions:**
+
+| Function | Description |
+|---|---|
+| `loadAllQueryThreads(filters)` | `api/queries/list` → renders table |
+| `openQueryDetail(queryId)` | `api/queries/thread` → renders panel |
+| `assignQuery(queryId, assigneeId, role)` | POST `api/queries/assign` |
+| `setPriorityOnQuery(queryId)` | Priority+assignee modal → POST `api/queries/set-priority` |
+| `addNoteToResponse(responseId)` | Inline note → POST `api/queries/add-note` |
+| `closeColdQueryAdmin(queryId)` | Password-auth modal → POST `api/queries/close-cold` |
+| `tagColdForPriority(queryId)` | Priority+assignee modal → POST `api/queries/set-priority` |
+| `initiatePrune()` | POST `api/queries/prune-archive` → show count |
+| `loadColdAudit()` | GET `api/queries/cold-audit` → renders table |
+
+### WHM, SBA, ZBDp, Agent — Blended
+
+**"My Query Inbox"** panel added to each role's primary dashboard:
+
+| Function | All 4 roles |
+|---|---|
+| `loadMyQueryInbox()` | `api/queries/list?assigned_to=me` |
+| `openQueryThread(queryId)` | Thread view: read + respond |
+| `submitResponse(queryId)` | Respond + optionally forward |
+| `closeQueryThread(queryId)` | Close own originating threads |
+
+---
+
+## Per-Role Feature Matrix
+
+| Feature | SrAdmin | Admin | WHM | SBA | ZBDp | Agent |
+|---|:---:|:---:|:---:|:---:|:---:|:---:|
+| Submit query | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Receive notification | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| View/respond assigned threads | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Respond to unassigned threads | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ |
+| Forward response to another role | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Counter-response notification | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Close own originating thread | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| View all open threads | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ |
+| Assign unassigned query | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ |
+| Set/reset priority | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ |
+| Add admin note to response | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ |
+| Prune archive (28-day) | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ |
+| Cold thread audit (4-day) | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ |
+| Force-close cold thread | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ |
+| Tag cold thread for priority | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ |
+
+---
+
+## Phased Implementation
+
+### Phase 0 — Auth Session & Cookie Upgrade
+- Add `staffLogin()`, `staffRegister()`, `logout()`, `checkSession()`, `verifyUser()` (scaffold) to [AuthController.php](file:///c:/xampp/htdocs/areabazaar/core/Controllers/AuthController.php)
+- Add `authGuard()`, `currentUser()`, `forceLogin()`, `forceVerify()` helper functions to [core/helpers/functions.php](file:///c:/xampp/htdocs/areabazaar/core/helpers/functions.php)
+- Add new auth routes to [index.php](file:///c:/xampp/htdocs/areabazaar/public/index.php)
+- Seed new `global_settings` keys (`session_lifetime_minutes`, `session_secure_cookie`)
+- Add `window.currentUser` PHP-injected JS variable to each dashboard (hardcoded for dev)
+- Add `window.notifPollInterval` PHP-injected variable to each dashboard (read from `global_settings`)
+
+### Phase 1 — Database Foundation
+- `ALTER TABLE queries` — add 8 new columns
+- `CREATE` 4 new tables (`query_responses`, `query_response_notes`, `query_notifications`, `query_audit_log`)
+- Seed new `global_settings` keys for notification config
+- Extend `QueryModel.php` with new methods
+- Create `QueryResponseModel.php` and `QueryNotificationModel.php`
+- Create `core/Services/NotificationService.php` (email + SMS stubs)
+
+### Phase 2 — Core API Layer
+- Register all new query + notification routes in [index.php](file:///c:/xampp/htdocs/areabazaar/public/index.php)
+- Implement all new [QueryController](file:///c:/xampp/htdocs/areabazaar/core/Controllers/QueryController.php#7-44) methods
+- Build internal `_notify()` helper (in-app + conditional email/SMS)
+- Refine [addQuery()](file:///c:/xampp/htdocs/areabazaar/core/Controllers/QueryController.php#17-43) to accept `creator_id`/`creator_role` from JS `window.currentUser`
+
+### Phase 3 — Notifications & Thread Viewing (All Roles)
+- Extend [global.js](file:///c:/xampp/htdocs/areabazaar/assets/js/global.js): bell, polling, thread modal, response submit, close thread
+- Update all existing `submitQueryAction()` calls across all dashboards to pass `window.currentUser` fields
+- Add **"My Query Inbox"** panel to: [whm_dashboard.php](file:///c:/xampp/htdocs/areabazaar/public/whm_dashboard.php), [sba_dashboard.php](file:///c:/xampp/htdocs/areabazaar/public/sba_dashboard.php), [zbdp_dashboard.php](file:///c:/xampp/htdocs/areabazaar/public/zbdp_dashboard.php), [agent_dashboard.php](file:///c:/xampp/htdocs/areabazaar/public/agent_dashboard.php)
+
+### Phase 4 — Admin Query Management Hub
+- Create `public/admin_queries.php`
+- Add sidebar link in all `admin_*.php` pages
+- Implement all admin JS functions: list, detail, assign, priority, note, close-cold, tag, prune, cold-audit
+- Password-authenticated cold-close flow
+
+### Phase 5 — Audit, Pruning & Cold Thread Tooling
+- `closeColdQuery()` — validates admin password → writes to `query_audit_log`
+- `pruneToArchive()` — batch-update `Archived` for closed threads >28 days; returns count
+- `getColdThreads()` — `WHERE last_activity < NOW() - INTERVAL 4 DAY AND status = 'Open'`
+- Cold Audit sortable table in `admin_queries.php`
+- Prune button with success feedback
+
+---
+
+## Verification Plan
+
+### API Tests (via [test_api.php](file:///c:/xampp/htdocs/areabazaar/public/test_api.php) or Postman)
+1. `POST api/auth/staff-login` — valid creds → session set, cookie returned
+2. `GET api/auth/check` — valid session → returns user data; expired/missing → 401
+3. `POST api/auth/logout` — session destroyed, cookie expired
+4. `POST api/queries/add` — record with correct creator fields
+5. `GET api/queries/list` — all open threads returned
+6. `POST api/queries/respond` — response + `query_notifications` row created
+7. `POST api/queries/assign` — `assigned_to` updated + notification created
+8. `POST api/queries/set-priority` — priority updated + notification created
+9. `POST api/queries/close` — status = `Closed`
+10. `GET api/queries/cold-audit` — only stale (>4 days) threads
+11. `POST api/queries/prune-archive` — only closed >28 days become `Archived`
+12. `POST api/queries/close-cold` — `query_audit_log` entry confirmed in DB
+
+### Manual Browser Tests
+1. Open any dashboard → notification bell renders with `0` badge
+2. Submit query → appears in `admin_queries.php` as Open thread
+3. Admin assigns to WHM → WHM bell updates to unread count
+4. WHM responds → Admin bell updates; thread visible in Admin detail panel
+5. Admin adds note to WHM's response → note visible inline in thread
+6. Originating user closes own thread → status = `Closed` system-wide
+7. Set `notif_email_enabled = 1` in `global_settings` → submit query → verify email log entry (or error log for dev with no mailer configured)
+8. Set a test thread's `last_activity` >4 days ago in DB → Cold Audit shows it
+9. Admin clicks Prune → Closed threads >28 days become `Archived`
+10. Admin force-closes cold thread → `query_audit_log` entry visible in DB
