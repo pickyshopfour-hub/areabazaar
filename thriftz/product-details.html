@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details | Thrift-Z Pre-Loved Marketplace</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="../assetsecm/images/thriftz-favicon-brief-color.png" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons & FontAwesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Plugins CSS (iziModal, iziToast) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.6.1/css/iziModal.min.css">
+
+    <style>
+        :root {
+            --tz-primary: #0a6810;
+            --tz-primary-hover: #08520d;
+            --tz-accent: #4ef896;
+            --tz-accent-light: #e8fdf0;
+            --tz-dark: #0f172a;
+            --tz-muted: #64748b;
+            --tz-card-border: #e2e8f0;
+            --tz-radius: 14px;
+        }
+
+        body {
+            background-color: #f8fafc;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #1e293b;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6, .brand-font {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .top-hyperlocal-bar {
+            background: #0f172a;
+            color: #cbd5e1;
+            font-size: 0.85rem;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .location-pill {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            padding: 3px 12px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .location-pill:hover {
+            background: var(--tz-primary);
+            color: #ffffff;
+        }
+
+        .live-bazaar-chip {
+            background: linear-gradient(135deg, #ef4444, #f97316);
+            color: #ffffff;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 50px;
+            letter-spacing: 0.5px;
+            animation: pulse-chip 2s infinite;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        @keyframes pulse-chip {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.04); opacity: 0.85; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .navbar-custom {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--tz-card-border);
+        }
+
+        .btn-tz {
+            background-color: var(--tz-primary);
+            color: #ffffff;
+            border: none;
+            font-weight: 600;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-tz:hover {
+            background-color: var(--tz-primary-hover);
+            color: #ffffff;
+        }
+
+        .btn-wallet-badge {
+            background: #e8fdf0;
+            color: #0a6810;
+            border: 1px solid #c3f7d2;
+            font-weight: 700;
+            font-size: 0.85rem;
+            padding: 6px 14px;
+            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .main-product-image {
+            width: 100%;
+            height: 440px;
+            object-fit: cover;
+            border-radius: var(--tz-radius);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        }
+
+        .spec-table th {
+            width: 35%;
+            background-color: #f8fafc;
+            color: #475569;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .spec-table td {
+            font-size: 0.85rem;
+            color: #1e293b;
+        }
+
+        .trust-box {
+            background: #ffffff;
+            border: 1px solid var(--tz-card-border);
+            border-radius: var(--tz-radius);
+            padding: 20px;
+        }
+
+        .condition-tag {
+            background: #0f172a;
+            color: #ffffff;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 5px 14px;
+            border-radius: 50px;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body data-store="thriftz">
+
+    <!-- TOP HYPERLOCAL BAR -->
+    <div class="top-hyperlocal-bar">
+        <div class="container d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <div class="d-flex align-items-center gap-2">
+                <span class="text-white-50"><i class="bi bi-geo-alt-fill text-success"></i> Hyperlocal Hub:</span>
+                <span class="location-pill" id="btnChangeLocation">
+                    <span id="currentLocationLabel">Tanke Hub, Ilorin</span>
+                    <i class="bi bi-chevron-down small"></i>
+                </span>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+                <span id="liveBazaarBannerBadge" class="live-bazaar-chip" style="display: none;">
+                    <i class="fa fa-bolt me-1"></i> LIVE BAZAAR ACTIVE IN TANKE
+                </span>
+                <span class="text-white-50 d-none d-md-inline">Verified Hyperlocal Second-Hand Delivery</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-custom sticky-top py-3">
+        <div class="container">
+            <a class="navbar-brand me-4" href="index.html">
+                <img src="../assetsecm/images/thriftz-logo-long-full-color-02.png" alt="Thrift-Z Logo" style="height: 34px; width: auto;">
+            </a>
+
+            <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <span class="bi bi-list fs-2 text-dark"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 fw-semibold">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="index.html"><i class="bi bi-shop me-1"></i> Marketplace</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="index.html#auctionArenaSection"><span class="badge bg-danger rounded-pill me-1">LIVE</span> 4 Auction Arenas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="category.html?category=all">All Categories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="../uwanbuy/index.html">UwanBuy</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="../betasup/index.html">Betasup</a>
+                    </li>
+                </ul>
+
+                <!-- Right Action Utilities -->
+                <div class="d-flex align-items-center gap-2 mt-3 mt-lg-0">
+                    <div class="btn-wallet-badge">
+                        <i class="bi bi-wallet2 text-success"></i>
+                        <span>Wallet: ₦<span class="user-wallet-bal">1,000.00</span></span>
+                    </div>
+
+                    <a href="index.html" class="btn btn-light border rounded-pill px-3 position-relative" title="Cart">
+                        <i class="bi bi-cart3"></i>
+                        <span class="badge bg-success position-absolute top-0 start-100 translate-middle rounded-pill cart-count">0</span>
+                    </a>
+
+                    <!-- Auth actions -->
+                    <div class="ms-1">
+                        <div class="auth-guest-only d-flex gap-2">
+                            <button class="btn btn-sm btn-outline-dark rounded-pill px-3" id="btn-login-trigger">Sign In</button>
+                            <button class="btn btn-sm btn-tz rounded-pill px-3" id="btn-register-trigger">Register</button>
+                        </div>
+                        <div class="auth-logged-only d-none dropdown">
+                            <button class="btn btn-sm btn-light border rounded-pill px-3 dropdown-toggle d-flex align-items-center gap-1" data-bs-toggle="dropdown">
+                                <i class="bi bi-person-circle text-success"></i>
+                                <span class="auth-user-name">Account</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-3">
+                                <li><a class="dropdown-item small" href="index.html"><i class="bi bi-bag-check me-2"></i>My Thrift Orders</a></li>
+                                <li><a class="dropdown-item small" href="index.html"><i class="bi bi-wallet2 me-2"></i>Wallet & Top-up</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><button class="dropdown-item small text-danger btn-logout-trigger"><i class="bi bi-box-arrow-right me-2"></i>Sign Out</button></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- BREADCRUMB -->
+    <div class="py-3 bg-white border-bottom">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0 small">
+                    <li class="breadcrumb-item"><a href="index.html" class="text-decoration-none text-muted">Home</a></li>
+                    <li class="breadcrumb-item"><a href="category.html?category=all" class="text-decoration-none text-muted">Marketplace</a></li>
+                    <li class="breadcrumb-item" id="breadcrumbCategory"><a href="category.html" class="text-decoration-none text-muted">Category</a></li>
+                    <li class="breadcrumb-item active text-dark fw-bold" id="breadcrumbProductTitle">Product Details</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <!-- MAIN PRODUCT DETAILS SECTION -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row g-5">
+                <!-- Left Column: Product Image Gallery -->
+                <div class="col-lg-6">
+                    <div class="position-relative mb-3">
+                        <img src="" id="productMainImage" class="main-product-image" alt="Product Image">
+                        <div class="position-absolute top-0 start-0 m-3">
+                            <span class="condition-tag" id="productConditionBadge">Condition</span>
+                        </div>
+                        <div class="position-absolute top-0 end-0 m-3">
+                            <span class="badge bg-danger rounded-pill px-3 py-2 fw-bold" id="productDiscountBadge">-45%</span>
+                        </div>
+                    </div>
+
+                    <!-- Trust Box & Guarantees -->
+                    <div class="trust-box mt-4">
+                        <h6 class="fw-bold text-dark mb-3"><i class="bi bi-shield-check text-success me-2"></i>AreaBazaar Buyer Protection</h6>
+                        <div class="row g-3 small">
+                            <div class="col-sm-6 d-flex align-items-center gap-2">
+                                <i class="bi bi-patch-check-fill text-success fs-5"></i>
+                                <div>
+                                    <div class="fw-bold">Hardware & Function Tested</div>
+                                    <div class="text-muted text-xs">Inspected by AreaBazaar techs</div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 d-flex align-items-center gap-2">
+                                <i class="bi bi-truck text-primary fs-5"></i>
+                                <div>
+                                    <div class="fw-bold">24-Hour Campus Hub Pickup</div>
+                                    <div class="text-muted text-xs">Collect at your registered hub</div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 d-flex align-items-center gap-2">
+                                <i class="bi bi-arrow-repeat text-warning fs-5"></i>
+                                <div>
+                                    <div class="fw-bold">48-Hour Return Window</div>
+                                    <div class="text-muted text-xs">If item doesn't match description</div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 d-flex align-items-center gap-2">
+                                <i class="bi bi-wallet2 text-success fs-5"></i>
+                                <div>
+                                    <div class="fw-bold">Instant Escrow Release</div>
+                                    <div class="text-muted text-xs">Funds held safely until collected</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Product Info & Actions -->
+                <div class="col-lg-6">
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                        <span class="badge bg-success-subtle text-success fw-bold text-uppercase" id="productCategoryBadge">Category</span>
+                        <span class="text-muted small">• Grade <strong id="productGradeBadge">A</strong></span>
+                    </div>
+
+                    <h1 class="fw-extrabold text-dark mb-2" id="productTitle">Product Title</h1>
+
+                    <!-- Seller Bar -->
+                    <div class="d-flex align-items-center gap-3 p-3 bg-light rounded-3 mb-4 border">
+                        <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width: 44px; height: 44px;">
+                            <i class="bi bi-person-check fs-5"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                            <div class="fw-bold text-dark" id="productSellerName">Verified Student Seller</div>
+                            <div class="small text-muted">
+                                <span class="text-warning fw-bold"><i class="bi bi-star-fill me-1"></i><span id="productSellerRating">4.9 ★</span></span>
+                                <span class="ms-2"><i class="bi bi-geo-alt me-1"></i>Tanke Hub Verified</span>
+                            </div>
+                        </div>
+                        <span class="badge bg-success-subtle text-success fw-bold"><i class="bi bi-check2-circle me-1"></i>ID Verified</span>
+                    </div>
+
+                    <!-- Price Block -->
+                    <div class="p-3 bg-white border rounded-3 mb-4">
+                        <div class="text-muted small mb-1">Thrift Deal Price:</div>
+                        <div class="d-flex align-items-baseline gap-3">
+                            <span class="fs-1 fw-extrabold text-success" id="productPrice">₦0</span>
+                            <span class="fs-5 text-decoration-line-through text-muted" id="productOriginalPrice">₦0</span>
+                            <span class="badge bg-danger rounded-pill px-3 py-2 fw-bold" id="productSavingsAmount">Save ₦0</span>
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="mb-4">
+                        <h6 class="fw-bold text-dark mb-2">Item Overview & Notes</h6>
+                        <p class="text-secondary leading-relaxed" id="productDescription"></p>
+                    </div>
+
+                    <!-- Actions & Add to Cart -->
+                    <div class="d-flex gap-3 mb-5">
+                        <div class="input-group" style="width: 130px;">
+                            <button class="btn btn-outline-secondary" type="button" id="btnQtyMinus">-</button>
+                            <input type="number" id="inputQuantity" class="form-control text-center fw-bold" value="1" min="1" max="5">
+                            <button class="btn btn-outline-secondary" type="button" id="btnQtyPlus">+</button>
+                        </div>
+
+                        <button class="btn btn-tz flex-fill py-3 fw-bold shadow-sm" id="btnAddToCart">
+                            <i class="bi bi-cart-plus-fill me-2"></i> Add to Thrift Cart
+                        </button>
+                    </div>
+
+                    <!-- Full Specifications Table -->
+                    <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
+                        <div class="card-header bg-dark text-white py-3 px-4">
+                            <h6 class="fw-bold mb-0"><i class="bi bi-list-check me-2"></i>Full Technical & Condition Specifications</h6>
+                        </div>
+                        <div class="card-body p-0">
+                            <table class="table table-bordered mb-0 spec-table" id="specificationsTable">
+                                <tbody>
+                                    <!-- Populated dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-dark text-white py-5 mt-auto">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <h5 class="fw-bold mb-3 text-white">Thrift-Z Marketplace</h5>
+                    <p class="small text-white-50">Empowering smart students and young professionals to buy & sell quality pre-loved fashion, gadgets, and home gear sustainably.</p>
+                </div>
+                <div class="col-md-4">
+                    <h6 class="fw-bold text-success mb-3">Shop Categories</h6>
+                    <ul class="list-unstyled small text-white-50">
+                        <li class="mb-2"><a href="category.html?category=fashion" class="text-white-50 text-decoration-none">Fashion & Accessories</a></li>
+                        <li class="mb-2"><a href="category.html?category=gadgets" class="text-white-50 text-decoration-none">Gadgets & Tech</a></li>
+                        <li class="mb-2"><a href="category.html?category=home" class="text-white-50 text-decoration-none">Home & Kitchen</a></li>
+                        <li class="mb-2"><a href="index.html#auctionArenaSection" class="text-white-50 text-decoration-none">4 Auction Arenas</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h6 class="fw-bold text-success mb-3">Hyperlocal Links</h6>
+                    <ul class="list-unstyled small text-white-50">
+                        <li class="mb-2"><a href="../uwanbuy/index.html" class="text-white-50 text-decoration-none">UwanBuy Supermarket</a></li>
+                        <li class="mb-2"><a href="../betasup/index.html" class="text-white-50 text-decoration-none">Betasup Soup Hub</a></li>
+                        <li class="mb-2"><a href="../Tanke/ch-frm-bazaar-page-sample.html" class="text-white-50 text-decoration-none">Tanke Live Bazaar</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL: REGISTRATION (FULL SCHEMA) -->
+    <div id="modal-register">
+        <div class="p-4">
+            <h5 class="fw-bold mb-2 text-dark">Join Thrift-Z Marketplace</h5>
+            <p class="text-muted small mb-4">Register your account with your verified local delivery address and preferred AreaBazaar Hub.</p>
+
+            <form id="form-register">
+                <h6 class="fw-bold text-success text-uppercase small mb-3">Personal & Security Details</h6>
+                <div class="row g-2 mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold">Full Name</label>
+                        <input type="text" id="reg-fullname" class="form-control form-control-sm" placeholder="e.g. Chukwuma Adebayo" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold">Phone Number</label>
+                        <input type="tel" id="reg-phone" class="form-control form-control-sm" placeholder="08012345678" required>
+                    </div>
+                </div>
+
+                <div class="row g-2 mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold">Email Address</label>
+                        <input type="email" id="reg-email" class="form-control form-control-sm" placeholder="name@example.com">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label small fw-bold">Password</label>
+                        <input type="password" id="reg-password" class="form-control form-control-sm" placeholder="Password" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label small fw-bold">Wallet PIN</label>
+                        <input type="password" id="reg-pin" maxlength="4" class="form-control form-control-sm text-center fw-bold" placeholder="1234" required>
+                    </div>
+                </div>
+
+                <h6 class="fw-bold text-success text-uppercase small mb-3 pt-2 border-top">Fulfillment Address</h6>
+                <div class="mb-2">
+                    <label class="form-label small fw-bold">Street Address (Line 1)</label>
+                    <input type="text" id="reg-address1" class="form-control form-control-sm" placeholder="e.g. 14 University Road, Tanke" required>
+                </div>
+
+                <div class="row g-2 mb-2">
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold">Suite / Flat (Optional)</label>
+                        <input type="text" id="reg-address2" class="form-control form-control-sm" placeholder="Flat 3B">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold">Nearest Landmark</label>
+                        <input type="text" id="reg-landmark" class="form-control form-control-sm" placeholder="Opposite Sanrab Filling Station" required>
+                    </div>
+                </div>
+
+                <div class="row g-2 mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold">City</label>
+                        <input type="text" id="reg-city" class="form-control form-control-sm" value="Ilorin" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold">State</label>
+                        <input type="text" id="reg-state" class="form-control form-control-sm" value="Kwara State" required>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label small fw-bold">Preferred Hub Location</label>
+                    <select id="reg-hub" class="form-select form-select-sm">
+                        <option value="Tanke Hub, Ilorin">Tanke Hub, Ilorin (Live Bazaar Active)</option>
+                        <option value="Ikeja Hub, Lagos">Ikeja Central Hub, Lagos</option>
+                        <option value="Gwarinpa Hub, Abuja">Gwarinpa Hub, Abuja</option>
+                        <option value="Rumuokwuta Hub, Port Harcourt">Rumuokwuta Hub, Port Harcourt</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-tz w-100 py-2 shadow-sm fw-bold">
+                    Create Account & Activate ₦15,000 Wallet Bonus
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: LOGIN -->
+    <div id="modal-login">
+        <div class="p-4">
+            <h5 class="fw-bold mb-3 text-dark">Sign In to Thrift-Z</h5>
+            <form id="form-login">
+                <div class="mb-3">
+                    <label class="form-label small fw-bold">Phone Number or Email</label>
+                    <input type="text" id="login-identifier" class="form-control" placeholder="08012345678" required>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label small fw-bold">Password</label>
+                    <input type="password" id="login-password" class="form-control" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn btn-tz w-100 py-3 fw-bold shadow-sm">Sign In</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: LOCATION SWITCHER -->
+    <div id="modal-location-switcher">
+        <div class="p-4">
+            <h5 class="fw-bold mb-2 text-dark"><i class="bi bi-geo-alt-fill text-success me-2"></i> Select Your Thrift Hub</h5>
+            <div class="list-group mb-4">
+                <button type="button" class="list-group-item list-group-item-action p-3 hub-select-item" data-hub="Tanke Hub, Ilorin">
+                    <div class="fw-bold text-dark">Tanke Hub, Ilorin</div>
+                    <small class="text-muted">University Road, Tanke • <span class="text-success fw-bold">Live Session Running</span></small>
+                </button>
+                <button type="button" class="list-group-item list-group-item-action p-3 hub-select-item" data-hub="Ikeja Hub, Lagos">
+                    <div class="fw-bold text-dark">Ikeja Central Hub, Lagos</div>
+                    <small class="text-muted">Allen Avenue, Ikeja</small>
+                </button>
+                <button type="button" class="list-group-item list-group-item-action p-3 hub-select-item" data-hub="Gwarinpa Hub, Abuja">
+                    <div class="fw-bold text-dark">Gwarinpa Hub, Abuja</div>
+                    <small class="text-muted">3rd Avenue, Gwarinpa</small>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: LIVE SESSION ALERT -->
+    <div id="modal-bazaar-session-alert">
+        <div class="p-4 text-center">
+            <div class="d-inline-flex align-items-center justify-content-center bg-danger-subtle text-danger rounded-circle mb-3" style="width: 70px; height: 70px;">
+                <i class="fa fa-tower-broadcast fs-2"></i>
+            </div>
+            <h4 class="fw-bold text-dark mb-1">Tanke Hyperlocal Live Wave</h4>
+            <p class="text-muted small mb-3">A live AreaBazaar auction session is currently active in Tanke Hub, Ilorin!</p>
+            <div class="d-grid gap-2">
+                <a href="../Tanke/ch-frm-bazaar-page-sample.html" class="btn btn-tz py-3 fw-bold">
+                    <i class="fa fa-gavel me-2"></i> Enter Tanke Live Bazaar Page
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Core Scripts -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.6.1/js/iziModal.min.js"></script>
+    <script src="assets/js/storefront-core.js"></script>
+    <script src="assets/js/thriftz.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            const allProducts = window.AreaBazaarStorefront.THRIFTZ_PRODUCTS || [];
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get('id') || 'tz-101';
+
+            const product = allProducts.find(p => p.id === productId) || allProducts[0];
+
+            // Configure iziToast
+            iziToast.settings({
+                timeout: 3000,
+                resetOnHover: true,
+                transitionIn: 'fadeInDown',
+                transitionOut: 'fadeOutUp',
+                position: 'topRight'
+            });
+
+            // Initialize Modals
+            $("#modal-register").iziModal({ title: 'Join Thrift-Z Marketplace', headerColor: '#0a6810', width: 640, radius: 14, padding: 0 });
+            $("#modal-login").iziModal({ title: 'Sign In', headerColor: '#0a6810', width: 440, radius: 14, padding: 0 });
+            $("#modal-location-switcher").iziModal({ title: 'Fulfillment Hub', headerColor: '#0a6810', width: 500, radius: 14, padding: 0 });
+            $("#modal-bazaar-session-alert").iziModal({ title: 'Live Session Alert', headerColor: '#dc2626', width: 500, radius: 14, padding: 0 });
+
+            // Populate Page Content
+            if (product) {
+                document.title = `${product.title} | Thrift-Z Pre-Loved Marketplace`;
+                $('#productTitle').text(product.title);
+                $('#breadcrumbProductTitle').text(product.title);
+                $('#productMainImage').attr('src', product.image);
+                $('#productConditionBadge').text(product.condition);
+                $('#productGradeBadge').text(product.conditionGrade || 'A');
+                $('#productCategoryBadge').text(product.categoryName || product.category);
+                $('#breadcrumbCategory a').text(product.categoryName || product.category).attr('href', `category.html?category=${product.category}`);
+                
+                $('#productSellerName').text(product.seller);
+                $('#productSellerRating').text(product.sellerRating);
+                $('#productDescription').text(product.description);
+
+                const discountPercent = Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100);
+                $('#productDiscountBadge').text(`-${discountPercent}%`);
+                $('#productPrice').text(window.AreaBazaarStorefront.formatNaira(product.price));
+                $('#productOriginalPrice').text(window.AreaBazaarStorefront.formatNaira(product.originalPrice));
+                $('#productSavingsAmount').text(`Save ${window.AreaBazaarStorefront.formatNaira(product.originalPrice - product.price)}`);
+
+                // Render Specs Table
+                const $specTbody = $('#specificationsTable tbody');
+                $specTbody.empty();
+                if (product.specifications) {
+                    for (const [key, val] of Object.entries(product.specifications)) {
+                        const formattedKey = key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
+                        $specTbody.append(`
+                            <tr>
+                                <th>${formattedKey}</th>
+                                <td>${val}</td>
+                            </tr>
+                        `);
+                    }
+                }
+            }
+
+            // Quantity buttons
+            $('#btnQtyPlus').on('click', function () {
+                let val = parseInt($('#inputQuantity').val()) || 1;
+                if (val < 5) $('#inputQuantity').val(val + 1);
+            });
+
+            $('#btnQtyMinus').on('click', function () {
+                let val = parseInt($('#inputQuantity').val()) || 1;
+                if (val > 1) $('#inputQuantity').val(val - 1);
+            });
+
+            // Add to Cart
+            $('#btnAddToCart').on('click', function () {
+                const qty = parseInt($('#inputQuantity').val()) || 1;
+                if (product && window.AreaBazaarStorefront) {
+                    window.AreaBazaarStorefront.addToCart({
+                        id: product.id,
+                        name: product.title,
+                        price: product.price,
+                        image: product.image,
+                        category: product.category,
+                        quantity: qty
+                    });
+                }
+            });
+
+            // Auth & Hub Triggers
+            $('#btn-register-trigger').on('click', () => $('#modal-register').iziModal('open'));
+            $('#btn-login-trigger').on('click', () => $('#modal-login').iziModal('open'));
+            $('#btnChangeLocation').on('click', () => $('#modal-location-switcher').iziModal('open'));
+            $('#liveBazaarBannerBadge').on('click', () => $('#modal-bazaar-session-alert').iziModal('open'));
+
+            // Forms
+            $('#form-register').on('submit', function (e) {
+                e.preventDefault();
+                const fullName = $('#reg-fullname').val().trim();
+                const phone = $('#reg-phone').val().trim();
+                const email = $('#reg-email').val().trim();
+                const password = $('#reg-password').val();
+                const pin = $('#reg-pin').val();
+                const addressLine1 = $('#reg-address1').val().trim();
+                const addressLine2 = $('#reg-address2').val().trim();
+                const landmark = $('#reg-landmark').val().trim();
+                const city = $('#reg-city').val().trim();
+                const state = $('#reg-state').val().trim();
+                const hub = $('#reg-hub').val();
+
+                if (!fullName || !phone || !password || !addressLine1 || !landmark) {
+                    iziToast.error({ title: 'Missing Info', message: 'Please fill all required fields.' });
+                    return;
+                }
+
+                if (window.AreaBazaarStorefront) {
+                    window.AreaBazaarStorefront.register({ fullName, phone, email, addressLine1, addressLine2, landmark, city, state, hub, pin });
+                }
+                $('#modal-register').iziModal('close');
+                this.reset();
+                iziToast.success({ title: 'Account Created', message: `Welcome, ${fullName}!` });
+            });
+
+            $('#form-login').on('submit', function (e) {
+                e.preventDefault();
+                const id = $('#login-identifier').val().trim();
+                const pw = $('#login-password').val();
+                if (window.AreaBazaarStorefront) {
+                    window.AreaBazaarStorefront.login(id, pw);
+                }
+                $('#modal-login').iziModal('close');
+                this.reset();
+                iziToast.success({ title: 'Signed In', message: `Welcome back, ${id}!` });
+            });
+
+            $(document).on('click', '.hub-select-item', function () {
+                const hub = $(this).data('hub');
+                if (window.AreaBazaarStorefront) {
+                    window.AreaBazaarStorefront.setLocation(hub);
+                }
+                $('#modal-location-switcher').iziModal('close');
+                iziToast.success({ title: 'Location Updated', message: `Fulfillment set to ${hub}.` });
+            });
+
+            $(document).on('click', '.btn-logout-trigger', function (e) {
+                e.preventDefault();
+                if (window.AreaBazaarStorefront) window.AreaBazaarStorefront.logout();
+                iziToast.info({ title: 'Signed Out', message: 'You have been logged out.' });
+            });
+
+            if (window.AreaBazaarStorefront) window.AreaBazaarStorefront.refresh();
+        });
+    </script>
+</body>
+
+</html>

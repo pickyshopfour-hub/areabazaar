@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <base target="_top">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 15px;
+            background: #f8fafc;
+        }
+
+        .form-label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #475569;
+        }
+
+        .card {
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-ab {
+            background: #0f172a;
+            color: white;
+            border-radius: 8px;
+            font-weight: 600;
+            border: none;
+        }
+
+        .btn-ab:hover {
+            background: #1e293b;
+            color: #cbd5e1;
+        }
+
+        .btn-outline-ab {
+            border: 1px solid #0f172a;
+            color: #0f172a;
+            font-weight: 600;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card p-3 mb-3">
+        <h6 class="fw-bold mb-3"><i class="fa fa-calculator me-2"></i> Summing Engine</h6>
+
+        <div class="mb-3">
+            <label class="form-label">Adjustment Type</label>
+            <select id="adjType" class="form-select">
+                <option value="percentage">Percentage (%)</option>
+                <option value="absolute">Absolute Value (₦)</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Value</label>
+            <div class="input-group">
+                <select id="adjOp" class="form-select" style="max-width: 70px;">
+                    <option value="add">+</option>
+                    <option value="subtract">-</option>
+                </select>
+                <input type="number" id="adjValue" class="form-control" placeholder="10">
+            </div>
+        </div>
+
+        <button class="btn btn-ab w-100 mb-2" onclick="applyAdjustment()">Apply Mass Adjustment</button>
+        <div class="row g-2">
+            <div class="col-6"><button class="btn btn-outline-secondary w-100 btn-sm" onclick="revert()">Revert</button>
+            </div>
+            <div class="col-6"><button class="btn btn-outline-danger w-100 btn-sm" onclick="resetToDefaults()">Reset
+                    Defaults</button></div>
+        </div>
+    </div>
+
+    <div class="card p-3">
+        <h6 class="fw-bold mb-3"><i class="fa fa-file-export me-2"></i> Wave Metadata</h6>
+
+        <div class="mb-2">
+            <label class="form-label">Wave Name</label>
+            <input type="text" id="waveName" class="form-control" placeholder="e.g. Wave 3 - Critical">
+        </div>
+
+        <div class="mb-2">
+            <label class="form-label">Session ID</label>
+            <input type="number" id="sessionId" class="form-control" value="1">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Scheduled Time (Optional)</label>
+            <input type="datetime-local" id="scheduledAt" class="form-control">
+        </div>
+
+        <div class="form-check mb-3 my-2">
+            <input class="form-check-input" type="checkbox" id="isDefaultWave">
+            <label class="form-check-label fw-bold small text-primary" for="isDefaultWave">
+                Set as Default-wave for this session
+            </label>
+        </div>
+
+        <hr>
+        <button class="btn btn-success w-100 py-2 fw-bold mb-2" onclick="exportWave()">
+            <i class="fa fa-file-excel me-2"></i> EXPORT TEMPLATE TO DRIVE
+        </button>
+        <button class="btn btn-primary w-100 py-2 fw-bold" onclick="pushWave()">
+            <i class="fa fa-cloud-upload-alt me-2"></i> SUBMIT WAVE TO BACKEND
+        </button>
+        <div id="status" class="mt-2 small text-center text-muted"></div>
+    </div>
+
+    <script>
+        function applyAdjustment() {
+            const params = {
+                type: document.getElementById('adjType').value,
+                operator: document.getElementById('adjOp').value,
+                value: document.getElementById('adjValue').value
+            };
+            google.script.run
+                .withSuccessHandler(() => alert('Adjustment Applied'))
+                .applyMassAdjustment(params);
+        }
+
+        function resetToDefaults() {
+            if (confirm('Reset all prices to variant base prices?')) {
+                google.script.run.resetToVariantDefaults();
+            }
+        }
+
+        function exportWave() {
+            const formData = {
+                wave_name: document.getElementById('waveName').value,
+                session_id: document.getElementById('sessionId').value,
+                scheduled_at: document.getElementById('scheduledAt').value,
+                is_default: document.getElementById('isDefaultWave').checked,
+                time_prepared: new Date().toISOString()
+            };
+
+            document.getElementById('status').innerText = 'Generating template...';
+            google.script.run
+                .withSuccessHandler((res) => {
+                    document.getElementById('status').innerHTML = `<span class="text-success">Success!</span> <a href="${res.fileUrl}" target="_blank">View File</a>`;
+                    document.getElementById('waveName').value = ''; // Clear only wave name
+                })
+                .exportWaveTemplate(formData);
+        }
+
+        function pushWave() {
+            const formData = {
+                wave_name: document.getElementById('waveName').value,
+                session_id: document.getElementById('sessionId').value,
+                scheduled_at: document.getElementById('scheduledAt').value,
+                is_default: document.getElementById('isDefaultWave').checked,
+                time_prepared: new Date().toISOString()
+            };
+
+            document.getElementById('status').innerText = 'Pushing payload to AB Backend...';
+            google.script.run
+                .withSuccessHandler((res) => {
+                    if (res.status === 'success') {
+                        document.getElementById('status').innerHTML = `<span class="text-success fw-bold">WAVE SUCCESSFULLY INGESTED!</span>`;
+                    } else {
+                        document.getElementById('status').innerHTML = `<span class="text-danger">Failed: ${res.message}</span>`;
+                    }
+                })
+                .pushAdminWaveNow(formData);
+        }
+
+        function revert() {
+            alert('Revert logic pending robust undo system. Reset defaults available.');
+        }
+    </script>
+</body>
+
+</html>

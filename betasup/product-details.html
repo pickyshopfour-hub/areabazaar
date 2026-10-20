@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageHtmlTitle">Soup Pot Details | BETASUP Cyber Kitchen</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="../assetsecm/images/betasup-favicon-color-white.png" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Plugins CSS (iziModal, iziToast) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.6.1/css/iziModal.min.css">
+
+    <style>
+        :root {
+            --primary-amber: #ff8c00;
+            --primary-orange: #f97316;
+            --accent-dark: #0f172a;
+            --surface-card: #ffffff;
+            --bg-light: #f8fafc;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --border-light: #e2e8f0;
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6, .brand-font {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .top-hyperlocal-bar {
+            background: #0f172a;
+            color: #cbd5e1;
+            font-size: 0.85rem;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .location-pill {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            padding: 3px 12px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .location-pill:hover {
+            background: var(--primary-amber);
+            color: #ffffff;
+        }
+
+        .live-bazaar-chip {
+            background: linear-gradient(135deg, #ef4444, #f97316);
+            color: #ffffff;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 50px;
+            letter-spacing: 0.5px;
+            animation: pulse-chip 2s infinite;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        @keyframes pulse-chip {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.04); opacity: 0.85; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .navbar-custom {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .pot-hero-display {
+            background: #ffffff;
+            border-radius: 20px;
+            border: 1px solid var(--border-light);
+            padding: 2.5rem;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pot-hero-display::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, rgba(255, 140, 0, 0.15) 0%, rgba(255, 255, 255, 0) 70%);
+            z-index: 0;
+        }
+
+        .pot-hero-display img {
+            max-height: 380px;
+            max-width: 100%;
+            object-fit: contain;
+            position: relative;
+            z-index: 1;
+            filter: drop-shadow(0 20px 25px rgba(0, 0, 0, 0.12));
+            transition: transform 0.4s ease;
+        }
+
+        .pot-hero-display:hover img {
+            transform: scale(1.03) translateY(-4px);
+        }
+
+        .option-card {
+            border: 2px solid var(--border-light);
+            border-radius: 14px;
+            padding: 14px 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: #ffffff;
+        }
+
+        .option-card:hover {
+            border-color: var(--primary-amber);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .option-card.active {
+            border-color: var(--primary-orange);
+            background: #fff7ed;
+            box-shadow: 0 4px 12px rgba(249, 115, 22, 0.15);
+        }
+
+        .btn-amber {
+            background: linear-gradient(135deg, var(--primary-amber), var(--primary-orange));
+            color: #ffffff;
+            border: none;
+            font-weight: 700;
+            border-radius: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-amber:hover {
+            opacity: 0.95;
+            color: #ffffff;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 15px rgba(249, 115, 22, 0.3);
+        }
+
+        .qty-btn {
+            width: 44px;
+            height: 44px;
+            border: 1px solid var(--border-light);
+            background: #ffffff;
+            border-radius: 10px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .qty-btn:hover {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+        }
+
+        .related-card {
+            background: #ffffff;
+            border-radius: 16px;
+            border: 1px solid var(--border-light);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .related-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-amber);
+        }
+
+        .badge-hygiene {
+            background: #ecfdf5;
+            color: #059669;
+            border: 1px solid #a7f3d0;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body data-store="betasup">
+
+    <!-- Top Hyperlocal Bar -->
+    <div class="top-hyperlocal-bar">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center gap-3">
+                <span><i class="fa-solid fa-fire-burner text-warning me-1"></i> BETASUP Cyber Cloud Kitchens</span>
+                <span class="d-none d-md-inline text-secondary">|</span>
+                <div class="location-pill" id="btnChangeLocation">
+                    <i class="fa-solid fa-location-dot text-danger"></i>
+                    <span id="navLocationText">Tanke Hub, Ilorin</span>
+                    <i class="fa-solid fa-chevron-down text-white-50 small ms-1"></i>
+                </div>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+                <span class="live-bazaar-chip" id="btnCheckLiveBazaar">
+                    <i class="fa-solid fa-bolt me-1"></i> Live AreaBazaar Session
+                </span>
+                <span class="d-none d-lg-inline text-secondary">|</span>
+                <span class="d-none d-lg-inline text-light small">
+                    <i class="fa-solid fa-wallet text-warning me-1"></i> Wallet: <strong id="navWalletBalance">₦15,000</strong>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+                <img src="../assetsecm/images/betasup-favicon-color-white.png" alt="BETASUP Logo" height="38" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));">
+                <div>
+                    <span class="brand-font fw-extrabold fs-4 text-dark d-block lh-1">BETA<span class="text-warning">SUP</span></span>
+                    <small class="text-muted text-uppercase" style="font-size: 0.65rem; letter-spacing: 1px; font-weight: 700;">Cyber Kitchen</small>
+                </div>
+            </a>
+
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#betasupNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="betasupNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4 fw-semibold small">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="index.html"><i class="fa-solid fa-house me-1 text-muted"></i> Kitchen Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark active" href="category.html"><i class="fa-solid fa-utensils me-1 text-warning"></i> All Soups & Stews</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="category.html?category=packages"><i class="fa-solid fa-cubes-stacked me-1 text-muted"></i> Party Packages</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-danger fw-bold" href="index.html#kitchen-auctions">
+                            <i class="fa-solid fa-gavel me-1"></i> Live Kitchen Bidding
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-muted" href="index.html#delivery-guarantees"><i class="fa-solid fa-shield-halved me-1"></i> Hygiene Guarantee</a>
+                    </li>
+                </ul>
+
+                <div class="d-flex align-items-center gap-2">
+                    <a href="category.html" class="btn btn-outline-secondary btn-sm rounded-pill px-3 fw-bold">
+                        <i class="fa fa-arrow-left me-1"></i> Back to Categories
+                    </a>
+
+                    <div class="auth-guest-only d-flex gap-2">
+                        <button class="btn btn-outline-dark btn-sm fw-bold px-3 rounded-pill" id="btnNavLogin">
+                            <i class="fa-solid fa-arrow-right-to-bracket me-1"></i> Sign In
+                        </button>
+                        <button class="btn btn-amber btn-sm fw-bold px-3 rounded-pill" id="btnNavRegister">
+                            Register
+                        </button>
+                    </div>
+
+                    <div class="auth-logged-only d-none d-flex align-items-center gap-2">
+                        <div class="dropdown">
+                            <button class="btn btn-light btn-sm rounded-pill border dropdown-toggle fw-bold d-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown">
+                                <i class="fa-solid fa-circle-user text-warning fs-6"></i>
+                                <span class="auth-user-name">Chef Account</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
+                                <li><a class="dropdown-item small" href="#"><i class="fa-solid fa-receipt me-2 text-muted"></i> Kitchen Orders</a></li>
+                                <li><a class="dropdown-item small" href="#"><i class="fa-solid fa-map-pin me-2 text-muted"></i> Delivery Addresses</a></li>
+                                <li><a class="dropdown-item small" href="#"><i class="fa-solid fa-shield-cat me-2 text-muted"></i> Change Wallet PIN</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item small text-danger fw-bold" href="#" id="btnLogout"><i class="fa-solid fa-power-off me-2"></i> Log Out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="bg-white border-bottom py-2">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0 small">
+                    <li class="breadcrumb-item"><a href="index.html" class="text-decoration-none text-muted">Home</a></li>
+                    <li class="breadcrumb-item"><a href="category.html" class="text-decoration-none text-muted">Cyber Kitchen</a></li>
+                    <li class="breadcrumb-item"><a href="category.html" id="breadcrumbCategory" class="text-decoration-none text-muted">Classic Soups</a></li>
+                    <li class="breadcrumb-item active text-dark fw-bold" aria-current="page" id="breadcrumbProductName">Delta Banga Soup Pots</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Product Configuration Section -->
+    <main class="container py-4 py-md-5">
+        <div class="row g-4 g-lg-5">
+            <!-- Left Column: Visual Showcase, Ingredients & Hygiene -->
+            <div class="col-lg-5">
+                <div class="pot-hero-display mb-4">
+                    <div class="d-flex justify-content-between align-items-center position-relative" style="z-index: 2;">
+                        <span class="badge bg-warning-subtle text-warning fw-bold px-3 py-1 rounded-pill" id="productCategoryBadge">Classic Soups</span>
+                        <span class="badge bg-danger text-white fw-bold px-2 py-1 rounded-pill small">
+                            <i class="fa-solid fa-fire me-1"></i> Hot Cooked
+                        </span>
+                    </div>
+
+                    <img id="productImage" src="../assetsecm/images/soups/banga-soup-roundbowl.png" alt="Soup Pot" class="my-3">
+
+                    <div class="d-flex justify-content-center align-items-center gap-3 mt-2 text-muted small position-relative" style="z-index: 2;">
+                        <span><i class="fa-solid fa-check-circle text-success me-1"></i> Fresh Pot Guarantee</span>
+                        <span>•</span>
+                        <span><i class="fa-solid fa-temperature-arrow-up text-danger me-1"></i> Shipped at 75°C</span>
+                    </div>
+                </div>
+
+                <!-- Kitchen Hygiene & Packaging Box -->
+                <div class="card border-0 shadow-sm rounded-4 p-4 mb-4" style="background: #ffffff;">
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <div class="p-2 rounded-3 bg-success-subtle text-success">
+                            <i class="fa-solid fa-shield-virus fs-4"></i>
+                        </div>
+                        <div>
+                            <h6 class="fw-bold mb-0 text-dark">NAFDAC Certified Cloud Kitchen</h6>
+                            <small class="text-muted">Strict temperature-controlled sterile cooking standards</small>
+                        </div>
+                    </div>
+                    <ul class="list-unstyled mb-0 small text-secondary">
+                        <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i> Shipped in tamper-proof thermally insulated food-grade containers.</li>
+                        <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i> Zero chemical preservatives — only native herbs and spices.</li>
+                        <li><i class="fa-solid fa-check text-success me-2"></i> Freshly cooked per order at your neighborhood AreaBazaar hub.</li>
+                    </ul>
+                </div>
+
+                <!-- Authentic Ingredients -->
+                <div class="card border-0 shadow-sm rounded-4 p-4" style="background: #ffffff;">
+                    <h6 class="fw-bold text-dark mb-3"><i class="fa-solid fa-mortar-pestle text-warning me-2"></i> Authentic Ingredients</h6>
+                    <div class="d-flex flex-wrap gap-2" id="ingredientsList">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Interactive Configuration -->
+            <div class="col-lg-7">
+                <div class="bg-white border rounded-4 p-4 p-md-5 shadow-sm">
+                    <!-- Title & Tagline -->
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="text-warning small" id="ratingStars">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                            <span class="fw-bold small text-dark" id="ratingScore">4.9</span>
+                            <span class="text-muted small">(128 reviews)</span>
+                        </div>
+                        <span class="badge badge-hygiene px-3 py-1 rounded-pill small">
+                            <i class="fa-solid fa-circle-check me-1"></i> Verified Chef Dish
+                        </span>
+                    </div>
+
+                    <h2 class="fw-extrabold text-dark brand-font mb-1" id="productTitle">DELTA BANGA Soup Pots</h2>
+                    <p class="text-muted small mb-3" id="productTagline">Oghwo-Amiedi Palm Fruit Extraction</p>
+
+                    <!-- Cooking Lead Time Pill -->
+                    <div class="p-3 bg-light rounded-3 mb-4 border d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center gap-2 small">
+                            <i class="fa-solid fa-stopwatch text-danger fs-5"></i>
+                            <div>
+                                <span class="d-block fw-bold text-dark">Kitchen Preparation Notice</span>
+                                <span class="text-muted small" id="leadTimeDisplay">45 mins cooking lead time</span>
+                            </div>
+                        </div>
+                        <span class="badge bg-dark px-3 py-2 rounded-pill small">Express Cloud Dispatch</span>
+                    </div>
+
+                    <!-- Price Header -->
+                    <div class="d-flex align-items-baseline gap-2 mb-3">
+                        <h1 class="fw-extrabold text-dark brand-font mb-0" id="displayCalculatedPrice">₦1,800</h1>
+                        <span class="text-muted small" id="priceSubtitle">for Mini 1L</span>
+                    </div>
+
+                    <p class="text-secondary small mb-4" id="productDescription">
+                        Rich slow-simmered palm fruit nectar infused with traditional Oburunbebe stick, dried bush meat morsels, and freshwater Catfish.
+                    </p>
+
+                    <hr class="my-4">
+
+                    <!-- Step 1: Select Pot Size -->
+                    <div class="mb-4">
+                        <label class="form-label fw-bold text-dark d-flex justify-content-between align-items-center">
+                            <span>1. Select Pot Volume & Size <span class="text-danger">*</span></span>
+                            <span class="badge bg-light text-muted border small">Authentic Portions</span>
+                        </label>
+                        <div class="row g-2" id="potVariantsContainer">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Included Prime Proteins -->
+                    <div class="mb-4">
+                        <label class="form-label fw-bold text-dark d-flex justify-content-between align-items-center">
+                            <span>2. Included Prime Proteins & Meats</span>
+                            <span class="badge bg-success-subtle text-success small">Included in Pot</span>
+                        </label>
+                        <div class="d-flex flex-wrap gap-2" id="proteinsContainer">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Choose Fresh Swallows / Sides -->
+                    <div class="mb-4">
+                        <label class="form-label fw-bold text-dark d-flex justify-content-between align-items-center">
+                            <span>3. Add Fresh Swallows / Sides</span>
+                            <span class="badge bg-light text-muted border small">Freshly Pounded</span>
+                        </label>
+                        <div class="row g-2" id="swallowVariantsContainer">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <!-- Quantity & Order Actions -->
+                    <div class="row g-3 align-items-center mb-4">
+                        <div class="col-sm-4">
+                            <label class="form-label fw-bold text-dark small mb-1">Pot Quantity</label>
+                            <div class="d-flex align-items-center gap-2">
+                                <button class="qty-btn" id="btnQtyMinus"><i class="fa fa-minus small"></i></button>
+                                <input type="number" id="inputQuantity" class="form-control text-center fw-bold border-light" value="1" min="1" max="20" style="height: 44px; border-radius: 10px;">
+                                <button class="qty-btn" id="btnQtyPlus"><i class="fa fa-plus small"></i></button>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-8">
+                            <label class="form-label fw-bold text-muted small mb-1 text-uppercase">Order Subtotal</label>
+                            <div class="p-2 px-3 bg-light rounded-3 border d-flex justify-content-between align-items-center" style="height: 44px;">
+                                <span class="small text-muted" id="subtotalBreakdownText">1x Mini 1L</span>
+                                <span class="fw-extrabold text-dark fs-5" id="finalSubtotalDisplay">₦1,800</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CTA Buttons -->
+                    <div class="d-flex flex-column flex-sm-row gap-3">
+                        <button class="btn btn-amber flex-fill py-3 fw-bold shadow-sm" id="btnAddToCart">
+                            <i class="fa-solid fa-basket-shopping me-2"></i> Add to Kitchen Cart
+                        </button>
+                        <button class="btn btn-dark py-3 px-4 fw-bold" id="btnInstantOrder">
+                            <i class="fa-solid fa-bolt text-warning me-2"></i> Order Instant Pot
+                        </button>
+                    </div>
+
+                    <!-- Hyperlocal Delivery Guarantee -->
+                    <div class="mt-4 p-3 rounded-3 bg-warning-subtle text-dark border border-warning-subtle d-flex align-items-center gap-3">
+                        <i class="fa-solid fa-truck-fast fs-3 text-warning"></i>
+                        <div class="small">
+                            <strong>Hyperlocal Fulfillment Guarantee:</strong> Prepared hot and delivered to your doorstep from <span class="storefront-current-location fw-bold">Tanke Hub, Ilorin</span> in under 60 minutes.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Related Soup Dishes -->
+        <div class="mt-5 pt-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h4 class="fw-bold brand-font text-dark mb-0">More Delicacies from our Cloud Kitchen</h4>
+                    <p class="text-muted small mb-0">Discover authentic regional delicacies prepared daily</p>
+                </div>
+                <a href="category.html" class="btn btn-sm btn-outline-dark fw-bold rounded-pill px-3">
+                    View All Pots <i class="fa fa-arrow-right ms-1"></i>
+                </a>
+            </div>
+
+            <div class="row g-4" id="relatedDishesGrid">
+                <!-- Populated dynamically -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-5 pb-4 mt-5 border-top border-secondary">
+        <div class="container">
+            <div class="row g-4 mb-4">
+                <div class="col-lg-4">
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <img src="../assetsecm/images/betasup-favicon-color-white.png" alt="BETASUP Logo" height="32">
+                        <span class="brand-font fw-extrabold fs-5 text-white">BETA<span class="text-warning">SUP</span></span>
+                    </div>
+                    <p class="text-secondary small">
+                        BETASUP is AreaBazaar's signature cyber cloud kitchen serving authentic, hot-cooked Nigerian traditional soups and party coolers with instant hyperlocal fulfillment.
+                    </p>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <h6 class="fw-bold text-white mb-3">Quick Navigation</h6>
+                    <ul class="list-unstyled text-secondary small">
+                        <li class="mb-2"><a href="index.html" class="text-secondary text-decoration-none">Home</a></li>
+                        <li class="mb-2"><a href="category.html" class="text-secondary text-decoration-none">All Soups</a></li>
+                        <li class="mb-2"><a href="category.html?category=packages" class="text-secondary text-decoration-none">Party Coolers</a></li>
+                        <li class="mb-2"><a href="index.html#kitchen-auctions" class="text-secondary text-decoration-none">Live Auctions</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-lg-3">
+                    <h6 class="fw-bold text-white mb-3">Sister Storefronts</h6>
+                    <ul class="list-unstyled text-secondary small">
+                        <li class="mb-2"><a href="../uwanbuy/index.html" class="text-secondary text-decoration-none">UwanBUY Superstore</a></li>
+                        <li class="mb-2"><a href="../thriftz/index.html" class="text-secondary text-decoration-none">Thrift-Z Verified Thrifting</a></li>
+                        <li class="mb-2"><a href="../Tanke/ch-frm-bazaar-page-sample.html" class="text-secondary text-decoration-none">Live AreaBazaar Hub</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3">
+                    <h6 class="fw-bold text-white mb-3">Kitchen Support</h6>
+                    <p class="text-secondary small mb-2"><i class="fa-solid fa-phone me-2 text-warning"></i> +234 800-BETA-SUP</p>
+                    <p class="text-secondary small mb-2"><i class="fa-solid fa-location-dot me-2 text-warning"></i> <span class="storefront-current-location">Tanke Hub, Ilorin</span></p>
+                    <p class="text-secondary small"><i class="fa-solid fa-envelope me-2 text-warning"></i> kitchen@areabazaar.com</p>
+                </div>
+            </div>
+            <div class="border-top border-secondary pt-3 text-center text-secondary small">
+                © 2026 AreaBazaar Ecosystem • BETASUP Cyber Kitchen. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Quick Specs iziModal (For Related Dishes) -->
+    <div id="quickViewModal" class="p-4" style="display:none;"></div>
+
+    <!-- Registration iziModal (Full Address & Wallet PIN Schema) -->
+    <div id="modal-register" class="p-4" style="display:none;">
+        <form id="form-register">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label small fw-bold">Full Name *</label>
+                    <input type="text" class="form-control" id="reg-name" placeholder="e.g. Adeola Balogun" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label small fw-bold">Email Address *</label>
+                    <input type="email" class="form-control" id="reg-email" placeholder="name@domain.com" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label small fw-bold">Phone Number *</label>
+                    <input type="tel" class="form-control" id="reg-phone" placeholder="08012345678" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label small fw-bold">Preferred Hub Location *</label>
+                    <select class="form-select" id="reg-hub" required>
+                        <option value="Tanke Hub, Ilorin">Tanke Hub, Ilorin</option>
+                        <option value="Ikeja Hub, Lagos">Ikeja Central Hub, Lagos</option>
+                        <option value="Gwarinpa Hub, Abuja">Gwarinpa Hub, Abuja</option>
+                        <option value="Rumuokwuta Hub, Port Harcourt">Rumuokwuta Hub, Port Harcourt</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label small fw-bold">Password *</label>
+                    <input type="password" class="form-control" id="reg-password" placeholder="At least 6 characters" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label small fw-bold text-danger">4-Digit Wallet Security PIN *</label>
+                    <input type="password" maxlength="4" class="form-control text-center fw-bold" id="reg-pin" placeholder="••••" required>
+                </div>
+                <div class="col-12"><hr class="my-1"></div>
+                <div class="col-md-8">
+                    <label class="form-label small fw-bold">Street Address (Line 1) *</label>
+                    <input type="text" class="form-control" id="reg-address1" placeholder="e.g. 14 University Road, Tanke" required>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label small fw-bold">Suite / Apt (Line 2)</label>
+                    <input type="text" class="form-control" id="reg-address2" placeholder="Block B, Flat 3">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label small fw-bold">Landmark</label>
+                    <input type="text" class="form-control" id="reg-landmark" placeholder="Near Sanrab Junction">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label small fw-bold">City *</label>
+                    <input type="text" class="form-control" id="reg-city" value="Ilorin" required>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label small fw-bold">State *</label>
+                    <input type="text" class="form-control" id="reg-state" value="Kwara State" required>
+                </div>
+                <div class="col-12">
+                    <label class="form-label small fw-bold">Delivery Instructions</label>
+                    <input type="text" class="form-control" id="reg-instructions" placeholder="Call when at the security gate">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label small fw-bold">Agent / Referral Code (Optional)</label>
+                    <input type="text" class="form-control" id="reg-agent" placeholder="AGNT-XXXX">
+                </div>
+                <div class="col-md-6 d-flex align-items-end">
+                    <button type="submit" class="btn btn-amber w-100 fw-bold py-2">
+                        Create Account & Save Profile
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Login iziModal -->
+    <div id="modal-login" class="p-4" style="display:none;">
+        <form id="form-login">
+            <div class="mb-3">
+                <label class="form-label small fw-bold">Email or Phone Number</label>
+                <input type="text" class="form-control" id="login-identifier" placeholder="name@domain.com or 080..." required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label small fw-bold">Password</label>
+                <input type="password" class="form-control" id="login-password" required>
+            </div>
+            <button type="submit" class="btn btn-dark w-100 fw-bold py-2 mb-3">Sign In</button>
+            <div class="text-center small">
+                Don't have an account? <a href="#" id="switch-to-register" class="fw-bold text-warning">Register here</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Location Switcher iziModal -->
+    <div id="modal-location-switcher" class="p-4" style="display:none;">
+        <p class="text-muted small mb-3">Select your hyperlocal pickup or express delivery center to see live cloud kitchen dishes:</p>
+        <div class="list-group" id="hubsListGroup">
+            <button type="button" class="list-group-item list-group-item-action p-3 d-flex justify-content-between align-items-center" data-hub="Tanke Hub, Ilorin">
+                <div>
+                    <h6 class="mb-0 fw-bold">Tanke Hub, Ilorin</h6>
+                    <small class="text-muted">Kwara State • Main Active Kitchen</small>
+                </div>
+                <span class="badge bg-danger">Live Session Active</span>
+            </button>
+            <button type="button" class="list-group-item list-group-item-action p-3 d-flex justify-content-between align-items-center" data-hub="Ikeja Hub, Lagos">
+                <div>
+                    <h6 class="mb-0 fw-bold">Ikeja Central Hub, Lagos</h6>
+                    <small class="text-muted">Lagos State • Mainland Express</small>
+                </div>
+                <span class="badge bg-light text-muted border">Standard</span>
+            </button>
+            <button type="button" class="list-group-item list-group-item-action p-3 d-flex justify-content-between align-items-center" data-hub="Gwarinpa Hub, Abuja">
+                <div>
+                    <h6 class="mb-0 fw-bold">Gwarinpa Hub, Abuja</h6>
+                    <small class="text-muted">Federal Capital Territory</small>
+                </div>
+                <span class="badge bg-light text-muted border">Standard</span>
+            </button>
+            <button type="button" class="list-group-item list-group-item-action p-3 d-flex justify-content-between align-items-center" data-hub="Rumuokwuta Hub, Port Harcourt">
+                <div>
+                    <h6 class="mb-0 fw-bold">Rumuokwuta Hub, Port Harcourt</h6>
+                    <small class="text-muted">Rivers State • South Express</small>
+                </div>
+                <span class="badge bg-light text-muted border">Standard</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- AreaBazaar Live Session Alert iziModal -->
+    <div id="modal-bazaar-session-alert" class="p-4" style="display:none;">
+        <div class="text-center mb-3">
+            <div class="badge bg-danger px-3 py-2 rounded-pill mb-2">LIVE HYPERLOCAL SESSION</div>
+            <h5 class="fw-bold" id="bazaarSessionTitle">Tanke Hyperlocal Live Wave</h5>
+            <p class="text-muted small">An active live AreaBazaar bidding session is in progress in your current hub (<span id="bazaarSessionHub">Tanke Hub, Ilorin</span>).</p>
+        </div>
+        <div class="p-3 bg-light rounded-3 mb-4 text-center">
+            <span class="text-muted small d-block">Current Active State:</span>
+            <strong class="text-dark fs-5" id="bazaarSessionWave">Wave 2 (High Mid)</strong>
+        </div>
+        <div class="d-flex gap-2">
+            <a href="../Tanke/ch-frm-bazaar-page-sample.html" class="btn btn-danger flex-fill fw-bold py-2" id="btnEnterBazaarSession">
+                <i class="fa fa-door-open me-1"></i> Enter Bazaar Page
+            </a>
+            <button type="button" class="btn btn-outline-secondary" onclick="$('#modal-bazaar-session-alert').iziModal('close');">
+                Stay on Betasup
+            </button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.6.1/js/iziModal.min.js"></script>
+    <script src="assets/js/storefront-core.js"></script>
+    <script src="assets/js/betasup.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            const allProducts = window.AreaBazaarStorefront.BETASUP_PRODUCTS || [];
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = Number(urlParams.get('id')) || 101;
+
+            // Find current product
+            const product = allProducts.find(p => p.id === productId) || allProducts[0];
+
+            // State
+            let selectedVariantIndex = 0;
+            let selectedSwallowIndex = 0;
+            let currentQuantity = 1;
+
+            iziToast.settings({
+                timeout: 3000,
+                resetOnHover: true,
+                transitionIn: 'fadeInDown',
+                transitionOut: 'fadeOutUp',
+                position: 'topRight'
+            });
+
+            // Initialize Modals
+            $("#quickViewModal").iziModal({
+                title: 'Soup Pot Specifications',
+                subtitle: 'Temporary Specifications & Sizes',
+                headerColor: '#0f172a',
+                width: 720,
+                radius: 14,
+                padding: 0
+            });
+
+            $("#modal-register").iziModal({
+                title: 'Join Betasup Cyber Kitchen',
+                subtitle: 'Address, Wallet PIN & AreaBazaar Hub Setup',
+                headerColor: '#0f172a',
+                width: 640,
+                radius: 14,
+                padding: 0
+            });
+
+            $("#modal-login").iziModal({
+                title: 'Sign In to Betasup',
+                subtitle: 'Access your kitchen wallet & orders',
+                headerColor: '#0f172a',
+                width: 440,
+                radius: 14,
+                padding: 0
+            });
+
+            $("#modal-location-switcher").iziModal({
+                title: 'Kitchen Fulfillment Hub',
+                subtitle: 'Select your local pickup or express delivery center',
+                headerColor: '#0f172a',
+                width: 520,
+                radius: 14,
+                padding: 0
+            });
+
+            $("#modal-bazaar-session-alert").iziModal({
+                title: 'Hyperlocal Live Session',
+                subtitle: 'AreaBazaar Live Wave Alert',
+                headerColor: '#dc2626',
+                width: 500,
+                radius: 14,
+                padding: 0
+            });
+
+            // Populate Page Content with Product Details
+            $('#pageHtmlTitle').text(`${product.name} | BETASUP Cyber Kitchen`);
+            $('#breadcrumbProductName').text(product.name);
+            $('#breadcrumbCategory').text(product.categoryName || 'Classic Soups').attr('href', `category.html?category=${product.category}`);
+            $('#productTitle').text(product.name);
+            $('#productTagline').text(product.tagline);
+            $('#productDescription').text(product.description);
+            $('#productImage').attr('src', product.image).attr('alt', product.name);
+            $('#productCategoryBadge').text(product.categoryName || product.category);
+            $('#ratingScore').text(product.rating || '4.9');
+            $('#leadTimeDisplay').text(product.leadTime || '40 mins cooking lead time');
+
+            // Render Ingredients
+            const $ingredients = $('#ingredientsList');
+            $ingredients.empty();
+            if (product.ingredients && product.ingredients.length > 0) {
+                product.ingredients.forEach(ing => {
+                    $ingredients.append(`<span class="badge bg-light text-dark border px-3 py-2 rounded-pill small">${ing}</span>`);
+                });
+            } else {
+                $ingredients.append('<span class="text-muted small">Standard authentic culinary herbs and seasoning.</span>');
+            }
+
+            // Render Pot Size Variants
+            const $potContainer = $('#potVariantsContainer');
+            $potContainer.empty();
+            if (product.variants && product.variants.length > 0) {
+                product.variants.forEach((v, idx) => {
+                    $potContainer.append(`
+                        <div class="col-6 col-md-3">
+                            <div class="option-card variant-size-card ${idx === 0 ? 'active' : ''}" data-index="${idx}">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <span class="fw-bold small text-dark">${v.size}</span>
+                                    <span class="badge bg-light text-muted border text-xs">${v.volume || ''}</span>
+                                </div>
+                                <div class="fw-extrabold text-dark">${window.AreaBazaarStorefront.formatNaira(v.price)}</div>
+                            </div>
+                        </div>
+                    `);
+                });
+            }
+
+            // Render Prime Proteins
+            const $proteinsContainer = $('#proteinsContainer');
+            $proteinsContainer.empty();
+            if (product.proteins && product.proteins.length > 0) {
+                product.proteins.forEach(prot => {
+                    $proteinsContainer.append(`<span class="badge bg-light text-dark border px-3 py-2 rounded-3 small"><i class="fa fa-drumstick-bite text-warning me-1"></i> ${prot}</span>`);
+                });
+            }
+
+            // Render Swallows / Sides
+            const $swallowContainer = $('#swallowVariantsContainer');
+            $swallowContainer.empty();
+            if (product.swallows && product.swallows.length > 0) {
+                product.swallows.forEach((sw, idx) => {
+                    const priceLabel = sw.price === 0 ? 'Included (₦0)' : `+${window.AreaBazaarStorefront.formatNaira(sw.price)}`;
+                    $swallowContainer.append(`
+                        <div class="col-6 col-md-3">
+                            <div class="option-card variant-swallow-card ${idx === 0 ? 'active' : ''}" data-index="${idx}">
+                                <div class="fw-bold small text-dark mb-1 text-truncate">${sw.name}</div>
+                                <div class="small fw-semibold text-warning">${priceLabel}</div>
+                            </div>
+                        </div>
+                    `);
+                });
+            }
+
+            // Price Calculation & Update Function
+            function updatePriceDisplay() {
+                const currentVariant = product.variants ? product.variants[selectedVariantIndex] : { price: product.basePrice, size: 'Standard' };
+                const currentSwallow = product.swallows ? product.swallows[selectedSwallowIndex] : { price: 0, name: 'None' };
+
+                const singleUnitTotal = currentVariant.price + currentSwallow.price;
+                const grandTotal = singleUnitTotal * currentQuantity;
+
+                $('#displayCalculatedPrice').text(window.AreaBazaarStorefront.formatNaira(currentVariant.price));
+                $('#priceSubtitle').text(`for ${currentVariant.size} ${currentSwallow.price > 0 ? '(+' + window.AreaBazaarStorefront.formatNaira(currentSwallow.price) + ' swallow)' : ''}`);
+                $('#subtotalBreakdownText').text(`${currentQuantity}x ${currentVariant.size} ${currentSwallow.name !== 'None (Soup Pot Only)' ? '+ ' + currentSwallow.name : ''}`);
+                $('#finalSubtotalDisplay').text(window.AreaBazaarStorefront.formatNaira(grandTotal));
+            }
+
+            updatePriceDisplay();
+
+            // Variant Size Selection
+            $(document).on('click', '.variant-size-card', function () {
+                $('.variant-size-card').removeClass('active');
+                $(this).addClass('active');
+                selectedVariantIndex = Number($(this).data('index'));
+                updatePriceDisplay();
+            });
+
+            // Swallow Selection
+            $(document).on('click', '.variant-swallow-card', function () {
+                $('.variant-swallow-card').removeClass('active');
+                $(this).addClass('active');
+                selectedSwallowIndex = Number($(this).data('index'));
+                updatePriceDisplay();
+            });
+
+            // Quantity Controls
+            $('#btnQtyMinus').on('click', function () {
+                if (currentQuantity > 1) {
+                    currentQuantity--;
+                    $('#inputQuantity').val(currentQuantity);
+                    updatePriceDisplay();
+                }
+            });
+
+            $('#btnQtyPlus').on('click', function () {
+                if (currentQuantity < 20) {
+                    currentQuantity++;
+                    $('#inputQuantity').val(currentQuantity);
+                    updatePriceDisplay();
+                }
+            });
+
+            $('#inputQuantity').on('change', function () {
+                let val = parseInt($(this).val(), 10);
+                if (isNaN(val) || val < 1) val = 1;
+                if (val > 20) val = 20;
+                currentQuantity = val;
+                $(this).val(val);
+                updatePriceDisplay();
+            });
+
+            // Add to Cart
+            $('#btnAddToCart').on('click', function () {
+                const currentVariant = product.variants ? product.variants[selectedVariantIndex] : { price: product.basePrice, size: 'Standard' };
+                const currentSwallow = product.swallows ? product.swallows[selectedSwallowIndex] : { price: 0, name: 'None' };
+                const unitPrice = currentVariant.price + currentSwallow.price;
+
+                const cartItem = {
+                    productId: product.id,
+                    name: `${product.name} (${currentVariant.size})`,
+                    swallow: currentSwallow.name,
+                    price: unitPrice,
+                    quantity: currentQuantity,
+                    image: product.image,
+                    category: product.category,
+                    store: 'betasup'
+                };
+
+                let cart = [];
+                try {
+                    cart = JSON.parse(localStorage.getItem('ab_cart') || '[]');
+                } catch (e) {
+                    cart = [];
+                }
+
+                cart.push(cartItem);
+                localStorage.setItem('ab_cart', JSON.stringify(cart));
+
+                // Also update storefront state
+                window.AreaBazaarStorefront.refresh();
+
+                iziToast.success({
+                    title: 'Added to Kitchen Cart',
+                    message: `${currentQuantity}x ${product.name} (${currentVariant.size}) has been added to your order.`
+                });
+            });
+
+            // Instant Order
+            $('#btnInstantOrder').on('click', function () {
+                const currentVariant = product.variants ? product.variants[selectedVariantIndex] : { price: product.basePrice, size: 'Standard' };
+                const currentSwallow = product.swallows ? product.swallows[selectedSwallowIndex] : { price: 0, name: 'None' };
+                const grandTotal = (currentVariant.price + currentSwallow.price) * currentQuantity;
+
+                const user = window.AreaBazaarStorefront.getUser();
+                if (!user) {
+                    iziToast.info({
+                        title: 'Profile Required',
+                        message: 'Please complete your quick delivery profile to dispatch your hot soup pot.'
+                    });
+                    $('#modal-register').iziModal('open');
+                    return;
+                }
+
+                iziToast.success({
+                    title: 'Hot Pot Dispatched!',
+                    message: `Order for ${currentQuantity}x ${product.name} (${window.AreaBazaarStorefront.formatNaira(grandTotal)}) placed to ${user.addressLine1 || user.hub}. Kitchen timer started!`
+                });
+            });
+
+            // Render Related Dishes
+            const related = allProducts.filter(p => p.id !== product.id).slice(0, 4);
+            const $relatedGrid = $('#relatedDishesGrid');
+            $relatedGrid.empty();
+
+            related.forEach(rel => {
+                $relatedGrid.append(`
+                    <div class="col-6 col-md-3">
+                        <div class="related-card h-100 d-flex flex-column">
+                            <div class="p-3 text-center bg-light" style="min-height: 160px; display: flex; align-items: center; justify-content: center;">
+                                <img src="${rel.image}" alt="${rel.name}" class="img-fluid" style="max-height: 120px; object-fit: contain;">
+                            </div>
+                            <div class="p-3 d-flex flex-column flex-fill">
+                                <span class="badge bg-warning-subtle text-warning small align-self-start mb-1">${rel.categoryName || rel.category}</span>
+                                <h6 class="fw-bold text-dark lh-sm mb-1">${rel.name}</h6>
+                                <p class="text-muted small text-truncate mb-2">${rel.tagline}</p>
+                                <div class="mt-auto d-flex justify-content-between align-items-center pt-2 border-top">
+                                    <div>
+                                        <small class="text-muted d-block" style="font-size: 0.7rem;">Starts at</small>
+                                        <strong class="text-dark">${window.AreaBazaarStorefront.formatNaira(rel.basePrice)}</strong>
+                                    </div>
+                                    <div class="d-flex gap-1">
+                                        <button class="btn btn-sm btn-outline-dark btn-view-specs" data-id="${rel.id}" title="Quick Specs">
+                                            <i class="fa fa-eye"></i>
+                                        </button>
+                                        <a href="product-details.html?id=${rel.id}" class="btn btn-sm btn-amber px-2 fw-bold" title="Order">
+                                            Order
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `);
+            });
+
+            // Quick View Specs Modal for Related Dishes
+            $(document).on('click', '.btn-view-specs', function () {
+                const id = Number($(this).data('id'));
+                const p = allProducts.find(prod => prod.id === id);
+                if (!p) return;
+
+                let variantsHtml = '';
+                if (p.variants) {
+                    p.variants.forEach(v => {
+                        variantsHtml += `<span class="badge bg-light text-dark border me-1 mb-1">${v.size}: <strong>${window.AreaBazaarStorefront.formatNaira(v.price)}</strong></span>`;
+                    });
+                }
+
+                const modalHtml = `
+                    <div class="row g-4 align-items-center">
+                        <div class="col-md-5 text-center">
+                            <div class="p-3 bg-light rounded-4 border">
+                                <img src="${p.image}" alt="${p.name}" class="img-fluid" style="max-height: 200px; object-fit: contain;">
+                            </div>
+                            <h5 class="fw-bold text-dark mt-2 mb-1">${p.name}</h5>
+                            <p class="small text-muted mb-0">${p.tagline}</p>
+                        </div>
+                        <div class="col-md-7">
+                            <span class="badge bg-dark mb-2">${p.categoryName || p.category}</span>
+                            <p class="text-secondary small mb-3">${p.description}</p>
+                            <div class="mb-3">
+                                <div class="small fw-bold text-muted text-uppercase mb-1">Available Sizes:</div>
+                                <div>${variantsHtml}</div>
+                            </div>
+                            <div class="d-flex gap-2 mt-4">
+                                <a href="product-details.html?id=${p.id}" class="btn btn-amber flex-fill fw-bold py-2 text-center">
+                                    Configure & Order Pot <i class="fa fa-arrow-right ms-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                $('#quickViewModal').html(modalHtml);
+                $('#quickViewModal').iziModal('open');
+            });
+
+            // Auth & Modals Trigger
+            $('#btnNavLogin').on('click', function () {
+                $('#modal-login').iziModal('open');
+            });
+
+            $('#btnNavRegister, #switch-to-register').on('click', function (e) {
+                e.preventDefault();
+                $('#modal-login').iziModal('close');
+                $('#modal-register').iziModal('open');
+            });
+
+            $('#btnChangeLocation').on('click', function () {
+                $('#modal-location-switcher').iziModal('open');
+            });
+
+            $('#btnCheckLiveBazaar').on('click', function () {
+                const currentLoc = window.AreaBazaarStorefront.getLocation();
+                if (currentLoc.toLowerCase().includes('tanke')) {
+                    $('#modal-bazaar-session-alert').iziModal('open');
+                } else {
+                    iziToast.info({
+                        title: 'No Live Wave in This Hub',
+                        message: `The active AreaBazaar live wave is currently running at Tanke Hub, Ilorin. Switch hub to join!`
+                    });
+                }
+            });
+
+            // Hub switcher selection
+            $('#hubsListGroup button').on('click', function () {
+                const chosenHub = $(this).data('hub');
+                window.AreaBazaarStorefront.setLocation(chosenHub);
+                $('#modal-location-switcher').iziModal('close');
+                iziToast.success({
+                    title: 'Fulfillment Hub Updated',
+                    message: `Now browsing culinary menu for ${chosenHub}`
+                });
+                if (chosenHub.toLowerCase().includes('tanke')) {
+                    setTimeout(() => {
+                        $('#modal-bazaar-session-alert').iziModal('open');
+                    }, 500);
+                }
+            });
+
+            // Register Submit
+            $('#form-register').on('submit', function (e) {
+                e.preventDefault();
+                const userObj = {
+                    name: $('#reg-name').val().trim(),
+                    email: $('#reg-email').val().trim(),
+                    phone: $('#reg-phone').val().trim(),
+                    hub: $('#reg-hub').val(),
+                    addressLine1: $('#reg-address1').val().trim(),
+                    addressLine2: $('#reg-address2').val().trim(),
+                    landmark: $('#reg-landmark').val().trim(),
+                    city: $('#reg-city').val().trim(),
+                    state: $('#reg-state').val().trim(),
+                    instructions: $('#reg-instructions').val().trim(),
+                    pin: $('#reg-pin').val().trim(),
+                    agentCode: $('#reg-agent').val().trim()
+                };
+
+                window.AreaBazaarStorefront.setUser(userObj);
+                window.AreaBazaarStorefront.setLocation(userObj.hub);
+                $('#modal-register').iziModal('close');
+
+                iziToast.success({
+                    title: 'Welcome to Betasup!',
+                    message: `Account created for ${userObj.name}. Delivery address and wallet PIN registered.`
+                });
+            });
+
+            // Login Submit
+            $('#form-login').on('submit', function (e) {
+                e.preventDefault();
+                const identifier = $('#login-identifier').val().trim();
+                const existing = window.AreaBazaarStorefront.getUser();
+
+                const userObj = existing || {
+                    name: identifier.split('@')[0] || 'Chef Guest',
+                    email: identifier.includes('@') ? identifier : 'guest@areabazaar.com',
+                    phone: identifier.includes('@') ? '08033221100' : identifier,
+                    hub: window.AreaBazaarStorefront.getLocation(),
+                    addressLine1: '14 University Road, Tanke',
+                    city: 'Ilorin',
+                    state: 'Kwara State'
+                };
+
+                window.AreaBazaarStorefront.setUser(userObj);
+                $('#modal-login').iziModal('close');
+
+                iziToast.success({
+                    title: 'Signed In',
+                    message: `Welcome back, ${userObj.name}!`
+                });
+            });
+
+            // Logout
+            $('#btnLogout').on('click', function (e) {
+                e.preventDefault();
+                window.AreaBazaarStorefront.setUser(null);
+                iziToast.info({
+                    title: 'Signed Out',
+                    message: 'You have signed out of your Betasup account.'
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

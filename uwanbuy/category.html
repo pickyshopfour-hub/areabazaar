@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Products & Categories | UwanBUY Hyperlocal</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="../assetsecm/images/uwanbuy-favicon-brief-color.png" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons & FontAwesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Plugins CSS (iziModal, iziToast) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.6.1/css/iziModal.min.css">
+
+    <style>
+        :root {
+            --uw-brand: #ff0000;
+            --uw-brand-hover: #b80000;
+            --uw-brand-light: #fff0f0;
+            --uw-dark: #0f172a;
+            --uw-muted: #64748b;
+            --uw-card-border: #e2e8f0;
+            --uw-radius: 14px;
+        }
+
+        body {
+            background-color: #f8fafc;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #1e293b;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6, .brand-font {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .top-hyperlocal-bar {
+            background: #0f172a;
+            color: #cbd5e1;
+            font-size: 0.85rem;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .location-pill {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            padding: 3px 12px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .location-pill:hover {
+            background: var(--uw-brand);
+            color: #ffffff;
+        }
+
+        .navbar-custom {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--uw-card-border);
+        }
+
+        .btn-brand {
+            background-color: var(--uw-brand);
+            color: #ffffff;
+            border: none;
+            font-weight: 600;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-brand:hover {
+            background-color: var(--uw-brand-hover);
+            color: #ffffff;
+        }
+
+        .btn-outline-brand {
+            border: 1.5px solid var(--uw-brand);
+            color: var(--uw-brand);
+            font-weight: 600;
+            border-radius: 10px;
+            background: transparent;
+        }
+
+        .btn-outline-brand:hover {
+            background-color: var(--uw-brand);
+            color: #ffffff;
+        }
+
+        /* Filter Chips */
+        .filter-chip {
+            padding: 8px 18px;
+            border-radius: 50px;
+            border: 1px solid #cbd5e1;
+            background: #ffffff;
+            color: #475569;
+            font-weight: 600;
+            font-size: 0.88rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .filter-chip.active, .filter-chip:hover {
+            background: var(--uw-brand);
+            color: #ffffff;
+            border-color: var(--uw-brand);
+        }
+
+        /* Product Cards */
+        .product-card {
+            background: #ffffff;
+            border-radius: var(--uw-radius);
+            border: 1px solid var(--uw-card-border);
+            transition: all 0.25s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+            overflow: hidden;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+            border-color: rgba(255, 0, 0, 0.3);
+        }
+
+        .product-img-wrapper {
+            height: 190px;
+            background-color: #f8fafc;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 1rem;
+        }
+
+        .product-img-wrapper img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-img-wrapper img {
+            transform: scale(1.05);
+        }
+
+        .btn-view-details {
+            background: #f1f5f9;
+            color: #334155;
+            font-weight: 600;
+            font-size: 0.82rem;
+            border-radius: 8px;
+            padding: 6px 12px;
+            border: 1px solid #cbd5e1;
+            transition: all 0.2s;
+        }
+
+        .btn-view-details:hover {
+            background: #e2e8f0;
+            color: #0f172a;
+        }
+
+        .spec-pill {
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            color: #334155;
+            display: inline-block;
+            margin-right: 6px;
+            margin-bottom: 6px;
+        }
+
+        .iziModal {
+            border-radius: 16px !important;
+            overflow: hidden !important;
+        }
+    </style>
+</head>
+
+<body data-store="uwanbuy">
+
+    <!-- Top Hyperlocal Strip -->
+    <div class="top-hyperlocal-bar">
+        <div class="container d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <div class="d-flex align-items-center gap-2">
+                <span class="text-white-50"><i class="bi bi-geo-alt-fill text-danger"></i> Hyperlocal Hub:</span>
+                <span class="location-pill" id="btnChangeLocation">
+                    <span id="currentLocationLabel">Tanke Hub, Ilorin</span>
+                    <i class="bi bi-chevron-down small"></i>
+                </span>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+                <span id="liveBazaarBannerBadge" class="badge bg-danger rounded-pill px-3 py-2" style="display: none; cursor: pointer;">
+                    <i class="fa fa-bolt me-1"></i> LIVE BAZAAR ACTIVE
+                </span>
+                <span class="text-white-50 d-none d-md-inline">Hyperlocal Fulfillment Within 2-4 Hours</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="../assetsecm/images/uwanbuy-logo-long-full-color-01.png" alt="UwanBuy Logo" style="height: 38px; width: auto;">
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMainCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navMainCollapse">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold text-dark" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active fw-bold text-danger" href="category.html?category=all">All Categories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold text-dark" href="../thriftz/index.html">Thrift-Z Market</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold text-dark" href="../betasup/index.html">Betasup Soups</a>
+                    </li>
+                </ul>
+
+                <!-- Right Utilities -->
+                <div class="d-flex align-items-center gap-2 mt-3 mt-lg-0">
+                    <div class="d-flex align-items-center gap-2 px-3 py-2 rounded-pill bg-light border cursor-pointer" id="btnNavWallet">
+                        <i class="bi bi-wallet2 text-danger"></i>
+                        <span class="small fw-semibold text-muted">Wallet:</span>
+                        <strong class="text-dark" id="wallet-balance-display">₦25,000.00</strong>
+                    </div>
+
+                    <button class="btn btn-brand position-relative shadow-sm px-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+                        <i class="bi bi-cart3"></i>
+                        <span class="d-none d-sm-inline ms-1">Cart</span>
+                        <span id="cartBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark d-none">
+                            0
+                        </span>
+                    </button>
+
+                    <div class="ms-1">
+                        <div class="auth-guest-only d-flex gap-2">
+                            <button class="btn btn-sm btn-outline-secondary rounded-pill px-3" id="btn-login-trigger">Sign In</button>
+                            <button class="btn btn-sm btn-brand rounded-pill px-3" id="btn-register-trigger">Register</button>
+                        </div>
+                        <div class="auth-logged-only d-none dropdown">
+                            <button class="btn btn-sm btn-light border rounded-pill px-3 dropdown-toggle d-flex align-items-center gap-1" data-bs-toggle="dropdown">
+                                <i class="bi bi-person-circle text-danger"></i>
+                                <span class="auth-user-name">Account</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-3">
+                                <li><a class="dropdown-item" href="javascript:void(0)" id="btnMyProfile"><i class="bi bi-person me-2"></i> My Address & Hub</a></li>
+                                <li><a class="dropdown-item" href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#boughtItemsOffcanvas"><i class="bi bi-bag-check me-2"></i> Past Orders</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-danger" href="javascript:void(0)" id="btnLogoutUser"><i class="bi bi-box-arrow-right me-2"></i> Sign Out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <main class="container py-4">
+
+        <!-- Breadcrumb Header -->
+        <nav aria-label="breadcrumb" class="mb-3">
+            <ol class="breadcrumb small">
+                <li class="breadcrumb-item"><a href="index.html" class="text-decoration-none text-muted">Home</a></li>
+                <li class="breadcrumb-item"><a href="category.html?category=all" class="text-decoration-none text-muted">Categories</a></li>
+                <li class="breadcrumb-item active text-danger fw-bold" id="breadcrumbCategoryName">All Products</li>
+            </ol>
+        </nav>
+
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
+            <div>
+                <h2 class="display-6 fw-bold text-dark mb-1" id="pageCategoryTitle">All Products</h2>
+                <p class="text-muted small mb-0">Showing available stock at <strong class="storefront-current-location">Tanke Hub, Ilorin</strong></p>
+            </div>
+
+            <!-- Sorting & Search Controls -->
+            <div class="d-flex gap-2">
+                <input type="text" id="categorySearchInput" class="form-control form-control-sm rounded-3" placeholder="Filter this category..." style="width: 220px;">
+                <select id="sortSelect" class="form-select form-select-sm rounded-3 fw-semibold text-secondary" style="width: 180px;">
+                    <option value="featured">Sort: Featured</option>
+                    <option value="price_asc">Price: Low to High</option>
+                    <option value="price_desc">Price: High to Low</option>
+                    <option value="rating">Highest Rated</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Category Filter Chips -->
+        <div class="d-flex flex-wrap gap-2 mb-4 pb-2 border-bottom" id="categoryFilterBar">
+            <a href="category.html?category=all" class="filter-chip" data-category="all">
+                <i class="bi bi-grid-fill"></i> All Departments
+            </a>
+            <a href="category.html?category=groceries" class="filter-chip" data-category="groceries">
+                <i class="bi bi-basket2-fill"></i> Groceries & Foodstuff
+            </a>
+            <a href="category.html?category=gadgets" class="filter-chip" data-category="gadgets">
+                <i class="bi bi-phone-fill"></i> Gadgets & Tech
+            </a>
+            <a href="category.html?category=fashion" class="filter-chip" data-category="fashion">
+                <i class="bi bi-person-arms-up"></i> Fashion & Wears
+            </a>
+            <a href="category.html?category=home" class="filter-chip" data-category="home">
+                <i class="bi bi-house-door-fill"></i> Home Essentials
+            </a>
+        </div>
+
+        <!-- Products Grid -->
+        <div class="row g-4 mb-5" id="categoryProductsGrid">
+            <!-- Rendered dynamically -->
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-dark text-white pt-5 pb-4 mt-5">
+        <div class="container text-center small text-white-50">
+            <p>&copy; 2026 UwanBuy Hyperlocal Marketplace. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Quick View Specs Modal -->
+    <div id="quickViewModal">
+        <div class="p-4" id="quickViewContent"></div>
+    </div>
+
+    <!-- Registration Modal -->
+    <div id="modal-register">
+        <div class="p-4">
+            <h5 class="fw-bold mb-2 text-dark">Join UwanBuy Hyperlocal</h5>
+            <p class="text-muted small mb-4">Complete your registration with your full delivery address and preferred AreaBazaar Hub.</p>
+            <form id="form-register">
+                <div class="row g-2 mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold">Full Name</label>
+                        <input type="text" id="reg-fullname" class="form-control form-control-sm" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold">Phone Number</label>
+                        <input type="tel" id="reg-phone" class="form-control form-control-sm" required>
+                    </div>
+                </div>
+                <div class="row g-2 mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold">Email</label>
+                        <input type="email" id="reg-email" class="form-control form-control-sm">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label small fw-bold">Password</label>
+                        <input type="password" id="reg-password" class="form-control form-control-sm" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label small fw-bold">Wallet PIN</label>
+                        <input type="password" id="reg-pin" maxlength="4" class="form-control form-control-sm text-center fw-bold" required>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <label class="form-label small fw-bold">Address Line 1</label>
+                    <input type="text" id="reg-address1" class="form-control form-control-sm" required>
+                </div>
+                <div class="row g-2 mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold">Landmark</label>
+                        <input type="text" id="reg-landmark" class="form-control form-control-sm" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold">Hub Location</label>
+                        <select id="reg-hub" class="form-select form-select-sm">
+                            <option value="Tanke Hub, Ilorin">Tanke Hub, Ilorin</option>
+                            <option value="Ikeja Hub, Lagos">Ikeja Central Hub, Lagos</option>
+                            <option value="Gwarinpa Hub, Abuja">Gwarinpa Hub, Abuja</option>
+                            <option value="Rumuokwuta Hub, Port Harcourt">Rumuokwuta Hub, Port Harcourt</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-brand w-100 py-2">Create Account & Activate Wallet</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Sign In Modal -->
+    <div id="modal-login">
+        <div class="p-4">
+            <h5 class="fw-bold mb-3 text-dark">Sign In to UwanBuy</h5>
+            <form id="form-login">
+                <div class="mb-3">
+                    <label class="form-label small fw-bold">Phone Number or Email</label>
+                    <input type="text" id="login-identifier" class="form-control" required>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label small fw-bold">Password</label>
+                    <input type="password" id="login-password" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-brand w-100 py-3">Sign In</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Location Switcher Modal -->
+    <div id="modal-location-switcher">
+        <div class="p-4">
+            <h5 class="fw-bold mb-3"><i class="bi bi-geo-alt-fill text-danger me-2"></i> Select Shopping Hub</h5>
+            <div class="list-group">
+                <button type="button" class="list-group-item list-group-item-action p-3 hub-select-item" data-hub="Tanke Hub, Ilorin">
+                    <div class="fw-bold text-dark">Tanke Hub, Ilorin</div>
+                    <small class="text-success fw-bold">Live Session Running</small>
+                </button>
+                <button type="button" class="list-group-item list-group-item-action p-3 hub-select-item" data-hub="Ikeja Hub, Lagos">
+                    <div class="fw-bold text-dark">Ikeja Central Hub, Lagos</div>
+                </button>
+                <button type="button" class="list-group-item list-group-item-action p-3 hub-select-item" data-hub="Gwarinpa Hub, Abuja">
+                    <div class="fw-bold text-dark">Gwarinpa Hub, Abuja</div>
+                </button>
+                <button type="button" class="list-group-item list-group-item-action p-3 hub-select-item" data-hub="Rumuokwuta Hub, Port Harcourt">
+                    <div class="fw-bold text-dark">Rumuokwuta Hub, Port Harcourt</div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Live AreaBazaar Session Alert Modal -->
+    <div id="modal-bazaar-session-alert">
+        <div class="p-4 text-center">
+            <span class="badge bg-danger px-3 py-2 rounded-pill fw-bold mb-2">LIVE AREABAZAAR SESSION</span>
+            <h4 class="fw-bold text-dark mb-2">Tanke Hyperlocal Live Wave</h4>
+            <p class="text-muted small mb-4">An active wave auction is ongoing for verified shoppers in Tanke Hub, Ilorin.</p>
+            <div class="d-grid gap-2">
+                <a href="../Tanke/ch-frm-bazaar-page-sample.html" class="btn btn-brand py-3 fw-bold">
+                    <i class="fa fa-gavel me-2"></i> Enter Tanke Live Bazaar
+                </a>
+                <button type="button" class="btn btn-light" onclick="$('#modal-bazaar-session-alert').iziModal('close');">
+                    Stay on UwanBuy
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Offcanvas -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="cartOffcanvas">
+        <div class="offcanvas-header border-bottom bg-light">
+            <h5 class="offcanvas-title fw-bold"><i class="bi bi-cart3 text-danger me-2"></i> Shopping Cart</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body d-flex flex-column p-3">
+            <div id="cartItemsContainer" class="flex-grow-1 overflow-auto"></div>
+            <div class="border-top pt-3">
+                <div class="d-flex justify-content-between fw-bold mb-3 fs-5">
+                    <span>Total:</span>
+                    <span id="cartTotalDisplay" class="text-danger">₦0</span>
+                </div>
+                <a href="index.html" class="btn btn-brand w-100 py-3 fw-bold">Proceed to Checkout</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.6.1/js/iziModal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+    <script src="assets/js/storefront-core.js"></script>
+    <script src="assets/js/uwanbuy.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            const allProducts = window.AreaBazaarStorefront.UWANBUY_PRODUCTS;
+            const urlParams = new URLSearchParams(window.location.search);
+            const activeCategory = (urlParams.get('category') || 'all').toLowerCase();
+
+            // Initialize Modals
+            $("#quickViewModal").iziModal({ title: 'Product Specifications', subtitle: 'Temporary Specifications & Quick Actions', headerColor: '#0f172a', width: 720, radius: 14, padding: 0 });
+            $("#modal-register").iziModal({ title: 'Create Account & Profile', subtitle: 'Address & Hyperlocal Hub Setup', headerColor: '#0f172a', width: 680, radius: 14, padding: 0 });
+            $("#modal-login").iziModal({ title: 'Sign In', subtitle: 'Access your wallet and orders', headerColor: '#0f172a', width: 440, radius: 14, padding: 0 });
+            $("#modal-location-switcher").iziModal({ title: 'Hyperlocal Hub Location', subtitle: 'Select your local AreaBazaar fulfillment center', headerColor: '#0f172a', width: 520, radius: 14, padding: 0 });
+            $("#modal-bazaar-session-alert").iziModal({ title: 'Live AreaBazaar Session Alert', subtitle: 'Active wave running in your registered hub', headerColor: '#b91c1c', width: 500, radius: 16, padding: 0 });
+
+            // Set Active Chip
+            $(`.filter-chip[data-category="${activeCategory}"]`).addClass('active');
+
+            // Set Page Titles
+            const categoryNames = {
+                all: 'All Department Products',
+                groceries: 'Groceries & Staple Foodstuff',
+                gadgets: 'Gadgets & Tech Accessories',
+                fashion: 'Wears & Fashion',
+                home: 'Home Essentials & Kitchenware'
+            };
+            const catTitle = categoryNames[activeCategory] || 'Category Products';
+            $('#pageCategoryTitle').text(catTitle);
+            $('#breadcrumbCategoryName').text(catTitle);
+
+            function filterAndRender() {
+                let items = allProducts;
+                if (activeCategory !== 'all') {
+                    items = items.filter(p => p.category.toLowerCase() === activeCategory);
+                }
+
+                const query = $('#categorySearchInput').val().toLowerCase().trim();
+                if (query) {
+                    items = items.filter(p => p.name.toLowerCase().includes(query) || p.description.toLowerCase().includes(query));
+                }
+
+                const sort = $('#sortSelect').val();
+                if (sort === 'price_asc') items.sort((a, b) => a.price - b.price);
+                else if (sort === 'price_desc') items.sort((a, b) => b.price - a.price);
+                else if (sort === 'rating') items.sort((a, b) => b.rating - a.rating);
+
+                const $grid = $('#categoryProductsGrid');
+                $grid.empty();
+
+                if (items.length === 0) {
+                    $grid.html('<div class="col-12 text-center py-5 text-muted"><h5>No products found matching your criteria</h5></div>');
+                    return;
+                }
+
+                items.forEach(p => {
+                    $grid.append(`
+                        <div class="col-6 col-md-4 col-lg-3">
+                            <div class="card product-card">
+                                <div class="product-img-wrapper">
+                                    <span class="badge bg-danger-subtle text-danger position-absolute top-0 start-0 m-2 small">${p.categoryName}</span>
+                                    <img src="${p.image}" alt="${p.name}">
+                                </div>
+                                <div class="card-body p-3 d-flex flex-column">
+                                    <small class="text-muted mb-1">${p.brand} • ${p.unitLabel}</small>
+                                    <h6 class="card-title fw-bold text-dark lh-sm mb-2 flex-grow-1">${p.name}</h6>
+                                    <div class="mb-3">
+                                        <span class="fw-bold fs-5 text-danger">${window.AreaBazaarStorefront.formatNaira(p.price)}</span>
+                                        ${p.compareAtPrice ? `<span class="text-decoration-line-through text-muted small ms-1">${window.AreaBazaarStorefront.formatNaira(p.compareAtPrice)}</span>` : ''}
+                                    </div>
+                                    <div class="d-flex gap-2 mt-auto">
+                                        <button class="btn btn-view-details flex-grow-1" data-id="${p.id}">
+                                            <i class="bi bi-eye me-1"></i> View Details
+                                        </button>
+                                        <button class="btn btn-brand btn-add-cart px-3" data-id="${p.id}">
+                                            <i class="bi bi-cart-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `);
+                });
+            }
+
+            filterAndRender();
+
+            $('#categorySearchInput').on('input', filterAndRender);
+            $('#sortSelect').on('change', filterAndRender);
+
+            // Quick View Specs Modal
+            $(document).on('click', '.btn-view-details', function () {
+                const id = $(this).data('id');
+                const p = allProducts.find(prod => prod.id === id);
+                if (!p) return;
+
+                let specsHtml = '';
+                if (p.specifications) {
+                    for (const [k, v] of Object.entries(p.specifications)) {
+                        const val = Array.isArray(v) ? v.join(', ') : v;
+                        specsHtml += `<span class="spec-pill"><strong>${k}:</strong> ${val}</span>`;
+                    }
+                }
+
+                const modalHtml = `
+                    <div class="row g-4 align-items-center">
+                        <div class="col-md-5 text-center">
+                            <img src="${p.image}" alt="${p.name}" class="img-fluid rounded-4 shadow-sm" style="max-height: 240px; object-fit: contain;">
+                        </div>
+                        <div class="col-md-7">
+                            <span class="badge bg-danger mb-2">${p.categoryName}</span>
+                            <h4 class="fw-bold text-dark mb-1">${p.name}</h4>
+                            <p class="text-muted small mb-2">${p.description}</p>
+                            
+                            <div class="p-2 bg-light rounded-3 mb-3">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="text-muted small">Current Price:</span>
+                                    <strong class="fs-4 text-danger">${window.AreaBazaarStorefront.formatNaira(p.price)}</strong>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center small text-muted">
+                                    <span>Stock Status:</span>
+                                    <span class="text-success fw-bold"><i class="bi bi-check-circle-fill me-1"></i> In Stock (${p.quantity} available)</span>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="small fw-bold text-secondary mb-1">Temporary Specifications:</div>
+                                <div class="d-flex flex-wrap">${specsHtml}</div>
+                            </div>
+
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-brand flex-grow-1 py-2 btn-add-cart" data-id="${p.id}">
+                                    <i class="bi bi-cart-plus me-1"></i> Add To Cart
+                                </button>
+                                <a href="product-details.html?id=${p.id}" class="btn btn-dark py-2 px-3 fw-bold">
+                                    See Full Details <i class="bi bi-arrow-right ms-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                $('#quickViewContent').html(modalHtml);
+                $('#quickViewModal').iziModal('open');
+            });
+
+            // Cart Handling
+            $(document).on('click', '.btn-add-cart', function () {
+                const id = $(this).data('id');
+                const product = allProducts.find(p => p.id === id);
+                if (product) {
+                    let cart = JSON.parse(localStorage.getItem('uwanbuy_cart') || '[]');
+                    const existing = cart.find(i => i.id === product.id);
+                    if (existing) existing.qty++;
+                    else cart.push({ ...product, qty: 1 });
+                    localStorage.setItem('uwanbuy_cart', JSON.stringify(cart));
+                    window.AreaBazaarStorefront.refresh();
+                    iziToast.success({ message: `${product.name} added to cart!`, position: 'topRight' });
+                }
+            });
+
+            // Location switch
+            $('#btnChangeLocation').on('click', () => $('#modal-location-switcher').iziModal('open'));
+            $('.hub-select-item').on('click', function () {
+                const hub = $(this).data('hub');
+                window.AreaBazaarStorefront.setLocation(hub);
+                $('#modal-location-switcher').iziModal('close');
+                iziToast.success({ message: `Location updated to ${hub}`, position: 'topRight' });
+                if (hub === 'Tanke Hub, Ilorin') {
+                    $('#liveBazaarBannerBadge').show();
+                    setTimeout(() => $('#modal-bazaar-session-alert').iziModal('open'), 500);
+                } else {
+                    $('#liveBazaarBannerBadge').hide();
+                }
+            });
+
+            $('#btn-register-trigger').on('click', () => $('#modal-register').iziModal('open'));
+            $('#btn-login-trigger').on('click', () => $('#modal-login').iziModal('open'));
+        });
+    </script>
+</body>
+
+</html>

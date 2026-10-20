@@ -1,0 +1,268 @@
+/* AreaBazaar Design System - Light Mode Refined */
+
+:root {
+    --primary-h: 212;
+    --primary-s: 92%;
+    --primary-l: 45%;
+
+    --bg-main: #f8fafc;
+    --bg-card: #ffffff;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.5);
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--text-main);
+    font-weight: 700;
+}
+
+.sidebar h4.fw-bold,
+.sidebar h5.fw-bold,
+.sidebar h4.fw-bold .small {
+    color: #ffc107 !important;
+}
+
+.dash-header h2.fw-bold {
+    color: #ffc107 !important;
+}
+
+.text-muted,
+.text-mutedSmall {
+    color: var(--text-muted) !important;
+}
+
+/* Glassmorphism Card (Light Mode Refined) */
+.glass-card {
+    background: var(--bg-card);
+    border: 1px solid #e2e8f0;
+    box-shadow: var(--shadow-md);
+    border-radius: 1.25rem;
+    padding: 1.5rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.glass-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+}
+
+/* Force all text in cards to be high-contrast */
+.glass-card h4,
+.glass-card h5,
+.glass-card p,
+.glass-card li,
+.glass-card span:not(.text-primary):not(.badge) {
+    color: var(--text-main) !important;
+}
+
+/* Premium Buttons */
+.btn-premium {
+    background: hsl(var(--primary-h), var(--primary-s), var(--primary-l));
+    color: #ffffff !important;
+    font-weight: 600;
+    border-radius: 0.75rem;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    transition: all 0.2s;
+}
+
+.btn-premium:hover {
+    background: hsl(var(--primary-h), var(--primary-s), calc(var(--primary-l) - 5%));
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+    transform: scale(1.02);
+}
+
+.btn-outline-premium {
+    border: 2px solid hsl(var(--primary-h), var(--primary-s), var(--primary-l));
+    color: hsl(var(--primary-h), var(--primary-s), var(--primary-l));
+    font-weight: 600;
+    border-radius: 0.75rem;
+}
+
+/* Modal Styling (Light Mode) */
+.iziModal .iziModal-content {
+    background-color: #ffffff !important;
+    color: var(--text-main) !important;
+    padding: 0 !important;
+}
+
+.iziModal .iziModal-content *:not(button):not(button *):not(.badge):not(.badge *) {
+    color: var(--text-main) !important;
+}
+
+.bg-primary.badge {
+    color: #ffffff !important;
+}
+
+.iziModal .iziModal-header {
+    background: transparent;
+    /* Allow JS headerColor to show */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.iziModal .iziModal-header-title {
+    color: #ffffff !important;
+    font-weight: 800 !important;
+    font-size: 1.1rem !important;
+    font-family: 'Inter', sans-serif !important;
+}
+
+.iziModal .iziModal-header-subtitle {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.iziModal label {
+    color: #1e293b !important;
+    font-weight: 700 !important;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.iziModal .form-control,
+.iziModal .form-select {
+    background-color: #f8fafc !important;
+    color: var(--text-main) !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 0.6rem;
+    padding: 0.75rem;
+}
+
+.iziModal .form-control::placeholder {
+    color: #94a3b8 !important;
+    opacity: 1 !important;
+}
+
+/* Notice & Alerts */
+.notice-text {
+    font-size: 0.85rem;
+    background: #fffbeb;
+    border-left: 4px solid #f59e0b;
+    padding: 1.25rem;
+    color: #92400e !important;
+    border-radius: 0.75rem;
+    font-weight: 600;
+}
+
+.notice-text * {
+    color: inherit !important;
+}
+
+/* Badge Logic */
+.wave-badge {
+    background: #ef4444;
+    color: white !important;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+/* Separators */
+.modal-separator {
+    text-align: center;
+    position: relative;
+    margin: 2rem 0;
+}
+
+.modal-separator span {
+    background: #ffffff;
+    padding: 0 1rem;
+    color: var(--text-muted);
+    position: relative;
+    z-index: 2;
+    font-weight: 600;
+}
+
+.modal-separator::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: #e2e8f0;
+    z-index: 1;
+}
+
+/* Quantity Controls */
+.qty-btn {
+    background: #f1f5f9;
+    color: var(--text-main);
+    border: 1px solid #cbd5e1;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+}
+
+.qty-input {
+    border: 1px solid #cbd5e1;
+    background: white;
+    color: var(--text-main) !important;
+    text-align: center;
+    font-weight: 700;
+}
+
+/* Fix specific colors for primary accents */
+.text-primary,
+.iziModal .text-primary,
+.iziModal .text-primary * {
+    color: hsl(var(--primary-h), var(--primary-s), var(--primary-l)) !important;
+}
+
+.text-white,
+.text-white-legible {
+    color: #ffffff !important;
+}
+
+/* Global Table Row Interaction Highlight */
+.table tbody tr:hover td,
+.table tbody tr:hover th {
+    background-color: #f1f5f9;
+}
+
+.table tbody tr.active-interaction-row td,
+.table tbody tr.active-interaction-row th,
+.table tbody tr:focus-within td,
+.table tbody tr:focus-within th {
+    background-color: #fff3cd !important;
+    box-shadow: inset 0 0 0 9999px #fff3cd !important;
+    border-top: 2px solid #ffc107 !important;
+    border-bottom: 2px solid #ffc107 !important;
+}
+
+.table tbody tr.active-interaction-row,
+.table tbody tr:focus-within {
+    outline: none !important;
+}
+
+.table tbody tr.active-interaction-row td:first-child,
+.table tbody tr:focus-within td:first-child {
+    border-left: 2px solid #ffc107 !important;
+}
+
+.table tbody tr.active-interaction-row td:last-child,
+.table tbody tr:focus-within td:last-child {
+    border-right: 2px solid #ffc107 !important;
+}
+
+/* Dispatch Card Interaction Highlight */
+.dispatch-card.active-interaction-row {
+    background-color: #fff3cd !important;
+    border: 2px solid #ffc107 !important;
+    border-left-width: 5px !important;
+    box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3) !important;
+}
