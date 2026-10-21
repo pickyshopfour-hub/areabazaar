@@ -1,0 +1,1698 @@
+{
+  "store": {
+    "id": "uwanbuy",
+    "name": "UwanBUY Hyperlocal",
+    "currency": "NGN",
+    "locale": "en-NG",
+    "activeHub": "Tanke Hub, Ilorin",
+    "vatPercent": 7.5
+  },
+  "sections": [
+    {
+      "key": "groceries",
+      "title": "Groceries & Foodstuff",
+      "subtitle": "Staples, oils, soup kits & pantry essentials delivered fresh from local farms and markets",
+      "icon": "bi-basket2-fill",
+      "displayOrder": 1,
+      "categories": [
+        {
+          "id": "1k-groceries-package",
+          "name": "₦1,000 Groceries Packages",
+          "description": "Affordable pre-packaged cooking essentials"
+        },
+        {
+          "id": "cooking-oils",
+          "name": "Cooking Oils & Fats",
+          "description": "Vegetable, palm, groundnut & soya oils"
+        },
+        {
+          "id": "grains-staples",
+          "name": "Grains & Food Stuffs",
+          "description": "Rice, garri, beans, semo & flours"
+        },
+        {
+          "id": "seasonings-spices",
+          "name": "Seasonings & Spices",
+          "description": "Cubes, curry, thyme, crayfish & pepper"
+        },
+        {
+          "id": "tubers-produce",
+          "name": "Tubers & Fresh Produce",
+          "description": "Yam tubers, potatoes, plantains & onions"
+        }
+      ]
+    },
+    {
+      "key": "gadgets",
+      "title": "Gadgets, Tech & Appliances",
+      "subtitle": "Verified electronics, kitchen appliances, cooling systems, power solutions & computing",
+      "icon": "bi-cpu-fill",
+      "displayOrder": 2,
+      "categories": [
+        {
+          "id": "cookers-stoves",
+          "name": "Gas & Electric Cookers",
+          "description": "Glass & stainless gas burners, electric hotplates & ovens"
+        },
+        {
+          "id": "kitchen-small-appliances",
+          "name": "Kitchen Small Appliances",
+          "description": "Boilers, kettles, blenders & microwave ovens"
+        },
+        {
+          "id": "home-cooling",
+          "name": "Air Conditioners & Cooling",
+          "description": "Split, standing, window, mobile & central AC units"
+        },
+        {
+          "id": "refrigeration",
+          "name": "Refrigerators & Freezers",
+          "description": "Single/double compressor fridges & chest freezers"
+        },
+        {
+          "id": "power-appliances",
+          "name": "Power & Utility Appliances",
+          "description": "Stabilizers 1kVA-30kVA, generators & pressing irons"
+        },
+        {
+          "id": "computing-tech",
+          "name": "Computing, Laptops & Phones",
+          "description": "Core i7 laptops, smartphones & digital accessories"
+        }
+      ]
+    },
+    {
+      "key": "fashion",
+      "title": "Wears & Fashion",
+      "subtitle": "Modern streetwear, traditional wear, footwear and everyday accessories",
+      "icon": "bi-bag-heart-fill",
+      "displayOrder": 3,
+      "categories": [
+        {
+          "id": "mens-wear",
+          "name": "Men's Clothing",
+          "description": "Hoodies, shirts, chinos & native wear"
+        },
+        {
+          "id": "womens-wear",
+          "name": "Women's Fashion",
+          "description": "Dresses, tops, denim & casuals"
+        },
+        {
+          "id": "footwear",
+          "name": "Footwear & Shoes",
+          "description": "Sneakers, loafers & everyday slides"
+        }
+      ]
+    },
+    {
+      "key": "home",
+      "title": "Home Essentials",
+      "subtitle": "Cookware, kitchenware, laundry solutions and home storage essentials",
+      "icon": "bi-house-door-fill",
+      "displayOrder": 4,
+      "categories": [
+        {
+          "id": "cookware-tableware",
+          "name": "Cookware & Dining",
+          "description": "Granite non-stick pots, pans & tableware"
+        },
+        {
+          "id": "cleaning-laundry",
+          "name": "Cleaning & Utility",
+          "description": "Spin mops, buckets, organizers & storage bins"
+        }
+      ]
+    },
+    {
+      "key": "trending",
+      "title": "Trending & Hyperlocal Deals",
+      "subtitle": "Fast-moving bestsellers with steep promotional discounts",
+      "icon": "bi-lightning-charge-fill",
+      "displayOrder": 5,
+      "categories": [
+        {
+          "id": "flash-deals",
+          "name": "Flash Deals",
+          "description": "Top discount products for Tanke Hub"
+        }
+      ]
+    }
+  ],
+  "pickupPoints": [
+    {
+      "id": "pku_tanke_01",
+      "name": "Tanke Central Hub Pickup",
+      "landmark": "Opposite Sanrab Filling Station",
+      "address": "14 University Road, Tanke, Ilorin",
+      "operatingHours": "Monday - Saturday: 8:00 AM - 7:30 PM",
+      "phone": "0803-123-9901",
+      "feeMinor": 0
+    },
+    {
+      "id": "pku_sanrab_02",
+      "name": "Sanrab Junction Collection Center",
+      "landmark": "Beside TotalEnergies Station",
+      "address": "Sanrab Junction, Tanke, Ilorin",
+      "operatingHours": "Monday - Saturday: 8:30 AM - 6:30 PM",
+      "phone": "0803-123-9902",
+      "feeMinor": 0
+    },
+    {
+      "id": "pku_tipper_03",
+      "name": "Tipper Garage Hub Locker",
+      "landmark": "Near Unilorin Motor Park",
+      "address": "Tipper Garage Area, Tanke, Ilorin",
+      "operatingHours": "Monday - Sunday: 8:00 AM - 8:00 PM",
+      "phone": "0803-123-9903",
+      "feeMinor": 0
+    }
+  ],
+  "deliveryFeeStandardMinor": 120000,
+  "deliveryFeeExpressSurchargeMinor": 150000,
+  "agentAccounts": [
+    {
+      "hubCode": "FRM-ILN-042",
+      "hubName": "Tanke Central Hub",
+      "agentName": "Chukwuma Adebayo",
+      "phone": "0801-234-5678",
+      "whatsapp": "+2348012345678",
+      "rating": 4.9,
+      "badge": "Accredited Senior Agent",
+      "photo": "../assetsecm/images/users/user-1.jpg"
+    },
+    {
+      "hubCode": "FRM-ILN-088",
+      "hubName": "Sanrab Station Hub",
+      "agentName": "Fatima Sanni",
+      "phone": "0803-987-6543",
+      "whatsapp": "+2348039876543",
+      "rating": 4.85,
+      "badge": "Accredited Field Agent",
+      "photo": "../assetsecm/images/users/user-2.jpg"
+    }
+  ],
+  "companyBank": {
+    "bankName": "First Bank of Nigeria",
+    "accountName": "UwanBUY Direct Settlement / AreaBazaar Hub",
+    "accountNumber": "3109845210",
+    "ussdCode": "*894*3109845210*AMOUNT#",
+    "sortCode": "011150000"
+  },
+  "products": [
+    {
+      "id": "uw_gro_001",
+      "storeId": "uwanbuy",
+      "sectionKey": "groceries",
+      "categoryId": "1k-groceries-package",
+      "categoryName": "₦1,000 Groceries Packages",
+      "subCategoryId": "1k-packages",
+      "title": "₦1,000 Soup Starter Kit (Egusi + Crayfish + Seasoning)",
+      "brand": "UwanBuy Fresh",
+      "sku": "UWB-1K-EGU",
+      "priceMinor": 100000,
+      "salePriceMinor": 100000,
+      "compareAtPriceMinor": 150000,
+      "currency": "NGN",
+      "unitLabel": "pack",
+      "packSize": "1 combo bag",
+      "rating": 4.9,
+      "reviewsCount": 84,
+      "stock": {
+        "quantity": 120,
+        "status": "in_stock",
+        "allowBackorder": true,
+        "moq": 1
+      },
+      "media": [
+        {
+          "type": "image",
+          "url": "../assetsecm/images/soups/egusi-soup-roundbowl.png",
+          "thumbnailUrl": "../assetsecm/images/soups/egusi-soup-roundbowl.png",
+          "altText": "1k Soup Starter Kit"
+        }
+      ],
+      "badges": [
+        "1k Special",
+        "Best Value"
+      ],
+      "description": "Smart budget ₦1,000 kitchen bundle featuring pre-measured fresh melon seeds (egusi), ground crayfish, seasoning cubes, and dry chili pepper.",
+      "specifications": {
+        "kitContents": "Handpicked melon seed (egusi) 200g, Ground Oron crayfish 50g, 4 Maggi cubes, Dried chili pepper",
+        "servings": "Cooks 1 medium soup pot (3-4 meals)",
+        "shelfLife": "3 Months in dry storage",
+        "packaging": "Sealed hygienic food pouch",
+        "origin": "Kwara Local Farmers"
+      },
+      "status": "published"
+    },
+    {
+      "id": "uw_gro_002",
+      "storeId": "uwanbuy",
+      "sectionKey": "groceries",
+      "categoryId": "1k-groceries-package",
+      "categoryName": "₦1,000 Groceries Packages",
+      "subCategoryId": "1k-packages",
+      "title": "₦1,000 Stew Essentials Mini Kit",
+      "brand": "UwanBuy Fresh",
+      "sku": "UWB-1K-STEW",
+      "priceMinor": 100000,
+      "salePriceMinor": 100000,
+      "compareAtPriceMinor": 140000,
+      "currency": "NGN",
+      "unitLabel": "pack",
+      "packSize": "1 combo pack",
+      "rating": 4.8,
+      "reviewsCount": 62,
+      "stock": {
+        "quantity": 95,
+        "status": "in_stock",
+        "allowBackorder": true,
+        "moq": 1
+      },
+      "media": [
+        {
+          "type": "image",
+          "url": "../assetsecm/images/soups/efo-riro-roundbowl.png",
+          "thumbnailUrl": "../assetsecm/images/soups/efo-riro-roundbowl.png",
+          "altText": "1k Stew Essentials"
+        }
+      ],
+      "badges": [
+        "1k Special"
+      ],
+      "description": "Essential stew ingredients bundled for instant convenience: tomato paste sachet (2pcs), mini vegetable oil pouch (100ml), curry, thyme, and red pepper flakes.",
+      "specifications": {
+        "kitContents": "Gino tomato mix 2x70g, 100ml Pure Vegetable Oil, Ducros curry & thyme, Seasoning cubes",
+        "preparationTime": "Ready for quick stew",
+        "packaging": "Ziploc vacuum pack"
+      },
+      "status": "published"
+    },
+    {
+      "id": "uw_gro_003",
+      "storeId": "uwanbuy",
+      "sectionKey": "groceries",
+      "categoryId": "cooking-oils",
+      "categoryName": "Cooking Oils & Fats",
+      "subCategoryId": "vegetable-oil",
+      "title": "Golden Penny Pure Vegetable Cooking Oil (5 Litres)",
+      "brand": "Golden Penny",
+      "sku": "UWB-OIL-GP5L",
+      "priceMinor": 1350000,
+      "salePriceMinor": 1350000,
+      "compareAtPriceMinor": 1550000,
+      "currency": "NGN",
+      "unitLabel": "jerrycan",
+      "packSize": "5L Jerrycan",
+      "rating": 4.9,
+      "reviewsCount": 156,
+      "stock": {
+        "quantity": 45,
+        "status": "in_stock",
+        "allowBackorder": false,
+        "moq": 1
+      },
+      "media": [
+        {
+          "type": "image",
+          "url": "../assetsecm/images/soups/banga-soup-roundbowl.png",
+          "thumbnailUrl": "../assetsecm/images/soups/banga-soup-roundbowl.png",
+          "altText": "Golden Penny 5L"
+        }
+      ],
+      "badges": [
+        "Bestseller",
+        "Vitamin A Enriched"
+      ],
+      "description": "Triple-refined clear vegetable cooking oil. Naturally cholesterol-free and fortified with Vitamin A for wholesome family meals.",
+      "specifications": {
+        "volume": "5.0 Litres",
+        "cholesterol": "0mg per serving",
+        "vitaminAEnriched": "Yes",
+        "packageType": "Tamper-proof ergonomic jerrycan",
+        "shelfLife": "24 Months"
+      },
+      "status": "published"
+    },
+    {
+      "id": "uw_gro_004",
+      "storeId": "uwanbuy",
+      "sectionKey": "groceries",
+      "categoryId": "cooking-oils",
+      "categoryName": "Cooking Oils & Fats",
+      "subCategoryId": "palm-oil",
+      "title": "Pure Unadulterated Okomu Red Palm Oil (5 Litres)",
+      "brand": "Okomu Mills",
+      "sku": "UWB-OIL-PLM5L",
+      "priceMinor": 1100000,
+      "salePriceMinor": 1100000,
+      "compareAtPriceMinor": 1250000,
+      "currency": "NGN",
+      "unitLabel": "keg",
+      "packSize": "5L Keg",
+      "rating": 4.85,
+      "reviewsCount": 94,
+      "stock": {
+        "quantity": 38,
+        "status": "in_stock",
+        "allowBackorder": false,
+        "moq": 1
+      },
+      "media": [
+        {
+          "type": "image",
+          "url": "../assetsecm/images/soups/ogbono-soup-roundbowl.png",
+          "thumbnailUrl": "../assetsecm/images/soups/ogbono-soup-roundbowl.png",
+          "altText": "Red Palm Oil 5L"
+        }
+      ],
+      "badges": [
+        "Traditional Grade",
+        "Zero Additives"
+      ],
+      "description": "Rich, aromatic, deep-red palm oil cold-pressed from farm-fresh ripe oil palm fruits. Zero water dilution or artificial dyes.",
+      "specifications": {
+        "volume": "5.0 Litres",
+        "tasteProfile": "Authentic rich palm aroma",
+        "processing": "Cold-settled, zero chemical additives",
+        "origin": "Edo State Oil Mills"
+      },
+      "status": "published"
+    },
+    {
+      "id": "uw_gro_005",
+      "storeId": "uwanbuy",
+      "sectionKey": "groceries",
+      "categoryId": "grains-staples",
+      "categoryName": "Grains & Food Stuffs",
+      "subCategoryId": "rice-grains",
+      "title": "Mama Gold Premium Long Grain Parboiled Rice (50kg)",
+      "brand": "Mama Gold",
+      "sku": "UWB-RIC-50KG",
+      "priceMinor": 4500000,
+      "salePriceMinor": 4500000,
+      "compareAtPriceMinor": 5200000,
+      "currency": "NGN",
+      "unitLabel": "bag (50kg)",
+      "packSize": "50kg Sack",
+      "rating": 4.9,
+      "reviewsCount": 210,
+      "stock": {
+        "quantity": 35,
+        "status": "in_stock",
+        "allowBackorder": true,
+        "moq": 1
+      },
+      "media": [
+        {
+          "type": "image",
+          "url": "../assetsecm/images/soups/egusi-soup-roundbowl.png",
+          "thumbnailUrl": "../assetsecm/images/soups/egusi-soup-roundbowl.png",
+          "altText": "Rice 50kg"
+        }
+      ],
+      "badges": [
+        "Stone Free",
+        "Premium Milled"
+      ],
+      "description": "De-stoned, non-sticky long grain parboiled Nigerian rice. Milled with automated modern sorters for uniform white grains.",
+      "specifications": {
+        "netWeight": "50kg",
+        "grainType": "Long Grain Parboiled",
+        "purity": "99.8% Stone-free optical sort",
+        "origin": "Nigeria",
+        "storage": "Store in a cool, dry place off concrete floor"
+      },
+      "status": "published"
+    },
+    {
+      "id": "uw_gro_006",
+      "storeId": "uwanbuy",
+      "sectionKey": "groceries",
+      "categoryId": "grains-staples",
+      "categoryName": "Grains & Food Stuffs",
+      "subCategoryId": "garri",
+      "title": "Ijebu White Garri Crispy & Fine Grained (10kg Paint Rubber)",
+      "brand": "Ijebu Heritage",
+      "sku": "UWB-GAR-10KG",
+      "priceMinor": 850000,
+      "salePriceMinor": 850000,
+      "compareAtPriceMinor": 1000000,
+      "currency": "NGN",
+      "unitLabel": "container (10kg)",
+      "packSize": "10kg Bucket",
+      "rating": 4.95,
+      "reviewsCount": 178,
+      "stock": {
+        "quantity": 52,
+        "status": "in_stock",
+        "allowBackorder": true,
+        "moq": 1
+      },
+      "media": [
+        {
+          "type": "image",
+          "url": "../assetsecm/images/soups/afang-soup-roundbowl.png",
+          "thumbnailUrl": "../assetsecm/images/soups/afang-soup-roundbowl.png",
+          "altText": "Ijebu Garri"
+        }
+      ],
+      "badges": [
+        "Crispy",
+        "Extra Sour"
+      ],
+      "description": "Authentic sun-dried Ijebu cassava flakes. Extra crisp and dry, perfectly fermented for drinking with groundnut or making swallow.",
+      "specifications": {
+        "netWeight": "10kg",
+        "moistureContent": "Under 8% (Extended storage life)",
+        "granulation": "Ultra-fine sifted",
+        "fermentation": "3-day traditional press"
+      },
+      "status": "published"
+    },
+    {
+      "id": "uw_gro_007",
+      "storeId": "uwanbuy",
+      "sectionKey": "groceries",
+      "categoryId": "tubers-produce",
+      "categoryName": "Tubers & Fresh Produce",
+      "subCategoryId": "yam",
+      "title": "Fresh Benue Premium Pounded-Yam Tubers (Bundle of 5)",
+      "brand": "Benue Farmgate",
+      "sku": "UWB-YAM-BND5",
+      "priceMinor": 1250000,
+      "salePriceMinor": 1250000,
+      "compareAtPriceMinor": 1500000,
+      "currency": "NGN",
+      "unitLabel": "bundle (5 tubers)",
+      "packSize": "5 Large Tubers",
+      "rating": 4.88,
+      "reviewsCount": 67,
+      "stock": {
+        "quantity": 28,
+        "status": "in_stock",
+        "allowBackorder": false,
+        "moq": 1
+      },
+      "media": [
+        {
+          "type": "image",
+          "url": "../assetsecm/images/soups/edikang-soup-roundbowl.png",
+          "thumbnailUrl": "../assetsecm/images/soups/edikang-soup-roundbowl.png",
+          "altText": "Benue Yam Tubers"
+        }
+      ],
+      "badges": [
+        "Farm Fresh",
+        "Poundable"
+      ],
+      "description": "Top-grade white yam tubers direct from Benue State soil. Starchy, dry texture ideal for smooth pounded yam and boiling.",
+      "specifications": {
+        "quantity": "5 Large Mature Tubers",
+        "approximateWeight": "18kg - 22kg total",
+        "variety": "White Guinea Yam (Dioscorea rotundata)",
+        "state": "Firm, rot-free guarantee"
+      },
+      "status": "published"
+    },
+    {
+      "id": "uw_gdt_101",
+      "storeId": "uwanbuy",
+      "sectionKey": "gadgets",
+      "categoryId": "cookers-stoves",
+      "categoryName": "Gas & Electric Cookers",
+      "subCategoryId": "gas-cooker",
+      "title": "Maxi Glass-Top 4-Burner Auto-Ignition Gas Cooker Unit with Oven",
+      "brand": "Maxi",
+      "sku": "GDT-GAS-4B-GLS",
+      "priceMinor": 8500000,
+      "salePriceMinor": 8500000,
+      "compareAtPriceMinor": 9800000,
+      "currency": "NGN",
+      "unitLabel": "unit",
+      "packSize": "1 Cooker Unit",
+      "rating": 4.85,
+      "reviewsCount": 49,
+      "stock": {
+        "quantity": 14,
+        "status": "in_stock",
+        "allowBackorder": false,
+        "moq": 1
+      },
+      "media": [
+        {
+          "type": "image",
+          "url": "assets/images/placeholders/gas-cooker.svg",
+          "thumbnailUrl": "assets/images/placeholders/gas-cooker.svg",
+          "altText": "Maxi Glass-Top 4-Burner Auto-Ignition Gas Cooker Unit with Oven"
+        }
+      ],
+      "badges": [
+        "Verified Inspection",
+        "High Economy"
+      ],
+      "description": "Heavy-duty 4-burner gas cooker unit featuring tempered glass top, electronic pulse auto-ignition, high gas economy valves, and built-in convection baking oven.",
+      "specifications": {
+        "burners": "4 Burners (1 Rapid, 2 Semi-rapid, 1 Simmer)",
+        "ignition": "Yes (Pulse Electronic)",
+        "gasEconomy": "High economy",
+        "topMaterial": "Toughened Tempered Glass",
+        "oven": "Yes (Gas Oven & Grill with Thermostat)",
+        "specialFeatures": "Flame failure safety device, cast iron pan supports, interior oven light",
+        "inspectionDiagnostics": {
+          "frame": "Optimal",
+          "body": "Scratch free",
+          "pipes": "Optimal pressure tested",
+          "burners": "Optimal uniform flame ring",
+          "regulators": "Optimal smooth brass spindles",
+          "igniters": "Optimal instant spark",
+          "standoffs": "Optimal non-slip rubber feet",
+          "racks": "Optimal chrome-plated steel",
+          "ovenRacks": "Optimal double shelf tier",
+          "ovenDoorHinges": "Optimal counterbalanced tension",
+          "ovenDoorGlass": "Intact dual-pane tempered",
+          "ovenDoorLockon": "Optimal airtight gasket latch"
+        }
+      },
+      "status": "published"
+    },
+    {
+      "id": "uw_gdt_102",
+      "storeId": "uwanbuy",
+      "sectionKey": "gadgets",
+      "categoryId": "cookers-stoves",
+      "categoryName": "Gas & Electric Cookers",
+      "subCategoryId": "electric-cooker",
+      "title": "MasterChef 2-Plate Non-Sticky Electric Hotplate Cooker Unit",
+      "brand": "MasterChef",
+      "sku": "GDT-ELE-2P-NST",
+      "priceMinor": 2200000,
+      "salePriceMinor": 2200000,
+      "compareAtPriceMinor": 2600000,
+      "currency": "NGN",
+      "unitLabel": "unit",
+      "packSize": "1 Cooker Unit",
+      "rating": 4.75,
+      "reviewsCount": 38,
+      "stock": {
+        "quantity": 22,
+        "status": "in_stock",
+        "allowBackorder": false,
+        "moq": 1
+      },
+      "media": [
+        {
+          "type": "image",
+          "url": "assets/images/placeholders/gas-cooker.svg",
+          "thumbnailUrl": "assets/images/placeholders/gas-cooker.svg",
+          "altText": "MasterChef 2-Plate Non-Sticky Electric Hotplate Cooker Unit"
+        }
+      ],
+      "badges": [
+        "Compact",
+        "Fast Heat"
+      ],
+      "description": "Double solid cast iron electric cooker unit with sealed spiral elements, non-sticky thermo-coated enamel body, and individual 5-stage rotary heat regulators.",
+      "specifications": {
+        "burners": "2 Plates (1500W + 1000W)",
+        "topMaterial": "Non-sticky thermo-enamel",
+        "oven": "No",
+        "powerRating": "2500 Watts total (220-240V)",
+        "specialFeatures": "Overheat thermostat cut-off, dual power indicator lamps",
+        "inspectionDiagnostics": {
+          "frame": "Optimal reinforced steel",
+          "body": "Scratch free",
+          "wireElements": "Optimal encased sealed spiral",
+          "burners": "Optimal rapid thermal transfer",
+          "regulators": "Optimal smooth click switches",
+          "standoffs": "Optimal heavy-duty standoffs",
+          "racks": "Optimal integrated plate rim",
+          "ovenRacks": "Not applicable",
+          "ovenDoorHinges": "Not applicable",
+          "ovenDoorGlass": "Not applicable",
+          "ovenDoorLockon": "Not applicable"
+        }
+      },
+      "status": "published"
+    },
+    {
+      "id": "uw_gdt_103",
+      "storeId": "uwanbuy",
+      "sectionKey": "gadgets",
+      "categoryId": "kitchen-small-appliances",
+      "categoryName": "Kitchen Small Appliances",
+      "subCategoryId": "boilers-kettles",
+      "title": "Century 2.2L Detachable Stainless Electric Boiler / Rapid Kettle",
+      "brand": "Century",
+      "sku": "GDT-BOI-22L-STN",
+      "priceMinor": 950000,
+      "salePriceMinor": 950000,
+      "compareAtPriceMinor": 1200000,
+      "currency": "NGN",
+      "unitLabel": "unit",
+      "packSize": "1 Kettle",
+      "rating": 4.9,
+      "reviewsCount": 112,
+      "stock": {
+        "quantity": 40,
+        "status": "in_stock",
+        "allowBackorder": true,
+        "moq": 1
+      },
+      "media": [
+        {
+          "type": "image",
+          "url": "assets/images/placeholders/water-boiler.svg",
+          "thumbnailUrl": "assets/images/placeholders/water-boiler.svg",
+          "altText": "Century 2.2L Detachable Stainless Electric Boiler / Rapid Kettle"
+        }
+      ],
+      "badges": [
+        "Auto-Switch",
+        "Grade 304 Stainless"
+      ],
+      "description": "High-capacity 2.2L electric water boiler with 360-degree cordless swivel articulation base, concealed rapid element, dry-boil safety protection, and LED status lamp.",
+      "specifications": {
+        "type": "Electric",
+        "structure": "Jug structure",
+        "volume": "2.2 Litres (1.7L and above)",
+        "power": "1800 Watts (220-240V)",
+        "articulation": "Detachable 360-degree power base",
+        "autoSwitch": "Yes (Steam sensitive cutoff)",
+        "thermostat": "Yes (Strix British thermostat)",
+        "tap": "No (Precision pouring spout)",
+        "alarm": "No (Click switch indicator)",
+        "levelIndicator": "Yes (Internal water gauge line)",
+        "inputRange": "220-240 Volts AC",
+        "cord": "Yes (Heavy-gauge insulated)",
+        "plug": "Yes (Fused 3-pin standard)",
+        "inspectionDiagnostics": {
+          "element": "Optimal concealed heating disc",
+          "seal": "Optimal silicone leakproof ring",
+          "body": "Scratch free brushed stainless",
+          "lid": "Optimal spring-assisted locking lid",
+          "cord": "Optimal intact jacket",
+          "indicators": "Optimal bright neon lamp",
+          "switch": "Optimal responsive tactile switch",
+          "autoSwitch": "Optimal boils and switches off immediately",
+          "plug": "Optimal fused 13A plug"
+        }
+      },
+      "status": "published"
+    },
+    {
+      "id": "uw_gdt_104",
+      "storeId": "uwanbuy",
+      "sectionKey": "gadgets",
+      "categoryId": "kitchen-small-appliances",
+      "categoryName": "Kitchen Small Appliances",
+      "subCategoryId": "blenders",
+      "title": "Binatone 1.5L Heavy Duty 3-Cup Speed Blender with Grinder",
+      "brand": "Binatone",
+      "sku": "GDT-BLE-3C-500W",
+      "priceMinor": 1850000,
+      "salePriceMinor": 1850000,
+      "compareAtPriceMinor": 2200000,
+      "currency": "NGN",
+      "unitLabel": "unit",
+      "packSize": "1 Blender Set",
+      "rating": 4.88,
+      "reviewsCount": 73,
+      "stock": {
+        "quantity": 19,
+        "status": "in_stock",
+        "allowBackorder": false,
+        "moq": 1
+      },
+      "media": [
+        {
+          "type": "image",
+          "url": "assets/images/placeholders/blender.svg",
+          "thumbnailUrl": "assets/images/placeholders/blender.svg",
+          "altText": "Binatone 1.5L Heavy Duty 3-Cup Speed Blender with Grinder"
+        }
+      ],
+      "badges": [
+        "Stainless Blades",
+        "Pulse Control"
+      ],
+      "description": "Powerful 500W blender with 3 interchangeable cups (main pitcher, dry mill, wet grinder), 2-speed step regulator, and hardened 4-blade surgical stainless steel cutters.",
+      "specifications": {
+        "cups": "3 Cups (1.5L jug, dry spice mill, coffee grinder)",
+        "volume": "1.5 Litres main jug",
+        "power": "500 Watts (220-240V 50Hz)",
+        "speedRegulator": "Yes (2 Speed settings + Pulse)",
+        "pieces": "3 Pieces in pack",
+        "inputRange": "220-240 Volts AC",
+        "cord": "Yes",
+        "plug": "Yes (3-pin fused plug)",
+        "inspectionDiagnostics": {
+          "motorPower": "Optimal high torque copper wound motor",
+          "cupIntegrity": "Intact crystal-clear shatterproof polycarbonate",
+          "controls": "Optimal smooth rotary switch",
+          "cover": "Optimal rubber-sealed cover with feeder cap",
+          "blades": "Optimal razor sharp 4-wing stainless",
+          "cord": "Optimal heavy-duty cord",
+          "plug": "Optimal intact plug",
+          "articulator": "Detachable interlock gear teeth",
+          "appearance": "Clean pristine white housing"
+        }
+      },
+      "status": "published"
+    },
+    {
+      "id": "uw_gdt_105",
+      "storeId": "uwanbuy",
+      "sectionKey": "gadgets",
+      "categoryId": "kitchen-small-appliances",
+      "categoryName": "Kitchen Small Appliances",
+      "subCategoryId": "microwave-ovens",
+      "title": "LG 25L NeoChef Smart Inverter Microwave Oven with Grill",
+      "brand": "LG Electronics",
+      "sku": "GDT-MIC-25L-INV",
+      "priceMinor": 8900000,
+      "salePriceMinor": 8900000,
+      "compareAtPriceMinor": 10500000,
+      "currency": "NGN",
+      "unitLabel": "unit",
+      "packSize": "1 Microwave Unit",
+      "rating": 4.95,
+      "reviewsCount": 41,
+      "stock": {
+        "quantity": 8,
+        "status": "in_stock",
+        "allowBackorder": false,
+        "moq": 1
+      },
+      "media": [
+        {
+          "type": "image",
+          "url": "assets/images/placeholders/microwave-oven.svg",
+          "thumbnailUrl": "assets/images/placeholders/microwave-oven.svg",
+          "altText": "LG 25L NeoChef Smart Inverter Microwave Oven with Grill"
+        }
+      ],
+      "badges": [
+        "Smart Inverter",
+        "EasyClean Coating"
+      ],
+      "description": "Smart inverter microwave oven featuring 25L capacity, quartz grill heater, 1000W output, 99.99% antibacterial EasyClean cavity, and touch glass presets.",
+      "specifications": {
+        "volume": "25 Litres",
+        "power": "1000W Microwave / 900W Quartz Grill",
+        "controlType": "Digital Touch Screen + Rotary Knob",
+        "preset": "Yes (Auto Cook, Reheat, Defrost, Grill)",
+        "inputRange": "220-240V / 50Hz",
+        "cord": "Yes",
+        "plug": "Yes",
+        "inspectionDiagnostics": {
+          "microwaveFunction": "Optimal uniform magnetron emission",
+          "grillFunction": "Optimal quartz heating bar glow",
+          "convectionFunction": "Optimal internal circulation",
+          "analogControl": "Not applicable",
+          "digitalControl": "Optimal responsive touch panel",
+          "indicatorLights": "Optimal bright white LED clock",
+          "digitalDisplay": "Optimal segment crystal display",
+          "bodyIntegrity": "Optimal seamless matte black body",
+          "bodyCover": "Optimal scratch-free exterior cover",
+          "timer": "Optimal precision digital countdown timer",
+          "innerLight": "Optimal interior white LED light",
+          "appearance": "Clean showroom condition"
+        }
+      },
+      "status": "published"
+    },
+    {
+      "id": "uw_gdt_106",
+      "storeId": "uwanbuy",
+      "sectionKey": "gadgets",
+      "categoryId": "home-cooling",
+      "categoryName": "Air Conditioners & Cooling",
+      "subCategoryId": "split-ac",
+      "title": "Hisense 1.5 HP Inverter Fast-Cooling Split AC Unit",
+      "brand": "Hisense",
+      "sku": "GDT-AC-SPL-15HP",
+      "priceMinor": 28500000,
+      "salePriceMinor": 28500000,
+      "compareAtPriceMinor": 32000000,
+      "currency": "NGN",
+      "unitLabel": "set (indoor + outdoor)",
+      "packSize": "2-Box System",
+      "rating": 4.92,
+      "reviewsCount": 55,
+      "stock": {
+        "quantity": 11,
+        "status": "in_stock",
+        "allowBackorder": false,
+        "moq": 1
+      },
+      "media": [
+        {
+          "type": "image",
+          "url": "assets/images/placeholders/air-conditioner.svg",
+          "thumbnailUrl": "assets/images/placeholders/air-conditioner.svg",
+          "altText": "Hisense 1.5 HP Inverter Fast-Cooling Split AC Unit"
+        }
+      ],
+      "badges": [
+        "Copper Condenser",
+        "Inverter Energy Saver"
+      ],
+      "description": "Whisper-quiet 1.5 HP split air conditioner with dual inverter compressor, 100% pure grooved copper piping, gold fin anti-corrosion, and intelligent remote controller.",
+      "specifications": {
+        "coolingPower": "1.5 HP (12,000 BTU/h)",
+        "refrigerant": "RA-134a Eco-friendly gas",
+        "watts": "1150 Watts",
+        "powerEconomy": "Economy inverter tier",
+        "startingVoltage": "Regular low-voltage start (160V-265V)",
+        "control": "Remote controller with digital LCD",
+        "display": "Yes (Hidden LED temperature display on indoor unit)",
+        "indoorFacePlate": "Pearl White Glossy finish",
+        "specialFeatures": "4D Auto-swing airflow, sleep mode, turbo cooling, anti-fungus self-cleaning",
+        "inspectionDiagnostics": {
+          "compressor": "Optimal high compression ratio",
+          "refrigerantGas": "Present factory pressurized",
+          "installationKit": "Present 3m pure copper connecting pipe included",
+          "remoteController": "Optimal responsive with batteries",
+          "airSwing": "Optimal horizontal & vertical motorized louvers",
+          "pipeConnectors": "Optimal flared brass nut joints",
+          "pipeIntegrity": "Optimal leak-tested copper lines",
+          "indoorOutdoorCompatibility": "Compatible factory matched pairs",
+          "indoorOutdoorBrand": "Same (Hisense genuine)",
+          "indoorUnitFan": "Optimal silent cross-flow blower",
+          "indoorUnitFilter": "Optimal high density washable mesh",
+          "indoorUnitBrackets": "Available heavy-duty wall mounting plate",
+          "outdoorUnitFan": "Optimal axial propeller fan",
+          "outdoorUnitFins": "Optimal pristine gold-fin coils",
+          "outdoorBrackets": "Present heavy-duty powder-coated steel brackets",
+          "appearance": "Clean zero blemishes"
+        }
+      },
+      "status": "published"
+    },
+    {
+      "id": "uw_gdt_107",
+      "storeId": "uwanbuy",
+      "sectionKey": "gadgets",
+      "categoryId": "home-cooling",
+      "categoryName": "Air Conditioners & Cooling",
+      "subCategoryId": "mobile-ac",
+      "title": "Midea 1.5 HP Portable Mobile Air Conditioner with 4 Wheels",
+      "brand": "Midea",
+      "sku": "GDT-AC-MOB-15HP",
+      "priceMinor": 23500000,
+      "salePriceMinor": 23500000,
+      "compareAtPriceMinor": 27000000,
+      "currency": "NGN",
+      "unitLabel": "unit",
+      "packSize": "1 Mobile AC Unit",
+      "rating": 4.86,
+      "reviewsCount": 29,
+      "stock": {
+        "quantity": 7,
+        "status": "in_stock",
+        "allowBackorder": false,
+        "moq": 1
+      },
+      "media": [
+        {
+          "type": "image",
+          "url": "assets/images/placeholders/air-conditioner.svg",
+          "thumbnailUrl": "assets/images/placeholders/air-conditioner.svg",
+          "altText": "Midea 1.5 HP Portable Mobile Air Conditioner with 4 Wheels"
+        }
+      ],
+      "badges": [
+        "No Installation Needed",
+        "Rolls Anywhere"
+      ],
+      "description": "Fully mobile 1.5 HP portable room cooler. Equipped with 4 smooth castor wheels, flexible exhaust hot air duct with window adapter, and integrated dehumidifier.",
+      "specifications": {
+        "coolingPower": "1.5 HP (12,000 BTU)",
+        "refrigerant": "RA-134a",
+        "watts": "1200 Watts",
+        "dehumidifier": "Present (30 Litres/Day extraction)",
+        "outputDirection": "Open forward motorized sweep",
+        "powerEconomy": "Economy auto-cycle",
+        "startingVoltage": "240 V",
+        "control": "Digital onboard touch panel + remote controller",
+        "display": "Yes (Blue backlight LCD)",
+        "runOffWaterSystem": "Replaceable can / continuous water pipe drain",
+        "inbuiltWaterDryer": "Present (Auto-condensate evaporation)",
+        "wheels": "4 Wheels heavy-duty multi-directional castor wheels",
+        "specialFeatures": "24-hour on/off timer, sleep curve mode, washable air filter",
+        "inspectionDiagnostics": {
+          "compressor": "Optimal low vibration rotary",
+          "refrigerantGas": "Optimal factory sealed charge",
+          "onBoardControl": "Functional capacitive touch",
+          "remoteController": "Present with full mode toggles",
+          "airSwing": "Optimal auto vertical louvers",
+          "outputFan": "Optimal multi-speed centrifugal blower",
+          "airFilter": "Optimal clean dual washable filters",
+          "hotAirDuct": "Present 1.5m accordion expandable hose",
+          "airDuctOpening": "Optimal snug locking flange",
+          "airDuctWindowAdapter": "Present adjustable window slider seal kit",
+          "runOffWaterSystem": "Optimal internal collection tank with overflow alert",
+          "wheels": "All 4 wheels optimal smooth rolling",
+          "appearance": "Clean modern white gloss casing"
+        }
+      },
+      "status": "published"
+    },
+    {
+      "id": "uw_gdt_108",
+      "storeId": "uwanbuy",
+      "sectionKey": "gadgets",
+      "categoryId": "refrigeration",
+      "categoryName": "Refrigerators & Freezers",
+      "subCategoryId": "refrigerators",
+      "title": "Haier Thermocool 250L Frost-Free Double Door Refrigerator",
+      "brand": "Haier Thermocool",
+      "sku": "GDT-REF-250L-DD",
+      "priceMinor": 34500000,
+      "salePriceMinor": 34500000,
+      "compareAtPriceMinor": 39000000,
+      "currency": "NGN",
+      "unitLabel": "unit",
+      "packSize": "1 Refrigerator",
+      "rating": 4.93,
+      "reviewsCount": 68,
+      "stock": {
+        "quantity": 10,
+        "status": "in_stock",
+        "allowBackorder": false,
+        "moq": 1
+      },
+      "media": [
+        {
+          "type": "image",
+          "url": "assets/images/placeholders/refrigerator.svg",
+          "thumbnailUrl": "assets/images/placeholders/refrigerator.svg",
+          "altText": "Haier Thermocool 250L Frost-Free Double Door Refrigerator"
+        }
+      ],
+      "badges": [
+        "Frost-Free",
+        "Low Voltage Start"
+      ],
+      "description": "Premium 250-litre double door refrigerator featuring door water dispenser, 0.25 HP tropicalized single compressor, frost-free air tower, and 100-hour cooling retention.",
+      "specifications": {
+        "size": "Medium-Large 250 Litres",
+        "volume": "185L Fridge + 65L Top Freezer",
+        "freezer": "Top freezer with multi-flow cooling vents",
+        "chillingPower": "Single compressor - 0.25 HP",
+        "refrigerant": "RA-60 Eco hydrocarbon gas",
+        "frostType": "Frost-free (No manual defrosting needed)",
+        "doors": "Double door with integrated recessed handles",
+        "waterDispenser": "Present (Built-in 2.5L door water dispenser)",
+        "compressorCondenserLocation": "Bottom rear sealed housing",
+        "bodyColour": "Titanium Metallic Silver",
+        "doorType": "Magnetic seal reversible door",
+        "innerLight": "Fridge apartment yes, freezer apartment yes",
+        "standOffWheels": "Yes (2 leveling feet + 2 rear roller wheels)",
+        "coolingFan": "Present (Multi-air flow circulation fan)",
+        "cord": "Long 1.8m insulated power cord",
+        "plug": "13amp fused British plug",
+        "inspectionDiagnostics": {
+          "compressor": "Optimal silent tropical compressor",
+          "condenser": "Optimal internal skin-condenser",
+          "thermostat": "Optimal electronic dial with quick freeze",
+          "pipes": "Optimal heavy-gauge copper capillary lines",
+          "doorClasp": "Optimal airtight magnetic gasket",
+          "thermostatRegulator": "Functional 7-level temperature range",
+          "innerLinning": "Optimal antibacterial white ABS lining",
+          "racksAndBaskets": "Present 3 tempered glass shelves + crisper drawer + 4 door balconies",
+          "standOffWheels": "Optimal leveled and stable",
+          "bodySurface": "Intact scratch-free metallic silver",
+          "coolingFan": "Present whisper-quiet airflow",
+          "serviceCoverPlate": "Present secured with screws",
+          "drainHole": "Present clear of debris",
+          "innerLight": "Optimal automatic door-activated LED"
+        }
+      },
+      "status": "published"
+    },
+    {
+      "id": "uw_gdt_109",
+      "storeId": "uwanbuy",
+      "sectionKey": "gadgets",
+      "categoryId": "refrigeration",
+      "categoryName": "Refrigerators & Freezers",
+      "subCategoryId": "freezers",
+      "title": "Century 300L Deep Fast-Freezing Chest Freezer Unit",
+      "brand": "Century",
+      "sku": "GDT-FRZ-300L-CST",
+      "priceMinor": 26500000,
+      "salePriceMinor": 26500000,
+      "compareAtPriceMinor": 30000000,
+      "currency": "NGN",
+      "unitLabel": "unit",
+      "packSize": "1 Chest Freezer",
+      "rating": 4.89,
+      "reviewsCount": 42,
+      "stock": {
+        "quantity": 12,
+        "status": "in_stock",
+        "allowBackorder": false,
+        "moq": 1
+      },
+      "media": [
+        {
+          "type": "image",
+          "url": "assets/images/placeholders/refrigerator.svg",
+          "thumbnailUrl": "assets/images/placeholders/refrigerator.svg",
+          "altText": "Century 300L Deep Fast-Freezing Chest Freezer Unit"
+        }
+      ],
+      "badges": [
+        "Super Freeze",
+        "Key Lock"
+      ],
+      "description": "Massive 300L deep chest freezer built with extra-thick polyurethane insulation for 120-hour power failure freeze retention. Features aluminum inner lining, key lock, and defrost drain.",
+      "specifications": {
+        "size": "Extra Large 300 Litres",
+        "volume": "300L net storage volume",
+        "chillingPower": "Single compressor - 0.25 HP Tropicalized",
+        "refrigerant": "RA-60 Gas",
+        "frostType": "Frost (Direct cooling coils wrapped 360-degrees)",
+        "doors": "Single door top-opening balanced lid with safety lock",
+        "waterDispenser": "Absent (Not applicable to deep freezers)",
+        "compressorCondenserLocation": "Bottom side ventilated compartment",
+        "bodyColour": "Classic White Poly-Enamel",
+        "doorType": "Top counterbalance door with safety latch and key",
+        "innerLight": "Yes (Lid-mounted auto illumination)",
+        "standOffWheels": "Yes (4 heavy-duty roller wheels)",
+        "coolingFan": "Present (Compressor cooling fan)",
+        "cord": "Long insulated cord",
+        "plug": "13amp fused plug",
+        "inspectionDiagnostics": {
+          "compressor": "Optimal high freezing pressure",
+          "condenser": "Optimal copper wire tube condenser",
+          "thermostat": "Optimal adjustable rotary control",
+          "pipes": "Optimal copper refrigeration circuit",
+          "doorClasp": "Optimal airtight rubber seal gasket",
+          "thermostatRegulator": "Functional dual mode (Fridge/Freezer switch)",
+          "innerLinning": "Optimal embossed aluminum anti-rust sheet",
+          "racksAndBaskets": "Present 2 removable wire storage baskets",
+          "standOffWheels": "Optimal smooth gliding wheels",
+          "bodySurface": "Intact scratch-free white finish",
+          "coolingFan": "Present active ventilation",
+          "serviceCoverPlate": "Present protective compressor grill",
+          "drainHole": "Present front water drain outlet with plug",
+          "innerLight": "Optimal bright light when lid opened"
+        }
+      },
+      "status": "published"
+    },
+    {
+      "id": "uw_gdt_110",
+      "storeId": "uwanbuy",
+      "sectionKey": "gadgets",
+      "categoryId": "power-appliances",
+      "categoryName": "Power & Utility Appliances",
+      "subCategoryId": "stabilizers",
+      "title": "Sollatek 5.0 kVA Heavy-Duty Relay Automatic Voltage Stabilizer",
+      "brand": "Sollatek",
+      "sku": "GDT-STB-5KVA-REL",
+      "priceMinor": 7800000,
+      "salePriceMinor": 7800000,
+      "compareAtPriceMinor": 9200000,
+      "currency": "NGN",
+      "unitLabel": "unit",
+      "packSize": "1 Stabilizer",
+      "rating": 4.96,
+      "reviewsCount": 87,
+      "stock": {
+        "quantity": 18,
+        "status": "in_stock",
+        "allowBackorder": true,
+        "moq": 1
+      },
+      "media": [
+        {
+          "type": "image",
+          "url": "assets/images/placeholders/voltage-stabilizer.svg",
+          "thumbnailUrl": "assets/images/placeholders/voltage-stabilizer.svg",
+          "altText": "Sollatek 5.0 kVA Heavy-Duty Relay Automatic Voltage Stabilizer"
+        }
+      ],
+      "badges": [
+        "Compressor Guard",
+        "Wide Range 100V-260V"
+      ],
+      "description": "5000VA automatic voltage regulator engineered specifically to protect refrigerators, deep freezers, ACs, and whole-apartment electronics from voltage surges and sags.",
+      "specifications": {
+        "powerKva": "5 kVA (1/1.5/2/3/3.5/4/5/10/20/30 options available)",
+        "boost": "Yes (Dual boost transformer taps)",
+        "delay": "Yes (3-minute compressor protection delay timer)",
+        "inputSelection": "Yes (Wide 100V-260V AC / Normal 140V-260V)",
+        "outputSockets": "Yes (Dual 13A universal sockets + terminal block)",
+        "inputRange": "100V - 260V AC",
+        "cord": "Yes",
+        "plug": "Yes (15A industrial plug)",
+        "inspectionDiagnostics": {
+          "body": "Scratched free heavy-gauge powder-coated steel",
+          "controlButtons": "Optimal firm tactile delay and mode toggles",
+          "booster": "Optimal rapid step-up auto transformers",
+          "cord": "Optimal thick copper core cable",
+          "plug": "Optimal solid plug pins",
+          "outputSocket": "Optimal snug brass connection sockets",
+          "coolingFan": "Yes (Thermal auto-activated exhaust fan)",
+          "indicatorLight": "Optimal dual green/red power and protection LEDs",
+          "inputVoltMeter": "Optimal digital calibrated LCD",
+          "outputVoltmeter": "Optimal steady 220V calibrated display",
+          "delaySwitch": "Optimal selector toggles 6s / 180s delay",
+          "boosterSwitch": "Optimal high/low mode switch",
+          "delayFunction": "Optimal holds power 3 mins during surge recovery"
+        }
+      },
+      "status": "published"
+    },
+    {
+      "id": "uw_gdt_111",
+      "storeId": "uwanbuy",
+      "sectionKey": "gadgets",
+      "categoryId": "power-appliances",
+      "categoryName": "Power & Utility Appliances",
+      "subCategoryId": "generators",
+      "title": "Firman 3.8 kVA Semi-Silent Petrol Generator with Key Starter & Wheels",
+      "brand": "Firman",
+      "sku": "GDT-GEN-38KVA-KEY",
+      "priceMinor": 38000000,
+      "salePriceMinor": 38000000,
+      "compareAtPriceMinor": 42500000,
+      "currency": "NGN",
+      "unitLabel": "unit",
+      "packSize": "1 Generator Unit",
+      "rating": 4.91,
+      "reviewsCount": 63,
+      "stock": {
+        "quantity": 9,
+        "status": "in_stock",
+        "allowBackorder": false,
+        "moq": 1
+      },
+      "media": [
+        {
+          "type": "image",
+          "url": "assets/images/placeholders/voltage-stabilizer.svg",
+          "thumbnailUrl": "assets/images/placeholders/voltage-stabilizer.svg",
+          "altText": "Firman 3.8 kVA Semi-Silent Petrol Generator with Key Starter & Wheels"
+        }
+      ],
+      "badges": [
+        "100% Copper",
+        "Key Starter"
+      ],
+      "description": "3.8 kVA peak output generator with 100% copper alternator wire, electric push-button/key starter, heavy-duty AVR, large 15-litre fuel tank, and 2-wheel transport kit.",
+      "specifications": {
+        "fuelType": "Petrol (PMS)",
+        "ratedOutput": "3.5 kVA / 220 Volts / 50 Hz",
+        "maxOutput": "3.8 kVA Peak Surge Output",
+        "enginePower": "7.5 HP 4-stroke OHV single cylinder",
+        "starter": "Key / rope starter (Dual electric and manual recoil)",
+        "silence": "Semi-silent tuned muffler with spark arrestor (68dB at 7m)",
+        "avr": "Automatic Voltage Regulator (AVR) integrated",
+        "oilPort": "Present (Easy oil drain and dipstick check)",
+        "oilAlert": "Present (Low oil sensor auto-shutoff)",
+        "voltMeter": "Present (Analog needle display)",
+        "engineSwitch": "Present (Heavy-duty key tumbler switch)",
+        "acOutputSwitch": "Present (Circuit breaker trip switch)",
+        "acOutputVoltage": "220V - 230V AC",
+        "batteryCharger": "Present (12V / 8.3A DC port with leads)",
+        "starterBattery": "Present (Maintenance-free 12V 9Ah sealed battery)",
+        "fuelTankCapacity": "15.0 Litres with fuel gauge",
+        "wheels": "Yes (Heavy-duty puncture-proof rubber transport wheels)",
+        "inspectionDiagnostics": {
+          "ratedOutput": "Optimal full load tested to 3500 Watts continuous",
+          "maxOutput": "Optimal surge handles 1.5HP AC startup",
+          "starter": "Optimal one-turn key ignition",
+          "silence": "Optimal baffling and minimal vibration dampeners",
+          "avr": "Optimal steady 220V without flicker",
+          "oilAlert": "Optimal auto kills engine when oil drops below line",
+          "voltMeter": "Optimal calibrated accurate dial",
+          "engineSwitch": "Optimal crisp key operation with 2 keys",
+          "acOutputSwitch": "Optimal quick-trip overload safety",
+          "batteryCharger": "Optimal 12V DC output confirmed",
+          "starterBattery": "Optimal holds full charge",
+          "fuelTank": "Optimal rust-free, zero leaks, pristine filter cap",
+          "wheels": "Optimal smooth bearing movement with dual handles"
+        }
+      },
+      "status": "published"
+    },
+    {
+      "id": "uw_gdt_112",
+      "storeId": "uwanbuy",
+      "sectionKey": "gadgets",
+      "categoryId": "power-appliances",
+      "categoryName": "Power & Utility Appliances",
+      "subCategoryId": "pressing-irons",
+      "title": "Philips 2400W Ceramic Steam & Spray Pressing Iron",
+      "brand": "Philips",
+      "sku": "GDT-IRN-2400W-STM",
+      "priceMinor": 350000,
+      "salePriceMinor": 350000,
+      "compareAtPriceMinor": 450000,
+      "currency": "NGN",
+      "unitLabel": "unit",
+      "packSize": "1 Pressing Iron",
+      "rating": 4.88,
+      "reviewsCount": 134,
+      "stock": {
+        "quantity": 48,
+        "status": "in_stock",
+        "allowBackorder": true,
+        "moq": 1
+      },
+      "media": [
+        {
+          "type": "image",
+          "url": "assets/images/placeholders/pressing-iron.svg",
+          "thumbnailUrl": "assets/images/placeholders/pressing-iron.svg",
+          "altText": "Philips 2400W Ceramic Steam & Spray Pressing Iron"
+        }
+      ],
+      "badges": [
+        "Ceramic Glide",
+        "Anti-Scale"
+      ],
+      "description": "Ergonomic 2400W steam iron equipped with non-stick ceramic soleplate, precision steam boost jet, water spray nozzle, vertical steam function, and calc-clean slider.",
+      "specifications": {
+        "power": "2400 Watts (220-240 volts)",
+        "method": "Steam / sprinkle / dry multi-mode",
+        "surface": "Ceramic teflon face soleplate",
+        "base": "Yes (Stable heel rest)",
+        "inputRange": "220-240V AC",
+        "cord": "Yes (360-degree swivel cord)",
+        "plug": "Yes (3-pin fused plug)",
+        "inspectionDiagnostics": {
+          "handle": "Intact ergonomic soft-grip handle",
+          "control": "Optimal multi-fabric dial (Silk, Wool, Cotton, Linen)",
+          "thermostat": "Yes (Auto cycle thermostat with pilot light)",
+          "waterReservoir": "Intact 300ml transparent tank with leakproof cap",
+          "steamJet": "Optimal 180g high-pressure steam burst",
+          "waterJet": "Optimal fine atomized front water spray",
+          "indicatorLight": "Optimal thermostat heating status lamp",
+          "cord": "Optimal reinforced rubber stress relief",
+          "plug": "Optimal fused 13A plug"
+        }
+      },
+      "status": "published"
+    },
+    {
+      "id": "uw_gdt_113",
+      "storeId": "uwanbuy",
+      "sectionKey": "gadgets",
+      "categoryId": "computing-tech",
+      "categoryName": "Computing, Laptops & Phones",
+      "subCategoryId": "laptops",
+      "title": "HP EliteBook Core i7 Business Laptop (8GB RAM / 500GB HDD / 15.6\")",
+      "brand": "HP",
+      "sku": "GDT-LAP-HP-I7",
+      "priceMinor": 22500000,
+      "salePriceMinor": 22500000,
+      "compareAtPriceMinor": 26000000,
+      "currency": "NGN",
+      "unitLabel": "unit",
+      "packSize": "1 Laptop with Charger",
+      "rating": 4.94,
+      "reviewsCount": 89,
+      "stock": {
+        "quantity": 12,
+        "status": "in_stock",
+        "allowBackorder": false,
+        "moq": 1
+      },
+      "media": [
+        {
+          "type": "image",
+          "url": "assets/images/placeholders/laptop-core-i7.svg",
+          "thumbnailUrl": "assets/images/placeholders/laptop-core-i7.svg",
+          "altText": "HP EliteBook Core i7 Business Laptop (8GB RAM / 500GB HDD / 15.6\")"
+        }
+      ],
+      "badges": [
+        "Enterprise Grade",
+        "Spill-Proof Keyboard"
+      ],
+      "description": "High-durability HP EliteBook equipped with Intel Core i7 2.40GHz processor, 15.6-inch anti-glare display, 8GB DDR-3 RAM, 500GB high-speed drive, Windows 10 Pro, and extensive enterprise I/O ports.",
+      "specifications": {
+        "brand": "HP",
+        "model": "EliteBook 850 Series",
+        "processor": "Intel Core i7 Quad-Core",
+        "processorSpeed": "2.40 GHz (Turbo boost up to 3.40 GHz)",
+        "screenSize": "15.6 Inches Anti-Glare HD",
+        "colour": "Metallic Silver with Brushed Aluminum Palmrest",
+        "ram": "8 GB DDR-3 (Expandable dual slot)",
+        "hardDrive": "500 GB 7200 RPM Fast Hard Drive",
+        "webcam": "Present (720p HD Webcam with dual microphone array)",
+        "operatingSystem": "Microsoft Windows 10 Pro 64-bit Genuine Activated",
+        "keyboard": "Spill proof US-Qwerty-English with full numeric pad",
+        "trackPad": "Single touch, L,R physical click buttons, dedicated y-scroll zone",
+        "flexAngle": "180 degrees flat lay angle with zinc alloy hinges",
+        "cdDvd": "DVD-RW Multi-burner optical drive",
+        "wifi": "Present (Dual band 2.4GHz / 5.0GHz 802.11ac)",
+        "bluetooth": "Present (Bluetooth 4.2 LE)",
+        "usb": "USB 2.0 x 2, USB 3.0 x 2 SuperSpeed",
+        "audioPort": "Single I/O 3.5mm combo audio jack port",
+        "touchBar": "Dedicated touch controls: volume mute, Wi-Fi switch, brightness",
+        "onboardSpeaker": "Dual DTS Sound stereo studio speakers",
+        "ramSlots": "DDR-3 x 2 slots (Supports up to 16GB total)",
+        "hdmi": "Present 1 Full HDMI output",
+        "displayPort": "1 DisplayPort present",
+        "vga": "1 VGA port present",
+        "networkPort": "1 Gigabit RJ-45 LAN port present",
+        "phonePort": "1 RJ-11 modem port present",
+        "eSata": "1 e-SATA combo port present",
+        "pcmci": "1 ExpressCard / PCMCI slot present",
+        "sdTransflash": "1 Multi-format SD/Transflash card reader present",
+        "smartCard": "Absent",
+        "simSlot": "Absent",
+        "dockingPort": "1 Docking station base connector present",
+        "chargingPort": "19V 15mm barrel and pin center socket",
+        "chargingVoltageCurrent": "19V / 4.7A (90W Fast Charger)",
+        "battery": "6 cell 180 Whr Lithium-Ion battery",
+        "mobileCharger": "Included 19V AC adapter and power cable",
+        "specialFeatures": "Night-light keyboard LED lamp, lid-lock catch, biometric fingerprint scanner, modular base maintenance cover",
+        "inspectionDiagnostics": {
+          "bluetooth": "Optimal paired and transmitting",
+          "usb": "All USB ports optimal data speed tested",
+          "display": "Optimal bright crisp panel, zero dead pixels",
+          "hardDrive": "Optimal 100% SMART health check passed",
+          "webcam": "Optimal clear video and mic pickup",
+          "operatingSystem": "Optimal, fully activated with genuine drivers",
+          "keyboard": "Optimal all keys responsive with tactile feedback",
+          "trackPad": "Optimal smooth gliding and click registration",
+          "flexAngle": "Complete 180 degrees and stable firm hinges",
+          "dvdDrive": "Optimal read and write verified",
+          "wifi": "Optimal connects instantly to hub router",
+          "audioPort": "Optimal clean stereo sound without static",
+          "touchBar": "Fully functional capacitive hotkeys",
+          "onboardSpeaker": "Optimal stable sound without distortion",
+          "ramSlots": "Both slots functional verified with 8GB dual channel",
+          "nonFunctionalPorts": "None (All ports tested 100% functional)",
+          "battery": "Minimum 4.5 hours moderate use, 2.5 hours heavy, 7+ hours standby",
+          "mobileCharger": "Present original HP 90W power adapter",
+          "indicatorsLights": "All functional (power, charge, disc, Wi-Fi LEDs)",
+          "casing": "Intact, clean, no cracks, no deep scratches"
+        }
+      },
+      "status": "published"
+    },
+    {
+      "id": "uw_gdt_114",
+      "storeId": "uwanbuy",
+      "sectionKey": "gadgets",
+      "categoryId": "computing-tech",
+      "categoryName": "Computing, Laptops & Phones",
+      "subCategoryId": "smartphones",
+      "title": "Smartphone Pro Max 256GB Dual SIM 5G",
+      "brand": "Apex Mobile",
+      "sku": "GDT-PHN-256-5G",
+      "priceMinor": 85000000,
+      "salePriceMinor": 85000000,
+      "compareAtPriceMinor": 92000000,
+      "currency": "NGN",
+      "unitLabel": "unit",
+      "packSize": "1 Smartphone Box",
+      "rating": 4.95,
+      "reviewsCount": 114,
+      "stock": {
+        "quantity": 16,
+        "status": "in_stock",
+        "allowBackorder": false,
+        "moq": 1
+      },
+      "media": [
+        {
+          "type": "image",
+          "url": "assets/images/placeholders/smartphone-pro.svg",
+          "thumbnailUrl": "assets/images/placeholders/smartphone-pro.svg",
+          "altText": "Smartphone Pro Max 256GB Dual SIM 5G"
+        }
+      ],
+      "badges": [
+        "5G Ready",
+        "120Hz OLED"
+      ],
+      "description": "Next-generation powerhouse smartphone with 6.7-inch OLED 120Hz display, 256GB NVMe high-speed storage, 12GB RAM, 50MP triple OIS camera, and 5000mAh battery.",
+      "specifications": {
+        "model": "Apex Pro Max 5G",
+        "storageGb": 256,
+        "memoryGb": 12,
+        "screenInches": 6.7,
+        "battery": "5000mAh with 67W Super Fast Charging",
+        "connectivity": [
+          "5G Sub-6",
+          "Wi-Fi 6E",
+          "Bluetooth 5.3",
+          "NFC"
+        ],
+        "simType": "Dual Nano-SIM + eSIM",
+        "operatingSystem": "Android 14 with 4 years OS support",
+        "warrantyMonths": 12,
+        "condition": "Brand New Sealed"
+      },
+      "status": "published"
+    },
+    {
+      "id": "uw_fas_201",
+      "storeId": "uwanbuy",
+      "sectionKey": "fashion",
+      "categoryId": "mens-wear",
+      "categoryName": "Men's Clothing",
+      "subCategoryId": "hoodies",
+      "title": "Heavyweight 380 GSM Oversized Cotton Streetwear Hoodie",
+      "brand": "Bazaar Urban",
+      "sku": "FAS-HOD-BLK-380",
+      "priceMinor": 1450000,
+      "salePriceMinor": 1450000,
+      "compareAtPriceMinor": 1800000,
+      "currency": "NGN",
+      "unitLabel": "piece",
+      "packSize": "1 Piece",
+      "rating": 4.9,
+      "reviewsCount": 78,
+      "stock": {
+        "quantity": 30,
+        "status": "in_stock",
+        "allowBackorder": true,
+        "moq": 1
+      },
+      "media": [
+        {
+          "type": "image",
+          "url": "../assetsecm/images/product/square/HS.png",
+          "thumbnailUrl": "../assetsecm/images/product/square/HS.png",
+          "altText": "Heavyweight 380 GSM Oversized Cotton Streetwear Hoodie"
+        }
+      ],
+      "badges": [
+        "100% Combed Cotton",
+        "Heavyweight"
+      ],
+      "description": "Premium 380gsm brushed organic cotton fleece hoodie. Drop-shoulder boxy silhouette with double-layered hood and front pouch pocket.",
+      "specifications": {
+        "material": "100% Combed Heavy Cotton Fleece",
+        "gsm": "380 GSM",
+        "availableSizes": [
+          "S",
+          "M",
+          "L",
+          "XL",
+          "XXL"
+        ],
+        "fit": "Oversized Streetwear Drop-Shoulder Fit",
+        "care": "Machine wash cold, air dry to preserve fabric density"
+      },
+      "status": "published"
+    },
+    {
+      "id": "uw_fas_202",
+      "storeId": "uwanbuy",
+      "sectionKey": "fashion",
+      "categoryId": "footwear",
+      "categoryName": "Footwear & Shoes",
+      "subCategoryId": "sneakers",
+      "title": "Clean Minimalist Leather Low-Top Street Sneakers",
+      "brand": "SoleCraft",
+      "sku": "FAS-SNK-WHT-42",
+      "priceMinor": 2200000,
+      "salePriceMinor": 2200000,
+      "compareAtPriceMinor": 2700000,
+      "currency": "NGN",
+      "unitLabel": "pair",
+      "packSize": "1 Pair with Extra Laces",
+      "rating": 4.87,
+      "reviewsCount": 51,
+      "stock": {
+        "quantity": 25,
+        "status": "in_stock",
+        "allowBackorder": false,
+        "moq": 1
+      },
+      "media": [
+        {
+          "type": "image",
+          "url": "../assetsecm/images/product/square/SH.png",
+          "thumbnailUrl": "../assetsecm/images/product/square/SH.png",
+          "altText": "Clean Minimalist Leather Low-Top Street Sneakers"
+        }
+      ],
+      "badges": [
+        "Genuine Leather",
+        "Memory Cushion"
+      ],
+      "description": "Hand-stitched genuine calfskin leather sneakers with vulcanized non-slip rubber outsoles and memory foam cushioned insoles.",
+      "specifications": {
+        "upper": "100% Top-Grain Calfskin Leather",
+        "outsole": "Vulcanized anti-abrasion rubber",
+        "insole": "Orthopedic arch support memory foam",
+        "sizesAvailable": [
+          "EU 40",
+          "EU 41",
+          "EU 42",
+          "EU 43",
+          "EU 44",
+          "EU 45"
+        ]
+      },
+      "status": "published"
+    },
+    {
+      "id": "uw_hom_301",
+      "storeId": "uwanbuy",
+      "sectionKey": "home",
+      "categoryId": "cookware-tableware",
+      "categoryName": "Cookware & Dining",
+      "subCategoryId": "granite-cookware",
+      "title": "ChefElite 7-Piece Swiss Granite Non-Stick Induction Cookware Set",
+      "brand": "ChefElite",
+      "sku": "HOM-POT-7PC-SWISS",
+      "priceMinor": 4800000,
+      "salePriceMinor": 4800000,
+      "compareAtPriceMinor": 5800000,
+      "currency": "NGN",
+      "unitLabel": "set",
+      "packSize": "7-Piece Cookware Box",
+      "rating": 4.96,
+      "reviewsCount": 118,
+      "stock": {
+        "quantity": 15,
+        "status": "in_stock",
+        "allowBackorder": false,
+        "moq": 1
+      },
+      "media": [
+        {
+          "type": "image",
+          "url": "../assetsecm/images/product/square/PC4.png",
+          "thumbnailUrl": "../assetsecm/images/product/square/PC4.png",
+          "altText": "ChefElite 7-Piece Swiss Granite Non-Stick Induction Cookware Set"
+        }
+      ],
+      "badges": [
+        "PTFE & PFOA Free",
+        "Induction Compatible"
+      ],
+      "description": "Heavy-gauge die-cast aluminum pots reinforced with 5-layer natural Swiss granite stone non-stick coating. Suitable for gas, electric, and induction cookers.",
+      "specifications": {
+        "piecesCount": "7 Pieces (20cm pot, 24cm pot, 28cm pot with tempered glass lids + 24cm deep frypan)",
+        "coating": "Natural Swiss Granite PTFE/PFOA Free",
+        "base": "Thick stainless induction magnetic thermal plate",
+        "handles": "Heat-resistant stay-cool wood-grain silicone handles",
+        "dishwasherSafe": "Yes"
+      },
+      "status": "published"
+    }
+  ],
+  "auctions": [
+    {
+      "id": "uw_auc_bid_01",
+      "auctionType": "bid_and_win",
+      "typeName": "Bid & Win Auction",
+      "badge": "Competitive Live Bidding",
+      "productId": "uw_gdt_101",
+      "title": "Heavy Duty 4-Burner Glass Top Gas Cooker Unit with Auto-Ignition",
+      "category": "Gas & Electric Cookers",
+      "moq": 2,
+      "basePriceMinor": 2800000,
+      "currentBidMinor": 3650000,
+      "minIncrementMinor": 100000,
+      "bidCount": 14,
+      "highestBidder": "Buyer-7491",
+      "endsInSeconds": 1420,
+      "image": "assets/images/placeholders/gas-cooker.svg",
+      "description": "Premium 4-burner tempered glass gas cooker with optimal igniters and heavy cast-iron pan standoffs. MOQ of 2 units enforced per bidder upon close."
+    },
+    {
+      "id": "uw_auc_flat_01",
+      "auctionType": "flat_rate",
+      "typeName": "Flat-Rate Flash Auction",
+      "badge": "Fixed Discount Slots",
+      "productId": "uw_gdt_103",
+      "title": "Smart Thermostat Stainless Electric Jug Boiler 2.2L (Detachable Base)",
+      "category": "Kitchen Small Appliances",
+      "moq": 3,
+      "flatRatePriceMinor": 1250000,
+      "retailPriceMinor": 1850000,
+      "totalSlots": 50,
+      "remainingSlots": 14,
+      "endsInSeconds": 3600,
+      "image": "assets/images/placeholders/water-boiler.svg",
+      "description": "Guaranteed flat-rate liquidation price on 2.2L automatic cordless boilers. Lock order at flat rate before pool depletes. Minimum Order Quantity: 3 units."
+    },
+    {
+      "id": "uw_auc_wave_01",
+      "auctionType": "price_wave",
+      "typeName": "Price Wave Dynamic Auction",
+      "badge": "Dynamic Downward Curve",
+      "productId": "uw_gdt_107",
+      "title": "High-Performance 1.5 HP Inverter Split Air Conditioner with Eco-Sensor",
+      "category": "Air Conditioners & Cooling",
+      "moq": 1,
+      "ceilingPriceMinor": 23500000,
+      "currentWavePriceMinor": 18250000,
+      "floorPriceMinor": 15000000,
+      "waveIntervalSeconds": 25,
+      "dropPerIntervalMinor": 250000,
+      "endsInSeconds": 980,
+      "image": "assets/images/placeholders/air-conditioner.svg",
+      "description": "Continuous descending wave pricing curve dropping ₦2,500 every 25 seconds until locked by the fastest buyer. Hyperlocal hub warranty included."
+    },
+    {
+      "id": "uw_auc_stock_01",
+      "auctionType": "stock_cap",
+      "typeName": "Stock Cap Volume Auction",
+      "badge": "Community Volume Unlock",
+      "productId": "uw_gro_002",
+      "title": "Pure Gold Grade Refined Cooking Vegetable Oil (5L Jerrycan)",
+      "category": "Cooking Oils & Fats",
+      "moq": 4,
+      "unitCapPriceMinor": 680000,
+      "marketPriceMinor": 950000,
+      "targetStockCap": 60,
+      "committedStock": 48,
+      "endsInSeconds": 5400,
+      "image": "../assetsecm/images/soups/egusi-soup-roundbowl.png",
+      "description": "Hyperlocal collective purchase pool. When community commitments hit the 60-unit cap, wholesale price of ₦6,800/unit unlocks. Buyer MOQ: 4 jerrycans."
+    },
+    {
+      "id": "uw_auc_time_01",
+      "auctionType": "time_cap",
+      "typeName": "Time Cap Countdown Blitz",
+      "badge": "Strict Deadline Blitz",
+      "productId": "uw_gdt_112",
+      "title": "Business Elite 15.6-inch Core i7 Quad-Core Laptop (8GB RAM / 320GB HDD)",
+      "category": "Computing, Laptops & Phones",
+      "moq": 1,
+      "blitzPriceMinor": 13200000,
+      "retailPriceMinor": 19500000,
+      "endsInSeconds": 750,
+      "image": "assets/images/placeholders/laptop-core-i7.svg",
+      "description": "Strict time-cap countdown blitz. When timer reaches zero, auction terminates immediately. Instant checkout validation required upon buzzer."
+    }
+  ]
+}

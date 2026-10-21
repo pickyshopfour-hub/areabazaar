@@ -1,0 +1,258 @@
+/**
+ * UwanBUY UI Updates & Micro-Animations (October 2026)
+ */
+
+:root {
+    --uw-brand: #ff0000;
+    --uw-brand-hover: #c40000;
+    --uw-brand-light: #fff0f0;
+    --uw-dark: #0f172a;
+    --uw-card-border: #e2e8f0;
+    --uw-radius: 14px;
+}
+
+/* Category Glow Alert for Type-Your-List Modal */
+@keyframes categoryGlowPulse {
+    0% {
+        box-shadow: 0 0 6px rgba(255, 0, 0, 0.4);
+        border-color: #ff0000;
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(255, 0, 0, 0.95), 0 0 30px rgba(255, 0, 0, 0.4);
+        border-color: #ff0000;
+        background-color: #fff5f5;
+    }
+    100% {
+        box-shadow: 0 0 6px rgba(255, 0, 0, 0.4);
+        border-color: #ff0000;
+    }
+}
+
+.category-glow-alert {
+    animation: categoryGlowPulse 1.2s infinite ease-in-out !important;
+    border: 2px solid #ff0000 !important;
+    border-radius: 14px;
+    padding: 8px;
+}
+
+/* Product Cards */
+.product-card {
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.2s ease;
+    border: 1px solid var(--uw-card-border) !important;
+}
+
+.product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08) !important;
+    border-color: rgba(255, 0, 0, 0.3) !important;
+}
+
+/* Modal Enhancements */
+.modal-content {
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.modal-header {
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.modal-footer {
+    border-top: 1px solid #f1f5f9;
+}
+
+/* Buttons */
+.btn-brand {
+    background-color: var(--uw-brand);
+    color: #ffffff;
+    border: none;
+    font-weight: 700;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+}
+
+.btn-brand:hover, .btn-brand:focus {
+    background-color: var(--uw-brand-hover);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(255, 0, 0, 0.25);
+}
+
+/* Section Headings */
+.section-title-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1.5px solid #e2e8f0;
+}
+
+.section-title-wrap h2 {
+    font-weight: 800;
+    margin: 0;
+    color: #0f172a;
+}
+
+/* Auction Timer Badge */
+.auction-timer-badge {
+    background: #0f172a;
+    color: #ffffff;
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-family: monospace;
+    font-size: 0.95rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Radio Chip Selection */
+.btn-check:checked + .btn-outline-danger {
+    background-color: var(--uw-brand) !important;
+    color: #ffffff !important;
+    border-color: var(--uw-brand) !important;
+}
+
+/* Order ID Badge */
+.badge-order-id {
+    font-family: monospace;
+    background: #f1f5f9;
+    color: #0f172a;
+    border: 1px solid #cbd5e1;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-weight: 700;
+}
+
+/* Quick View / Specs Modal Overhaul (Image 4 Alignment) */
+#modal-quick-view .modal-content {
+    border: none;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+#quickViewSpecsPills .badge {
+    background-color: #f8fafc;
+    color: #334155;
+    border: 1px solid #e2e8f0;
+    font-size: 0.825rem;
+    padding: 6px 12px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+#quickViewExtraAccordion .accordion-button {
+    font-size: 0.85rem;
+    font-weight: 700;
+    background-color: #f8fafc;
+    color: #0f172a;
+}
+
+#quickViewExtraAccordion .accordion-button:not(.collapsed) {
+    background-color: #fee2e2;
+    color: #b91c1c;
+}
+
+/* Responsive Product Card Polish */
+.product-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px -4px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* ==============================================================
+   RESPONSIVE CART OFFCANVAS & CHECKOUT (NO HORIZONTAL OVERFLOW)
+   ============================================================== */
+#cartOffcanvas, .offcanvas-cart-responsive {
+    width: 100% !important;
+    max-width: 440px !important;
+    overflow-x: hidden !important;
+}
+
+#cartOffcanvas .offcanvas-body {
+    overflow-x: hidden !important;
+    padding: 0 !important;
+}
+
+#cartItemsContainer {
+    overflow-x: hidden !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 12px !important;
+}
+
+#cartDrawerItemsList {
+    overflow-x: hidden !important;
+    width: 100% !important;
+}
+
+.cart-drawer-item-card {
+    border-radius: 12px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+}
+
+.cart-item-top-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+}
+
+.cart-item-title {
+    font-weight: 700;
+    color: #0f172a;
+    font-size: 0.85rem;
+    line-height: 1.25;
+    margin-bottom: 2px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.cart-item-bottom-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px dashed #e2e8f0;
+    width: 100%;
+}
+
+/* Modal Checkout Responsiveness */
+@media (max-width: 576px) {
+    #modal-checkout-validate .modal-dialog,
+    #modal-payment-request .modal-dialog,
+    #modal-payment-report .modal-dialog,
+    #modal-fund-wallet .modal-dialog {
+        margin: 0.5rem !important;
+        max-width: calc(100vw - 1rem) !important;
+    }
+    #modal-checkout-validate .modal-body,
+    #modal-payment-request .modal-body,
+    #modal-payment-report .modal-body {
+        padding: 1rem !important;
+    }
+    #modal-checkout-validate .modal-footer,
+    #modal-payment-request .modal-footer {
+        flex-direction: column-reverse !important;
+        gap: 0.5rem !important;
+    }
+    #modal-checkout-validate .modal-footer .btn,
+    #modal-payment-request .modal-footer .btn {
+        width: 100% !important;
+        margin: 0 !important;
+    }
+    #cartFooter .row.g-2 {
+        --bs-gutter-x: 0.5rem;
+    }
+}
+

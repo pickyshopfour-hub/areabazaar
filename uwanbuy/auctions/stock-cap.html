@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Cap Volume Auction | UwanBUY Hyperlocal</title>
+
+    <link rel="shortcut icon" type="image/x-icon" href="../../assetsecm/images/uwanbuy-favicon-brief-color.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.6.1/css/iziModal.min.css">
+    <link rel="stylesheet" href="../assets/css/uwanbuy-updates.css">
+
+    <style>
+        :root {
+            --uw-brand: #ff0000;
+            --uw-brand-hover: #b80000;
+        }
+
+        body {
+            background-color: #f8fafc;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #1e293b;
+        }
+
+        .stock-cap-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
+            border: 2px solid #bbf7d0;
+            border-radius: 18px;
+            padding: 1.5rem;
+        }
+
+        .pool-progress-bar {
+            height: 18px;
+            border-radius: 50px;
+            background: #e2e8f0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .pool-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #16a34a, #22c55e);
+            border-radius: 50px;
+            transition: width 0.5s ease-in-out;
+        }
+    </style>
+</head>
+
+<body data-store="uwanbuy">
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="../index.html">
+                <img src="../../assetsecm/images/uwanbuy-logo-long-full-color-01.png" alt="UwanBuy Logo" style="height: 38px; width: auto;">
+            </a>
+
+            <div class="d-flex ms-auto align-items-center gap-2">
+                <a href="index.html" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
+                    <i class="bi bi-arrow-left me-1"></i> All Auctions
+                </a>
+                
+                <div class="d-flex align-items-center gap-2 px-3 py-2 rounded-pill bg-light border cursor-pointer" id="btnNavWallet">
+                    <i class="bi bi-wallet2 text-danger"></i>
+                    <strong class="text-dark" id="wallet-balance-display">₦25,000.00</strong>
+                </div>
+                <button class="btn btn-brand position-relative shadow-sm px-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+                    <i class="bi bi-cart3"></i>
+                    <span id="cartBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark d-none">0</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <main class="container py-4">
+
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb small">
+                <li class="breadcrumb-item"><a href="../index.html" class="text-muted text-decoration-none">Home</a></li>
+                <li class="breadcrumb-item"><a href="index.html" class="text-muted text-decoration-none">Storefront Auctions</a></li>
+                <li class="breadcrumb-item active text-success fw-bold">Stock Cap Volume Auction</li>
+            </ol>
+        </nav>
+
+        <div class="row g-4 g-lg-5 mb-5">
+            <!-- Left: Product Showcase & Specifications -->
+            <div class="col-lg-6">
+                <div class="bg-white border rounded-4 p-4 text-center shadow-sm position-relative mb-4">
+                    <span class="badge bg-success position-absolute top-0 start-0 m-3 py-2 px-3 rounded-pill fw-bold">Community Volume Pool</span>
+                    <img src="../../assetsecm/images/soups/egusi-soup-roundbowl.png" alt="Vegetable Oil" class="img-fluid" style="max-height: 320px; object-fit: contain;">
+                </div>
+
+                <div class="card border rounded-4 p-4 bg-white shadow-sm">
+                    <h6 class="fw-bold text-dark mb-3"><i class="bi bi-patch-check-fill text-success me-2"></i> Quality Assurance & Batch Verification</h6>
+                    <div class="row g-2 small">
+                        <div class="col-6"><i class="bi bi-check2 text-success me-1"></i> Grade: <strong>Triple-Refined Pure Gold</strong></div>
+                        <div class="col-6"><i class="bi bi-check2 text-success me-1"></i> Packaging: <strong>5L Food-grade Jerrycan</strong></div>
+                        <div class="col-6"><i class="bi bi-check2 text-success me-1"></i> Origin: <strong>Local Hyperlocal Agrimarket</strong></div>
+                        <div class="col-6"><i class="bi bi-check2 text-success me-1"></i> Seal: <strong>Tamper-Proof Induction Foil</strong></div>
+                        <div class="col-6"><i class="bi bi-check2 text-success me-1"></i> Cholesterol: <strong>0% Zero Cholesterol</strong></div>
+                        <div class="col-6"><i class="bi bi-check2 text-success me-1"></i> Fortification: <strong>Vitamin A Enriched</strong></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Stock Cap Progress & Commitment -->
+            <div class="col-lg-6">
+                <span class="badge bg-success-subtle text-success fw-bold mb-2">Auction Lot: UW-AUC-STOCK-01</span>
+                <h1 class="h2 fw-bold text-dark mb-2">Pure Gold Grade Refined Cooking Vegetable Oil (5L Jerrycan)</h1>
+                <p class="text-muted small mb-4">Hyperlocal community volume pool. When collective commitments reach 60 units, the wholesale factory price of ₦6,800/unit triggers for all pool members.</p>
+
+                <!-- Mandatory MOQ Banner -->
+                <div class="alert alert-warning border-warning p-3 rounded-3 d-flex align-items-center gap-3 mb-4">
+                    <i class="bi bi-info-circle-fill fs-3 text-warning-emphasis"></i>
+                    <div>
+                        <strong class="text-dark d-block">Minimum Order Quantity (MOQ) Required: 4 Jerrycans</strong>
+                        <span class="small text-muted">Backend rule: To participate in unlocking wholesale stock cap, order at least 4 units.</span>
+                    </div>
+                </div>
+
+                <!-- Stock Cap Panel -->
+                <div class="stock-cap-card mb-4 shadow-sm">
+                    <div class="d-flex justify-content-between align-items-baseline mb-2">
+                        <div>
+                            <small class="text-muted d-block text-xs text-uppercase fw-bold">Unlocked Wholesale Unit Price</small>
+                            <span class="display-6 fw-extrabold text-success" id="unlockedPriceDisplay">₦6,800.00</span>
+                            <span class="text-decoration-line-through text-muted ms-2">₦9,500.00</span>
+                        </div>
+                        <span class="badge bg-success text-white fw-bold px-3 py-2 rounded-pill">SAVE 28%</span>
+                    </div>
+
+                    <!-- Progress towards Cap -->
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between small text-muted mb-2">
+                            <span>Community Committed: <strong class="text-dark" id="committedStockLabel">48 Units</strong></span>
+                            <span class="text-success fw-bold">Cap Target: 60 Units</span>
+                        </div>
+                        <div class="pool-progress-bar mb-2">
+                            <div class="pool-progress-fill" id="poolProgressBar" style="width: 80%;"></div>
+                        </div>
+                        <div class="d-flex justify-content-between text-xs text-muted">
+                            <span class="text-success fw-bold"><i class="bi bi-check-circle-fill me-1"></i> 80% Achieved</span>
+                            <span>Only <strong>12 units</strong> remaining to trigger wholesale release!</span>
+                        </div>
+                    </div>
+
+                    <!-- Quantity Selector with MOQ Pre-filled -->
+                    <div class="d-flex align-items-center gap-3 mb-4">
+                        <label class="small fw-bold text-secondary">Your Commitment (MOQ 4):</label>
+                        <div class="d-flex align-items-center gap-2">
+                            <button class="btn btn-sm btn-outline-secondary" id="btnMinusStockQty"><i class="bi bi-dash"></i></button>
+                            <input type="number" id="stockQtyInput" value="4" min="4" max="12" class="form-control text-center fw-bold" style="width: 70px;">
+                            <button class="btn btn-sm btn-outline-secondary" id="btnPlusStockQty"><i class="bi bi-plus"></i></button>
+                        </div>
+                        <span class="small text-muted">Your Total: <strong class="text-success fs-6" id="stockCommitTotal">₦27,200.00</strong></span>
+                    </div>
+
+                    <!-- Commit & Buy Button -->
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-success btn-lg py-3 fw-bold shadow-sm" id="btnCommitStockCapAndCheckout">
+                            <i class="bi bi-pie-chart-fill me-2"></i> Commit & Proceed to Validation (MOQ: 4)
+                        </button>
+                        <small class="text-center text-muted text-xs">
+                            <i class="bi bi-shield-check text-success me-1"></i>
+                            Locks units in stock cap pool and opens server quote validation modal.
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-5 pb-4 mt-5">
+        <div class="container text-center small text-white-50">
+            <p>&copy; 2026 UwanBuy Hyperlocal Marketplace. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Cart Offcanvas -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="cartOffcanvas" style="width: 440px;">
+        <div class="offcanvas-header border-bottom bg-light">
+            <h5 class="offcanvas-title fw-bold"><i class="bi bi-cart3 text-danger me-2"></i> Shopping Cart</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body d-flex flex-column p-0">
+            <!-- Pinned Top Cart Pending Orders (Awaiting Payment) -->
+            <div id="cart-pending-orders-container" class="p-3 pb-0"></div>
+
+            <!-- Customer Submitted Shopping Lists Status (Awaiting Admin Pricing) -->
+            <div id="cart-submitted-lists-container" class="px-3 pt-2"></div>
+
+            <!-- Select All & Summary Header -->
+            <div class="d-flex justify-content-between align-items-center px-3 py-2 bg-light border-bottom" id="cartSelectControlsBar">
+                <div class="form-check m-0 d-flex align-items-center gap-2">
+                    <input class="form-check-input" type="checkbox" id="selectAllCartCheck" checked>
+                    <label class="form-check-label small fw-bold" for="selectAllCartCheck">Select All</label>
+                </div>
+                <span class="badge bg-white text-dark border small" id="selectedCartSummary">0 selected</span>
+            </div>
+
+            <div id="cartItemsContainer" class="flex-grow-1 overflow-auto p-3">
+                <div id="cartDrawerItemsList">
+                    <div class="text-center text-muted mt-5" id="emptyCartState">
+                        <i class="bi bi-cart-x fs-1"></i>
+                        <p class="mt-2">Your cart is empty.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="border-top p-3 bg-light" id="cartFooter">
+                <div class="d-flex justify-content-between align-items-baseline mb-1">
+                    <span class="small text-muted">Selected Subtotal:</span>
+                    <span id="cartSelectedSubtotalDisplay" class="fw-extrabold text-danger fs-4">₦0.00</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="text-xs text-muted">Cart Full Total:</span>
+                    <span id="cartSubtotalDisplay" class="text-xs fw-bold text-secondary">₦0.00</span>
+                </div>
+                <div class="row g-2">
+                    <div class="col-6">
+                        <button class="btn btn-outline-danger w-100 py-2 fw-bold small" id="btnCheckoutSelected" disabled>
+                            <i class="bi bi-check2-square me-1"></i> Checkout Selected (<span id="countSelectedBadge">0</span>)
+                        </button>
+                    </div>
+                    <div class="col-6">
+                        <button class="btn btn-brand w-100 py-2 fw-bold small shadow-sm" id="btnCheckoutAll" disabled>
+                            <i class="bi bi-cart-check me-1"></i> Checkout All (<span id="countAllBadge">0</span>)
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+            <div class="border-top p-3 bg-light" id="cartFooter">
+                <div class="d-flex justify-content-between fw-bold mb-3 fs-5">
+                    <span>Subtotal:</span>
+                    <span id="cartSubtotalDisplay" class="text-danger">₦0.00</span>
+                </div>
+                <div class="d-grid gap-2">
+                    <button class="btn btn-brand w-100 py-3 fw-bold shadow-sm" id="btnProceedToCheckout">
+                        <i class="bi bi-shield-check me-2"></i> Proceed to Checkout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal fade" id="modal-checkout-validate" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-light">
+                    <div>
+                        <span class="badge bg-dark rounded-pill px-2 py-1 text-xs mb-1">Server Quote Validation</span>
+                        <h5 class="modal-title fw-bold">Order Checkout Validation</h5>
+                        <small class="text-muted">Order ID: <span class="badge-order-id" id="validateOrderIdDisplay">ORD-UWB-...</span></small>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <label class="form-label small fw-bold text-uppercase text-dark mb-2">Fulfillment & Delivery</label>
+                    <div class="row g-2 mb-3">
+                        <div class="col-sm-6">
+                            <div class="p-3 border rounded-3 bg-light">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="fulfillmentChoice" id="stk_fulfill_pickup" value="pickup" checked>
+                                    <label class="form-check-label fw-bold text-dark small" for="stk_fulfill_pickup">
+                                        <i class="bi bi-geo-alt-fill text-danger me-1"></i> Free Hub Pickup Point
+                                        <span class="badge bg-success-subtle text-success d-block mt-1">₦0.00 Free</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="p-3 border rounded-3 bg-light">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="fulfillmentChoice" id="stk_fulfill_address" value="address">
+                                    <label class="form-check-label fw-bold text-dark small" for="stk_fulfill_address">
+                                        <i class="bi bi-truck text-primary me-1"></i> Deliver to My Address
+                                        <span class="badge bg-primary-subtle text-primary d-block mt-1">+₦1,200.00</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="pickupAccordionWrapper" class="mb-3">
+                        <label class="form-label text-xs fw-bold text-muted text-uppercase mb-1">Select Local Hub Collection Point:</label>
+                        <div id="pickupPointsAccordionList" class="border rounded-3 p-2 bg-light" style="max-height: 180px; overflow-y: auto;"></div>
+                    </div>
+
+                    <div id="addressInputWrapper" class="mb-3 d-none">
+                        <label class="form-label text-xs fw-bold text-muted text-uppercase mb-1">Enter Delivery Address:</label>
+                        <textarea id="deliveryAddressInput" class="form-control" rows="2" placeholder="Street Address, Flat/House Number, Landmark, City"></textarea>
+                    </div>
+
+                    <div class="form-check form-switch p-3 border rounded-3 bg-light mb-4">
+                        <input class="form-check-input ms-0 me-3" type="checkbox" id="expressDeliveryToggle">
+                        <label class="form-check-label fw-bold text-dark small" for="expressDeliveryToggle">
+                            <i class="bi bi-lightning-charge-fill text-warning me-1"></i> Express Priority Delivery
+                            <span class="text-muted fw-normal d-block text-xs">Guaranteed 45-minute dispatch within hub radius (+₦1,500.00 surcharge)</span>
+                        </label>
+                    </div>
+
+                    <div class="p-3 bg-light rounded-3 border mb-3">
+                        <h6 class="fw-bold text-dark small text-uppercase mb-2">Price & Tax Breakdown</h6>
+                        <div class="d-flex justify-content-between small text-muted mb-1">
+                            <span>Items Subtotal:</span>
+                            <strong class="text-dark" id="summarySubtotal">₦0.00</strong>
+                        </div>
+                        <div class="d-flex justify-content-between small text-muted mb-1">
+                            <span>Delivery Fee:</span>
+                            <strong class="text-success" id="summaryDeliveryFee">FREE</strong>
+                        </div>
+                        <div class="d-flex justify-content-between small text-muted mb-1 d-none" id="summaryExpressRow">
+                            <span>Express Surcharge:</span>
+                            <strong class="text-warning-emphasis" id="summaryExpressFee">₦0.00</strong>
+                        </div>
+                        <div class="d-flex justify-content-between small text-muted mb-2">
+                            <span>VAT (7.5% applicable):</span>
+                            <strong class="text-dark" id="summaryVat">₦0.00</strong>
+                        </div>
+                        <div class="d-flex justify-content-between fw-extrabold fs-5 text-dark border-top pt-2">
+                            <span>Order Total:</span>
+                            <span class="text-danger" id="summaryTotalAmount">₦0.00</span>
+                        </div>
+                    </div>
+
+                    <div class="p-3 rounded-3 border mb-3 bg-white">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <small class="text-muted d-block text-xs">Your Wallet Balance</small>
+                                <strong class="fs-6 text-dark" id="validateWalletBalanceText">₦25,000.00</strong>
+                            </div>
+                            <span class="badge bg-dark-subtle text-dark">Verified Local Wallet</span>
+                        </div>
+                        <div id="walletInsufficientAlert" class="alert alert-warning p-2 small mt-2 mb-0 d-none">
+                            <i class="bi bi-exclamation-triangle-fill me-1"></i>
+                            Wallet balance is insufficient (Deficit: <strong id="walletDeficitAmount">₦0.00</strong>).
+                            <div class="mt-2 d-flex gap-2">
+                                <button type="button" class="btn btn-sm btn-outline-dark btn-open-payment-request" data-purpose="wallet_topup">
+                                    <i class="bi bi-wallet2 me-1"></i> Top Up Wallet
+                                </button>
+                                <button type="button" class="btn btn-sm btn-danger btn-open-payment-request" data-purpose="order_direct">
+                                    <i class="bi bi-credit-card me-1"></i> Pay Directly
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-light d-flex justify-content-between">
+                    <button type="button" class="btn btn-outline-secondary" id="btnCreatePaymentRequest" data-purpose="order_direct">
+                        <i class="bi bi-receipt me-1"></i> Create Payment Request
+                    </button>
+                    <button type="button" class="btn btn-brand px-4 py-2" id="btnPayWithWallet">
+                        <i class="bi bi-check2-circle me-1"></i> Pay with Wallet
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wallet PIN Modal -->
+    <div class="modal fade" id="modal-wallet-pin" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content text-center p-4">
+                <i class="bi bi-shield-lock display-4 text-danger mb-2"></i>
+                <h5 class="fw-bold mb-1">Enter Wallet PIN</h5>
+                <p class="text-muted small mb-3">Order: <span id="pinOrderIdDisplay" class="fw-bold"></span><br>Amount: <span id="pinAmountDisplay" class="text-danger fw-bold"></span></p>
+                <div class="mb-3">
+                    <input type="password" id="walletPinInput" class="form-control text-center fs-4 fw-bold letter-spacing-2" maxlength="4" placeholder="••••">
+                </div>
+                <button type="button" class="btn btn-brand w-100 py-2 fw-bold" id="btnConfirmWalletPin">
+                    Confirm & Settle
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Payment Request Modal -->
+    <div class="modal fade" id="modal-payment-request" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-light">
+                    <div>
+                        <h5 class="modal-title fw-bold">Create Payment Request</h5>
+                        <small class="text-muted">Order: <span id="reqOrderIdDisplay" class="fw-bold"></span> &bull; Amount: <span id="reqAmountDisplay" class="text-danger fw-bold"></span></small>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <input type="hidden" id="reqPurposeInput" value="order_direct">
+                    <label class="form-label small fw-bold text-uppercase text-dark mb-2">Choose Payment Channel</label>
+                    <div class="row g-2 mb-3">
+                        <div class="col-6">
+                            <div class="p-2 border rounded-3 bg-light">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="paymentChannelChoice" id="stk_channel_agent" value="agent" checked>
+                                    <label class="form-check-label fw-bold small text-dark" for="stk_channel_agent">
+                                        <i class="bi bi-person-badge-fill text-danger me-1"></i> Pay with Agent
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="p-2 border rounded-3 bg-light">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="paymentChannelChoice" id="stk_channel_direct" value="direct">
+                                    <label class="form-check-label fw-bold small text-dark" for="stk_channel_direct">
+                                        <i class="bi bi-bank text-primary me-1"></i> Bank Transfer
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="channelAgentCard" class="card border rounded-3 p-3 bg-light mb-3">
+                        <div class="d-flex align-items-center gap-2 mb-2">
+                            <span class="badge bg-danger rounded-circle p-2"><i class="bi bi-person text-white"></i></span>
+                            <div>
+                                <h6 class="fw-bold text-dark mb-0" id="agentNameDisplay">Chukwuma Adebayo</h6>
+                                <small class="text-muted"><span id="agentBadgeDisplay">Accredited Senior Agent</span> &bull; Hub: <strong id="agentHubCodeDisplay">FRM-ILN-042</strong></small>
+                            </div>
+                        </div>
+                        <p class="text-muted text-xs mb-2">Call or chat the agent via WhatsApp to arrange local POS, cash-at-hub, or verified agent transfer.</p>
+                        <div class="d-flex gap-2">
+                            <a href="tel:08012345678" class="btn btn-sm btn-outline-secondary flex-fill small"><i class="bi bi-telephone me-1"></i> Call</a>
+                            <a href="#" id="agentWhatsappBtn" target="_blank" class="btn btn-sm btn-success flex-fill small"><i class="bi bi-whatsapp me-1"></i> WhatsApp</a>
+                        </div>
+                    </div>
+
+                    <div id="channelDirectCard" class="card border rounded-3 p-3 bg-light mb-3">
+                        <div class="d-flex align-items-center gap-2 mb-2">
+                            <i class="bi bi-bank fs-4 text-primary"></i>
+                            <div>
+                                <h6 class="fw-bold text-dark mb-0" id="bankNameDisplay">First Bank of Nigeria</h6>
+                                <small class="text-muted">Account Name: <strong id="bankAccountNameDisplay">UwanBUY Direct Settlement</strong></small>
+                            </div>
+                        </div>
+                        <div class="bg-white p-2 border rounded-2 d-flex justify-content-between align-items-center mb-2">
+                            <span class="fs-5 fw-bold font-monospace text-dark" id="bankAccountDisplay">3109845210</span>
+                            <button class="btn btn-sm btn-outline-secondary py-0 text-xs" onclick="navigator.clipboard.writeText('3109845210'); if(window.iziToast) iziToast.info({title:'Copied'});">Copy</button>
+                        </div>
+                        <small class="text-muted text-xs">Transfer via your banking app, then generate a payment reference below.</small>
+                    </div>
+
+                    <div id="generatedRefAlert" class="alert alert-success p-3 rounded-3 mb-0 d-none">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div>
+                                <small class="text-muted d-block text-xs">Payment Reference Generated:</small>
+                                <strong class="fs-5 font-monospace text-dark" id="generatedRefText">REF-UWB-...</strong>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-success fw-bold" id="btnOpenPaymentReport">
+                                Submit Report <i class="bi bi-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-light d-flex justify-content-between">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-brand px-4" id="btnGeneratePaymentRef">
+                        <i class="bi bi-qr-code me-1"></i> Generate Payment Ref
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Report Form Modal -->
+    <div class="modal fade" id="modal-payment-report" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-light">
+                    <div>
+                        <h5 class="modal-title fw-bold">Payment Report Form</h5>
+                        <small class="text-muted">Submit payment proof for instant local hub reconciliation</small>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="formPaymentReport">
+                    <div class="modal-body p-4">
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Payment Reference <span class="text-danger">*</span></label>
+                            <input type="text" id="reportPaymentRefInput" class="form-control font-monospace fw-bold" readonly required>
+                        </div>
+                        <div class="row g-2 mb-3">
+                            <div class="col-6">
+                                <label class="form-label small fw-bold">Order ID</label>
+                                <input type="text" id="reportOrderIdInput" class="form-control form-control-sm font-monospace" readonly>
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label small fw-bold">Amount Paid (₦) <span class="text-danger">*</span></label>
+                                <input type="number" id="reportAmountPaidInput" class="form-control form-control-sm fw-bold" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Bank Paid From <span class="text-danger">*</span></label>
+                            <select id="reportBankSelect" class="form-select form-select-sm" required>
+                                <option value="">Select your bank...</option>
+                                <option value="Access Bank">Access Bank</option>
+                                <option value="GTBank">Guaranty Trust Bank (GTBank)</option>
+                                <option value="First Bank">First Bank of Nigeria</option>
+                                <option value="Zenith Bank">Zenith Bank</option>
+                                <option value="UBA">United Bank for Africa (UBA)</option>
+                                <option value="OPay">OPay</option>
+                                <option value="PalmPay">PalmPay</option>
+                                <option value="Kuda Bank">Kuda Microfinance Bank</option>
+                                <option value="Other Bank">Other Bank</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Payer Account Name <span class="text-danger">*</span></label>
+                            <input type="text" id="reportPayerNameInput" class="form-control form-control-sm" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Receipt / Remarks (Optional)</label>
+                            <input type="text" id="reportRemarksInput" class="form-control form-control-sm">
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-light d-flex justify-content-between">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Submit Later</button>
+                        <button type="submit" class="btn btn-brand px-4 fw-bold">
+                            <i class="bi bi-send-check me-1"></i> Submit Payment Report
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.6.1/js/iziModal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+    <script src="../assets/js/storefront-core.js"></script>
+    <script src="../assets/js/uwanbuy.js"></script>
+    <script src="../assets/js/uwanbuy-engine.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            const auctionId = 'uw_auc_stock_01';
+            const unitPrice = 6800;
+            const moq = 4;
+            let qty = 4;
+
+            function updateTotals() {
+                $('#stockQtyInput').val(qty);
+                $('#stockCommitTotal').text('₦' + (qty * unitPrice).toLocaleString() + '.00');
+            }
+
+            $('#btnMinusStockQty').on('click', function () {
+                if (qty > moq) {
+                    qty--;
+                    updateTotals();
+                } else {
+                    iziToast.warning({ title: 'MOQ Limit', message: 'Minimum Order Quantity is 4 units.' });
+                }
+            });
+
+            $('#btnPlusStockQty').on('click', function () {
+                if (qty < 12) {
+                    qty++;
+                    updateTotals();
+                }
+            });
+
+            $('#stockQtyInput').on('change', function () {
+                let val = parseInt($(this).val(), 10) || moq;
+                if (val < moq) val = moq;
+                qty = val;
+                updateTotals();
+            });
+
+            $('#btnCommitStockCapAndCheckout').on('click', function () {
+                window.UwanBuyEngine.buyAuctionItem(auctionId, qty);
+            });
+        });
+    </script>
+</body>
+
+</html>

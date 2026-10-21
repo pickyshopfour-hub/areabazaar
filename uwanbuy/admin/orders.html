@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Storefront Orders & Dispatch | UwanBUY Admin</title>
+
+    <link rel="shortcut icon" type="image/x-icon" href="../../assetsecm/images/uwanbuy-favicon-brief-color.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
+    <link rel="stylesheet" href="../assets/css/uwanbuy-updates.css">
+
+    <style>
+        :root {
+            --uw-brand: #ff0000;
+            --uw-dark: #0f172a;
+        }
+
+        body {
+            background-color: #f1f5f9;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #1e293b;
+        }
+
+        .admin-sidebar {
+            background-color: #0f172a;
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        .admin-sidebar .nav-link {
+            color: #94a3b8;
+            font-weight: 600;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .admin-sidebar .nav-link.active,
+        .admin-sidebar .nav-link:hover {
+            color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .admin-sidebar .nav-link.active {
+            background-color: var(--uw-brand);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 admin-sidebar p-3 d-flex flex-column">
+                <a href="../index.html" class="d-flex align-items-center mb-4 text-decoration-none text-white gap-2">
+                    <img src="../../assetsecm/images/uwanbuy-logo-long-full-color-01.png" alt="Logo" style="height: 32px; background: white; padding: 4px 8px; border-radius: 6px;">
+                </a>
+
+                <small class="text-uppercase text-secondary fw-bold text-xs mb-2 px-2">Storefront Console</small>
+                <nav class="nav flex-column mb-auto">
+                    <a class="nav-link" href="index.html">
+                        <i class="bi bi-speedometer2"></i> Dashboard
+                    </a>
+                    <a class="nav-link" href="auctions.html">
+                        <i class="bi bi-hammer"></i> Auction Setup & MOQ
+                    </a>
+                    <a class="nav-link" href="reconciliation.html">
+                        <i class="bi bi-receipt-cutoff"></i> Reconciliation
+                    </a>
+                    <a class="nav-link active" href="orders.html">
+                        <i class="bi bi-bag-check"></i> Orders & Dispatch
+                    </a>
+                </nav>
+
+                <div class="border-top border-secondary pt-3 mt-4">
+                    <a href="../index.html" class="btn btn-sm btn-outline-light w-100">
+                        <i class="bi bi-shop me-1"></i> Return to Storefront
+                    </a>
+                </div>
+            </div>
+
+            <!-- Main Content Area -->
+            <div class="col-md-9 col-lg-10 p-4">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <span class="badge bg-danger-subtle text-danger fw-bold small">Local Fulfillment</span>
+                        <h2 class="fw-bold text-dark m-0">Storefront Orders & Dispatch Console</h2>
+                        <small class="text-muted">Validate delivery passcodes for Tanke Hub 2-4 hour local fulfillment</small>
+                    </div>
+                </div>
+
+                <!-- Passcode Quick Verification Card -->
+                <div class="card border-0 rounded-4 shadow-sm bg-white p-4 mb-4">
+                    <h5 class="fw-bold text-dark mb-2"><i class="bi bi-qr-code-scan text-danger me-2"></i> Instant Delivery Passcode Verification</h5>
+                    <p class="text-muted small mb-3">When a customer arrives at the pickup point or delivery agent arrives at their address, verify their 4-digit passcode.</p>
+
+                    <div class="row g-2 align-items-center" style="max-width: 520px;">
+                        <div class="col-7">
+                            <input type="text" id="verifyPasscodeInput" class="form-control form-control-lg fw-bold text-center letter-spacing-2 font-monospace" placeholder="e.g. 5892" maxlength="4">
+                        </div>
+                        <div class="col-5">
+                            <button class="btn btn-brand btn-lg w-100 fw-bold" id="btnVerifyPasscode">
+                                <i class="bi bi-check-circle me-1"></i> Verify Code
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Incoming Customer Shopping Lists (Requires Admin Pricing) -->
+                <div class="card border-0 rounded-4 shadow-sm bg-white p-4 mb-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                            <span class="badge bg-primary-subtle text-primary fw-bold small">Direct Farm-Gate & Wholesale Pricing Desk</span>
+                            <h5 class="fw-bold text-dark mb-0 mt-1"><i class="bi bi-card-checklist text-danger me-2"></i> Incoming Customer Shopping Lists</h5>
+                        </div>
+                        <span class="badge bg-danger rounded-pill px-3 py-2" id="pendingListsCountBadge">0 Pending Pricing</span>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>List ID</th>
+                                    <th>Customer / Hub</th>
+                                    <th>Items Count</th>
+                                    <th>Submitted Time</th>
+                                    <th>Status</th>
+                                    <th class="text-end">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminSubmittedListsTableBody">
+                                <!-- Loaded dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                <!-- 15-Minute Bulk Delivery Tracking Dispatch Console -->
+                <div class="card border-0 rounded-4 shadow-sm bg-white p-4 mb-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                            <span class="badge bg-warning-subtle text-warning-emphasis fw-bold small">Automated 15-Minute Bulk Cycle</span>
+                            <h5 class="fw-bold text-dark mb-0 mt-1"><i class="bi bi-truck text-danger me-2"></i> Bulk Delivery Tracking Dispatch Queue</h5>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="badge bg-light text-dark border px-3 py-2 fw-bold" id="trackingBatchTimerDisplay">Next Batch: 14m 25s</span>
+                            <button class="btn btn-brand btn-sm px-3 py-2 fw-bold" id="btnTriggerTrackingBatch">
+                                <i class="bi bi-lightning-charge-fill me-1"></i> Dispatch Bulk Batch Now
+                            </button>
+                        </div>
+                    </div>
+                    <p class="text-muted small mb-3">Customer tracking requests are batched and dispatched in bulk every 15 minutes. Dispatching assigns riders and sends automated tracking notification emails to customers.</p>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Request ID</th>
+                                    <th>Order ID</th>
+                                    <th>Customer Email</th>
+                                    <th>Phone</th>
+                                    <th>Requested At</th>
+                                    <th>Queue Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminTrackingRequestsTableBody">
+                                <!-- Loaded dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Orders Queue -->
+                <div class="card border-0 rounded-4 shadow-sm bg-white p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="fw-bold text-dark mb-0">Local Orders Queue</h5>
+                        <div class="btn-group btn-group-sm" role="group">
+                            <button type="button" class="btn btn-outline-secondary active" id="btnFilterAll">All</button>
+                            <button type="button" class="btn btn-outline-secondary" id="btnFilterPaid">Paid & Confirmed</button>
+                            <button type="button" class="btn btn-outline-secondary" id="btnFilterAwaiting">Awaiting Payment</button>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Customer / Items</th>
+                                    <th>Fulfillment</th>
+                                    <th>Total Amount</th>
+                                    <th>Delivery Passcode</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminOrdersTableBody">
+                                <!-- Loaded dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Price Customer Shopping List -->
+    <div class="modal fade" id="modalPriceShoppingList" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="modal-header text-white px-4 py-3" style="background-color: #0f172a;">
+                    <div>
+                        <h5 class="modal-title fw-bold mb-0">Price Customer Shopping List</h5>
+                        <small class="text-white-50" id="pricingModalSubtitle">List ID: LST-UWB-...</small>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <p class="text-muted small mb-3">Input verified unit prices for items requested by the customer. Once calculated, push directly to customer's cart.</p>
+                    <div class="table-responsive border rounded-3 mb-3">
+                        <table class="table table-sm table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th class="ps-3 py-2">Item Name</th>
+                                    <th class="py-2">Category</th>
+                                    <th class="py-2" style="width: 80px;">Qty</th>
+                                    <th class="py-2" style="width: 170px;">Unit Price (₦)</th>
+                                    <th class="text-end pe-3 py-2">Line Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pricingItemsTableBody">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded-3 border">
+                        <span class="fw-bold text-dark">Calculated List Total:</span>
+                        <span class="fs-4 fw-extrabold text-danger" id="pricingModalTotalDisplay">₦0.00</span>
+                    </div>
+                </div>
+                <div class="modal-footer bg-light d-flex justify-content-between">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-brand px-4 py-2 fw-bold" id="btnApproveAndPushToCart">
+                        <i class="bi bi-cart-plus me-1"></i> Calculate & Push to Customer Cart
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+    <script src="../assets/js/storefront-core.js"></script>
+    <script src="../assets/js/uwanbuy.js"></script>
+    <script src="../assets/js/uwanbuy-engine.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            let activePricingList = null;
+
+            function renderSubmittedLists() {
+                let lists = [];
+                try {
+                    lists = JSON.parse(localStorage.getItem('uwanbuy_submitted_lists')) || [];
+                } catch (e) {
+                    lists = [];
+                }
+
+                // If empty, provide 1 sample list for admin testing
+                if (lists.length === 0) {
+                    lists = [
+                        {
+                            listId: 'LST-UWB-48201',
+                            customerName: 'Amina Bello (Tanke Resident)',
+                            customerPhone: '0802-998-1122',
+                            hub: 'Tanke Hub, Ilorin',
+                            submittedAt: new Date(Date.now() - 3600000).toISOString(),
+                            status: 'pending_admin_pricing',
+                            items: [
+                                { title: 'Parboiled Rice (10kg custom pack)', categoryName: 'groceries', quantity: 2, unitLabel: 'bag', unitPriceMinor: 0, isCustom: true },
+                                { title: 'Red Chili Bell Pepper (Basket)', categoryName: 'groceries', quantity: 1, unitLabel: 'basket', unitPriceMinor: 0, isCustom: true }
+                            ]
+                        }
+                    ];
+                    localStorage.setItem('uwanbuy_submitted_lists', JSON.stringify(lists));
+                }
+
+                const pendingCount = lists.filter(l => l.status === 'pending_admin_pricing').length;
+                $('#pendingListsCountBadge').text(`${pendingCount} Pending Pricing`);
+
+                const $tbody = $('#adminSubmittedListsTableBody');
+                $tbody.empty();
+
+                if (lists.length === 0) {
+                    $tbody.html('<tr><td colspan="6" class="text-center text-muted py-4">No submitted customer shopping lists.</td></tr>');
+                    return;
+                }
+
+                lists.forEach(l => {
+                    const isPending = l.status === 'pending_admin_pricing';
+                    const statusBadge = isPending
+                        ? '<span class="badge bg-warning text-dark"><i class="bi bi-hourglass-split me-1"></i> Awaiting Price</span>'
+                        : '<span class="badge bg-success"><i class="bi bi-cart-check me-1"></i> Priced & Added to Cart</span>';
+
+                    const actionBtn = isPending
+                        ? `<button class="btn btn-sm btn-brand fw-bold btn-price-list" data-list-id="${l.listId}"><i class="bi bi-tag me-1"></i> Price & Add to Cart</button>`
+                        : `<button class="btn btn-sm btn-outline-secondary" disabled><i class="bi bi-check2"></i> Complete</button>`;
+
+                    $tbody.append(`
+                        <tr>
+                            <td><strong class="font-monospace text-dark">${l.listId}</strong></td>
+                            <td>
+                                <strong class="d-block text-dark">${l.customerName || 'Customer'}</strong>
+                                <small class="text-muted"><i class="bi bi-geo-alt me-1"></i>${l.hub || 'Tanke Hub'} &bull; ${l.customerPhone || '0803...'}</small>
+                            </td>
+                            <td><span class="badge bg-light text-dark border">${l.items.length} items</span></td>
+                            <td><small class="text-muted">${new Date(l.submittedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</small></td>
+                            <td>${statusBadge}</td>
+                            <td class="text-end">${actionBtn}</td>
+                        </tr>
+                    `);
+                });
+            }
+
+            renderSubmittedLists();
+
+            // Price List Click
+            $(document).on('click', '.btn-price-list', function () {
+                const listId = $(this).data('list-id');
+                let lists = JSON.parse(localStorage.getItem('uwanbuy_submitted_lists')) || [];
+                const list = lists.find(l => l.listId === listId);
+                if (!list) return;
+
+                activePricingList = list;
+                $('#pricingModalSubtitle').text(`List ID: ${list.listId} &bull; ${list.customerName || 'Customer'}`);
+
+                const $tbody = $('#pricingItemsTableBody');
+                $tbody.empty();
+
+                list.items.forEach((item, idx) => {
+                    const defaultPriceNaira = item.unitPriceMinor ? (item.unitPriceMinor / 100) : (item.isCustom ? 2500 : 1500);
+                    $tbody.append(`
+                        <tr>
+                            <td class="ps-3 fw-bold small text-dark">${item.title}</td>
+                            <td class="small text-muted">${item.categoryName || 'General'}</td>
+                            <td class="small fw-bold">${item.quantity} ${item.unitLabel || 'unit'}</td>
+                            <td>
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-text">₦</span>
+                                    <input type="number" class="form-control form-control-sm fw-bold item-unit-price-input" data-index="${idx}" value="${defaultPriceNaira}" min="100" step="50">
+                                </div>
+                            </td>
+                            <td class="text-end pe-3 fw-bold text-danger item-line-total" data-index="${idx}">
+                                ₦${(defaultPriceNaira * item.quantity).toLocaleString()}
+                            </td>
+                        </tr>
+                    `);
+                });
+
+                recalcPricingModalTotal();
+
+                const modal = new bootstrap.Modal(document.getElementById('modalPriceShoppingList'));
+                modal.show();
+            });
+
+            function recalcPricingModalTotal() {
+                if (!activePricingList) return;
+                let total = 0;
+                $('#pricingItemsTableBody tr').each(function () {
+                    const idx = $(this).find('.item-unit-price-input').data('index');
+                    const unitPrice = parseFloat($(this).find('.item-unit-price-input').val()) || 0;
+                    const qty = activePricingList.items[idx].quantity || 1;
+                    const lineTotal = unitPrice * qty;
+                    total += lineTotal;
+                    $(this).find('.item-line-total').text('₦' + lineTotal.toLocaleString('en-NG', { minimumFractionDigits: 2 }));
+                });
+                $('#pricingModalTotalDisplay').text('₦' + total.toLocaleString('en-NG', { minimumFractionDigits: 2 }));
+            }
+
+            $(document).on('input', '.item-unit-price-input', recalcPricingModalTotal);
+
+            // Approve & Push to Customer Cart
+            $('#btnApproveAndPushToCart').on('click', function () {
+                if (!activePricingList) return;
+
+                // 1. Update prices in list
+                $('#pricingItemsTableBody tr').each(function () {
+                    const idx = $(this).find('.item-unit-price-input').data('index');
+                    const unitPrice = parseFloat($(this).find('.item-unit-price-input').val()) || 0;
+                    activePricingList.items[idx].unitPriceMinor = Math.round(unitPrice * 100);
+                });
+
+                activePricingList.status = 'priced_and_added_to_cart';
+                activePricingList.pricedAt = new Date().toISOString();
+
+                // 2. Save back to uwanbuy_submitted_lists
+                let lists = JSON.parse(localStorage.getItem('uwanbuy_submitted_lists')) || [];
+                const listIdx = lists.findIndex(l => l.listId === activePricingList.listId);
+                if (listIdx >= 0) lists[listIdx] = activePricingList;
+                localStorage.setItem('uwanbuy_submitted_lists', JSON.stringify(lists));
+
+                // 3. Push priced items directly into uwanbuy_cart_state!
+                let cart = [];
+                try {
+                    cart = JSON.parse(localStorage.getItem('uwanbuy_cart_state')) || [];
+                } catch (e) {
+                    cart = [];
+                }
+
+                activePricingList.items.forEach(item => {
+                    cart.push({
+                        lineId: 'line_list_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
+                        productId: item.productId || ('list_item_' + Date.now()),
+                        title: item.title + ' [Admin Quoted]',
+                        priceMinor: item.unitPriceMinor,
+                        unitLabel: item.unitLabel || 'unit',
+                        image: 'assets/images/placeholders/gas-cooker.svg',
+                        quantity: item.quantity,
+                        moq: 1
+                    });
+                });
+
+                localStorage.setItem('uwanbuy_cart_state', JSON.stringify(cart));
+
+                const modalEl = document.getElementById('modalPriceShoppingList');
+                const modal = bootstrap.Modal.getInstance(modalEl);
+                if (modal) modal.hide();
+
+                iziToast.success({
+                    title: 'Priced & Added to Cart!',
+                    message: `Shopping List ${activePricingList.listId} items have been calculated and pushed directly into the customer cart.`,
+                    position: 'topRight',
+                    timeout: 6000
+                });
+
+                renderSubmittedLists();
+            });
+            function renderOrders(filter = 'all') {
+                let orders = window.UwanBuyEngine.pendingOrders || [];
+
+                // If empty, seed mock demo order for preview
+                if (orders.length === 0) {
+                    orders = [
+                        {
+                            orderId: 'ORD-UWB-202610-8401',
+                            totalMinor: 7550000,
+                            items: [{ title: 'Heavy Duty 4-Burner Glass Top Gas Cooker Unit', qty: 2 }],
+                            status: 'paid_and_confirmed',
+                            deliveryPasscode: 5892,
+                            deliveryMethod: 'Free Tanke Hub Pickup Point',
+                            createdAt: new Date().toISOString()
+                        },
+                        {
+                            orderId: 'ORD-UWB-202610-3942',
+                            totalMinor: 3870000,
+                            items: [{ title: 'Pure Gold Cooking Vegetable Oil (5L)', qty: 4 }],
+                            status: 'awaiting_payment',
+                            paymentRef: 'REF-UWB-202610-39421',
+                            deliveryMethod: 'Address Delivery (Express Dispatch)',
+                            createdAt: new Date(Date.now() - 1800000).toISOString()
+                        }
+                    ];
+                    window.UwanBuyEngine.pendingOrders = orders;
+                    window.UwanBuyEngine.saveLocalState();
+                }
+
+                if (filter === 'paid') orders = orders.filter(o => o.status === 'paid_and_confirmed');
+                else if (filter === 'awaiting') orders = orders.filter(o => o.status !== 'paid_and_confirmed');
+
+                const $tbody = $('#adminOrdersTableBody');
+                $tbody.empty();
+
+                if (orders.length === 0) {
+                    $tbody.append('<tr><td colspan="6" class="text-center text-muted py-4">No matching orders found.</td></tr>');
+                    return;
+                }
+
+                orders.forEach(o => {
+                    const isPaid = o.status === 'paid_and_confirmed';
+                    const statusBadge = isPaid
+                        ? '<span class="badge bg-success"><i class="bi bi-check2 me-1"></i> Paid & Confirmed</span>'
+                        : '<span class="badge bg-warning text-dark"><i class="bi bi-clock me-1"></i> Awaiting Payment</span>';
+
+                    const passcodeDisplay = isPaid
+                        ? `<span class="badge bg-dark font-monospace fs-6 px-3 py-2 text-warning">${o.deliveryPasscode || '8491'}</span>`
+                        : '<span class="text-muted small">Pending Payment</span>';
+
+                    const itemsTitle = (o.items && o.items[0] && o.items[0].title) || 'General Essentials';
+                    const itemsQty = (o.items && o.items[0] && o.items[0].qty) || 1;
+
+                    $tbody.append(`
+                        <tr>
+                            <td><strong class="font-monospace text-dark">${o.orderId}</strong></td>
+                            <td>
+                                <strong class="d-block text-dark text-truncate" style="max-width: 260px;">${itemsTitle}</strong>
+                                <small class="text-muted">Quantity: ${itemsQty} units &bull; ${new Date(o.createdAt || Date.now()).toLocaleTimeString()}</small>
+                            </td>
+                            <td><span class="badge bg-light text-secondary border">${o.deliveryMethod || 'Tanke Hub Collection Point'}</span></td>
+                            <td class="fw-bold text-danger">${window.UwanBuyEngine.formatNaira(o.totalMinor, true)}</td>
+                            <td>${passcodeDisplay}</td>
+                            <td>${statusBadge}</td>
+                        </tr>
+                    `);
+                });
+            }
+
+            function renderTrackingRequests() {
+                const requests = JSON.parse(localStorage.getItem('uwanbuy_tracking_requests') || '[]');
+                const $tbody = $('#adminTrackingRequestsTableBody');
+                if (!$tbody.length) return;
+                $tbody.empty();
+
+                if (requests.length === 0) {
+                    $tbody.html(`
+                        <tr>
+                            <td colspan="6" class="text-center py-3 text-muted small">
+                                <i class="bi bi-inbox me-1"></i> No tracking requests currently queued.
+                            </td>
+                        </tr>
+                    `);
+                    return;
+                }
+
+                requests.forEach(r => {
+                    const isDispatched = r.status === 'dispatched_email_sent';
+                    const badgeClass = isDispatched ? 'bg-success-subtle text-success' : 'bg-warning-subtle text-warning-emphasis';
+                    const badgeText = isDispatched ? 'Dispatched (Email Sent)' : 'Queued for 15-Min Batch';
+
+                    $tbody.append(`
+                        <tr>
+                            <td><span class="font-monospace small fw-bold">${r.requestId}</span></td>
+                            <td><span class="badge-order-id small">${r.orderId}</span></td>
+                            <td class="small fw-bold text-dark">${r.customerEmail}</td>
+                            <td class="small text-muted">${r.customerPhone || 'N/A'}</td>
+                            <td class="small text-muted">${new Date(r.requestedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
+                            <td><span class="badge ${badgeClass} fw-bold">${badgeText}</span></td>
+                        </tr>
+                    `);
+                });
+            }
+
+            renderOrders('all');
+            renderTrackingRequests();
+
+            // 15-Minute Countdown Timer Display
+            function updateTrackingCountdown() {
+                const scheduledTime = parseInt(localStorage.getItem('uwanbuy_next_tracking_batch_time'), 10) || (Date.now() + 15 * 60 * 1000);
+                const diff = Math.max(0, scheduledTime - Date.now());
+                const mins = Math.floor(diff / 60000);
+                const secs = Math.floor((diff % 60000) / 1000);
+                $('#trackingBatchTimerDisplay').text(`Next Batch: ${mins}m ${secs < 10 ? '0' : ''}${secs}s`);
+            }
+            setInterval(updateTrackingCountdown, 1000);
+            updateTrackingCountdown();
+
+            // Hook into batch dispatch button
+            $('#btnTriggerTrackingBatch').on('click', function () {
+                setTimeout(renderTrackingRequests, 400);
+            });
+
+            $('#btnFilterAll').on('click', function () {
+                $('.btn-group button').removeClass('active');
+                $(this).addClass('active');
+                renderOrders('all');
+            });
+
+            $('#btnFilterPaid').on('click', function () {
+                $('.btn-group button').removeClass('active');
+                $(this).addClass('active');
+                renderOrders('paid');
+            });
+
+            $('#btnFilterAwaiting').on('click', function () {
+                $('.btn-group button').removeClass('active');
+                $(this).addClass('active');
+                renderOrders('awaiting');
+            });
+
+            $('#btnVerifyPasscode').on('click', function () {
+                const entered = $('#verifyPasscodeInput').val().trim();
+                if (entered.length < 4) {
+                    iziToast.warning({ title: 'Invalid Code', message: 'Enter 4-digit passcode.' });
+                    return;
+                }
+                const orders = window.UwanBuyEngine.pendingOrders || [];
+                const match = orders.find(o => String(o.deliveryPasscode) === entered && o.status === 'paid_and_confirmed');
+
+                if (match) {
+                    iziToast.success({
+                        title: 'Passcode Verified!',
+                        message: `Order ${match.orderId} verified. Safe to release goods to customer!`,
+                        position: 'topCenter',
+                        timeout: 7000
+                    });
+                } else {
+                    iziToast.error({
+                        title: 'Verification Failed',
+                        message: 'No confirmed order found with this passcode.',
+                        position: 'topCenter'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

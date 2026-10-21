@@ -23,6 +23,8 @@
     <!-- Plugins CSS (iziModal, iziToast) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.6.1/css/iziModal.min.css">
+    <!-- UwanBuy October 2026 Updates CSS -->
+    <link rel="stylesheet" href="assets/css/uwanbuy-updates.css">
 
     <style>
         :root {
@@ -250,6 +252,9 @@
                     <li class="nav-item">
                         <a class="nav-link fw-semibold text-dark" href="../betasup/index.html">Betasup Soups</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold text-danger" href="auctions/index.html"><i class="bi bi-lightning-charge-fill me-1"></i>Auctions & Deals</a>
+                    </li>
                 </ul>
 
                 <!-- Right Utilities -->
@@ -471,19 +476,432 @@
     </div>
 
     <!-- Cart Offcanvas -->
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="cartOffcanvas">
+    <div class="offcanvas offcanvas-end offcanvas-cart-responsive" tabindex="-1" id="cartOffcanvas" style="width: min(440px, 100vw);">
         <div class="offcanvas-header border-bottom bg-light">
             <h5 class="offcanvas-title fw-bold"><i class="bi bi-cart3 text-danger me-2"></i> Shopping Cart</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
         </div>
-        <div class="offcanvas-body d-flex flex-column p-3">
-            <div id="cartItemsContainer" class="flex-grow-1 overflow-auto"></div>
-            <div class="border-top pt-3">
-                <div class="d-flex justify-content-between fw-bold mb-3 fs-5">
-                    <span>Total:</span>
-                    <span id="cartTotalDisplay" class="text-danger">₦0</span>
+        <div class="offcanvas-body d-flex flex-column p-0">
+            <!-- Pinned Top Cart Pending Orders (Awaiting Payment) -->
+            <div id="cart-pending-orders-container" class="p-3 pb-0"></div>
+
+            <!-- Customer Submitted Shopping Lists Status (Awaiting Admin Pricing) -->
+            <div id="cart-submitted-lists-container" class="px-3 pt-2"></div>
+
+            <!-- Select All & Summary Header -->
+            <div class="d-flex justify-content-between align-items-center px-3 py-2 bg-light border-bottom" id="cartSelectControlsBar">
+                <div class="form-check m-0 d-flex align-items-center gap-2">
+                    <input class="form-check-input" type="checkbox" id="selectAllCartCheck" checked>
+                    <label class="form-check-label small fw-bold" for="selectAllCartCheck">Select All</label>
                 </div>
-                <a href="index.html" class="btn btn-brand w-100 py-3 fw-bold">Proceed to Checkout</a>
+                <span class="badge bg-white text-dark border small" id="selectedCartSummary">0 selected</span>
+            </div>
+
+            <div id="cartItemsContainer" class="flex-grow-1 overflow-auto p-3">
+                <div id="cartDrawerItemsList">
+                    <div class="text-center text-muted mt-5" id="emptyCartState">
+                        <i class="bi bi-cart-x fs-1"></i>
+                        <p class="mt-2">Your cart is empty.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="border-top p-3 bg-light" id="cartFooter">
+                <div class="d-flex justify-content-between align-items-baseline mb-1">
+                    <span class="small text-muted">Selected Subtotal:</span>
+                    <span id="cartSelectedSubtotalDisplay" class="fw-extrabold text-danger fs-4">₦0.00</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="text-xs text-muted">Cart Full Total:</span>
+                    <span id="cartSubtotalDisplay" class="text-xs fw-bold text-secondary">₦0.00</span>
+                </div>
+                <div class="row g-2">
+                    <div class="col-6">
+                        <button class="btn btn-outline-danger w-100 py-2 fw-bold small" id="btnCheckoutSelected" disabled>
+                            <i class="bi bi-check2-square me-1"></i> Checkout Selected (<span id="countSelectedBadge">0</span>)
+                        </button>
+                    </div>
+                    <div class="col-6">
+                        <button class="btn btn-brand w-100 py-2 fw-bold small shadow-sm" id="btnCheckoutAll" disabled>
+                            <i class="bi bi-cart-check me-1"></i> Checkout All (<span id="countAllBadge">0</span>)
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==============================================================
+         MODAL 2: CHECKOUT VALIDATION MODAL (ASYNC QUOTE & VAT)
+         ============================================================== -->
+    <div class="modal fade" id="modal-checkout-validate" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-light">
+                    <div>
+                        <span class="badge bg-dark rounded-pill px-2 py-1 text-xs mb-1">Server Quote Validation</span>
+                        <h5 class="modal-title fw-bold">Order Checkout Validation</h5>
+                        <small class="text-muted">Order ID: <span class="badge-order-id" id="validateOrderIdDisplay">ORD-UWB-...</span></small>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <label class="form-label small fw-bold text-uppercase text-dark mb-2">Fulfillment & Delivery</label>
+                    <div class="row g-2 mb-3">
+                        <div class="col-sm-6">
+                            <div class="p-3 border rounded-3 bg-light">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="fulfillmentChoice" id="cat_fulfill_pickup" value="pickup" checked>
+                                    <label class="form-check-label fw-bold text-dark small" for="cat_fulfill_pickup">
+                                        <i class="bi bi-geo-alt-fill text-danger me-1"></i> Free Hub Pickup Point
+                                        <span class="badge bg-success-subtle text-success d-block mt-1">₦0.00 Free</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="p-3 border rounded-3 bg-light">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="fulfillmentChoice" id="cat_fulfill_address" value="address">
+                                    <label class="form-check-label fw-bold text-dark small" for="cat_fulfill_address">
+                                        <i class="bi bi-truck text-primary me-1"></i> Deliver to My Address
+                                        <span class="badge bg-primary-subtle text-primary d-block mt-1">+₦1,200.00</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="pickupAccordionWrapper" class="mb-3">
+                        <label class="form-label text-xs fw-bold text-muted text-uppercase mb-1">Select Local Hub Collection Point:</label>
+                        <div id="pickupPointsAccordionList" class="border rounded-3 p-2 bg-light" style="max-height: 180px; overflow-y: auto;"></div>
+                    </div>
+
+                    <div id="addressInputWrapper" class="mb-3 d-none">
+                        <label class="form-label text-xs fw-bold text-muted text-uppercase mb-1">Enter Delivery Address:</label>
+                        <textarea id="deliveryAddressInput" class="form-control" rows="2" placeholder="Street Address, Flat/House Number, Landmark, City"></textarea>
+                    </div>
+
+                    <div class="form-check form-switch p-3 border rounded-3 bg-light mb-4">
+                        <input class="form-check-input ms-0 me-3" type="checkbox" id="expressDeliveryToggle">
+                        <label class="form-check-label fw-bold text-dark small" for="expressDeliveryToggle">
+                            <i class="bi bi-lightning-charge-fill text-warning me-1"></i> Express Priority Delivery
+                            <span class="text-muted fw-normal d-block text-xs">Guaranteed 45-minute dispatch within hub radius (+₦1,500.00 surcharge)</span>
+                        </label>
+                    </div>
+
+                    <div class="p-3 bg-light rounded-3 border mb-3">
+                        <h6 class="fw-bold text-dark small text-uppercase mb-2">Price & Tax Breakdown</h6>
+                        <div class="d-flex justify-content-between small text-muted mb-1">
+                            <span>Items Subtotal:</span>
+                            <strong class="text-dark" id="summarySubtotal">₦0.00</strong>
+                        </div>
+                        <div class="d-flex justify-content-between small text-muted mb-1">
+                            <span>Delivery Fee:</span>
+                            <strong class="text-success" id="summaryDeliveryFee">FREE</strong>
+                        </div>
+                        <div class="d-flex justify-content-between small text-muted mb-1 d-none" id="summaryExpressRow">
+                            <span>Express Surcharge:</span>
+                            <strong class="text-warning-emphasis" id="summaryExpressFee">₦0.00</strong>
+                        </div>
+                        <div class="d-flex justify-content-between small text-muted mb-2">
+                            <span>VAT (7.5% applicable):</span>
+                            <strong class="text-dark" id="summaryVat">₦0.00</strong>
+                        </div>
+                        <div class="d-flex justify-content-between fw-extrabold fs-5 text-dark border-top pt-2">
+                            <span>Order Total:</span>
+                            <span class="text-danger" id="summaryTotalAmount">₦0.00</span>
+                        </div>
+                    </div>
+
+                    <div class="p-3 rounded-3 border mb-3 bg-white">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <small class="text-muted d-block text-xs">Your Wallet Balance</small>
+                                <strong class="fs-6 text-dark" id="validateWalletBalanceText">₦25,000.00</strong>
+                            </div>
+                            <span class="badge bg-dark-subtle text-dark">Verified Local Wallet</span>
+                        </div>
+                        <div id="walletInsufficientAlert" class="alert alert-warning p-2 small mt-2 mb-0 d-none">
+                            <i class="bi bi-exclamation-triangle-fill me-1"></i>
+                            Wallet balance is insufficient (Deficit: <strong id="walletDeficitAmount">₦0.00</strong>).
+                            <div class="mt-2 d-flex gap-2">
+                                <button type="button" class="btn btn-sm btn-outline-dark btn-open-payment-request" data-purpose="wallet_topup">
+                                    <i class="bi bi-wallet2 me-1"></i> Top Up Wallet
+                                </button>
+                                <button type="button" class="btn btn-sm btn-danger btn-open-payment-request" data-purpose="order_direct">
+                                    <i class="bi bi-credit-card me-1"></i> Pay Directly
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-light d-flex justify-content-between">
+                    <button type="button" class="btn btn-outline-secondary" id="btnCreatePaymentRequest" data-purpose="order_direct">
+                        <i class="bi bi-receipt me-1"></i> Create Payment Request
+                    </button>
+                    <button type="button" class="btn btn-brand px-4 py-2" id="btnPayWithWallet">
+                        <i class="bi bi-check2-circle me-1"></i> Pay with Wallet
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==============================================================
+         MODAL 3: WALLET PIN CONFIRMATION
+         ============================================================== -->
+    <div class="modal fade" id="modal-wallet-pin" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content text-center p-4">
+                <i class="bi bi-shield-lock display-4 text-danger mb-2"></i>
+                <h5 class="fw-bold mb-1">Enter Wallet PIN</h5>
+                <p class="text-muted small mb-3">Order: <span id="pinOrderIdDisplay" class="fw-bold"></span><br>Amount: <span id="pinAmountDisplay" class="text-danger fw-bold"></span></p>
+                <div class="mb-3">
+                    <input type="password" id="walletPinInput" class="form-control text-center fs-4 fw-bold letter-spacing-2" maxlength="4" placeholder="••••">
+                </div>
+                <button type="button" class="btn btn-brand w-100 py-2 fw-bold" id="btnConfirmWalletPin">
+                    Confirm & Settle
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==============================================================
+         MODAL 4: CREATE PAYMENT REQUEST MODAL
+         ============================================================== -->
+    <div class="modal fade" id="modal-payment-request" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-light">
+                    <div>
+                        <h5 class="modal-title fw-bold">Create Payment Request</h5>
+                        <small class="text-muted">Order: <span id="reqOrderIdDisplay" class="fw-bold"></span> &bull; Amount: <span id="reqAmountDisplay" class="text-danger fw-bold"></span></small>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <input type="hidden" id="reqPurposeInput" value="order_direct">
+                    <label class="form-label small fw-bold text-uppercase text-dark mb-2">Choose Payment Channel</label>
+                    <div class="row g-2 mb-3">
+                        <div class="col-6">
+                            <div class="p-2 border rounded-3 bg-light">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="paymentChannelChoice" id="cat_channel_agent" value="agent" checked>
+                                    <label class="form-check-label fw-bold small text-dark" for="cat_channel_agent">
+                                        <i class="bi bi-person-badge-fill text-danger me-1"></i> Pay with Agent
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="p-2 border rounded-3 bg-light">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="paymentChannelChoice" id="cat_channel_direct" value="direct">
+                                    <label class="form-check-label fw-bold small text-dark" for="cat_channel_direct">
+                                        <i class="bi bi-bank text-primary me-1"></i> Bank Transfer
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="channelAgentCard" class="card border rounded-3 p-3 bg-light mb-3">
+                        <div class="d-flex align-items-center gap-2 mb-2">
+                            <span class="badge bg-danger rounded-circle p-2"><i class="bi bi-person text-white"></i></span>
+                            <div>
+                                <h6 class="fw-bold text-dark mb-0" id="agentNameDisplay">Chukwuma Adebayo</h6>
+                                <small class="text-muted"><span id="agentBadgeDisplay">Accredited Senior Agent</span> &bull; Hub: <strong id="agentHubCodeDisplay">FRM-ILN-042</strong></small>
+                            </div>
+                        </div>
+                        <p class="text-muted text-xs mb-2">Call or chat the agent via WhatsApp to arrange local POS, cash-at-hub, or verified agent transfer.</p>
+                        <div class="d-flex gap-2">
+                            <a href="tel:08012345678" class="btn btn-sm btn-outline-secondary flex-fill small"><i class="bi bi-telephone me-1"></i> Call</a>
+                            <a href="#" id="agentWhatsappBtn" target="_blank" class="btn btn-sm btn-success flex-fill small"><i class="bi bi-whatsapp me-1"></i> WhatsApp</a>
+                        </div>
+                    </div>
+
+                    <div id="channelDirectCard" class="card border rounded-3 p-3 bg-light mb-3">
+                        <div class="d-flex align-items-center gap-2 mb-2">
+                            <i class="bi bi-bank fs-4 text-primary"></i>
+                            <div>
+                                <h6 class="fw-bold text-dark mb-0" id="bankNameDisplay">First Bank of Nigeria</h6>
+                                <small class="text-muted">Account Name: <strong id="bankAccountNameDisplay">UwanBUY Direct Settlement</strong></small>
+                            </div>
+                        </div>
+                        <div class="bg-white p-2 border rounded-2 d-flex justify-content-between align-items-center mb-2">
+                            <span class="fs-5 fw-bold font-monospace text-dark" id="bankAccountDisplay">3109845210</span>
+                            <button class="btn btn-sm btn-outline-secondary py-0 text-xs" onclick="navigator.clipboard.writeText('3109845210'); if(window.iziToast) iziToast.info({title:'Copied'});">Copy</button>
+                        </div>
+                        <small class="text-muted text-xs">Transfer via your banking app, then generate a payment reference below.</small>
+                    </div>
+
+                    <div id="generatedRefAlert" class="alert alert-success p-3 rounded-3 mb-0 d-none">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div>
+                                <small class="text-muted d-block text-xs">Payment Reference Generated:</small>
+                                <strong class="fs-5 font-monospace text-dark" id="generatedRefText">REF-UWB-...</strong>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-success fw-bold" id="btnOpenPaymentReport">
+                                Submit Report <i class="bi bi-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-light d-flex justify-content-between">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-brand px-4" id="btnGeneratePaymentRef">
+                        <i class="bi bi-qr-code me-1"></i> Generate Payment Ref
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==============================================================
+         MODAL 5: PAYMENT REPORT FORM
+         ============================================================== -->
+    <div class="modal fade" id="modal-payment-report" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-light">
+                    <div>
+                        <h5 class="modal-title fw-bold">Payment Report Form</h5>
+                        <small class="text-muted">Submit payment proof for instant local hub reconciliation</small>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="formPaymentReport">
+                    <div class="modal-body p-4">
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Payment Reference <span class="text-danger">*</span></label>
+                            <input type="text" id="reportPaymentRefInput" class="form-control font-monospace fw-bold" readonly required>
+                        </div>
+                        <div class="row g-2 mb-3">
+                            <div class="col-6">
+                                <label class="form-label small fw-bold">Order ID</label>
+                                <input type="text" id="reportOrderIdInput" class="form-control form-control-sm font-monospace" readonly>
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label small fw-bold">Amount Paid (₦) <span class="text-danger">*</span></label>
+                                <input type="number" id="reportAmountPaidInput" class="form-control form-control-sm fw-bold" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Bank Paid From <span class="text-danger">*</span></label>
+                            <select id="reportBankSelect" class="form-select form-select-sm" required>
+                                <option value="">Select your bank...</option>
+                                <option value="Access Bank">Access Bank</option>
+                                <option value="GTBank">Guaranty Trust Bank (GTBank)</option>
+                                <option value="First Bank">First Bank of Nigeria</option>
+                                <option value="Zenith Bank">Zenith Bank</option>
+                                <option value="UBA">United Bank for Africa (UBA)</option>
+                                <option value="OPay">OPay</option>
+                                <option value="PalmPay">PalmPay</option>
+                                <option value="Kuda Bank">Kuda Microfinance Bank</option>
+                                <option value="Other Bank">Other Bank</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Payer Account Name <span class="text-danger">*</span></label>
+                            <input type="text" id="reportPayerNameInput" class="form-control form-control-sm" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Receipt / Remarks (Optional)</label>
+                            <input type="text" id="reportRemarksInput" class="form-control form-control-sm">
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-light d-flex justify-content-between">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Submit Later</button>
+                        <button type="submit" class="btn btn-brand px-4 fw-bold">
+                            <i class="bi bi-send-check me-1"></i> Submit Payment Report
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==============================================================
+         MODAL 6: PRODUCT SPECIFICATIONS & DIRECT ADD-TO-CART MODAL
+         ============================================================== -->
+    <div class="modal fade" id="modal-quick-view" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+                <!-- Dark Header matching Image 4 -->
+                <div class="modal-header text-white px-4 py-3" style="background-color: #111827;">
+                    <div>
+                        <h5 class="modal-title fw-bold mb-0">Product Specifications</h5>
+                        <small class="text-white-50">Temporary Specifications & Quick Actions</small>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <!-- 2-Column Body -->
+                <div class="modal-body p-4">
+                    <div class="row g-4 align-items-start">
+                        <!-- Left Column: Product Image -->
+                        <div class="col-12 col-md-5 text-center">
+                            <div class="p-3 bg-light rounded-4 border d-flex align-items-center justify-content-center" style="min-height: 250px;">
+                                <img src="" id="quickViewImage" alt="Product" class="img-fluid" style="max-height: 220px; object-fit: contain;">
+                            </div>
+                        </div>
+                        <!-- Right Column: Info, Specs Pills, Accordion & Add to Cart -->
+                        <div class="col-12 col-md-7">
+                            <span class="badge bg-danger rounded-pill px-3 py-1 mb-2 fw-bold" id="quickViewCategoryBadge">Category</span>
+                            <h4 class="fw-bold text-dark mb-1" id="quickViewTitle">Product Title</h4>
+                            <p class="text-muted small mb-3" id="quickViewDescription">Product description...</p>
+
+                            <!-- Price & Stock Status Box -->
+                            <div class="d-flex justify-content-between align-items-center py-2 px-3 bg-light rounded-3 mb-3 border">
+                                <div>
+                                    <small class="text-muted d-block">Current Price:</small>
+                                    <span class="fs-4 fw-extrabold text-danger" id="quickViewPrice">₦0.00</span>
+                                </div>
+                                <div class="text-end">
+                                    <small class="text-muted d-block">Stock Status:</small>
+                                    <span class="text-success fw-bold small" id="quickViewStockStatus">
+                                        <i class="bi bi-check-circle-fill me-1"></i> In Stock
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Temporary Specifications: Pill Badges -->
+                            <div class="mb-3">
+                                <label class="small fw-bold text-muted text-uppercase mb-2 d-block">Temporary Specifications:</label>
+                                <div class="d-flex flex-wrap gap-2" id="quickViewSpecsPills">
+                                    <!-- Populated dynamically -->
+                                </div>
+                            </div>
+
+                            <!-- Embedded Accordion for Extra Specifications / Diagnostics -->
+                            <div class="accordion accordion-flush border rounded-3 mb-3 d-none" id="quickViewExtraAccordion">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingQuickViewDiag">
+                                        <button class="accordion-button collapsed py-2 small fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseQuickViewDiag">
+                                            <i class="bi bi-shield-check text-success me-2"></i> Technical Diagnostics & Inspection Attributes
+                                        </button>
+                                    </h2>
+                                    <div id="collapseQuickViewDiag" class="accordion-collapse collapse" data-bs-parent="#quickViewExtraAccordion">
+                                        <div class="accordion-body p-2" id="quickViewAccordionContent">
+                                            <!-- Diagnostics / extra specs table -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Action Row: Quantity Stepper & Direct Add to Cart (NO 'See Full Details' Button) -->
+                            <div class="d-flex align-items-center gap-2 pt-2">
+                                <div class="input-group" style="width: 125px;">
+                                    <button class="btn btn-outline-secondary" type="button" id="quickViewQtyMinus">-</button>
+                                    <input type="number" class="form-control text-center fw-bold" id="quickViewQtyInput" value="1" min="1">
+                                    <button class="btn btn-outline-secondary" type="button" id="quickViewQtyPlus">+</button>
+                                </div>
+                                <button class="btn btn-danger btn-lg flex-grow-1 fw-bold shadow-sm" id="quickViewAddToCartBtn">
+                                    <i class="bi bi-cart-plus me-1"></i> Add To Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -495,6 +913,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
     <script src="assets/js/storefront-core.js"></script>
     <script src="assets/js/uwanbuy.js"></script>
+    <script src="assets/js/uwanbuy-engine.js"></script>
 
     <script>
         $(document).ready(function () {
