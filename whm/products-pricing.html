@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WHM Products Price Update | AreaBazaar Logistics</title>
+  
+  <link rel="shortcut icon" type="image/x-icon" href="../assetsecm/images/uwanbuy-favicon-brief-color.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
+  <link rel="stylesheet" href="assets/css/whm-style.css">
+</head>
+<body>
+
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-md-3 col-lg-2 whm-sidebar p-3 d-flex flex-column">
+      <div class="d-flex align-items-center justify-content-between mb-3 px-2">
+        <a href="index.html" class="d-flex align-items-center text-decoration-none text-white gap-2">
+          <div class="bg-primary text-white rounded p-1 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+            <i class="fa fa-warehouse fs-6"></i>
+          </div>
+          <div>
+            <span class="fw-bold fs-6 tracking-tight d-block">AreaBazaar</span>
+            <span class="whm-brand-badge">WHM Suite</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="whm-nav-header">Command Center</div>
+      <nav class="nav flex-column">
+        <a class="nav-link" href="index.html">
+          <span><i class="bi bi-speedometer2"></i> Operations Dashboard</span>
+        </a>
+      </nav>
+
+      <div class="whm-nav-header">Catalog & Inventory</div>
+      <nav class="nav flex-column">
+        <a class="nav-link active" href="products-pricing.html">
+          <span><i class="bi bi-tag"></i> Products Price Update</span>
+        </a>
+        <a class="nav-link" href="inventory.html">
+          <span><i class="bi bi-boxes"></i> Product Inventory Update</span>
+        </a>
+        <a class="nav-link" href="handling.html">
+          <span><i class="bi bi-shield-check"></i> Product Handling Update</span>
+        </a>
+      </nav>
+
+      <div class="whm-nav-header">Fulfillment & Sourcing</div>
+      <nav class="nav flex-column mb-auto">
+        <a class="nav-link" href="order-items.html">
+          <span><i class="bi bi-list-check"></i> Order-Items Update</span>
+        </a>
+        <a class="nav-link" href="collation.html">
+          <span><i class="bi bi-diagram-3"></i> Collation (per categ)</span>
+        </a>
+        <a class="nav-link" href="sourcing.html">
+          <span><i class="bi bi-truck"></i> SBA Sourcing (per categ)</span>
+        </a>
+        <a class="nav-link" href="qa.html">
+          <span><i class="bi bi-patch-check"></i> Product QA (per categ)</span>
+        </a>
+      </nav>
+
+      <div class="border-top border-secondary pt-3 mt-4">
+        <a href="../uwanbuy/admin/index.html" class="btn btn-sm btn-outline-secondary w-100 text-start text-white-50 d-flex align-items-center justify-content-between">
+          <span><i class="bi bi-arrow-left me-1"></i> Storefront Admin</span>
+          <i class="bi bi-box-arrow-up-right small"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="col-md-9 col-lg-10 p-4">
+      <!-- Top Bar -->
+      <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 pb-2 border-bottom border-secondary border-opacity-25 gap-3">
+        <div>
+          <div class="d-flex align-items-center gap-2 mb-1">
+            <span class="badge badge-whm-blue py-1 px-2"><i class="bi bi-tag me-1"></i> Module 01</span>
+            <span class="text-secondary small">| Catalog Pricing & Cost Floor Matrix</span>
+          </div>
+          <h2 class="fw-bold m-0 text-white font-outfit">WHM Products Price Update</h2>
+          <small class="text-secondary">Manage base selling prices, cost floors, margins, and execute batch percentage/flat price recalibrations</small>
+        </div>
+
+        <div class="d-flex align-items-center gap-2">
+          <button class="btn btn-sm btn-outline-secondary text-white" onclick="renderPriceTable()">
+            <i class="fa fa-sync-alt me-1"></i> Refresh
+          </button>
+          <button class="btn btn-sm btn-primary" onclick="openBatchModalSelected()">
+            <i class="bi bi-sliders me-1"></i> Batch Price Adjust
+          </button>
+        </div>
+      </div>
+
+      <!-- Filters & Controls -->
+      <div class="whm-card p-3 mb-4">
+        <div class="row g-2 align-items-center">
+          <div class="col-md-4">
+            <div class="input-group">
+              <span class="input-group-text bg-dark border-secondary border-opacity-50 text-secondary"><i class="bi bi-search"></i></span>
+              <input type="text" id="searchInput" class="form-control whm-form-control" placeholder="Search by product title or brand..." onkeyup="filterProducts()">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <select id="categoryFilter" class="form-select whm-form-select" onchange="filterProducts()">
+              <option value="all">All Categories</option>
+              <option value="gadgets">Gadgets & Tech</option>
+              <option value="groceries">Packaged Groceries</option>
+              <option value="foodstuff">Foodstuff & Agro</option>
+              <option value="fashion">Fashion & Apparel</option>
+              <option value="home">Home Essentials</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <select id="marginFilter" class="form-select whm-form-select" onchange="filterProducts()">
+              <option value="all">All Margins</option>
+              <option value="low">Low Margin (&lt; 10%)</option>
+              <option value="healthy">Healthy Margin (&ge; 10%)</option>
+              <option value="high">High Margin (&ge; 25%)</option>
+            </select>
+          </div>
+          <div class="col-md-2 text-end">
+            <span class="text-secondary small" id="showingCount">0 products</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Products Price Table -->
+      <div class="whm-card p-0 overflow-hidden mb-5">
+        <div class="table-responsive">
+          <table class="table whm-table align-middle">
+            <thead>
+              <tr>
+                <th style="width: 40px;">
+                  <input type="checkbox" id="selectAllCheckbox" onchange="toggleSelectAll(this.checked)">
+                </th>
+                <th>Product & Variants</th>
+                <th>Category</th>
+                <th>Benchmark Cost Floor</th>
+                <th>Retail Selling Price</th>
+                <th>Gross Margin</th>
+                <th>Margin %</th>
+                <th class="text-end pe-4">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="pricingTableBody">
+              <tr>
+                <td colspan="8" class="text-center text-muted py-5">Loading pricing matrix...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Single Product Price Edit Modal -->
+<div class="modal fade whm-modal" id="priceEditModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title fw-bold text-white font-outfit" id="modalProductTitle">Edit Product Price</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body p-4">
+        <input type="hidden" id="editProductId">
+
+        <div class="row g-3 mb-3">
+          <div class="col-md-6">
+            <label class="form-label small text-secondary fw-bold text-uppercase">Base Wholesale Cost Floor (NGN)</label>
+            <div class="input-group">
+              <span class="input-group-text bg-dark border-secondary border-opacity-50 text-secondary">₦</span>
+              <input type="number" id="editCostFloorInput" class="form-control whm-form-control fw-bold" oninput="calcEditMargin()">
+            </div>
+            <small class="text-muted">Direct replenishment / purchase cost.</small>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label small text-secondary fw-bold text-uppercase">Retail Selling Price (NGN)</label>
+            <div class="input-group">
+              <span class="input-group-text bg-dark border-secondary border-opacity-50 text-secondary">₦</span>
+              <input type="number" id="editPriceInput" class="form-control whm-form-control fw-bold text-primary" oninput="calcEditMargin()">
+            </div>
+            <small class="text-muted">Customer-facing storefront price (customizable).</small>
+          </div>
+        </div>
+
+        <!-- Algorithmic Suggested Price & Handling Cost Panel -->
+        <div class="p-3 rounded-3 mb-3" style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(16, 185, 129, 0.35);">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <span class="small fw-bold text-success text-uppercase"><i class="bi bi-cpu me-1"></i> Backend Algorithmic Recommendation</span>
+            <span class="badge bg-success-subtle text-success border border-success border-opacity-25">Suggested, Not Forced</span>
+          </div>
+
+          <div class="row g-2 align-items-center mb-2">
+            <div class="col-md-7">
+              <div class="small text-secondary" id="handlingCostSummaryText">Handling Cost: ₦0 (Transport, Washing, Loading, Bagging)</div>
+              <div class="small text-white-50 mt-1">Effective Landed Floor: <strong class="text-white font-monospace" id="effectiveLandedFloorText">₦0</strong></div>
+            </div>
+            <div class="col-md-5 text-end">
+              <div class="fs-6 fw-bold text-success font-monospace" id="modalSuggestedPriceText">₦0.00</div>
+              <button type="button" class="btn btn-sm btn-outline-success mt-1 py-1 px-2 fw-bold" id="btnAdoptSuggested" onclick="adoptSuggestedPrice()">
+                <i class="bi bi-arrow-down-circle me-1"></i> Apply Suggested Price
+              </button>
+            </div>
+          </div>
+          <small class="text-muted d-block border-top border-secondary border-opacity-25 pt-2">
+            * Backend calculates suggested price from base purchase cost + physical handling costs (transportation, washing, loading, bagging). You can freely adopt it or override with a custom price.
+          </small>
+        </div>
+
+        <!-- Margin Live Preview Banner -->
+        <div class="p-3 rounded-3 mb-4 d-flex justify-content-between align-items-center" id="marginBanner" style="background-color: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3);">
+          <div>
+            <div class="text-secondary small fw-bold">CALCULATED MARGIN (VS BASE COST)</div>
+            <div class="h5 m-0 fw-bold text-white" id="liveMarginAmount">₦0</div>
+          </div>
+          <div class="text-end">
+            <div class="text-secondary small fw-bold">PROFIT MARGIN %</div>
+            <div class="h5 m-0 fw-bold text-info" id="liveMarginPercent">0.0%</div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label small text-secondary fw-bold text-uppercase">Price Update Reason</label>
+          <select id="editReasonSelect" class="form-select whm-form-select">
+            <option value="routine_adjustment">Routine Market Adjustment</option>
+            <option value="supplier_rebate">Supplier Rebate / Wholesale Discount</option>
+            <option value="market_surge">Market Surcharge / Inflation Adjustment</option>
+            <option value="clearance">Clearance / Warehouse Liquidation Pool</option>
+          </select>
+        </div>
+
+        <!-- Variant Price Adjustments if any -->
+        <div id="variantsContainer" class="mt-4" style="display: none;">
+          <h6 class="fw-bold text-white mb-2 font-outfit border-bottom border-secondary border-opacity-25 pb-2">Variant Price Differentials</h6>
+          <div id="variantsList" class="d-flex flex-column gap-2"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary text-white" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary fw-bold" onclick="saveProductPrice()">
+          <i class="bi bi-check-circle me-1"></i> Save Price Changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Batch Price Modal -->
+<div class="modal fade whm-modal" id="batchPriceModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title fw-bold text-white font-outfit">Batch Price Adjustment</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body p-4">
+        <p class="text-secondary small mb-3">Adjust prices simultaneously for <span class="fw-bold text-white" id="batchSelectedCount">0</span> selected products.</p>
+
+        <div class="mb-3">
+          <label class="form-label small text-secondary fw-bold text-uppercase">Adjustment Mode</label>
+          <select id="batchAdjustmentType" class="form-select whm-form-select" onchange="toggleBatchInputs()">
+            <option value="percentage">Percentage Offset (%)</option>
+            <option value="flat_offset">Flat Naira Offset (₦)</option>
+            <option value="uniform_rate">Set Uniform Liquidation Rate (₦)</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label small text-secondary fw-bold text-uppercase" id="batchValueLabel">Adjustment Percentage (%)</label>
+          <input type="number" id="batchValueInput" class="form-control whm-form-control fw-bold" placeholder="e.g. 5 for +5%, -10 for -10%">
+          <small class="text-muted" id="batchValueHint">Positive numbers increase prices; negative numbers apply discounts.</small>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label small text-secondary fw-bold text-uppercase">Reason for Batch Adjustment</label>
+          <input type="text" id="batchReasonInput" class="form-control whm-form-control" placeholder="e.g. Q4 Inflation Recalibration">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary text-white" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary fw-bold" onclick="executeBatchPriceUpdate()">
+          <i class="bi bi-sliders me-1"></i> Apply to Selected
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Floating Action Bar for Multiple Select -->
+<div id="floatingActionBar" class="whm-floating-bar" style="display: none;">
+  <span class="text-white small fw-bold"><span id="floatingSelectedCount">0</span> products selected</span>
+  <button class="btn btn-sm btn-primary fw-bold" onclick="openBatchModalSelected()">
+    <i class="bi bi-sliders me-1"></i> Batch Recalibrate
+  </button>
+  <button class="btn btn-sm btn-outline-light" onclick="toggleSelectAll(false)">
+    Deselect All
+  </button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+<script src="assets/js/whm-engine.js"></script>
+<script>
+  let selectedProductIds = new Set();
+  let currentProducts = [];
+
+  document.addEventListener('DOMContentLoaded', () => {
+    renderPriceTable();
+  });
+
+  function renderPriceTable() {
+    currentProducts = whmEngine.getProducts();
+    filterProducts();
+  }
+
+  function filterProducts() {
+    const q = (document.getElementById('searchInput').value || '').toLowerCase();
+    const cat = document.getElementById('categoryFilter').value;
+    const marginF = document.getElementById('marginFilter').value;
+
+    let filtered = currentProducts.filter(p => {
+      const matchQ = p.title.toLowerCase().includes(q) || (p.brand || '').toLowerCase().includes(q);
+      const matchCat = cat === 'all' || p.categoryId === cat;
+      
+      const price = p.priceMinor || 0;
+      const cost = p.costFloorMinor || 0;
+      const marginPct = price > 0 ? ((price - cost) / price) * 100 : 0;
+      
+      let matchMargin = true;
+      if (marginF === 'low') matchMargin = marginPct < 10;
+      else if (marginF === 'healthy') matchMargin = marginPct >= 10;
+      else if (marginF === 'high') matchMargin = marginPct >= 25;
+
+      return matchQ && matchCat && matchMargin;
+    });
+
+    document.getElementById('showingCount').textContent = `${filtered.length} products`;
+    const tbody = document.getElementById('pricingTableBody');
+
+    if (filtered.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="8" class="text-center text-muted py-5">No products matched the filter.</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = filtered.map(p => {
+      const isChecked = selectedProductIds.has(p.id);
+      const costFloor = p.costFloorMinor || (p.priceMinor * 0.8);
+      const sugg = whmEngine.calculateAlgorithmicSuggestedPrice(p.id);
+      const handlingCost = sugg ? sugg.totalHandlingCostMinor : 0;
+      const effectiveFloor = costFloor + handlingCost;
+      const marginMinor = p.priceMinor - costFloor;
+      const marginPct = (marginMinor / p.priceMinor) * 100;
+      const marginClass = marginPct >= 20 ? 'text-success' : (marginPct >= 10 ? 'text-info' : 'text-warning');
+      const hasVariants = Array.isArray(p.variants) && p.variants.length > 0;
+
+      return `
+        <tr>
+          <td>
+            <input type="checkbox" class="product-checkbox" value="${p.id}" ${isChecked ? 'checked' : ''} onchange="toggleItemSelect('${p.id}', this.checked)">
+          </td>
+          <td>
+            <div class="fw-bold text-white">${p.title}</div>
+            <div class="text-muted small">${p.brand || 'Unbranded'} ${hasVariants ? `&bull; <span class="badge badge-whm-slate">${p.variants.length} Variants</span>` : ''}</div>
+          </td>
+          <td><span class="badge badge-whm-blue">${p.categoryId.toUpperCase()}</span></td>
+          <td>
+            <div class="font-monospace text-secondary">${whmEngine.formatNaira(costFloor)}</div>
+            <div class="small text-info" title="Physical Handling (Transport, Washing, Loading, Bagging)">+ Hdl: ${whmEngine.formatNaira(handlingCost)}</div>
+          </td>
+          <td>
+            <div class="font-monospace fw-bold text-white">${whmEngine.formatNaira(p.priceMinor)}</div>
+            <div class="small text-success" title="Backend Algorithmic Suggestion (Not Forced)">Sugg: ${sugg ? whmEngine.formatNaira(sugg.suggestedPriceMinor) : 'N/A'}</div>
+          </td>
+          <td class="font-monospace ${marginClass}">${whmEngine.formatNaira(marginMinor)}</td>
+          <td><span class="badge ${marginPct >= 15 ? 'badge-whm-green' : 'badge-whm-amber'}">${whmEngine.formatPercent(marginPct)}</span></td>
+          <td class="text-end pe-4">
+            <button class="btn btn-sm btn-outline-primary" onclick="openPriceModal('${p.id}')">
+              <i class="bi bi-pencil-square me-1"></i> Edit Price
+            </button>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  function toggleItemSelect(id, checked) {
+    if (checked) selectedProductIds.add(id);
+    else selectedProductIds.delete(id);
+    updateFloatingBar();
+  }
+
+  function toggleSelectAll(checked) {
+    const checkboxes = document.querySelectorAll('.product-checkbox');
+    checkboxes.forEach(cb => {
+      cb.checked = checked;
+      if (checked) selectedProductIds.add(cb.value);
+      else selectedProductIds.delete(cb.value);
+    });
+    document.getElementById('selectAllCheckbox').checked = checked;
+    updateFloatingBar();
+  }
+
+  function updateFloatingBar() {
+    const count = selectedProductIds.size;
+    const bar = document.getElementById('floatingActionBar');
+    document.getElementById('floatingSelectedCount').textContent = count;
+    document.getElementById('batchSelectedCount').textContent = count;
+    if (count > 0) bar.style.display = 'flex';
+    else bar.style.display = 'none';
+  }
+
+  let currentModalSuggestedMinor = 0;
+
+  function openPriceModal(productId) {
+    const p = whmEngine.getProductById(productId);
+    if (!p) return;
+
+    document.getElementById('editProductId').value = p.id;
+    document.getElementById('modalProductTitle').textContent = `Price Update: ${p.title}`;
+    document.getElementById('editPriceInput').value = (p.priceMinor || 0) / 100;
+    document.getElementById('editCostFloorInput').value = (p.costFloorMinor || (p.priceMinor * 0.8)) / 100;
+
+    // Load backend algorithmic recommendation & handling cost breakdown
+    const sugg = whmEngine.calculateAlgorithmicSuggestedPrice(p.id);
+    if (sugg) {
+      currentModalSuggestedMinor = sugg.suggestedPriceMinor;
+      const hb = sugg.handlingCostBreakdown || {};
+      const transStr = whmEngine.formatNaira(hb.transportationMinor || 0);
+      const washStr = whmEngine.formatNaira(hb.washingMinor || 0);
+      const loadStr = whmEngine.formatNaira(hb.loadingMinor || 0);
+      const bagStr = whmEngine.formatNaira(hb.baggingMinor || 0);
+      const totalHdlStr = whmEngine.formatNaira(sugg.totalHandlingCostMinor);
+
+      document.getElementById('handlingCostSummaryText').innerHTML = 
+        `Handling Cost: <strong class="text-info">${totalHdlStr}</strong> <span class="text-secondary">(Trans: ${transStr}, Wash: ${washStr}, Load: ${loadStr}, Bag: ${bagStr})</span>`;
+      document.getElementById('effectiveLandedFloorText').textContent = whmEngine.formatNaira(sugg.effectiveCostFloorMinor);
+      document.getElementById('modalSuggestedPriceText').textContent = whmEngine.formatNaira(sugg.suggestedPriceMinor);
+    }
+    
+    // Render variants if any
+    const varContainer = document.getElementById('variantsContainer');
+    const varList = document.getElementById('variantsList');
+    if (Array.isArray(p.variants) && p.variants.length > 0) {
+      varContainer.style.display = 'block';
+      varList.innerHTML = p.variants.map((v, i) => `
+        <div class="p-2 rounded bg-dark border border-secondary border-opacity-25 d-flex justify-content-between align-items-center">
+          <span class="small fw-semibold text-white">${v.name}</span>
+          <div class="d-flex align-items-center gap-2">
+            <span class="text-muted small">Delta:</span>
+            <input type="number" class="form-control form-control-sm whm-form-control var-delta-input" data-var-id="${v.id}" value="${(v.priceDeltaMinor || 0) / 100}" style="width: 100px;">
+          </div>
+        </div>
+      `).join('');
+    } else {
+      varContainer.style.display = 'none';
+    }
+
+    calcEditMargin();
+    new bootstrap.Modal(document.getElementById('priceEditModal')).show();
+  }
+
+  function adoptSuggestedPrice() {
+    if (currentModalSuggestedMinor > 0) {
+      document.getElementById('editPriceInput').value = (currentModalSuggestedMinor / 100);
+      calcEditMargin();
+      iziToast.info({ title: 'Suggested Price Applied', message: 'Price set to backend algorithmic recommendation. You can still adjust it.', position: 'topRight' });
+    }
+  }
+
+  function calcEditMargin() {
+    const price = parseFloat(document.getElementById('editPriceInput').value) || 0;
+    const cost = parseFloat(document.getElementById('editCostFloorInput').value) || 0;
+    const margin = price - cost;
+    const pct = price > 0 ? (margin / price) * 100 : 0;
+
+    document.getElementById('liveMarginAmount').textContent = '₦' + margin.toLocaleString();
+    document.getElementById('liveMarginPercent').textContent = pct.toFixed(1) + '%';
+
+    const banner = document.getElementById('marginBanner');
+    if (price < cost) {
+      banner.style.backgroundColor = 'rgba(239, 68, 68, 0.15)';
+      banner.style.borderColor = 'rgba(239, 68, 68, 0.4)';
+    } else {
+      banner.style.backgroundColor = 'rgba(59, 130, 246, 0.1)';
+      banner.style.borderColor = 'rgba(59, 130, 246, 0.3)';
+    }
+  }
+
+  function saveProductPrice() {
+    const productId = document.getElementById('editProductId').value;
+    const newPriceMinor = (parseFloat(document.getElementById('editPriceInput').value) || 0) * 100;
+    const costFloorMinor = (parseFloat(document.getElementById('editCostFloorInput').value) || 0) * 100;
+    const reason = document.getElementById('editReasonSelect').value;
+
+    const variantInputs = document.querySelectorAll('.var-delta-input');
+    const variantUpdates = [];
+    variantInputs.forEach(inp => {
+      variantUpdates.push({
+        variantId: inp.dataset.varId,
+        priceDeltaMinor: (parseFloat(inp.value) || 0) * 100
+      });
+    });
+
+    const res = whmEngine.updateProductPrice(productId, newPriceMinor, costFloorMinor, reason, 'WHM Pricing Lead', variantUpdates);
+
+    if (!res.success) {
+      iziToast.error({ title: 'Price Error', message: res.error, position: 'topRight' });
+      return;
+    }
+
+    iziToast.success({ title: 'Price Updated', message: 'Price changes synchronized with storefront.', position: 'topRight' });
+    bootstrap.Modal.getInstance(document.getElementById('priceEditModal')).hide();
+    renderPriceTable();
+  }
+
+  function openBatchModalSelected() {
+    if (selectedProductIds.size === 0) {
+      iziToast.warning({ title: 'No Selection', message: 'Please select at least one product using the checkboxes.', position: 'topRight' });
+      return;
+    }
+    document.getElementById('batchSelectedCount').textContent = selectedProductIds.size;
+    new bootstrap.Modal(document.getElementById('batchPriceModal')).show();
+  }
+
+  function toggleBatchInputs() {
+    const type = document.getElementById('batchAdjustmentType').value;
+    const label = document.getElementById('batchValueLabel');
+    const hint = document.getElementById('batchValueHint');
+
+    if (type === 'percentage') {
+      label.textContent = 'Adjustment Percentage (%)';
+      hint.textContent = 'e.g. 5 for +5%, -10 for -10% discount';
+    } else if (type === 'flat_offset') {
+      label.textContent = 'Flat Naira Offset (₦)';
+      hint.textContent = 'e.g. 500 to add ₦500, -1000 to reduce by ₦1,000';
+    } else if (type === 'uniform_rate') {
+      label.textContent = 'Uniform Flat Price (₦)';
+      hint.textContent = 'e.g. 12500 for uniform ₦12,500 clearance pool';
+    }
+  }
+
+  function executeBatchPriceUpdate() {
+    const type = document.getElementById('batchAdjustmentType').value;
+    const val = parseFloat(document.getElementById('batchValueInput').value);
+    const reason = document.getElementById('batchReasonInput').value || 'Batch Recalibration';
+
+    if (isNaN(val)) {
+      iziToast.warning({ title: 'Invalid Value', message: 'Please enter a valid numeric adjustment value.', position: 'topRight' });
+      return;
+    }
+
+    const res = whmEngine.applyBatchPrice(Array.from(selectedProductIds), type, val, 10000, reason, 'WHM Batch Manager');
+    iziToast.success({ title: 'Batch Applied', message: `Adjusted prices for ${res.updatedCount} products.`, position: 'topRight' });
+    bootstrap.Modal.getInstance(document.getElementById('batchPriceModal')).hide();
+    selectedProductIds.clear();
+    updateFloatingBar();
+    renderPriceTable();
+  }
+</script>
+</body>
+</html>

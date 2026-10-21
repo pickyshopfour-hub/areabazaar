@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WHM Product Sourcing - Assign to SBA (per categ) | AreaBazaar Logistics</title>
+  
+  <link rel="shortcut icon" type="image/x-icon" href="../assetsecm/images/uwanbuy-favicon-brief-color.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
+  <link rel="stylesheet" href="assets/css/whm-style.css">
+</head>
+<body>
+
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-md-3 col-lg-2 whm-sidebar p-3 d-flex flex-column">
+      <div class="d-flex align-items-center justify-content-between mb-3 px-2">
+        <a href="index.html" class="d-flex align-items-center text-decoration-none text-white gap-2">
+          <div class="bg-primary text-white rounded p-1 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+            <i class="fa fa-warehouse fs-6"></i>
+          </div>
+          <div>
+            <span class="fw-bold fs-6 tracking-tight d-block">AreaBazaar</span>
+            <span class="whm-brand-badge">WHM Suite</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="whm-nav-header">Command Center</div>
+      <nav class="nav flex-column">
+        <a class="nav-link" href="index.html">
+          <span><i class="bi bi-speedometer2"></i> Operations Dashboard</span>
+        </a>
+      </nav>
+
+      <div class="whm-nav-header">Catalog & Inventory</div>
+      <nav class="nav flex-column">
+        <a class="nav-link" href="products-pricing.html">
+          <span><i class="bi bi-tag"></i> Products Price Update</span>
+        </a>
+        <a class="nav-link" href="inventory.html">
+          <span><i class="bi bi-boxes"></i> Product Inventory Update</span>
+        </a>
+        <a class="nav-link" href="handling.html">
+          <span><i class="bi bi-shield-check"></i> Product Handling Update</span>
+        </a>
+      </nav>
+
+      <div class="whm-nav-header">Fulfillment & Sourcing</div>
+      <nav class="nav flex-column mb-auto">
+        <a class="nav-link" href="order-items.html">
+          <span><i class="bi bi-list-check"></i> Order-Items Update</span>
+        </a>
+        <a class="nav-link" href="collation.html">
+          <span><i class="bi bi-diagram-3"></i> Collation (per categ)</span>
+        </a>
+        <a class="nav-link active" href="sourcing.html">
+          <span><i class="bi bi-truck"></i> SBA Sourcing (per categ)</span>
+        </a>
+        <a class="nav-link" href="qa.html">
+          <span><i class="bi bi-patch-check"></i> Product QA (per categ)</span>
+        </a>
+      </nav>
+
+      <div class="border-top border-secondary pt-3 mt-4">
+        <a href="../uwanbuy/admin/index.html" class="btn btn-sm btn-outline-secondary w-100 text-start text-white-50 d-flex align-items-center justify-content-between">
+          <span><i class="bi bi-arrow-left me-1"></i> Storefront Admin</span>
+          <i class="bi bi-box-arrow-up-right small"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="col-md-9 col-lg-10 p-4">
+      <!-- Top Bar -->
+      <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 pb-2 border-bottom border-secondary border-opacity-25 gap-3">
+        <div>
+          <div class="d-flex align-items-center gap-2 mb-1">
+            <span class="badge badge-whm-purple py-1 px-2"><i class="bi bi-truck me-1"></i> Module 06</span>
+            <span class="text-secondary small">| Sourcing & Buying Agents (SBA) Procurement</span>
+          </div>
+          <h2 class="fw-bold m-0 text-white font-outfit">WHM Product Sourcing - Assign to SBA (per categ)</h2>
+          <small class="text-secondary">Detect replenishment deficits, dispatch procurement sheets to specialized SBAs, and track receiving at warehouse dock</small>
+        </div>
+
+        <div class="d-flex align-items-center gap-2">
+          <button class="btn btn-sm btn-outline-secondary text-white" onclick="renderSbaPage()">
+            <i class="fa fa-sync-alt me-1"></i> Refresh
+          </button>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs: Deficits vs Active Batches -->
+      <ul class="nav nav-pills mb-4 gap-2">
+        <li class="nav-item">
+          <button class="nav-link active rounded-pill px-4" id="tabDeficitsBtn" data-bs-toggle="pill" data-bs-target="#tabDeficits">
+            <i class="bi bi-exclamation-triangle me-1"></i> Unassigned Deficits (<span id="deficitCount">0</span>)
+          </button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-link rounded-pill px-4" id="tabBatchesBtn" data-bs-toggle="pill" data-bs-target="#tabBatches">
+            <i class="bi bi-truck me-1"></i> Active SBA Assignments (<span id="batchCount">0</span>)
+          </button>
+        </li>
+      </ul>
+
+      <div class="tab-content">
+        <!-- Tab 1: Deficit Aggregation -->
+        <div class="tab-pane fade show active" id="tabDeficits">
+          <div class="whm-card p-0 overflow-hidden mb-5">
+            <div class="whm-card-header d-flex justify-content-between align-items-center">
+              <div>
+                <h5 class="fw-bold text-white m-0 font-outfit">Inventory Deficits Requiring Procurement</h5>
+                <small class="text-secondary">Aggregated by order demand and minimum stock thresholds</small>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table whm-table align-middle">
+                <thead>
+                  <tr>
+                    <th>Product Title</th>
+                    <th>Category</th>
+                    <th>Current Physical Stock</th>
+                    <th>Order Demand</th>
+                    <th>Net Deficit</th>
+                    <th>Benchmark Unit Cost</th>
+                    <th>Estimated Budget</th>
+                    <th>Suggested Wholesale Origin</th>
+                    <th class="text-end pe-4">Procurement Action</th>
+                  </tr>
+                </thead>
+                <tbody id="deficitsTableBody">
+                  <tr>
+                    <td colspan="9" class="text-center text-muted py-5">Checking for replenishment deficits...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 2: Active SBA Batches -->
+        <div class="tab-pane fade" id="tabBatches">
+          <div class="whm-card p-0 overflow-hidden mb-5">
+            <div class="whm-card-header d-flex justify-content-between align-items-center">
+              <div>
+                <h5 class="fw-bold text-white m-0 font-outfit">Active SBA Procurement Batches</h5>
+                <small class="text-secondary">Tracking acquisition pipeline through delivery at dock</small>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table whm-table align-middle">
+                <thead>
+                  <tr>
+                    <th>Batch ID</th>
+                    <th>Assigned SBA Agent</th>
+                    <th>Category</th>
+                    <th>Target Market Origin</th>
+                    <th>Budget Allocation</th>
+                    <th>Actual Incurred</th>
+                    <th>Lifecycle Status</th>
+                    <th class="text-end pe-4">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="batchesTableBody">
+                  <tr>
+                    <td colspan="8" class="text-center text-muted py-5">Loading active batches...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Create SBA Batch Modal -->
+<div class="modal fade whm-modal" id="createBatchModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title fw-bold text-white font-outfit">Assign Sourcing Batch to SBA</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body p-4">
+        <input type="hidden" id="batchProductId">
+        <input type="hidden" id="batchCategoryId">
+
+        <div class="p-3 rounded bg-dark border border-secondary border-opacity-25 mb-3">
+          <div class="text-secondary small fw-bold text-uppercase">Target Sourcing Item</div>
+          <div class="h6 fw-bold text-white m-0" id="batchItemTitle">Product Title</div>
+          <div class="text-muted small" id="batchItemDeficit">Deficit: 16 units &bull; Est. Budget: ₦19,200</div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label small text-secondary fw-bold text-uppercase">Select Specialized SBA Agent</label>
+          <select id="sbaAgentSelect" class="form-select whm-form-select">
+            <option value="sba_agro_kayode" data-name="Kayode Agro Direct" data-phone="08033129841">Kayode Agro Direct (Agro & Foodstuff Specialist)</option>
+            <option value="sba_fmcg_bola" data-name="Bola FMCG Procurement" data-phone="08055419822">Bola FMCG Procurement (Groceries & Supermarket)</option>
+            <option value="sba_tech_victor" data-name="Victor Tech Sourcing" data-phone="08022987114">Victor Tech Sourcing (Electronics & Gadgets)</option>
+            <option value="sba_apparel_kemi" data-name="Kemi Apparel Source" data-phone="08099881123">Kemi Apparel Source (Fashion & Textiles)</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label small text-secondary fw-bold text-uppercase">Target Procurement Market / Wholesale Depot</label>
+          <input type="text" id="batchTargetMarketInput" class="form-control whm-form-control" placeholder="e.g. Ipata Market, Ilorin">
+        </div>
+
+        <div class="row g-2 mb-3">
+          <div class="col-6">
+            <label class="form-label small text-secondary fw-bold text-uppercase">Quantity to Source</label>
+            <input type="number" id="batchQtyInput" class="form-control whm-form-control fw-bold text-center" oninput="calcBatchBudget()">
+          </div>
+          <div class="col-6">
+            <label class="form-label small text-secondary fw-bold text-uppercase">Disbursement Budget (₦)</label>
+            <input type="number" id="batchBudgetInput" class="form-control whm-form-control fw-bold text-center text-primary">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary text-white" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary fw-bold" onclick="executeCreateSbaBatch()">
+          <i class="bi bi-truck me-1"></i> Dispatch Batch to SBA
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Receive SBA Inbound Delivery Modal -->
+<div class="modal fade whm-modal" id="receiveBatchModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title fw-bold text-white font-outfit">Log SBA Inbound Delivery at Dock</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body p-4">
+        <input type="hidden" id="receiveBatchId">
+
+        <div class="p-3 rounded bg-dark border border-secondary border-opacity-25 mb-3">
+          <div class="text-secondary small fw-bold text-uppercase">SBA Batch Info</div>
+          <div class="h6 fw-bold text-white m-0" id="receiveBatchTitle">Batch ID</div>
+          <div class="text-muted small" id="receiveBatchAgent">Agent: Kayode Agro &bull; Budget: ₦19,200</div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label small text-secondary fw-bold text-uppercase">Receiving Warehouse Dock</label>
+          <select id="receiveDockSelect" class="form-select whm-form-select">
+            <option value="Dock 1 (General Cargo)">Dock 1 - General Cargo & Dry FMCG</option>
+            <option value="Dock 2 (Perishables)">Dock 2 - Perishables & Agro Produce</option>
+            <option value="Dock 3 (Cold Chain)">Dock 3 - Cold Chain Refrigerated Intake</option>
+            <option value="Dock 4 (High Value Tech)">Dock 4 - High Value Tech Cage</option>
+          </select>
+        </div>
+
+        <div class="row g-2 mb-3">
+          <div class="col-6">
+            <label class="form-label small text-secondary fw-bold text-uppercase">Actual Incurred Cost (₦)</label>
+            <input type="number" id="receiveActualCostInput" class="form-control whm-form-control fw-bold text-center text-primary" placeholder="Total Paid">
+          </div>
+          <div class="col-6">
+            <label class="form-label small text-secondary fw-bold text-uppercase">Vendor Receipt Reference</label>
+            <input type="text" id="receiveReceiptRefInput" class="form-control whm-form-control text-center" placeholder="e.g. RCPT-9921">
+          </div>
+        </div>
+
+        <div class="p-3 rounded bg-info bg-opacity-10 border border-info border-opacity-25 text-info small">
+          <i class="bi bi-info-circle me-1"></i> Received items will automatically generate <strong>QA Inspection Tickets</strong> for quality verification before shelving into pick bins.
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary text-white" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-success fw-bold" onclick="executeReceiveBatch()">
+          <i class="bi bi-box-arrow-in-down me-1"></i> Receive at Dock & Send to QA
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+<script src="assets/js/whm-engine.js"></script>
+<script>
+  let deficits = [];
+  let batches = [];
+  let currentDeficitItem = null;
+
+  document.addEventListener('DOMContentLoaded', () => {
+    renderSbaPage();
+  });
+
+  function renderSbaPage() {
+    deficits = whmEngine.getDeficits();
+    batches = whmEngine.getSbaAssignments();
+
+    document.getElementById('deficitCount').textContent = deficits.length;
+    document.getElementById('batchCount').textContent = batches.length;
+
+    renderDeficitsTable();
+    renderBatchesTable();
+  }
+
+  function renderDeficitsTable() {
+    const tbody = document.getElementById('deficitsTableBody');
+    if (deficits.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="9" class="text-center text-success py-5"><i class="bi bi-check-circle fs-3 d-block mb-2"></i>No inventory deficits! Stock is adequate for current order demand.</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = deficits.map(d => `
+      <tr>
+        <td>
+          <div class="fw-bold text-white">${d.title}</div>
+          <div class="text-muted small font-monospace">${d.productId}</div>
+        </td>
+        <td><span class="badge badge-whm-blue">${d.categoryId.toUpperCase()}</span></td>
+        <td class="font-monospace text-secondary">${d.currentStock}</td>
+        <td class="font-monospace text-warning">${d.pendingDemand}</td>
+        <td class="font-monospace fw-bold text-danger fs-6">${d.deficitQty} units</td>
+        <td class="font-monospace text-secondary">${whmEngine.formatNaira(d.unitCostFloorMinor)}</td>
+        <td class="font-monospace text-primary fw-bold">${whmEngine.formatNaira(d.estTotalMinor)}</td>
+        <td class="text-secondary small">${d.suggestedOrigin}</td>
+        <td class="text-end pe-4">
+          <button class="btn btn-sm btn-primary fw-bold" onclick="openCreateBatchModal('${d.productId}')">
+            <i class="bi bi-truck me-1"></i> Assign SBA
+          </button>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  function renderBatchesTable() {
+    const tbody = document.getElementById('batchesTableBody');
+    if (batches.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="8" class="text-center text-muted py-5">No active SBA batches found.</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = batches.map(b => {
+      let statusBadge = '<span class="badge badge-whm-slate">Assigned</span>';
+      if (b.status === 'in_transit') statusBadge = '<span class="badge badge-whm-amber"><i class="bi bi-truck me-1"></i>In Transit</span>';
+      else if (b.status === 'supplied_at_dock') statusBadge = '<span class="badge badge-whm-cyan"><i class="bi bi-box-arrow-in-down me-1"></i>At Dock / QA</span>';
+      else if (b.status === 'qa_passed') statusBadge = '<span class="badge badge-whm-green"><i class="bi bi-check2-circle me-1"></i>QA Cleared</span>';
+
+      return `
+        <tr>
+          <td><span class="badge badge-whm-purple font-monospace fw-bold">${b.batchId}</span></td>
+          <td>
+            <div class="fw-bold text-white">${b.sbaName}</div>
+            <div class="text-muted small">${b.sbaPhone}</div>
+          </td>
+          <td><span class="badge badge-whm-blue">${b.categoryName}</span></td>
+          <td class="text-secondary small">${b.targetMarket}</td>
+          <td class="font-monospace text-white">${whmEngine.formatNaira(b.totalBudgetMinor)}</td>
+          <td class="font-monospace ${b.actualCostMinor ? 'text-success' : 'text-muted'}">${b.actualCostMinor ? whmEngine.formatNaira(b.actualCostMinor) : 'Pending'}</td>
+          <td>${statusBadge}</td>
+          <td class="text-end pe-4">
+            ${b.status !== 'supplied_at_dock' && b.status !== 'qa_passed' ? `
+              <button class="btn btn-sm btn-outline-success fw-semibold" onclick="openReceiveBatchModal('${b.batchId}')">
+                <i class="bi bi-box-arrow-in-down me-1"></i> Receive at Dock
+              </button>
+            ` : `<span class="badge badge-whm-green">Dock Received</span>`}
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  function openCreateBatchModal(productId) {
+    currentDeficitItem = deficits.find(d => d.productId === productId);
+    if (!currentDeficitItem) return;
+
+    document.getElementById('batchProductId').value = currentDeficitItem.productId;
+    document.getElementById('batchCategoryId').value = currentDeficitItem.categoryId;
+    document.getElementById('batchItemTitle').textContent = currentDeficitItem.title;
+    document.getElementById('batchItemDeficit').textContent = `Deficit: ${currentDeficitItem.deficitQty} units | Est: ${whmEngine.formatNaira(currentDeficitItem.estTotalMinor)}`;
+    document.getElementById('batchTargetMarketInput').value = currentDeficitItem.suggestedOrigin;
+    document.getElementById('batchQtyInput').value = currentDeficitItem.deficitQty;
+    document.getElementById('batchBudgetInput').value = (currentDeficitItem.estTotalMinor || 0) / 100;
+
+    // Auto-select agent by category
+    const sbaSelect = document.getElementById('sbaAgentSelect');
+    if (currentDeficitItem.categoryId === 'foodstuff') sbaSelect.value = 'sba_agro_kayode';
+    else if (currentDeficitItem.categoryId === 'groceries') sbaSelect.value = 'sba_fmcg_bola';
+    else if (currentDeficitItem.categoryId === 'gadgets') sbaSelect.value = 'sba_tech_victor';
+    else if (currentDeficitItem.categoryId === 'fashion') sbaSelect.value = 'sba_apparel_kemi';
+
+    new bootstrap.Modal(document.getElementById('createBatchModal')).show();
+  }
+
+  function calcBatchBudget() {
+    if (!currentDeficitItem) return;
+    const qty = parseInt(document.getElementById('batchQtyInput').value) || 0;
+    const unitCost = currentDeficitItem.unitCostFloorMinor || 0;
+    document.getElementById('batchBudgetInput').value = (qty * unitCost) / 100;
+  }
+
+  function executeCreateSbaBatch() {
+    const sbaSelect = document.getElementById('sbaAgentSelect');
+    const sbaId = sbaSelect.value;
+    const sbaName = sbaSelect.options[sbaSelect.selectedIndex].dataset.name;
+    const sbaPhone = sbaSelect.options[sbaSelect.selectedIndex].dataset.phone;
+    const market = document.getElementById('batchTargetMarketInput').value || 'Central Wholesale Depot';
+    const qty = parseInt(document.getElementById('batchQtyInput').value) || currentDeficitItem.deficitQty;
+    const budgetMinor = (parseFloat(document.getElementById('batchBudgetInput').value) || 0) * 100;
+
+    const items = [
+      {
+        productId: currentDeficitItem.productId,
+        productTitle: currentDeficitItem.title,
+        requestedQty: qty,
+        unitBenchmarkMinor: currentDeficitItem.unitCostFloorMinor
+      }
+    ];
+
+    whmEngine.createSbaBatch(sbaId, sbaName, sbaPhone, currentDeficitItem.categoryId, market, items, budgetMinor, 'Sourcing Supervisor');
+    iziToast.success({ title: 'SBA Batch Dispatched', message: `Assigned procurement batch to ${sbaName}`, position: 'topRight' });
+    bootstrap.Modal.getInstance(document.getElementById('createBatchModal')).hide();
+    
+    // Switch to batches tab
+    new bootstrap.Tab(document.getElementById('tabBatchesBtn')).show();
+    renderSbaPage();
+  }
+
+  function openReceiveBatchModal(batchId) {
+    const b = batches.find(item => item.batchId === batchId);
+    if (!b) return;
+
+    document.getElementById('receiveBatchId').value = b.batchId;
+    document.getElementById('receiveBatchTitle').textContent = `${b.batchId} (${b.categoryName})`;
+    document.getElementById('receiveBatchAgent').textContent = `Agent: ${b.sbaName} &bull; Budget: ${whmEngine.formatNaira(b.totalBudgetMinor)}`;
+    document.getElementById('receiveActualCostInput').value = (b.totalBudgetMinor || 0) / 100;
+    document.getElementById('receiveReceiptRefInput').value = 'RCPT-' + Date.now().toString().slice(-5);
+
+    new bootstrap.Modal(document.getElementById('receiveBatchModal')).show();
+  }
+
+  function executeReceiveBatch() {
+    const batchId = document.getElementById('receiveBatchId').value;
+    const actualCostMinor = (parseFloat(document.getElementById('receiveActualCostInput').value) || 0) * 100;
+    const receiptRef = document.getElementById('receiveReceiptRefInput').value;
+    const dock = document.getElementById('receiveDockSelect').value;
+
+    const res = whmEngine.supplySbaBatch(batchId, {}, actualCostMinor, receiptRef, dock, 'Dock Receiving Lead');
+    iziToast.success({ title: 'Batch Received at Dock', message: 'Inbound delivery routed to Quality Assurance!', position: 'topRight' });
+    bootstrap.Modal.getInstance(document.getElementById('receiveBatchModal')).hide();
+    renderSbaPage();
+  }
+</script>
+</body>
+</html>

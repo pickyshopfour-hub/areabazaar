@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FRM Operations Command Center | Field Regional Marketing</title>
+  
+  <link rel="shortcut icon" type="image/x-icon" href="../assetsecm/images/uwanbuy-favicon-brief-color.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
+  <link rel="stylesheet" href="assets/css/frm-style.css">
+</head>
+<body>
+
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-md-3 col-lg-2 frm-sidebar p-3 d-flex flex-column">
+      <div class="d-flex align-items-center justify-content-between mb-3 px-2">
+        <a href="index.html" class="d-flex align-items-center text-decoration-none text-white gap-2">
+          <div class="bg-success text-white rounded p-1 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+            <i class="fa fa-map-marked-alt fs-6"></i>
+          </div>
+          <div>
+            <span class="fw-bold fs-6 tracking-tight d-block">AreaBazaar</span>
+            <span class="frm-brand-badge">FRM Marketing</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="frm-nav-header">Command Center</div>
+      <nav class="nav flex-column">
+        <a class="nav-link active" href="index.html">
+          <span><i class="bi bi-speedometer2"></i> Operations Center</span>
+        </a>
+      </nav>
+
+      <div class="frm-nav-header">Field Commercials</div>
+      <nav class="nav flex-column">
+        <a class="nav-link" href="product-listing.html">
+          <span><i class="bi bi-grid-3x3-gap"></i> Product Listing</span>
+        </a>
+        <a class="nav-link" href="payment-report.html">
+          <span><i class="bi bi-receipt"></i> Payment Report</span>
+        </a>
+        <a class="nav-link" href="payment-remittance.html">
+          <span><i class="bi bi-bank"></i> Payment Remittance</span>
+        </a>
+      </nav>
+
+      <div class="frm-nav-header">Customer Fulfillment</div>
+      <nav class="nav flex-column mb-auto">
+        <a class="nav-link" href="order-submit.html">
+          <span><i class="bi bi-cart-plus"></i> Customer-Order Submit</span>
+        </a>
+        <a class="nav-link" href="order-track.html">
+          <span><i class="bi bi-geo-alt"></i> Customer-Order Track</span>
+        </a>
+        <a class="nav-link" href="order-delivery.html">
+          <span><i class="bi bi-check2-circle"></i> Customer-Order Delivery</span>
+        </a>
+      </nav>
+
+      <div class="border-top border-secondary border-opacity-25 pt-3 mt-4">
+        <div class="small text-secondary mb-2">Connected Operations:</div>
+        <a href="../whm/index.html" class="btn btn-sm btn-outline-info w-100 text-start text-info d-flex align-items-center justify-content-between mb-2">
+          <span><i class="bi bi-boxes me-1"></i> WHM Warehouse</span>
+          <i class="bi bi-box-arrow-up-right small"></i>
+        </a>
+        <a href="../uwanbuy/admin/index.html" class="btn btn-sm btn-outline-secondary w-100 text-start text-white-50 d-flex align-items-center justify-content-between">
+          <span><i class="bi bi-shop me-1"></i> Storefront Admin</span>
+          <i class="bi bi-box-arrow-up-right small"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="col-md-9 col-lg-10 p-4">
+      <!-- Top Bar -->
+      <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 pb-2 border-bottom border-secondary border-opacity-25 gap-3">
+        <div>
+          <div class="d-flex align-items-center gap-2 mb-1">
+            <span class="badge badge-frm-emerald py-1 px-2"><i class="bi bi-broadcast me-1"></i> Live Hub Network</span>
+            <span class="text-secondary small">| Kwara State Regional Hubs (Tanke, Fate, Sanrab, Offa Garage)</span>
+          </div>
+          <h2 class="fw-bold m-0 text-white font-outfit">Field Regional Marketing (FRM) Dashboard</h2>
+          <small class="text-secondary">Commercial field sales intake, real-time customer payments, bank remittances, and last-mile proof-of-delivery handovers</small>
+        </div>
+
+        <div class="d-flex align-items-center gap-2">
+          <a href="order-submit.html" class="btn btn-sm btn-success fw-bold shadow-sm">
+            <i class="bi bi-cart-plus me-1"></i> New Customer Order
+          </a>
+          <a href="payment-report.html" class="btn btn-sm btn-outline-light">
+            <i class="bi bi-receipt me-1"></i> Log Field Payment
+          </a>
+        </div>
+      </div>
+
+      <!-- KPI Overview Cards -->
+      <div class="row g-3 mb-4">
+        <div class="col-sm-6 col-xl-3">
+          <div class="frm-kpi-tile kpi-emerald">
+            <div class="text-secondary small fw-bold text-uppercase mb-1">Active Field Orders</div>
+            <div class="frm-kpi-val text-success" id="kpiActiveOrders">0</div>
+            <div class="small text-muted mt-1"><span id="kpiDeliveredRatio">0 delivered</span> &bull; Active pipeline</div>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-xl-3">
+          <div class="frm-kpi-tile kpi-cyan">
+            <div class="text-secondary small fw-bold text-uppercase mb-1">Today's Collections</div>
+            <div class="frm-kpi-val text-info" id="kpiTodayCollections">₦0.00</div>
+            <div class="small text-muted mt-1">POS, transfer & cash logged</div>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-xl-3">
+          <div class="frm-kpi-tile kpi-amber">
+            <div class="text-secondary small fw-bold text-uppercase mb-1">Unremitted Field Funds</div>
+            <div class="frm-kpi-val text-warning" id="kpiUnremitted">₦0.00</div>
+            <div class="small text-muted mt-1"><a href="payment-remittance.html" class="text-warning text-decoration-none">Remit to HQ Bank &rarr;</a></div>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-xl-3">
+          <div class="frm-kpi-tile kpi-purple">
+            <div class="text-secondary small fw-bold text-uppercase mb-1">Active Marketers / Hubs</div>
+            <div class="frm-kpi-val text-purple" id="kpiActiveAgents">4 Agents</div>
+            <div class="small text-muted mt-1">4 Local fulfillment hubs</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Operational Action Matrix -->
+      <div class="row g-3 mb-4">
+        <div class="col-md-4">
+          <div class="frm-card p-3 h-100">
+            <div class="d-flex align-items-center gap-2 mb-2">
+              <div class="bg-success bg-opacity-25 text-success rounded p-2"><i class="bi bi-grid-3x3-gap fs-5"></i></div>
+              <div>
+                <h6 class="fw-bold text-white mb-0">FRM Product Listing</h6>
+                <small class="text-secondary">Browse warehouse catalog & margins</small>
+              </div>
+            </div>
+            <p class="small text-muted mb-3">Live inventory counts, regional retail price sheets, wholesale margins, and marketer rate cards for customer pitching.</p>
+            <a href="product-listing.html" class="btn btn-sm btn-outline-success w-100 fw-bold">Open Product Listing &rarr;</a>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="frm-card p-3 h-100">
+            <div class="d-flex align-items-center gap-2 mb-2">
+              <div class="bg-info bg-opacity-25 text-info rounded p-2"><i class="bi bi-receipt fs-5"></i></div>
+              <div>
+                <h6 class="fw-bold text-white mb-0">FRM Payment Report</h6>
+                <small class="text-secondary">Log customer field cash & POS payments</small>
+              </div>
+            </div>
+            <p class="small text-muted mb-3">Track all payments received from neighborhood buyers, attach transaction receipts, and reconcile cash held by marketers.</p>
+            <a href="payment-report.html" class="btn btn-sm btn-outline-info w-100 fw-bold">Open Payment Reports &rarr;</a>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="frm-card p-3 h-100">
+            <div class="d-flex align-items-center gap-2 mb-2">
+              <div class="bg-warning bg-opacity-25 text-warning rounded p-2"><i class="bi bi-bank fs-5"></i></div>
+              <div>
+                <h6 class="fw-bold text-white mb-0">FRM Payment Remittance</h6>
+                <small class="text-secondary">Batch transfer collections to HQ</small>
+              </div>
+            </div>
+            <p class="small text-muted mb-3">Generate batch remittances, upload bank deposit tellers, match corporate bank feeds, and clear field agent liabilities.</p>
+            <a href="payment-remittance.html" class="btn btn-sm btn-outline-warning w-100 fw-bold">Open Remittance Desk &rarr;</a>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="frm-card p-3 h-100">
+            <div class="d-flex align-items-center gap-2 mb-2">
+              <div class="bg-primary bg-opacity-25 text-primary rounded p-2"><i class="bi bi-cart-plus fs-5"></i></div>
+              <div>
+                <h6 class="fw-bold text-white mb-0">FRM Customer-Order Submit</h6>
+                <small class="text-secondary">Direct marketer order intake form</small>
+              </div>
+            </div>
+            <p class="small text-muted mb-3">Submit orders on behalf of regional customers, auto-generate 4-digit security passcodes, and trigger warehouse dispatch.</p>
+            <a href="order-submit.html" class="btn btn-sm btn-outline-primary w-100 fw-bold">Submit Customer Order &rarr;</a>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="frm-card p-3 h-100">
+            <div class="d-flex align-items-center gap-2 mb-2">
+              <div class="bg-cyan bg-opacity-25 text-cyan rounded p-2"><i class="bi bi-geo-alt fs-5"></i></div>
+              <div>
+                <h6 class="fw-bold text-white mb-0">FRM Customer-Order Track</h6>
+                <small class="text-secondary">End-to-end fulfillment pipeline</small>
+              </div>
+            </div>
+            <p class="small text-muted mb-3">Monitor order progress from collation to central transit and local hub arrival with automated 15-minute dispatch synchronization.</p>
+            <a href="order-track.html" class="btn btn-sm btn-outline-light w-100 fw-bold">Track Field Orders &rarr;</a>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="frm-card p-3 h-100">
+            <div class="d-flex align-items-center gap-2 mb-2">
+              <div class="bg-success bg-opacity-25 text-success rounded p-2"><i class="bi bi-check2-circle fs-5"></i></div>
+              <div>
+                <h6 class="fw-bold text-white mb-0">FRM Customer-Order Delivery</h6>
+                <small class="text-secondary">Passcode & Proof-of-Delivery Handover</small>
+              </div>
+            </div>
+            <p class="small text-muted mb-3">Verify the customer's 4-digit delivery passcode, capture recipient signature / photo POD, and confirm fulfillment instantly.</p>
+            <a href="order-delivery.html" class="btn btn-sm btn-outline-success w-100 fw-bold">Verify & Deliver Order &rarr;</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Field Orders Activity -->
+      <div class="frm-card p-4 mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <div>
+            <h5 class="fw-bold text-white mb-0 font-outfit"><i class="bi bi-clock-history text-success me-2"></i> Recent Field Orders</h5>
+            <small class="text-secondary">Orders submitted by regional marketers across Tanke, Fate, Sanrab, and Offa Garage</small>
+          </div>
+          <a href="order-track.html" class="btn btn-sm btn-outline-secondary text-white">View All Orders &rarr;</a>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table frm-table align-middle">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Customer & Address</th>
+                <th>Hub / Zone</th>
+                <th>Items Count</th>
+                <th>Total Value</th>
+                <th>Passcode</th>
+                <th>Fulfillment Status</th>
+                <th class="text-end">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="recentOrdersTableBody">
+              <tr>
+                <td colspan="8" class="text-center text-muted py-4">Loading field orders...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+<script src="assets/js/frm-engine.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    loadDashboardStats();
+  });
+
+  function loadDashboardStats() {
+    const orders = frmEngine.getOrders();
+    const payments = frmEngine.getPaymentReports();
+    const remittances = frmEngine.getRemittances();
+    const agents = frmEngine.getAgents();
+
+    // KPIs
+    const activeOrders = orders.filter(o => o.fulfillmentStatus !== 'delivered' && o.fulfillmentStatus !== 'cancelled');
+    const deliveredOrders = orders.filter(o => o.fulfillmentStatus === 'delivered');
+    
+    document.getElementById('kpiActiveOrders').textContent = activeOrders.length;
+    document.getElementById('kpiDeliveredRatio').textContent = `${deliveredOrders.length} delivered`;
+
+    // Today's collections
+    const totalCollectionsMinor = payments.reduce((acc, p) => acc + (p.amountMinor || 0), 0);
+    document.getElementById('kpiTodayCollections').textContent = frmEngine.formatNaira(totalCollectionsMinor);
+
+    // Unremitted funds
+    const unremittedMinor = payments
+      .filter(p => p.remittanceStatus === 'unremitted')
+      .reduce((acc, p) => acc + (p.amountMinor || 0), 0);
+    document.getElementById('kpiUnremitted').textContent = frmEngine.formatNaira(unremittedMinor);
+
+    document.getElementById('kpiActiveAgents').textContent = `${agents.length} Marketers`;
+
+    // Render Recent Orders Table
+    const tbody = document.getElementById('recentOrdersTableBody');
+    if (orders.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="8" class="text-center text-muted py-4">No field orders submitted yet.</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = orders.slice(0, 5).map(o => {
+      let statusBadge = '<span class="badge badge-frm-amber">Submitted</span>';
+      if (o.fulfillmentStatus === 'collation') statusBadge = '<span class="badge badge-frm-cyan">Collation</span>';
+      else if (o.fulfillmentStatus === 'warehouse_dispatched') statusBadge = '<span class="badge badge-frm-cyan"><i class="bi bi-truck me-1"></i>In Transit</span>';
+      else if (o.fulfillmentStatus === 'hub_arrived') statusBadge = '<span class="badge badge-frm-amber"><i class="bi bi-building me-1"></i>Hub Arrived</span>';
+      else if (o.fulfillmentStatus === 'out_for_delivery') statusBadge = '<span class="badge badge-frm-amber"><i class="bi bi-bicycle me-1"></i>Out for Handover</span>';
+      else if (o.fulfillmentStatus === 'delivered') statusBadge = '<span class="badge badge-frm-emerald"><i class="bi bi-check-circle me-1"></i>Delivered</span>';
+
+      return `
+        <tr>
+          <td><strong class="font-monospace text-white">${o.id}</strong></td>
+          <td>
+            <div class="fw-bold text-white">${o.customerName}</div>
+            <small class="text-secondary"><i class="bi bi-telephone me-1"></i>${o.customerPhone}</small>
+          </td>
+          <td><span class="badge badge-frm-slate">${o.hub}</span></td>
+          <td><span class="badge bg-dark text-white-50 border border-secondary border-opacity-25">${(o.items || []).length} items</span></td>
+          <td class="font-monospace fw-bold text-white">${frmEngine.formatNaira(o.totalAmountMinor)}</td>
+          <td>
+            <span class="badge bg-dark text-warning font-monospace px-2 py-1 border border-warning border-opacity-50 letter-spacing-1">
+              <i class="bi bi-key me-1"></i>${o.passcode}
+            </span>
+          </td>
+          <td>${statusBadge}</td>
+          <td class="text-end">
+            ${o.fulfillmentStatus !== 'delivered' 
+              ? `<a href="order-delivery.html?orderId=${o.id}" class="btn btn-sm btn-outline-success"><i class="bi bi-check2"></i> Deliver</a>`
+              : `<span class="small text-muted"><i class="bi bi-check-all text-success"></i> Complete</span>`
+            }
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }
+</script>
+</body>
+</html>

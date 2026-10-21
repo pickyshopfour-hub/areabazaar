@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FRM Customer-Order Track | Fulfillment Pipeline Tracker</title>
+  
+  <link rel="shortcut icon" type="image/x-icon" href="../assetsecm/images/uwanbuy-favicon-brief-color.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
+  <link rel="stylesheet" href="assets/css/frm-style.css">
+</head>
+<body>
+
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-md-3 col-lg-2 frm-sidebar p-3 d-flex flex-column">
+      <div class="d-flex align-items-center justify-content-between mb-3 px-2">
+        <a href="index.html" class="d-flex align-items-center text-decoration-none text-white gap-2">
+          <div class="bg-success text-white rounded p-1 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+            <i class="fa fa-map-marked-alt fs-6"></i>
+          </div>
+          <div>
+            <span class="fw-bold fs-6 tracking-tight d-block">AreaBazaar</span>
+            <span class="frm-brand-badge">FRM Marketing</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="frm-nav-header">Command Center</div>
+      <nav class="nav flex-column">
+        <a class="nav-link" href="index.html">
+          <span><i class="bi bi-speedometer2"></i> Operations Center</span>
+        </a>
+      </nav>
+
+      <div class="frm-nav-header">Field Commercials</div>
+      <nav class="nav flex-column">
+        <a class="nav-link" href="product-listing.html">
+          <span><i class="bi bi-grid-3x3-gap"></i> Product Listing</span>
+        </a>
+        <a class="nav-link" href="payment-report.html">
+          <span><i class="bi bi-receipt"></i> Payment Report</span>
+        </a>
+        <a class="nav-link" href="payment-remittance.html">
+          <span><i class="bi bi-bank"></i> Payment Remittance</span>
+        </a>
+      </nav>
+
+      <div class="frm-nav-header">Customer Fulfillment</div>
+      <nav class="nav flex-column mb-auto">
+        <a class="nav-link" href="order-submit.html">
+          <span><i class="bi bi-cart-plus"></i> Customer-Order Submit</span>
+        </a>
+        <a class="nav-link active" href="order-track.html">
+          <span><i class="bi bi-geo-alt"></i> Customer-Order Track</span>
+        </a>
+        <a class="nav-link" href="order-delivery.html">
+          <span><i class="bi bi-check2-circle"></i> Customer-Order Delivery</span>
+        </a>
+      </nav>
+
+      <div class="border-top border-secondary border-opacity-25 pt-3 mt-4">
+        <a href="../uwanbuy/admin/index.html" class="btn btn-sm btn-outline-secondary w-100 text-start text-white-50 d-flex align-items-center justify-content-between">
+          <span><i class="bi bi-shop me-1"></i> Storefront Admin</span>
+          <i class="bi bi-box-arrow-up-right small"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="col-md-9 col-lg-10 p-4">
+      <!-- Top Bar -->
+      <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 pb-2 border-bottom border-secondary border-opacity-25 gap-3">
+        <div>
+          <div class="d-flex align-items-center gap-2 mb-1">
+            <span class="badge badge-frm-cyan py-1 px-2"><i class="bi bi-geo-alt me-1"></i> Module 05</span>
+            <span class="text-secondary small">| Real-time Regional Fulfillment Pipeline Tracker</span>
+          </div>
+          <h2 class="fw-bold m-0 text-white font-outfit">FRM Customer-Order Track</h2>
+          <small class="text-secondary">Track customer orders through collation, central transit, local hub staging, and rider handover</small>
+        </div>
+
+        <div class="d-flex align-items-center gap-2">
+          <span class="badge bg-dark border border-secondary text-info px-3 py-2 fw-bold" id="batchCycleTimer">
+            <i class="bi bi-clock-history me-1"></i> Next 15m Dispatch: 11m 45s
+          </span>
+          <a href="order-submit.html" class="btn btn-sm btn-success fw-bold shadow-sm">
+            <i class="bi bi-plus-circle me-1"></i> New Order
+          </a>
+        </div>
+      </div>
+
+      <!-- Quick Search Bar -->
+      <div class="frm-card p-3 mb-4">
+        <div class="row g-2 align-items-center">
+          <div class="col-md-5">
+            <div class="input-group">
+              <span class="input-group-text bg-dark border-secondary border-opacity-50 text-secondary"><i class="bi bi-search"></i></span>
+              <input type="text" id="searchInput" class="form-control frm-form-control" placeholder="Search by Order ID (ORD-FRM-...), Customer Name, or Phone..." onkeyup="filterOrders()">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <select id="hubFilter" class="form-select frm-form-select" onchange="filterOrders()">
+              <option value="all">All Regional Hubs</option>
+              <option value="Tanke">Tanke Hub</option>
+              <option value="Fate">Fate Hub</option>
+              <option value="Sanrab">Sanrab Hub</option>
+              <option value="Offa Garage">Offa Garage Hub</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <select id="statusFilter" class="form-select frm-form-select" onchange="filterOrders()">
+              <option value="all">All Statuses</option>
+              <option value="submitted">Submitted</option>
+              <option value="collation">Collation</option>
+              <option value="warehouse_dispatched">In Transit</option>
+              <option value="hub_arrived">Hub Arrived</option>
+              <option value="out_for_delivery">Out for Delivery</option>
+              <option value="delivered">Delivered</option>
+            </select>
+          </div>
+          <div class="col-md-2 text-end">
+            <span class="text-secondary small" id="showingCount">0 orders tracked</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Tracking Detail Card (Selected or Top Order) -->
+      <div class="frm-card p-4 mb-4" id="trackingDetailPanel" style="display: none;">
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 pb-3 border-bottom border-secondary border-opacity-25 gap-3">
+          <div>
+            <div class="d-flex align-items-center gap-2 mb-1">
+              <h4 class="fw-bold text-white m-0 font-monospace" id="detailOrderId">ORD-FRM-50124</h4>
+              <span class="badge badge-frm-amber" id="detailStatusBadge">Out for Delivery</span>
+            </div>
+            <div class="text-secondary small">
+              Customer: <strong class="text-white" id="detailCustName">Madam Folake Alabi</strong> &bull;
+              Phone: <strong class="text-info font-monospace" id="detailCustPhone">0803-882-9901</strong> &bull;
+              Hub: <span class="badge badge-frm-slate" id="detailHub">Tanke Hub, Ilorin</span>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-center gap-2">
+            <button class="btn btn-sm btn-outline-success" onclick="shareWhatsAppTracking()">
+              <i class="bi bi-whatsapp me-1"></i> Send Customer WhatsApp
+            </button>
+            <a href="order-delivery.html" class="btn btn-sm btn-success fw-bold" id="detailDeliverLink">
+              <i class="bi bi-check2-circle me-1"></i> Go to Handover Desk
+            </a>
+          </div>
+        </div>
+
+        <!-- 5-Stage Stepper Timeline -->
+        <div class="position-relative my-4 px-3">
+          <div class="track-line">
+            <div class="track-line-progress" id="timelineProgressBar" style="width: 80%;"></div>
+          </div>
+          <div class="d-flex justify-content-between position-relative text-center">
+            <!-- Stage 1 -->
+            <div class="d-flex flex-column align-items-center" style="width: 100px;">
+              <div class="track-step-node completed mb-2" id="node_submitted">
+                <i class="bi bi-cart-check"></i>
+              </div>
+              <small class="fw-bold text-white">Submitted</small>
+              <small class="text-muted" style="font-size: 0.65rem;" id="time_submitted">09:30 AM</small>
+            </div>
+            <!-- Stage 2 -->
+            <div class="d-flex flex-column align-items-center" style="width: 100px;">
+              <div class="track-step-node completed mb-2" id="node_collation">
+                <i class="bi bi-boxes"></i>
+              </div>
+              <small class="fw-bold text-white">Collation</small>
+              <small class="text-muted" style="font-size: 0.65rem;" id="time_collation">10:15 AM</small>
+            </div>
+            <!-- Stage 3 -->
+            <div class="d-flex flex-column align-items-center" style="width: 100px;">
+              <div class="track-step-node completed mb-2" id="node_warehouse_dispatched">
+                <i class="bi bi-truck"></i>
+              </div>
+              <small class="fw-bold text-white">In Transit</small>
+              <small class="text-muted" style="font-size: 0.65rem;" id="time_warehouse_dispatched">11:00 AM</small>
+            </div>
+            <!-- Stage 4 -->
+            <div class="d-flex flex-column align-items-center" style="width: 100px;">
+              <div class="track-step-node completed mb-2" id="node_hub_arrived">
+                <i class="bi bi-building"></i>
+              </div>
+              <small class="fw-bold text-white">Hub Staged</small>
+              <small class="text-muted" style="font-size: 0.65rem;" id="time_hub_arrived">11:45 AM</small>
+            </div>
+            <!-- Stage 5 -->
+            <div class="d-flex flex-column align-items-center" style="width: 100px;">
+              <div class="track-step-node active mb-2" id="node_out_for_delivery">
+                <i class="bi bi-bicycle"></i>
+              </div>
+              <small class="fw-bold text-white">Handover</small>
+              <small class="text-muted" style="font-size: 0.65rem;" id="time_out_for_delivery">Out Now</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Order Items & Passcode Box -->
+        <div class="row g-3 mt-3">
+          <div class="col-md-7">
+            <h6 class="fw-bold text-white small text-uppercase mb-2">Package Items Included:</h6>
+            <div class="p-3 rounded bg-dark border border-secondary border-opacity-25" id="detailItemsList">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+          <div class="col-md-5">
+            <h6 class="fw-bold text-white small text-uppercase mb-2">Delivery Verification Security:</h6>
+            <div class="p-3 rounded bg-dark border border-warning border-opacity-30 text-center">
+              <span class="small text-secondary d-block">Authorized Customer Passcode:</span>
+              <div class="fs-2 fw-bold text-warning font-monospace my-1 letter-spacing-2" id="detailPasscode">6821</div>
+              <small class="text-muted d-block">Rider must confirm this passcode in <code>Customer-Order Delivery</code> before releasing goods.</small>
+              
+              <!-- Quick Stage Advance -->
+              <div class="border-top border-secondary border-opacity-25 pt-2 mt-2">
+                <span class="small text-secondary d-block mb-1">Coordinator Advance Action:</span>
+                <select id="selectAdvanceStage" class="form-select form-select-sm frm-form-select d-inline-block w-auto mb-1">
+                  <option value="collation">Set: WHM Collation</option>
+                  <option value="warehouse_dispatched">Set: Dispatched to Hub</option>
+                  <option value="hub_arrived">Set: Arrived at Local Hub</option>
+                  <option value="out_for_delivery">Set: Out for Handover</option>
+                </select>
+                <button type="button" class="btn btn-sm btn-outline-info" onclick="advanceActiveOrder()">Advance</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Orders Pipeline Table -->
+      <div class="frm-card p-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="fw-bold text-white mb-0 font-outfit"><i class="bi bi-list-stars text-cyan me-2"></i> Field Orders Fulfillment Pipeline</h5>
+          <button class="btn btn-sm btn-outline-secondary text-white" onclick="loadTrackOrders()">
+            <i class="bi bi-arrow-clockwise me-1"></i> Refresh Queue
+          </button>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table frm-table align-middle">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Customer & Address</th>
+                <th>Hub / Zone</th>
+                <th>Passcode</th>
+                <th>Fulfillment Stage</th>
+                <th>Payment</th>
+                <th>Order Value</th>
+                <th class="text-end pe-4">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="trackTableBody">
+              <tr>
+                <td colspan="8" class="text-center text-muted py-4">Loading tracking queue...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+<script src="assets/js/frm-engine.js"></script>
+<script>
+  let allOrders = [];
+  let selectedOrderId = null;
+
+  document.addEventListener('DOMContentLoaded', () => {
+    loadTrackOrders();
+    startTimer();
+  });
+
+  function startTimer() {
+    let seconds = 705; // 11m 45s
+    setInterval(() => {
+      seconds = seconds > 0 ? seconds - 1 : 900;
+      const m = Math.floor(seconds / 60);
+      const s = seconds % 60;
+      document.getElementById('batchCycleTimer').innerHTML = `<i class="bi bi-clock-history me-1"></i> Next 15m Dispatch: ${m}m ${s < 10 ? '0' : ''}${s}s`;
+    }, 1000);
+  }
+
+  function loadTrackOrders() {
+    allOrders = frmEngine.getOrders();
+    filterOrders();
+    if (allOrders.length > 0 && !selectedOrderId) {
+      selectOrderForDetail(allOrders[0].id);
+    }
+  }
+
+  function filterOrders() {
+    const q = (document.getElementById('searchInput').value || '').toLowerCase();
+    const hub = document.getElementById('hubFilter').value;
+    const st = document.getElementById('statusFilter').value;
+
+    const filtered = allOrders.filter(o => {
+      const matchQ = (o.id || '').toLowerCase().includes(q) || (o.customerName || '').toLowerCase().includes(q) || (o.customerPhone || '').includes(q);
+      const matchHub = hub === 'all' || (o.hub || '').includes(hub);
+      const matchSt = st === 'all' || o.fulfillmentStatus === st;
+      return matchQ && matchHub && matchSt;
+    });
+
+    document.getElementById('showingCount').textContent = `${filtered.length} orders tracked`;
+    const tbody = document.getElementById('trackTableBody');
+
+    if (filtered.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="8" class="text-center text-muted py-4">No matching orders in tracking pipeline.</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = filtered.map(o => {
+      let stageBadge = '<span class="badge badge-frm-amber">Submitted</span>';
+      if (o.fulfillmentStatus === 'collation') stageBadge = '<span class="badge badge-frm-cyan">Collation</span>';
+      else if (o.fulfillmentStatus === 'warehouse_dispatched') stageBadge = '<span class="badge badge-frm-cyan"><i class="bi bi-truck me-1"></i>In Transit</span>';
+      else if (o.fulfillmentStatus === 'hub_arrived') stageBadge = '<span class="badge badge-frm-amber"><i class="bi bi-building me-1"></i>Hub Staged</span>';
+      else if (o.fulfillmentStatus === 'out_for_delivery') stageBadge = '<span class="badge badge-frm-amber"><i class="bi bi-bicycle me-1"></i>Out for Handover</span>';
+      else if (o.fulfillmentStatus === 'delivered') stageBadge = '<span class="badge badge-frm-emerald"><i class="bi bi-check-circle me-1"></i>Delivered</span>';
+
+      return `
+        <tr class="${o.id === selectedOrderId ? 'table-active' : ''}">
+          <td><strong class="font-monospace text-white">${o.id}</strong></td>
+          <td>
+            <div class="fw-bold text-white">${o.customerName}</div>
+            <small class="text-secondary">${o.customerAddress || ''}</small>
+          </td>
+          <td><span class="badge badge-frm-slate">${o.hub || 'Tanke'}</span></td>
+          <td>
+            <span class="badge bg-dark text-warning font-monospace px-2 py-1 border border-warning border-opacity-50">
+              ${o.passcode}
+            </span>
+          </td>
+          <td>${stageBadge}</td>
+          <td>
+            <span class="badge ${o.paymentStatus === 'paid' ? 'badge-frm-emerald' : 'badge-frm-amber'}">
+              ${(o.paymentStatus || 'pending').toUpperCase()}
+            </span>
+          </td>
+          <td><strong class="font-monospace text-white">${frmEngine.formatNaira(o.totalAmountMinor)}</strong></td>
+          <td class="text-end pe-4">
+            <button class="btn btn-sm btn-outline-cyan me-1" onclick="selectOrderForDetail('${o.id}')">
+              <i class="bi bi-eye"></i> Track
+            </button>
+            ${o.fulfillmentStatus !== 'delivered' ? `
+              <a href="order-delivery.html?orderId=${o.id}" class="btn btn-sm btn-outline-success">
+                <i class="bi bi-check2"></i> Deliver
+              </a>
+            ` : ''}
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  function selectOrderForDetail(orderId) {
+    selectedOrderId = orderId;
+    const o = allOrders.find(item => item.id === orderId);
+    if (!o) return;
+
+    document.getElementById('trackingDetailPanel').style.display = 'block';
+    document.getElementById('detailOrderId').textContent = o.id;
+    document.getElementById('detailCustName').textContent = o.customerName;
+    document.getElementById('detailCustPhone').textContent = o.customerPhone;
+    document.getElementById('detailHub').textContent = o.hub;
+    document.getElementById('detailPasscode').textContent = o.passcode;
+    document.getElementById('detailDeliverLink').href = `order-delivery.html?orderId=${o.id}`;
+
+    // Status Badge
+    document.getElementById('detailStatusBadge').textContent = (o.fulfillmentStatus || 'Submitted').toUpperCase().replace(/_/g, ' ');
+
+    // Progress Bar & Nodes
+    const stages = ['submitted', 'collation', 'warehouse_dispatched', 'hub_arrived', 'out_for_delivery', 'delivered'];
+    const currentIdx = stages.indexOf(o.fulfillmentStatus || 'submitted');
+    const pct = Math.min(100, Math.max(10, (currentIdx / 4) * 100));
+    document.getElementById('timelineProgressBar').style.width = `${pct}%`;
+
+    stages.slice(0, 5).forEach((st, idx) => {
+      const node = document.getElementById(`node_${st}`);
+      if (node) {
+        node.className = 'track-step-node mb-2';
+        if (idx < currentIdx) node.classList.add('completed');
+        else if (idx === currentIdx) node.classList.add('active');
+        else node.classList.add('pending');
+      }
+    });
+
+    // Populate Items
+    const itemsContainer = document.getElementById('detailItemsList');
+    itemsContainer.innerHTML = (o.items || []).map(it => `
+      <div class="d-flex justify-content-between align-items-center mb-1 text-white small">
+        <span>${it.title} &times; <strong class="text-info">${it.quantity}</strong></span>
+        <strong class="font-monospace text-success">${frmEngine.formatNaira(it.lineTotalMinor)}</strong>
+      </div>
+    `).join('') + `
+      <div class="border-top border-secondary border-opacity-25 pt-2 mt-2 d-flex justify-content-between text-white fw-bold">
+        <span>Total Payable:</span>
+        <span class="font-monospace text-success">${frmEngine.formatNaira(o.totalAmountMinor)}</span>
+      </div>
+    `;
+
+    filterOrders();
+  }
+
+  function advanceActiveOrder() {
+    if (!selectedOrderId) return;
+    const stage = document.getElementById('selectAdvanceStage').value;
+    frmEngine.updateOrderStatus(selectedOrderId, stage, 'Fulfillment stage updated via FRM Track console.');
+    iziToast.success({ title: 'Stage Advanced', message: `Order updated to ${stage.replace(/_/g, ' ')}.`, position: 'topRight' });
+    loadTrackOrders();
+    selectOrderForDetail(selectedOrderId);
+  }
+
+  function shareWhatsAppTracking() {
+    if (!selectedOrderId) return;
+    const o = allOrders.find(item => item.id === selectedOrderId);
+    if (!o) return;
+
+    const msg = `Hello ${o.customerName}! Your AreaBazaar regional order (${o.id}) is currently [${o.fulfillmentStatus.replace(/_/g, ' ').toUpperCase()}]. Total: ${frmEngine.formatNaira(o.totalAmountMinor)}. Your delivery passcode is [${o.passcode}]. Please present this to the rider upon arrival. Thank you!`;
+    const encoded = encodeURIComponent(msg);
+    window.open(`https://wa.me/234${o.customerPhone.replace(/[^0-9]/g, '').slice(-10)}?text=${encoded}`, '_blank');
+  }
+</script>
+</body>
+</html>

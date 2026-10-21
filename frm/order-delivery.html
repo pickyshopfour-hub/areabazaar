@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FRM Customer-Order Delivery | Passcode Verification & Proof of Delivery</title>
+  
+  <link rel="shortcut icon" type="image/x-icon" href="../assetsecm/images/uwanbuy-favicon-brief-color.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
+  <link rel="stylesheet" href="assets/css/frm-style.css">
+</head>
+<body>
+
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-md-3 col-lg-2 frm-sidebar p-3 d-flex flex-column">
+      <div class="d-flex align-items-center justify-content-between mb-3 px-2">
+        <a href="index.html" class="d-flex align-items-center text-decoration-none text-white gap-2">
+          <div class="bg-success text-white rounded p-1 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+            <i class="fa fa-map-marked-alt fs-6"></i>
+          </div>
+          <div>
+            <span class="fw-bold fs-6 tracking-tight d-block">AreaBazaar</span>
+            <span class="frm-brand-badge">FRM Marketing</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="frm-nav-header">Command Center</div>
+      <nav class="nav flex-column">
+        <a class="nav-link" href="index.html">
+          <span><i class="bi bi-speedometer2"></i> Operations Center</span>
+        </a>
+      </nav>
+
+      <div class="frm-nav-header">Field Commercials</div>
+      <nav class="nav flex-column">
+        <a class="nav-link" href="product-listing.html">
+          <span><i class="bi bi-grid-3x3-gap"></i> Product Listing</span>
+        </a>
+        <a class="nav-link" href="payment-report.html">
+          <span><i class="bi bi-receipt"></i> Payment Report</span>
+        </a>
+        <a class="nav-link" href="payment-remittance.html">
+          <span><i class="bi bi-bank"></i> Payment Remittance</span>
+        </a>
+      </nav>
+
+      <div class="frm-nav-header">Customer Fulfillment</div>
+      <nav class="nav flex-column mb-auto">
+        <a class="nav-link" href="order-submit.html">
+          <span><i class="bi bi-cart-plus"></i> Customer-Order Submit</span>
+        </a>
+        <a class="nav-link" href="order-track.html">
+          <span><i class="bi bi-geo-alt"></i> Customer-Order Track</span>
+        </a>
+        <a class="nav-link active" href="order-delivery.html">
+          <span><i class="bi bi-check2-circle"></i> Customer-Order Delivery</span>
+        </a>
+      </nav>
+
+      <div class="border-top border-secondary border-opacity-25 pt-3 mt-4">
+        <a href="../uwanbuy/admin/index.html" class="btn btn-sm btn-outline-secondary w-100 text-start text-white-50 d-flex align-items-center justify-content-between">
+          <span><i class="bi bi-shop me-1"></i> Storefront Admin</span>
+          <i class="bi bi-box-arrow-up-right small"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="col-md-9 col-lg-10 p-4">
+      <!-- Top Bar -->
+      <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 pb-2 border-bottom border-secondary border-opacity-25 gap-3">
+        <div>
+          <div class="d-flex align-items-center gap-2 mb-1">
+            <span class="badge badge-frm-emerald py-1 px-2"><i class="bi bi-check2-circle me-1"></i> Module 06</span>
+            <span class="text-secondary small">| Field Delivery Handover & Proof-of-Delivery Desk</span>
+          </div>
+          <h2 class="fw-bold m-0 text-white font-outfit">FRM Customer-Order Delivery</h2>
+          <small class="text-secondary">Verify the customer's secret 4-digit passcode, record recipient proof-of-delivery, and settle order fulfillment</small>
+        </div>
+
+        <div class="d-flex align-items-center gap-2">
+          <a href="order-track.html" class="btn btn-sm btn-outline-light">
+            <i class="bi bi-geo-alt me-1"></i> View Order Queue
+          </a>
+        </div>
+      </div>
+
+      <!-- Quick Delivery Verification Card -->
+      <div class="frm-card p-4 mb-4">
+        <div class="row g-4 align-items-center">
+          <div class="col-lg-7">
+            <div class="d-flex align-items-center gap-2 mb-2">
+              <div class="bg-success text-white rounded p-2"><i class="bi bi-qr-code-scan fs-4"></i></div>
+              <div>
+                <h5 class="fw-bold text-white mb-0 font-outfit">Instant Delivery Passcode Verification</h5>
+                <small class="text-secondary">Customer must provide the 4-digit code generated at order placement</small>
+              </div>
+            </div>
+            <p class="text-muted small mb-3">Upon physical handover at the customer's store or doorstep, select the order and enter their 4-digit passcode to release the package.</p>
+
+            <div class="row g-2">
+              <div class="col-md-7">
+                <label class="form-label small text-secondary fw-bold text-uppercase">Target Delivery Order</label>
+                <select id="selectDeliveryOrder" class="form-select frm-form-select" onchange="handleOrderSelectionChange()">
+                  <!-- Dynamically populated -->
+                </select>
+              </div>
+              <div class="col-md-5">
+                <label class="form-label small text-secondary fw-bold text-uppercase">4-Digit Passcode</label>
+                <input type="text" id="inputPasscode" class="form-control frm-form-control text-center font-monospace fw-bold fs-5 text-warning letter-spacing-2" placeholder="e.g. 5892" maxlength="4">
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-5 border-start border-secondary border-opacity-25 ps-lg-4">
+            <div id="selectedOrderPreview" class="p-3 rounded bg-dark border border-secondary border-opacity-25 mb-3">
+              <div class="text-center text-muted small py-2">Select an order above to preview details.</div>
+            </div>
+
+            <button type="button" class="btn btn-success btn-lg w-100 fw-bold shadow-sm" onclick="processPasscodeVerification()">
+              <i class="bi bi-shield-check me-1"></i> Verify Passcode & Complete Handover
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Proof of Delivery (POD) Details Modal -->
+      <div class="modal fade frm-modal" id="modalPodDetails" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <div>
+                <h5 class="modal-title fw-bold text-white font-outfit">Record Proof of Delivery (POD)</h5>
+                <small class="text-secondary">Capture recipient identification and finalize delivery</small>
+              </div>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4">
+              <form id="podForm" onsubmit="handleFinalizeDelivery(event)">
+                <input type="hidden" id="podOrderId">
+                <input type="hidden" id="podVerifiedPasscode">
+
+                <div class="alert alert-success bg-success bg-opacity-10 border border-success border-opacity-30 d-flex align-items-center gap-2 mb-3">
+                  <i class="bi bi-check-circle-fill fs-4 text-success"></i>
+                  <div>
+                    <strong class="text-white">Passcode Verified Successfully!</strong>
+                    <div class="small text-white-50">Authorized code matched customer's token. Please record the recipient details below.</div>
+                  </div>
+                </div>
+
+                <div class="row g-3 mb-3">
+                  <div class="col-md-6">
+                    <label class="form-label small text-secondary fw-bold text-uppercase">Recipient Full Name *</label>
+                    <input type="text" id="podRecipientName" class="form-control frm-form-control" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label small text-secondary fw-bold text-uppercase">Recipient Phone Number *</label>
+                    <input type="text" id="podRecipientPhone" class="form-control frm-form-control" required>
+                  </div>
+                </div>
+
+                <div class="row g-3 mb-3">
+                  <div class="col-md-6">
+                    <label class="form-label small text-secondary fw-bold text-uppercase">Relationship to Buyer *</label>
+                    <select id="podRelationship" class="form-select frm-form-select">
+                      <option value="Self (Customer)">Self (Customer in Person)</option>
+                      <option value="Store Associate / Staff">Store Associate / Shop Cashier</option>
+                      <option value="Family Member">Family Member / Spouse</option>
+                      <option value="Reception / Security">Receptionist / Gate Security</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label small text-secondary fw-bold text-uppercase">Handover Marketer / Rider</label>
+                    <input type="text" id="podDeliveredBy" class="form-control frm-form-control" value="Kabir Olatunji (FRM Tanke)">
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label small text-secondary fw-bold text-uppercase">Proof of Delivery Document / Photo Ref</label>
+                  <input type="text" id="podPhotoRef" class="form-control frm-form-control" placeholder="e.g. signed_invoice_slip_09.jpg or recipient_signature_token">
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label small text-secondary fw-bold text-uppercase">Handover Delivery Notes</label>
+                  <textarea id="podNotes" class="form-control frm-form-control" rows="2" placeholder="e.g. Package intact. Goods verified in good condition by customer."></textarea>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2 mt-4 pt-2 border-top border-secondary border-opacity-25">
+                  <button type="button" class="btn btn-outline-secondary text-white" data-bs-dismiss="modal">Cancel</button>
+                  <button type="submit" class="btn btn-success fw-bold px-4">
+                    <i class="bi bi-patch-check-fill me-1"></i> Confirm & Complete Delivery
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Deliveries History Table -->
+      <div class="frm-card p-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <div>
+            <h5 class="fw-bold text-white mb-0 font-outfit"><i class="bi bi-clock-history text-success me-2"></i> Completed Field Deliveries</h5>
+            <small class="text-secondary">Historical log of orders fulfilled with verified passcodes and proof of delivery</small>
+          </div>
+          <button class="btn btn-sm btn-outline-secondary text-white" onclick="loadDeliveryLedger()">
+            <i class="bi bi-arrow-clockwise me-1"></i> Refresh
+          </button>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table frm-table align-middle">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Customer & Address</th>
+                <th>Recipient Handover</th>
+                <th>Passcode Verified</th>
+                <th>Delivered Time</th>
+                <th>Delivered By</th>
+                <th>Order Value</th>
+                <th class="text-end pe-4">POD Certificate</th>
+              </tr>
+            </thead>
+            <tbody id="deliveredTableBody">
+              <tr>
+                <td colspan="8" class="text-center text-muted py-4">Loading completed deliveries...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+<script src="assets/js/frm-engine.js"></script>
+<script>
+  let orders = [];
+
+  document.addEventListener('DOMContentLoaded', () => {
+    loadDeliveryLedger();
+    
+    // Check if URL has orderId parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const prefillOrderId = urlParams.get('orderId');
+    if (prefillOrderId) {
+      document.getElementById('selectDeliveryOrder').value = prefillOrderId;
+      handleOrderSelectionChange();
+    }
+  });
+
+  function loadDeliveryLedger() {
+    orders = frmEngine.getOrders();
+    populateSelectDropdown();
+    renderDeliveredTable();
+  }
+
+  function populateSelectDropdown() {
+    const select = document.getElementById('selectDeliveryOrder');
+    const pendingDeliveries = orders.filter(o => o.fulfillmentStatus !== 'delivered' && o.fulfillmentStatus !== 'cancelled');
+
+    if (pendingDeliveries.length === 0) {
+      select.innerHTML = '<option value="">No pending deliveries</option>';
+      document.getElementById('selectedOrderPreview').innerHTML = '<div class="text-center text-muted small py-2">All orders are delivered!</div>';
+      return;
+    }
+
+    select.innerHTML = pendingDeliveries.map(o => `
+      <option value="${o.id}">${o.id} &bull; ${o.customerName} (${frmEngine.formatNaira(o.totalAmountMinor)})</option>
+    `).join('');
+
+    handleOrderSelectionChange();
+  }
+
+  function handleOrderSelectionChange() {
+    const orderId = document.getElementById('selectDeliveryOrder').value;
+    const o = orders.find(item => item.id === orderId);
+    const preview = document.getElementById('selectedOrderPreview');
+
+    if (!o) {
+      preview.innerHTML = '<div class="text-center text-muted small py-2">Select an order above.</div>';
+      return;
+    }
+
+    preview.innerHTML = `
+      <div class="d-flex justify-content-between mb-1">
+        <span class="small text-secondary">Customer:</span>
+        <strong class="text-white small">${o.customerName}</strong>
+      </div>
+      <div class="d-flex justify-content-between mb-1">
+        <span class="small text-secondary">Phone:</span>
+        <span class="font-monospace text-info small">${o.customerPhone}</span>
+      </div>
+      <div class="d-flex justify-content-between mb-1">
+        <span class="small text-secondary">Delivery Address:</span>
+        <span class="text-white-50 small text-end" style="max-width: 220px;">${o.customerAddress || o.hub}</span>
+      </div>
+      <div class="d-flex justify-content-between mb-1">
+        <span class="small text-secondary">Order Total:</span>
+        <strong class="font-monospace text-success small">${frmEngine.formatNaira(o.totalAmountMinor)}</strong>
+      </div>
+      <div class="d-flex justify-content-between">
+        <span class="small text-secondary">Payment Mode:</span>
+        <span class="badge ${o.paymentStatus === 'paid' ? 'badge-frm-emerald' : 'badge-frm-amber'}">${(o.paymentMode || 'COD').toUpperCase()}</span>
+      </div>
+    `;
+  }
+
+  function processPasscodeVerification() {
+    const orderId = document.getElementById('selectDeliveryOrder').value;
+    const passcode = document.getElementById('inputPasscode').value.trim();
+
+    if (!orderId) {
+      iziToast.warning({ title: 'Select Order', message: 'Please select an order for delivery.', position: 'topRight' });
+      return;
+    }
+
+    if (!passcode || passcode.length < 4) {
+      iziToast.warning({ title: 'Enter Passcode', message: 'Please enter the 4-digit passcode provided by the customer.', position: 'topRight' });
+      return;
+    }
+
+    const o = orders.find(item => item.id === orderId);
+    if (!o) return;
+
+    if (String(o.passcode).trim() !== passcode) {
+      iziToast.error({ title: 'Passcode Mismatch', message: 'Invalid 4-digit passcode! Handover cannot be completed without customer passcode.', position: 'topRight' });
+      return;
+    }
+
+    // Passcode valid! Open POD capture modal
+    document.getElementById('podOrderId').value = o.id;
+    document.getElementById('podVerifiedPasscode').value = passcode;
+    document.getElementById('podRecipientName').value = o.customerName;
+    document.getElementById('podRecipientPhone').value = o.customerPhone;
+    document.getElementById('podDeliveredBy').value = `${o.agentName} (FRM Handover)`;
+    document.getElementById('podPhotoRef').value = `pod_receipt_${o.id.toLowerCase()}.jpg`;
+
+    new bootstrap.Modal(document.getElementById('modalPodDetails')).show();
+  }
+
+  function handleFinalizeDelivery(e) {
+    e.preventDefault();
+    const orderId = document.getElementById('podOrderId').value;
+    const passcode = document.getElementById('podVerifiedPasscode').value;
+
+    const podData = {
+      recipientName: document.getElementById('podRecipientName').value,
+      recipientPhone: document.getElementById('podRecipientPhone').value,
+      relationship: document.getElementById('podRelationship').value,
+      deliveredBy: document.getElementById('podDeliveredBy').value,
+      deliveryNotes: document.getElementById('podNotes').value
+    };
+
+    const res = frmEngine.verifyDeliveryPasscode(orderId, passcode, podData);
+
+    if (!res.success) {
+      iziToast.error({ title: 'Error', message: res.error, position: 'topRight' });
+      return;
+    }
+
+    iziToast.success({ title: 'Order Delivered', message: `Order ${orderId} marked as DELIVERED & fulfilled.`, position: 'topRight' });
+    bootstrap.Modal.getInstance(document.getElementById('modalPodDetails')).hide();
+    document.getElementById('inputPasscode').value = '';
+    loadDeliveryLedger();
+  }
+
+  function renderDeliveredTable() {
+    const tbody = document.getElementById('deliveredTableBody');
+    const delivered = orders.filter(o => o.fulfillmentStatus === 'delivered');
+
+    if (delivered.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="8" class="text-center text-muted py-4">No delivered orders yet.</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = delivered.map(o => {
+      const pod = o.pod || {};
+      const delTime = o.deliveredAt ? new Date(o.deliveredAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'N/A';
+      const delDate = o.deliveredAt ? new Date(o.deliveredAt).toLocaleDateString('en-NG') : '';
+
+      return `
+        <tr>
+          <td><strong class="font-monospace text-white">${o.id}</strong></td>
+          <td>
+            <div class="fw-bold text-white">${o.customerName}</div>
+            <small class="text-secondary">${o.customerAddress || o.hub}</small>
+          </td>
+          <td>
+            <div class="text-white-50 small">${pod.recipientName || o.customerName}</div>
+            <small class="text-muted">${pod.relationship || 'Customer'}</small>
+          </td>
+          <td>
+            <span class="badge bg-dark text-success font-monospace border border-success border-opacity-50">
+              <i class="bi bi-shield-check me-1"></i>${pod.verifiedPasscode || o.passcode}
+            </span>
+          </td>
+          <td>
+            <span class="small text-white">${delTime}</span>
+            <small class="text-muted d-block">${delDate}</small>
+          </td>
+          <td><small class="text-white-50">${pod.deliveredBy || o.agentName}</small></td>
+          <td><strong class="font-monospace text-success">${frmEngine.formatNaira(o.totalAmountMinor)}</strong></td>
+          <td class="text-end pe-4">
+            <span class="badge badge-frm-emerald py-1 px-2">
+              <i class="bi bi-file-earmark-check me-1"></i>POD Certified
+            </span>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }
+</script>
+</body>
+</html>

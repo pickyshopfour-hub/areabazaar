@@ -822,4 +822,656 @@ Real-time live session controller enabling operators to manage broadcast lifecyc
   - Section `#landingAuctionDealsRow` directly below hero banner.
   - Interactive filter pills (`All Live Auctions`, `Bid & Win`, `Flat-Rate Pool`, `Price Wave`, `Stock Cap`, `Time Cap`).
 
+--------------------------------------------------------------------------------
+## 7.10 Warehouse Management (WHM) Enterprise Operations & Logistics API Mapping
+
+The Warehouse Management System (WHM) operates in the root directory (`/whm/`) decoupled from the storefront, providing full logistics lifecycle management for inventory, physical handling, order-line fulfillment, category collation, SBA sourcing procurement, and category-tailored QA inspections.
+
+---
+
+### 7.10.1 WHM Products Price Update
+
+#### Single Product Price & Cost Floor Update
+- **UI Trigger:** `whm/products-pricing.html` -> `#btnSavePriceModal` ("Save Price Changes").
+- **HTTP Method & Route:** `PATCH /api/v1/whm/products/{productId}/price`
+- **Request Headers:** `Content-Type: application/json`
+- **Request Payload:**
+```json
+{
+  "priceMinor": 85000000,
+  "costFloorMinor": 72000000,
+  "compareAtPriceMinor": 92000000,
+  "reason": "supplier_rebate",
+  "operatorId": "whm_staff_10",
+  "notes": "Adjusted procurement benchmark based on latest wholesale distributor shipment",
+  "variants": [
+    {
+      "variantId": "var_256gb_blk",
+      "priceDeltaMinor": 0,
+      "costFloorMinor": 72000000
+    },
+    {
+      "variantId": "var_512gb_slv",
+      "priceDeltaMinor": 12000000,
+      "costFloorMinor": 81000000
+    }
+  ]
+}
+```
+- **Response `data` (200 OK):**
+```json
+{
+  "productId": "uw_prd_3001",
+  "priceMinor": 85000000,
+  "costFloorMinor": 72000000,
+  "marginMinor": 13000000,
+  "marginPercentage": 15.29,
+  "updatedAt": "2026-10-21T14:35:00Z",
+  "auditLogId": "aud_prc_9941"
+}
+```
+
+#### Batch / Multi-Select Products Price Update
+- **UI Trigger:** `whm/products-pricing.html` -> `#btnApplyBatchPrice` ("Apply Batch Adjustment").
+- **HTTP Method & Route:** `POST /api/v1/whm/products/batch-price`
+- **Request Payload:**
+```json
+{
+  "productIds": ["uw_prd_3001", "uw_prd_3002", "uw_prd_3005"],
+  "adjustmentType": "percentage",
+  "adjustmentValue": 5.0,
+  "roundToNearestMinor": 10000,
+  "reason": "inflation_recalibration",
+  "operatorId": "whm_staff_10"
+}
+```
+- **Response `data` (200 OK):**
+```json
+{
+  "updatedCount": 3,
+  "adjustments": [
+    {
+      "productId": "uw_prd_3001",
+      "oldPriceMinor": 85000000,
+      "newPriceMinor": 89250000,
+      "marginPercentage": 19.33
+    }
+  ]
+}
+```
+
+---
+
+### 7.10.2 WHM Product Inventory Update
+
+#### Stock Add / Drop Adjustment
+- **UI Trigger:** `whm/inventory.html` -> `#btnConfirmStockAdjustment` ("Apply Stock Delta").
+- **HTTP Method & Route:** `POST /api/v1/whm/products/{productId}/stock/adjust`
+- **Request Payload:**
+```json
+{
+  "action": "add",
+  "quantity": 15,
+  "variantId": "var_256gb_blk",
+  "reasonCode": "inbound_shipment",
+  "warehouseZone": "Zone C - Gadgets",
+  "binLocation": "C-04-B2-S1",
+  "proofDocReference": "PO-WH-2026-881",
+  "operatorId": "whm_staff_10"
+}
+```
+- **Response `data` (200 OK):**
+```json
+{
+  "productId": "uw_prd_3001",
+  "variantId": "var_256gb_blk",
+  "previousStock": 18,
+  "newStock": 33,
+  "reservedStock": 4,
+  "availableStock": 29,
+  "stockStatus": "in_stock",
+  "binLocation": "C-04-B2-S1",
+  "auditLogId": "aud_stk_1049"
+}
+```
+
+#### Warehouse Location / Slotting Assignment
+- **UI Trigger:** `whm/inventory.html` -> `#btnSaveLocation` ("Assign Bay/Bin Slot").
+- **HTTP Method & Route:** `POST /api/v1/whm/products/{productId}/location`
+- **Request Payload:**
+```json
+{
+  "zone": "Zone A - Groceries & Foodstuff",
+  "aisle": "02",
+  "bay": "B4",
+  "shelf": "S3",
+  "bin": "12",
+  "fullLocationCode": "A-02-B4-S3-12",
+  "isPrimaryPickFace": true
+}
+```
+
+---
+
+### 7.10.3 WHM Product Handling Update
+
+#### Physical Handling, Storage Conditions & Logistics Safety
+- **UI Trigger:** `whm/handling.html` -> `#btnSaveHandlingSpecs` ("Update Handling Configuration").
+- **HTTP Method & Route:** `PUT /api/v1/whm/products/{productId}/handling`
+- **Request Payload:**
+```json
+{
+  "storageCondition": "cold_chain",
+  "temperatureTargetCelsius": { "min": 2, "max": 8 },
+  "fragilityClass": "fragile_glass",
+  "hazardClass": "none",
+  "dimensionsCm": { "length": 25.0, "width": 15.0, "height": 30.0 },
+  "grossWeightKg": 2.45,
+  "heavyLiftRequired": false,
+  "maxStackTiers": 4,
+  "packagingRequirement": "bubble_wrap_box",
+  "tamperEvidentSealRequired": true,
+  "expiryTrackingEnabled": true,
+  "shelfLifeDaysFromIntake": 180,
+  "handlingNotes": "Keep upright; store away from direct sunlight."
+}
+```
+- **Response `data` (200 OK):**
+```json
+{
+  "productId": "uw_prd_3001",
+  "handlingSpecs": {
+    "storageCondition": "cold_chain",
+    "grossWeightKg": 2.45,
+    "maxStackTiers": 4,
+    "handlingStatus": "configured"
+  },
+  "updatedAt": "2026-10-21T14:36:00Z"
+}
+```
+
+---
+
+### 7.10.4 WHM Order-Items Update
+
+#### List Warehouse Order-Items Across Stores
+- **UI Trigger:** `whm/order-items.html` table initialization.
+- **HTTP Method & Route:** `GET /api/v1/whm/order-items`
+- **Query Parameters:** `status?`, `categoryId?`, `urgency?` (`standard`|`express_tanke`), `orderId?`, `cursor?`, `limit?`.
+- **Response `data` (200 OK):**
+```json
+{
+  "items": [
+    {
+      "orderItemId": "uw_item_7719",
+      "orderId": "ORD-UWB-202610-8812",
+      "orderPasscode": "UWB-PASS-4412",
+      "productId": "uw_prd_3001",
+      "productTitle": "Smartphone Pro 256GB",
+      "variantName": "Midnight Black",
+      "categoryId": "gadgets",
+      "quantity": 1,
+      "allocatedBin": "C-04-B2-S1",
+      "itemStatus": "pending_pick",
+      "pickerId": null,
+      "urgency": "express_tanke",
+      "createdAt": "2026-10-21T14:10:00Z"
+    }
+  ],
+  "meta": { "totalPending": 14, "totalPicking": 6, "totalPacked": 22 }
+}
+```
+
+#### Update Order-Item Lifecycle State
+- **UI Trigger:** `whm/order-items.html` -> Status Action buttons / Multi-select action bar.
+- **HTTP Method & Route:** `PATCH /api/v1/whm/order-items/{orderItemId}/status`
+- **Request Payload:**
+```json
+{
+  "newStatus": "picked",
+  "pickerId": "picker_tanke_04",
+  "binScanned": "C-04-B2-S1",
+  "verificationNotes": "Serial recorded and unit verified intact"
+}
+```
+
+#### Report Shortage or Propose Substitution
+- **UI Trigger:** `whm/order-items.html` -> `#btnItemSubstitute` ("Log Shortage / Substitute").
+- **HTTP Method & Route:** `POST /api/v1/whm/order-items/{orderItemId}/substitute`
+- **Request Payload:**
+```json
+{
+  "substituteProductId": "uw_prd_3008",
+  "substituteTitle": "Smartphone Plus 256GB (Space Grey)",
+  "priceDifferenceMinor": 0,
+  "reason": "original_variant_damaged_in_bin",
+  "customerApprovalRequired": true,
+  "operatorId": "whm_staff_10"
+}
+```
+
+---
+
+### 7.10.5 WHM Product Collation (per Categ)
+
+#### Collation Aggregation Matrix per Category
+- **UI Trigger:** `whm/collation.html` initialization & Category filter tabs.
+- **HTTP Method & Route:** `GET /api/v1/whm/collation/by-category`
+- **Response `data` (200 OK):**
+```json
+{
+  "categories": [
+    {
+      "categoryId": "groceries",
+      "categoryName": "Packaged Groceries",
+      "totalItemsToCollate": 28,
+      "collatedCount": 20,
+      "pendingCount": 8,
+      "batchPickListsActive": 2
+    },
+    {
+      "categoryId": "foodstuff",
+      "categoryName": "Foodstuff & Agro",
+      "totalItemsToCollate": 34,
+      "collatedCount": 31,
+      "pendingCount": 3,
+      "batchPickListsActive": 3
+    },
+    {
+      "categoryId": "gadgets",
+      "categoryName": "Gadgets & Accessories",
+      "totalItemsToCollate": 12,
+      "collatedCount": 11,
+      "pendingCount": 1,
+      "batchPickListsActive": 1
+    }
+  ],
+  "activeOrdersCollation": [
+    {
+      "orderId": "ORD-UWB-202610-8812",
+      "deliveryPasscode": "UWB-PASS-4412",
+      "customerName": "Tolani Shittu",
+      "assignedToteId": "TOTE-GR-09",
+      "categoryProgress": {
+        "groceries": { "total": 2, "collated": 2, "status": "completed" },
+        "foodstuff": { "total": 1, "collated": 1, "status": "completed" },
+        "gadgets": { "total": 1, "collated": 0, "status": "pending_pick" }
+      },
+      "overallCompletionPercentage": 75.0,
+      "readyForPacking": false
+    }
+  ]
+}
+```
+
+#### Assign Picked Category Items to Customer Order Tote (Pigeon-Hole)
+- **UI Trigger:** `whm/collation.html` -> `#btnConfirmCollationSlot` ("Place in Order Tote").
+- **HTTP Method & Route:** `POST /api/v1/whm/collation/totes/assign`
+- **Request Payload:**
+```json
+{
+  "orderId": "ORD-UWB-202610-8812",
+  "orderItemId": "uw_item_7719",
+  "toteId": "TOTE-GR-09",
+  "collationStationId": "STATION_BAY_03",
+  "collateOperatorId": "picker_tanke_04"
+}
+```
+
+#### Complete Collation for Order
+- **UI Trigger:** `whm/collation.html` -> `#btnReleaseOrderToPacking` ("Collation 100% -> Send to Packing & QA").
+- **HTTP Method & Route:** `POST /api/v1/whm/collation/orders/{orderId}/complete`
+- **Response `data` (200 OK):**
+```json
+{
+  "orderId": "ORD-UWB-202610-8812",
+  "allCategoriesCollated": true,
+  "stagedForPackingAt": "2026-10-21T14:38:00Z",
+  "nextStage": "whm_qa_inspection"
+}
+```
+
+---
+
+### 7.10.6 WHM Product Sourcing - Assign to SBA (per Categ)
+
+#### Sourcing Deficit Aggregation per Category
+- **UI Trigger:** `whm/sourcing.html` -> `#tabDeficitAggregation`.
+- **HTTP Method & Route:** `GET /api/v1/whm/sourcing/deficits`
+- **Response `data` (200 OK):**
+```json
+{
+  "categoryDeficits": [
+    {
+      "categoryId": "foodstuff",
+      "categoryName": "Foodstuff & Farm Produce",
+      "recommendedSbaSpecialist": "SBA-AGRO-01",
+      "deficitItems": [
+        {
+          "productId": "uw_prd_1004",
+          "title": "Yam Tubers (Medium Size)",
+          "currentPhysicalStock": 2,
+          "orderDemandQty": 18,
+          "netDeficitQty": 16,
+          "benchmarkUnitCostMinor": 120000,
+          "estimatedTotalCostMinor": 1920000,
+          "suggestedOrigin": "Ipata Wholesale Market"
+        }
+      ]
+    }
+  ]
+}
+```
+
+#### Create & Assign Procurement Batch to Sourcing & Buying Agent (SBA)
+- **UI Trigger:** `whm/sourcing.html` -> `#btnCreateSbaBatch` ("Generate SBA Batch").
+- **HTTP Method & Route:** `POST /api/v1/whm/sourcing/batches/create`
+- **Request Payload:**
+```json
+{
+  "sbaId": "sba_agro_kayode",
+  "categoryId": "foodstuff",
+  "targetMarket": "Ipata Market, Ilorin",
+  "items": [
+    {
+      "productId": "uw_prd_1004",
+      "targetQty": 16,
+      "benchmarkUnitPriceMinor": 120000
+    }
+  ],
+  "disbursementBudgetMinor": 1920000,
+  "expectedReturnWarehouseTime": "2026-10-21T17:00:00Z",
+  "operatorId": "whm_staff_10"
+}
+```
+- **Response `data` (201 Created):**
+```json
+{
+  "batchId": "SBA-BATCH-202610-044",
+  "sbaId": "sba_agro_kayode",
+  "sbaName": "Kayode Agro Sourcing",
+  "categoryId": "foodstuff",
+  "status": "assigned",
+  "totalBudgetMinor": 1920000,
+  "assignedAt": "2026-10-21T14:40:00Z"
+}
+```
+
+#### SBA Delivery & Receiving at Warehouse Bay
+- **UI Trigger:** `whm/sourcing.html` -> `#btnLogSbaSupply` ("Receive Inbound SBA Batch").
+- **HTTP Method & Route:** `POST /api/v1/whm/sourcing/batches/{batchId}/supply`
+- **Request Payload:**
+```json
+{
+  "batchId": "SBA-BATCH-202610-044",
+  "suppliedQtyMap": {
+    "uw_prd_1004": 16
+  },
+  "actualTotalCostMinor": 1850000,
+  "vendorReceiptRef": "RCPT-IPT-9920",
+  "receivingBay": "Receiving Dock 2 (Perishables)",
+  "receivingClerkId": "whm_staff_10"
+}
+```
+- **Response `data` (200 OK):**
+```json
+{
+  "batchId": "SBA-BATCH-202610-044",
+  "status": "supplied_at_dock",
+  "costVarianceMinor": -70000,
+  "routedToQa": true,
+  "qaBatchTicketId": "QA-TCK-202610-182"
+}
+```
+
+---
+
+### 7.10.7 WHM Product QA (per Categ)
+
+#### Get Pending QA Inspection Queue
+- **UI Trigger:** `whm/qa.html` initialization & Category filter buttons.
+- **HTTP Method & Route:** `GET /api/v1/whm/qa/pending`
+- **Query Parameters:** `categoryId?`, `sourceType?` (`sba_intake`|`order_pack_verify`).
+- **Response `data` (200 OK):**
+```json
+{
+  "pendingInspections": [
+    {
+      "qaTicketId": "QA-TCK-202610-182",
+      "sourceType": "sba_intake",
+      "batchId": "SBA-BATCH-202610-044",
+      "productId": "uw_prd_1004",
+      "productTitle": "Yam Tubers (Medium Size)",
+      "categoryId": "foodstuff",
+      "quantity": 16,
+      "specBenchmarkDoc": "product-specs.pdf"
+    },
+    {
+      "qaTicketId": "QA-TCK-202610-183",
+      "sourceType": "order_pack_verify",
+      "orderId": "ORD-UWB-202610-8812",
+      "productId": "uw_prd_3001",
+      "productTitle": "Smartphone Pro 256GB",
+      "categoryId": "gadgets",
+      "quantity": 1,
+      "specBenchmarkDoc": "product-specs.pdf"
+    }
+  ]
+}
+```
+
+#### Perform Category QA Inspection
+- **UI Trigger:** `whm/qa.html` -> `#btnSubmitQaInspection` ("Record QA Decision").
+- **HTTP Method & Route:** `POST /api/v1/whm/qa/inspect`
+- **Request Payload:**
+```json
+{
+  "qaTicketId": "QA-TCK-202610-183",
+  "categoryId": "gadgets",
+  "disposition": "pass_grade_a",
+  "checklistEvaluation": {
+    "powerOnTest": "pass",
+    "screenIntegrity": "pass",
+    "imeiLogged": "358941098234812",
+    "ramStorageVerified": "8GB / 256GB matched",
+    "batteryHealthIndicator": "100%",
+    "accessoriesIncluded": ["charger_cable", "sim_ejector"],
+    "factorySealOrInspectionStickerApplied": true
+  },
+  "defectsNoted": null,
+  "inspectorId": "qa_inspector_02",
+  "dispositionNotes": "Passed all diagnostics specified in product-specs.pdf; verified factory original."
+}
+```
+- **Response `data` (200 OK):**
+```json
+{
+  "qaTicketId": "QA-TCK-202610-183",
+  "disposition": "pass_grade_a",
+  "routedAction": "released_to_order_dispatch",
+  "inspectedAt": "2026-10-21T14:42:00Z",
+  "certificateRef": "QA-CERT-UWB-88192"
+}
+```
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+### 7.11 Field Regional Marketing (FRM) Operations & API Mapping
+
+#### 7.11.1 Regional Product Listing & Algorithmic Suggested Pricing
+- **UI Trigger:** `frm/product-listing.html` (Catalog Table & Daily Rate Card Generator).
+- **HTTP Method & Route:** `GET /api/v1/frm/products`
+- **Query Parameters:** `category={groceries|foodstuff|gadgets|fashion|home}`, `search={query}`, `stockStatus={in_stock|low_stock|all}`.
+- **Backend Pricing Algorithm Note:** The price returned includes the `algorithmicSuggestedPriceMinor` computed from `baseCostFloorMinor` + physical handling breakdown (`transportationMinor`, `washingMinor`, `loadingMinor`, `baggingMinor`). This value is returned as a **recommendation/suggestion**, NOT a forced constraint on regional sales.
+- **Response `data` (200 OK):**
+```json
+{
+  "products": [
+    {
+      "id": "uw_prd_1001",
+      "title": "Refined Pure Vegetable Cooking Oil 5L",
+      "categoryId": "groceries",
+      "unitLabel": "5L Jerrycan",
+      "stockQuantity": 64,
+      "baseCostFloorMinor": 1220000,
+      "handlingCostBreakdown": {
+        "transportationMinor": 30000,
+        "washingMinor": 5000,
+        "loadingMinor": 15000,
+        "baggingMinor": 20000,
+        "overheadMinor": 10000,
+        "totalHandlingCostMinor": 80000
+      },
+      "effectiveCostFloorMinor": 1300000,
+      "currentPriceMinor": 1450000,
+      "algorithmicSuggestedPriceMinor": 1460000,
+      "suggestedMarginMinor": 160000,
+      "suggestedMarginPct": 10.96,
+      "isSuggestionOnly": true
+    }
+  ]
+}
+```
+
+#### 7.11.2 Field Customer Payment Report Submission & Audit
+- **UI Trigger:** `frm/payment-report.html` -> `#modalNewPayment` ("Save Payment Report").
+- **HTTP Method & Route:** `POST /api/v1/frm/payments/report`
+- **Request Payload:**
+```json
+{
+  "orderId": "ORD-FRM-50124",
+  "customerName": "Madam Folake Alabi",
+  "customerPhone": "0803-882-9901",
+  "amountMinor": 14000000,
+  "channel": "pos_terminal",
+  "posTerminalId": "POS-TNK-091",
+  "bankName": "Moniepoint MFB",
+  "transactionRef": "MNP-TX-9921820",
+  "agentId": "AGT-ILN-01",
+  "agentName": "Kabir Olatunji",
+  "receiptDoc": "moniepoint_slip_8801.png",
+  "notes": "Full order payment collected via POS swipe."
+}
+```
+- **Response `data` (201 Created):**
+```json
+{
+  "reportId": "REP-PAY-8801",
+  "orderId": "ORD-FRM-50124",
+  "amountMinor": 14000000,
+  "status": "verified",
+  "remittanceStatus": "unremitted",
+  "reportedAt": "2026-10-21T15:20:00Z"
+}
+```
+
+#### 7.11.3 Corporate Bank Remittance Batch Creation & HQ Settlement
+- **UI Trigger:** `frm/payment-remittance.html` -> `#modalRemittanceBatch` ("Submit Remittance to HQ").
+- **HTTP Method & Route:** `POST /api/v1/frm/remittances`
+- **Request Payload:**
+```json
+{
+  "paymentReportIds": ["REP-PAY-8801", "REP-PAY-8803"],
+  "agentId": "AGT-ILN-01",
+  "hub": "Tanke Hub, Ilorin",
+  "destinationBank": "First Bank of Nigeria (AreaBazaar Operations - 2038192810)",
+  "bankTellerRef": "FBN-DEP-9921820",
+  "depositSlipFile": "fbn_teller_scan_8801.jpg",
+  "notes": "Friday field collections deposited at University Road branch."
+}
+```
+- **Response `data` (201 Created):**
+```json
+{
+  "batchId": "REM-BATCH-103",
+  "batchCode": "REM-ILN-202610-02",
+  "totalAmountMinor": 39000000,
+  "status": "submitted",
+  "remittedAt": "2026-10-21T15:45:00Z"
+}
+```
+
+#### 7.11.4 Customer Order Direct Field Submission
+- **UI Trigger:** `frm/order-submit.html` -> `#orderSubmitForm` ("Submit Customer Order").
+- **HTTP Method & Route:** `POST /api/v1/frm/orders/submit`
+- **Request Payload:**
+```json
+{
+  "customerName": "Alhaji Bashir Mustapha",
+  "customerPhone": "0814-555-8822",
+  "customerAddress": "Plot 7, Fate River Basin Estate, Ilorin",
+  "hub": "Fate Hub, Ilorin",
+  "agentId": "AGT-ILN-02",
+  "agentName": "Zainab Danladi",
+  "items": [
+    { "productId": "uw_prd_1004", "title": "Selected Fresh Yam Tubers", "quantity": 10, "unitPriceMinor": 180000 },
+    { "productId": "uw_prd_1005", "title": "Premium Smoked Catfish Pack", "quantity": 2, "unitPriceMinor": 650000 }
+  ],
+  "totalAmountMinor": 3100000,
+  "paymentMode": "pay_on_delivery"
+}
+```
+- **Response `data` (201 Created):**
+```json
+{
+  "orderId": "ORD-FRM-50125",
+  "customerName": "Alhaji Bashir Mustapha",
+  "totalAmountMinor": 3100000,
+  "passcode": "4190",
+  "paymentStatus": "pending",
+  "fulfillmentStatus": "submitted",
+  "createdAt": "2026-10-21T15:50:00Z"
+}
+```
+
+#### 7.11.5 Customer Order Tracking & Fulfillment Pipeline
+- **UI Trigger:** `frm/order-track.html` (Fulfillment Stepper Timeline).
+- **HTTP Method & Route:** `GET /api/v1/frm/orders/track/{orderId}`
+- **Response `data` (200 OK):**
+```json
+{
+  "orderId": "ORD-FRM-50124",
+  "customerName": "Madam Folake Alabi",
+  "customerAddress": "14 University Road, Tanke, Ilorin",
+  "hub": "Tanke Hub, Ilorin",
+  "fulfillmentStatus": "out_for_delivery",
+  "passcode": "6821",
+  "timeline": [
+    { "stage": "submitted", "timestamp": "2026-10-21T10:00:00Z" },
+    { "stage": "collation", "timestamp": "2026-10-21T11:00:00Z" },
+    { "stage": "warehouse_dispatched", "timestamp": "2026-10-21T12:00:00Z" },
+    { "stage": "hub_arrived", "timestamp": "2026-10-21T13:30:00Z" },
+    { "stage": "out_for_delivery", "timestamp": "2026-10-21T14:45:00Z" }
+  ]
+}
+```
+
+#### 7.11.6 Customer Delivery Passcode Verification & Proof of Delivery (POD)
+- **UI Trigger:** `frm/order-delivery.html` -> `#podForm` ("Confirm & Complete Delivery").
+- **HTTP Method & Route:** `POST /api/v1/frm/orders/{orderId}/deliver`
+- **Request Payload:**
+```json
+{
+  "orderId": "ORD-FRM-50124",
+  "passcode": "6821",
+  "recipientName": "Madam Folake Alabi",
+  "recipientPhone": "0803-882-9901",
+  "relationship": "Self (Customer)",
+  "deliveredBy": "Kabir Olatunji (FRM Handover)",
+  "deliveryNotes": "Delivered intact. Customer verified bags and cooking oil.",
+  "photoProofRef": "pod_receipt_50124.jpg"
+}
+```
+- **Response `data` (200 OK):**
+```json
+{
+  "orderId": "ORD-FRM-50124",
+  "fulfillmentStatus": "delivered",
+  "paymentStatus": "paid",
+  "deliveredAt": "2026-10-21T15:55:00Z",
+  "podCertificateRef": "POD-CERT-ILN-99120"
+}
+```
+
+
+
 
