@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UWB-Adm Products + Variants | UwanBUY Storefront Admin</title>
+
+    <link rel="shortcut icon" type="image/x-icon" href="../../assetsecm/images/uwanbuy-favicon-brief-color.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
+    <link rel="stylesheet" href="../assets/css/uwanbuy-updates.css">
+
+    <style>
+        :root {
+            --uw-brand: #ff0000;
+            --uw-dark: #0f172a;
+        }
+
+        body {
+            background-color: #f1f5f9;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #1e293b;
+        }
+
+        .admin-sidebar {
+            background-color: #0f172a;
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        .admin-sidebar .nav-link {
+            color: #94a3b8;
+            font-weight: 600;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .admin-sidebar .nav-link.active,
+        .admin-sidebar .nav-link:hover {
+            color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .admin-sidebar .nav-link.active {
+            background-color: var(--uw-brand);
+        }
+
+        .batch-action-bar {
+            background: #ffffff;
+            border: 2px solid #0f172a;
+            border-radius: 12px;
+            padding: 0.75rem 1.25rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 15px;
+            z-index: 1020;
+            display: none;
+        }
+
+        .product-thumb {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+            border-radius: 8px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 2px;
+        }
+
+        .dropzone-box {
+            border: 2px dashed #cbd5e1;
+            border-radius: 12px;
+            background: #f8fafc;
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .dropzone-box:hover,
+        .dropzone-box.dragover {
+            border-color: var(--uw-brand);
+            background: #fef2f2;
+        }
+
+        .variant-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 2px 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 admin-sidebar p-3 d-flex flex-column">
+                <a href="../index.html" class="d-flex align-items-center mb-4 text-decoration-none text-white gap-2">
+                    <img src="../../assetsecm/images/uwanbuy-logo-long-full-color-01.png" alt="Logo" style="height: 32px; background: white; padding: 4px 8px; border-radius: 6px;">
+                </a>
+
+                <small class="text-uppercase text-secondary fw-bold text-xs mb-2 px-2">Storefront Console</small>
+                <nav class="nav flex-column mb-auto">
+                    <a class="nav-link" href="index.html">
+                        <i class="bi bi-speedometer2"></i> Dashboard
+                    </a>
+                    <a class="nav-link active" href="products.html">
+                        <i class="bi bi-box-seam"></i> Products + Variants
+                    </a>
+                    <a class="nav-link" href="auctions.html">
+                        <i class="bi bi-hammer"></i> Auction Prep & Waves
+                    </a>
+                    <a class="nav-link" href="reconciliation.html">
+                        <i class="bi bi-receipt-cutoff"></i> Reconciliation
+                    </a>
+                    <a class="nav-link" href="orders.html">
+                        <i class="bi bi-bag-check"></i> Orders & Dispatch
+                    </a>
+                </nav>
+
+                <div class="border-top border-secondary pt-3 mt-4">
+                    <div class="small text-secondary mb-2">Connected Hub:</div>
+                    <strong class="text-white d-block small mb-3">Tanke Hub, Ilorin</strong>
+                    <a href="../index.html" class="btn btn-sm btn-outline-light w-100">
+                        <i class="bi bi-shop me-1"></i> Return to Storefront
+                    </a>
+                </div>
+            </div>
+
+            <!-- Main Content Area -->
+            <div class="col-md-9 col-lg-10 p-4">
+
+                <!-- Header -->
+                <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+                    <div>
+                        <span class="badge bg-danger-subtle text-danger fw-bold small">UWB-Adm Catalog & Operations</span>
+                        <h2 class="fw-bold text-dark m-0">Products + Variants Management</h2>
+                        <small class="text-muted">Single/mass spreadsheet upload per segment, price adjustments, stock audit, and auction listings</small>
+                    </div>
+                    <div class="d-flex flex-wrap gap-2">
+                        <button class="btn btn-outline-secondary btn-sm rounded-pill fw-bold" id="btnDownloadTemplate">
+                            <i class="bi bi-download me-1"></i> Download Template (CSV)
+                        </button>
+                        <button class="btn btn-outline-danger btn-sm rounded-pill fw-bold" data-bs-toggle="modal" data-bs-target="#modalBulkUpload">
+                            <i class="bi bi-file-earmark-spreadsheet me-1"></i> Bulk Upload (Excel/CSV)
+                        </button>
+                        <button class="btn btn-danger btn-sm rounded-pill fw-bold shadow-sm" data-bs-toggle="modal" data-bs-target="#modalAddProduct">
+                            <i class="bi bi-plus-circle me-1"></i> Add Single Product
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sticky Multi-Select Batch Action Bar -->
+                <div class="batch-action-bar mb-3" id="batchActionBar">
+                    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="badge bg-dark rounded-pill px-3 py-2 fw-bold" id="batchSelectedCount">0 Selected</span>
+                            <span class="small text-muted">Apply bulk action to selected products:</span>
+                        </div>
+                        <div class="d-flex flex-wrap gap-2">
+                            <button class="btn btn-sm btn-outline-dark fw-bold rounded-3" id="btnBatchPrice">
+                                <i class="bi bi-currency-exchange me-1"></i> Adjust Price (Multi)
+                            </button>
+                            <button class="btn btn-sm btn-outline-secondary fw-bold rounded-3" id="btnBatchStockStatus">
+                                <i class="bi bi-boxes me-1"></i> Stock Status (Multi)
+                            </button>
+                            <button class="btn btn-sm btn-outline-success fw-bold rounded-3" id="btnBatchPublish">
+                                <i class="bi bi-eye me-1"></i> Publish / Unpublish
+                            </button>
+                            <button class="btn btn-sm btn-danger fw-bold rounded-3 shadow-sm" id="btnBatchListAuction">
+                                <i class="bi bi-hammer me-1"></i> List on Auction (Multi)
+                            </button>
+                            <button class="btn btn-sm btn-link text-muted" id="btnBatchClear">Deselect All</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filters & Search Toolbar -->
+                <div class="card border-0 rounded-4 shadow-sm bg-white p-3 mb-4">
+                    <div class="row g-2 align-items-center">
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0"><i class="bi bi-search text-muted"></i></span>
+                                <input type="text" class="form-control border-start-0" id="filterSearch" placeholder="Search by product title, brand, or SKU...">
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-2">
+                            <select class="form-select" id="filterCategory">
+                                <option value="all">All Segments</option>
+                                <option value="groceries">Groceries & Food</option>
+                                <option value="gadgets">Gadgets & Tech</option>
+                                <option value="fashion">Fashion & Style</option>
+                                <option value="home">Home Essentials</option>
+                                <option value="appliances">Appliances</option>
+                            </select>
+                        </div>
+                        <div class="col-6 col-md-2">
+                            <select class="form-select" id="filterStock">
+                                <option value="all">All Stock Status</option>
+                                <option value="in_stock">In Stock (&gt; 5)</option>
+                                <option value="low_stock">Low Stock (&le; 5)</option>
+                                <option value="out_of_stock">Out of Stock (0)</option>
+                            </select>
+                        </div>
+                        <div class="col-6 col-md-2">
+                            <select class="form-select" id="filterPublish">
+                                <option value="all">All Status</option>
+                                <option value="published">Published</option>
+                                <option value="draft">Draft</option>
+                            </select>
+                        </div>
+                        <div class="col-6 col-md-2">
+                            <select class="form-select" id="filterAuction">
+                                <option value="all">All Catalog</option>
+                                <option value="on_auction">On Auction</option>
+                                <option value="standard">Standard Catalog</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Products Table -->
+                <div class="card border-0 rounded-4 shadow-sm bg-white p-3">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0" id="productsTable">
+                            <thead class="table-light">
+                                <tr>
+                                    <th style="width: 40px;">
+                                        <input type="checkbox" class="form-check-input" id="checkSelectAll">
+                                    </th>
+                                    <th>Product & Info</th>
+                                    <th>Category Segment</th>
+                                    <th>Variants</th>
+                                    <th>Price (₦)</th>
+                                    <th>Stock Level</th>
+                                    <th>Status</th>
+                                    <th>Auction</th>
+                                    <th class="text-end" style="min-width: 170px;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productsTableBody">
+                                <!-- Populated dynamically by script -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="p-3 text-center text-muted d-none" id="noProductsFound">
+                        <i class="bi bi-box-seam fs-1 d-block mb-2 text-secondary"></i>
+                        <p class="mb-0">No products match your active search filters.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 1: Add Single Product -->
+    <div class="modal fade" id="modalAddProduct" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content rounded-4 border-0 shadow">
+                <div class="modal-header border-bottom bg-light">
+                    <h5 class="modal-title fw-bold"><i class="bi bi-plus-circle text-danger me-2"></i> Add Single Product to Segment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form id="formAddProduct">
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-8">
+                                <label class="form-label small fw-bold">Product Title <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="inpTitle" required placeholder="e.g. Binatone 1.5L Blender with Grinder Mill">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label small fw-bold">Category Segment <span class="text-danger">*</span></label>
+                                <select class="form-select" id="inpCategory" required>
+                                    <option value="groceries">Groceries & Food</option>
+                                    <option value="gadgets" selected>Gadgets & Tech</option>
+                                    <option value="fashion">Fashion & Style</option>
+                                    <option value="home">Home Essentials</option>
+                                    <option value="appliances">Appliances</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label small fw-bold">Brand / Maker</label>
+                                <input type="text" class="form-control" id="inpBrand" placeholder="e.g. Binatone">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label small fw-bold">Base Price (₦) <span class="text-danger">*</span></label>
+                                <input type="number" class="form-control" id="inpPrice" required min="100" step="50" placeholder="18500">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label small fw-bold">Unit Label</label>
+                                <input type="text" class="form-control" id="inpUnitLabel" placeholder="e.g. unit, bag, pair, pack" value="unit">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label small fw-bold">Initial Stock (Units) <span class="text-danger">*</span></label>
+                                <input type="number" class="form-control" id="inpStock" required min="0" value="25">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label small fw-bold">Minimum Order Quantity (MOQ)</label>
+                                <input type="number" class="form-control" id="inpMoq" min="1" value="1">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label small fw-bold">Product Image</label>
+                                <select class="form-select" id="inpImageSelect">
+                                    <option value="../assets/images/placeholders/water-boiler.svg">Kettle / Boiler SVG</option>
+                                    <option value="../../assetsecm/images/soups/egusi-soup-roundbowl.png">Egusi Round Bowl PNG</option>
+                                    <option value="../../assetsecm/images/soups/afang-soup-roundbowl.png">Afang Round Bowl PNG</option>
+                                    <option value="../../assetsecm/images/soups/ogbono-soup-roundbowl.png">Ogbono Round Bowl PNG</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label small fw-bold">Product Description</label>
+                                <textarea class="form-control" id="inpDescription" rows="2" placeholder="Brief marketing details, power rating, condition, or warranty terms"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Dynamic Variants Builder Section -->
+                        <div class="border rounded-3 p-3 bg-light mb-3">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div>
+                                    <h6 class="fw-bold mb-0 text-dark"><i class="bi bi-diagram-3 me-1 text-danger"></i> Product Variants Builder</h6>
+                                    <small class="text-muted">Add size, color, power rating or capacity splits with custom prices</small>
+                                </div>
+                                <button type="button" class="btn btn-outline-danger btn-sm rounded-pill fw-bold" id="btnAddVariantRow">
+                                    <i class="bi bi-plus me-1"></i> Add Variant
+                                </button>
+                            </div>
+
+                            <div id="variantRowsContainer" class="d-flex flex-column gap-2">
+                                <!-- Variant rows added dynamically -->
+                            </div>
+                            <div id="noVariantsNotice" class="small text-muted py-2 text-center">
+                                No variants configured. Product will be listed as standard single variant.
+                            </div>
+                        </div>
+
+                        <div class="form-check form-switch mb-3">
+                            <input class="form-check-input" type="checkbox" id="inpPublishImmediate" checked>
+                            <label class="form-check-label small fw-bold" for="inpPublishImmediate">Publish immediately on storefront</label>
+                        </div>
+
+                        <div class="text-end">
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-danger fw-bold px-4">Save & Ingest Product</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2: Bulk Upload (Excel / CSV) -->
+    <div class="modal fade" id="modalBulkUpload" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content rounded-4 border-0 shadow">
+                <div class="modal-header border-bottom bg-light">
+                    <h5 class="modal-title fw-bold"><i class="bi bi-file-earmark-spreadsheet text-danger me-2"></i> Bulk Mass Load Products</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="alert alert-info border-0 rounded-3 small p-3 mb-3 d-flex align-items-center gap-3">
+                        <i class="bi bi-info-circle-fill fs-3 text-info"></i>
+                        <div>
+                            <strong>Supported Formats:</strong> Upload Microsoft Excel (<code>.xlsx</code>, <code>.xls</code>) or Comma-Separated Values (<code>.csv</code>).
+                            Columns required: <code>title</code>, <code>category</code>, <code>brand</code>, <code>price</code>, <code>stock</code>, <code>unitLabel</code>, <code>moq</code>, <code>variants</code>.
+                        </div>
+                    </div>
+
+                    <div class="dropzone-box mb-3" id="dropzoneBulkUpload">
+                        <i class="bi bi-cloud-arrow-up display-4 text-danger mb-2 d-block"></i>
+                        <h6 class="fw-bold mb-1">Click to browse or drag and drop spreadsheet here</h6>
+                        <small class="text-muted d-block mb-3">Accepts .xlsx, .xls, .csv up to 10MB</small>
+                        <input type="file" id="fileSpreadsheetInput" class="d-none" accept=".xlsx,.xls,.csv">
+                        <button type="button" class="btn btn-sm btn-outline-dark fw-bold rounded-pill px-3" onclick="$('#fileSpreadsheetInput').click()">
+                            Select File from Computer
+                        </button>
+                    </div>
+
+                    <!-- Parsed Preview -->
+                    <div id="bulkPreviewSection" class="d-none">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h6 class="fw-bold mb-0 text-dark"><i class="bi bi-table me-1"></i> Parsed Rows Preview (<span id="parsedRowCount">0</span> items)</h6>
+                            <span class="badge bg-success-subtle text-success fw-bold px-2 py-1" id="parsedStatusBadge">Ready to Ingest</span>
+                        </div>
+                        <div class="table-responsive border rounded-3 mb-3" style="max-height: 240px; overflow-y: auto;">
+                            <table class="table table-sm table-striped small align-middle mb-0">
+                                <thead class="table-light sticky-top">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Title</th>
+                                        <th>Category</th>
+                                        <th>Price (₦)</th>
+                                        <th>Stock</th>
+                                        <th>Variants</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="parsedPreviewTableBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="text-end">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger fw-bold px-4" id="btnConfirmBulkIngest" disabled>
+                            <i class="bi bi-check2-circle me-1"></i> Confirm & Ingest Products
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 3: View Details & Variants -->
+    <div class="modal fade" id="modalViewDetails" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content rounded-4 border-0 shadow">
+                <div class="modal-header border-bottom bg-light">
+                    <h5 class="modal-title fw-bold"><i class="bi bi-info-circle text-danger me-2"></i> Product & Variant Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4" id="modalViewDetailsBody">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 4: Stock Add / Drop -->
+    <div class="modal fade" id="modalStockAdjustment" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 border-0 shadow">
+                <div class="modal-header border-bottom bg-light">
+                    <h5 class="modal-title fw-bold"><i class="bi bi-boxes text-danger me-2"></i> Stock Add / Drop Adjustment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <input type="hidden" id="adjProductId">
+                    <h6 class="fw-bold mb-1" id="adjProductTitle">Product Title</h6>
+                    <p class="text-muted small mb-3">Current Stock Level: <strong class="text-dark" id="adjCurrentStock">0</strong> units</p>
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Adjustment Type</label>
+                        <div class="d-flex gap-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="adjType" id="adjTypeAdd" value="add" checked>
+                                <label class="form-check-label text-success fw-bold" for="adjTypeAdd"><i class="bi bi-plus-circle me-1"></i> Add Stock (+)</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="adjType" id="adjTypeDrop" value="drop">
+                                <label class="form-check-label text-danger fw-bold" for="adjTypeDrop"><i class="bi bi-dash-circle me-1"></i> Drop / Reduce (-)</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Quantity (Units)</label>
+                        <input type="number" class="form-control" id="adjQty" min="1" value="10">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Audit Reason</label>
+                        <select class="form-select" id="adjReason">
+                            <option value="Restock from Supplier">Restock from Supplier / Warehouse</option>
+                            <option value="Damaged Goods Write-off">Damaged Goods / Packaging Defect</option>
+                            <option value="Audit Count Correction">Audit Stock Count Correction</option>
+                            <option value="Transferred to Other Hub">Transferred to another Hub Center</option>
+                            <option value="Customer Return">Customer Return to Stock</option>
+                        </select>
+                    </div>
+
+                    <div class="text-end">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-danger fw-bold px-4" id="btnSaveStockAdjustment">Update Inventory</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 5: Edit Single Price -->
+    <div class="modal fade" id="modalSinglePrice" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 border-0 shadow">
+                <div class="modal-header border-bottom bg-light">
+                    <h5 class="modal-title fw-bold"><i class="bi bi-tag text-danger me-2"></i> Update Product Price</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <input type="hidden" id="priceProductId">
+                    <h6 class="fw-bold mb-1" id="priceProductTitle">Product Title</h6>
+                    <p class="text-muted small mb-3">Current Base Price: <strong class="text-danger" id="priceProductCurrent">₦0</strong></p>
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">New Base Price (₦)</label>
+                        <input type="number" class="form-control" id="priceProductNew" min="100" step="50">
+                    </div>
+
+                    <div class="text-end">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-danger fw-bold px-4" id="btnSaveSinglePrice">Update Price</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 6: Batch Price Adjustment -->
+    <div class="modal fade" id="modalBatchPrice" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 border-0 shadow">
+                <div class="modal-header border-bottom bg-light">
+                    <h5 class="modal-title fw-bold"><i class="bi bi-currency-exchange text-danger me-2"></i> Batch Multi-Price Adjustment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <p class="small text-muted mb-3">Adjust price across <strong id="batchPriceCount">0</strong> selected items simultaneously.</p>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Adjustment Method</label>
+                        <select class="form-select" id="batchPriceMode">
+                            <option value="set_uniform">Set Uniform Fixed Price (₦)</option>
+                            <option value="inc_fixed">Increase by Fixed Amount (+₦)</option>
+                            <option value="dec_fixed">Decrease by Fixed Amount (-₦)</option>
+                            <option value="inc_percent">Increase by Percentage (+%)</option>
+                            <option value="dec_percent">Decrease by Percentage (-%)</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Value</label>
+                        <input type="number" class="form-control" id="batchPriceValue" placeholder="e.g. 1000 or 10">
+                    </div>
+                    <div class="text-end">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-danger fw-bold px-4" id="btnApplyBatchPrice">Apply Multi-Price</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+    <!-- SheetJS for Client-Side Excel / CSV Reading -->
+    <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+    <!-- PapaParse for robust CSV parsing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+
+    <script src="../assets/js/storefront-core.js"></script>
+    <script src="../assets/js/uwanbuy.js"></script>
+    <script src="../assets/js/uwanbuy-engine.js"></script>
+
+    <!-- Products Admin Controller Logic -->
+    <script>
+        $(document).ready(function () {
+            let products = [];
+            let selectedProductIds = new Set();
+            let parsedBulkRows = [];
+
+            // Load products from engine and local overrides
+            function loadProducts() {
+                const baseProducts = window.UwanBuyEngine.getAllProducts() || [];
+                const localAdminProducts = JSON.parse(localStorage.getItem('uwanbuy_admin_products') || '[]');
+                
+                // Merge, allowing local admin items to supersede or prepend
+                const localMap = new Map();
+                localAdminProducts.forEach(p => localMap.set(p.id, p));
+
+                products = baseProducts.map(p => localMap.has(p.id) ? localMap.get(p.id) : {
+                    ...p,
+                    stockQty: (p.stock && p.stock.quantity) !== undefined ? p.stock.quantity : 25,
+                    stockStatus: (p.stock && p.stock.quantity === 0) ? 'out_of_stock' : ((p.stock && p.stock.quantity <= 5) ? 'low_stock' : 'in_stock'),
+                    published: p.published !== false,
+                    isAuction: p.isAuction || false,
+                    variants: p.variants || []
+                });
+
+                // Add purely custom items created in admin
+                localAdminProducts.forEach(p => {
+                    if (!products.some(existing => existing.id === p.id)) {
+                        products.unshift(p);
+                    }
+                });
+            }
+
+            function saveAdminState() {
+                localStorage.setItem('uwanbuy_admin_products', JSON.stringify(products));
+            }
+
+            function renderProductsTable() {
+                const $tbody = $('#productsTableBody');
+                $tbody.empty();
+
+                const q = ($('#filterSearch').val() || '').toLowerCase().trim();
+                const cat = $('#filterCategory').val();
+                const stock = $('#filterStock').val();
+                const pub = $('#filterPublish').val();
+                const auc = $('#filterAuction').val();
+
+                let filtered = products.filter(p => {
+                    if (q && !(p.title.toLowerCase().includes(q) || (p.brand && p.brand.toLowerCase().includes(q)) || (p.id && p.id.toLowerCase().includes(q)))) {
+                        return false;
+                    }
+                    if (cat !== 'all') {
+                        const pCat = (p.categoryId || p.category || '').toLowerCase();
+                        if (!pCat.includes(cat)) return false;
+                    }
+                    if (stock !== 'all') {
+                        const qty = p.stockQty !== undefined ? p.stockQty : 20;
+                        if (stock === 'in_stock' && qty <= 5) return false;
+                        if (stock === 'low_stock' && (qty > 5 || qty === 0)) return false;
+                        if (stock === 'out_of_stock' && qty > 0) return false;
+                    }
+                    if (pub !== 'all') {
+                        if (pub === 'published' && !p.published) return false;
+                        if (pub === 'draft' && p.published) return false;
+                    }
+                    if (auc !== 'all') {
+                        if (auc === 'on_auction' && !p.isAuction) return false;
+                        if (auc === 'standard' && p.isAuction) return false;
+                    }
+                    return true;
+                });
+
+                if (filtered.length === 0) {
+                    $('#noProductsFound').removeClass('d-none');
+                } else {
+                    $('#noProductsFound').addClass('d-none');
+                }
+
+                filtered.forEach(p => {
+                    const isChecked = selectedProductIds.has(p.id);
+                    const qty = p.stockQty !== undefined ? p.stockQty : 25;
+                    let stockBadge = '<span class="badge bg-success-subtle text-success fw-bold">In Stock (' + qty + ')</span>';
+                    if (qty === 0) stockBadge = '<span class="badge bg-danger-subtle text-danger fw-bold">Out of Stock (0)</span>';
+                    else if (qty <= 5) stockBadge = '<span class="badge bg-warning-subtle text-warning-emphasis fw-bold">Low Stock (' + qty + ')</span>';
+
+                    const pubBadge = p.published ? '<span class="badge bg-success rounded-pill px-2">Published</span>' : '<span class="badge bg-secondary rounded-pill px-2">Draft</span>';
+                    const aucBadge = p.isAuction ? '<span class="badge bg-danger rounded-pill px-2"><i class="bi bi-hammer me-1"></i>On Auction</span>' : '<span class="text-muted text-xs">-</span>';
+
+                    const variantsCount = (p.variants && p.variants.length) ? `<span class="badge bg-primary-subtle text-primary fw-bold">${p.variants.length} Variants</span>` : `<span class="text-muted small">Standard</span>`;
+
+                    const priceVal = p.priceMinor ? (p.priceMinor / 100) : (p.price || 0);
+
+                    $tbody.append(`
+                        <tr data-id="${p.id}">
+                            <td>
+                                <input type="checkbox" class="form-check-input row-select-check" data-id="${p.id}" ${isChecked ? 'checked' : ''}>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center gap-3">
+                                    <img src="${p.image || '../assets/images/placeholders/water-boiler.svg'}" alt="${p.title}" class="product-thumb">
+                                    <div>
+                                        <div class="fw-bold text-dark text-truncate" style="max-width: 240px;" title="${p.title}">${p.title}</div>
+                                        <div class="d-flex gap-2 text-xs text-muted">
+                                            <span>SKU: <strong>${p.id}</strong></span>
+                                            <span>&bull;</span>
+                                            <span>${p.brand || 'Verified'}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="badge bg-light text-dark border text-xs text-uppercase">${p.categoryId || p.category || 'general'}</span>
+                            </td>
+                            <td>${variantsCount}</td>
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    <strong class="text-danger fs-6">${window.UwanBuyEngine.formatNaira(priceVal * 100, true)}</strong>
+                                    <button class="btn btn-sm btn-link p-0 text-muted btn-edit-price" data-id="${p.id}" title="Edit Price"><i class="bi bi-pencil-square"></i></button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    ${stockBadge}
+                                    <button class="btn btn-sm btn-link p-0 text-muted btn-adj-stock" data-id="${p.id}" title="Add/Drop Stock"><i class="bi bi-plus-slash-minus"></i></button>
+                                </div>
+                            </td>
+                            <td>${pubBadge}</td>
+                            <td>${aucBadge}</td>
+                            <td class="text-end">
+                                <div class="btn-group btn-group-sm">
+                                    <button class="btn btn-outline-secondary btn-view-prod" data-id="${p.id}" title="View Details">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                    <button class="btn btn-outline-secondary btn-toggle-pub" data-id="${p.id}" title="${p.published ? 'Unpublish' : 'Publish'}">
+                                        <i class="bi ${p.published ? 'bi-eye-slash' : 'bi-eye'}"></i>
+                                    </button>
+                                    <button class="btn btn-danger btn-list-auction" data-id="${p.id}" title="List on Auction">
+                                        <i class="bi bi-hammer me-1"></i> Auction
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    `);
+                });
+
+                updateBatchBar();
+            }
+
+            function updateBatchBar() {
+                const count = selectedProductIds.size;
+                if (count > 0) {
+                    $('#batchSelectedCount').text(`${count} Selected`);
+                    $('#batchActionBar').slideDown(150);
+                } else {
+                    $('#batchActionBar').slideUp(150);
+                }
+            }
+
+            // Initial load
+            loadProducts();
+            renderProductsTable();
+
+            // Filters change
+            $('#filterSearch, #filterCategory, #filterStock, #filterPublish, #filterAuction').on('input change', function () {
+                renderProductsTable();
+            });
+
+            // Select all checkbox
+            $('#checkSelectAll').on('change', function () {
+                const isChecked = this.checked;
+                $('.row-select-check').each(function () {
+                    const id = $(this).data('id');
+                    if (isChecked) selectedProductIds.add(id);
+                    else selectedProductIds.delete(id);
+                });
+                renderProductsTable();
+            });
+
+            // Row checkbox change
+            $(document).on('change', '.row-select-check', function () {
+                const id = $(this).data('id');
+                if (this.checked) selectedProductIds.add(id);
+                else selectedProductIds.delete(id);
+                updateBatchBar();
+            });
+
+            $('#btnBatchClear').on('click', function () {
+                selectedProductIds.clear();
+                $('#checkSelectAll').prop('checked', false);
+                renderProductsTable();
+            });
+
+            // 1. Single Product Add with Variant Builder
+            let newProductVariants = [];
+
+            $('#btnAddVariantRow').on('click', function () {
+                const rowId = 'var_' + Date.now();
+                newProductVariants.push({
+                    id: rowId,
+                    name: 'Color / Size / Spec',
+                    value: 'Standard',
+                    priceDelta: 0,
+                    stock: 10
+                });
+                renderVariantRows();
+            });
+
+            function renderVariantRows() {
+                const $cont = $('#variantRowsContainer');
+                $cont.empty();
+                if (newProductVariants.length === 0) {
+                    $('#noVariantsNotice').show();
+                    return;
+                }
+                $('#noVariantsNotice').hide();
+
+                newProductVariants.forEach((v, idx) => {
+                    $cont.append(`
+                        <div class="row g-2 align-items-center border-bottom pb-2">
+                            <div class="col-3">
+                                <input type="text" class="form-control form-control-sm var-name-input" data-idx="${idx}" placeholder="Type (e.g. Color)" value="${v.name}">
+                            </div>
+                            <div class="col-3">
+                                <input type="text" class="form-control form-control-sm var-val-input" data-idx="${idx}" placeholder="Value (e.g. 128GB Silver)" value="${v.value}">
+                            </div>
+                            <div class="col-3">
+                                <input type="number" class="form-control form-control-sm var-price-input" data-idx="${idx}" placeholder="+/- ₦ Price Delta" value="${v.priceDelta}">
+                            </div>
+                            <div class="col-2">
+                                <input type="number" class="form-control form-control-sm var-stock-input" data-idx="${idx}" placeholder="Stock" value="${v.stock}">
+                            </div>
+                            <div class="col-1 text-end">
+                                <button type="button" class="btn btn-sm btn-link text-danger p-0 btn-remove-var" data-idx="${idx}"><i class="bi bi-trash"></i></button>
+                            </div>
+                        </div>
+                    `);
+                });
+            }
+
+            $(document).on('input', '.var-name-input', function () {
+                const idx = $(this).data('idx');
+                newProductVariants[idx].name = $(this).val();
+            });
+            $(document).on('input', '.var-val-input', function () {
+                const idx = $(this).data('idx');
+                newProductVariants[idx].value = $(this).val();
+            });
+            $(document).on('input', '.var-price-input', function () {
+                const idx = $(this).data('idx');
+                newProductVariants[idx].priceDelta = parseFloat($(this).val()) || 0;
+            });
+            $(document).on('input', '.var-stock-input', function () {
+                const idx = $(this).data('idx');
+                newProductVariants[idx].stock = parseInt($(this).val(), 10) || 0;
+            });
+            $(document).on('click', '.btn-remove-var', function () {
+                const idx = $(this).data('idx');
+                newProductVariants.splice(idx, 1);
+                renderVariantRows();
+            });
+
+            $('#formAddProduct').on('submit', function (e) {
+                e.preventDefault();
+                const id = 'uw_adm_' + Date.now();
+                const title = $('#inpTitle').val().trim();
+                const category = $('#inpCategory').val();
+                const brand = $('#inpBrand').val().trim() || 'Verified Supplier';
+                const price = parseFloat($('#inpPrice').val()) || 1000;
+                const unitLabel = $('#inpUnitLabel').val().trim() || 'unit';
+                const stockQty = parseInt($('#inpStock').val(), 10) || 20;
+                const moq = parseInt($('#inpMoq').val(), 10) || 1;
+                const img = $('#inpImageSelect').val();
+                const desc = $('#inpDescription').val().trim() || 'Standard product in local hub inventory.';
+                const published = $('#inpPublishImmediate').is(':checked');
+
+                const newProd = {
+                    id: id,
+                    title: title,
+                    name: title,
+                    categoryId: category,
+                    category: category,
+                    categoryName: category.charAt(0).toUpperCase() + category.slice(1),
+                    brand: brand,
+                    price: price,
+                    priceMinor: price * 100,
+                    unitLabel: unitLabel,
+                    stockQty: stockQty,
+                    stock: { quantity: stockQty, moq: moq },
+                    description: desc,
+                    image: img,
+                    published: published,
+                    isAuction: false,
+                    variants: [...newProductVariants]
+                };
+
+                products.unshift(newProd);
+                saveAdminState();
+                renderProductsTable();
+
+                $('#modalAddProduct').modal('hide');
+                $('#formAddProduct')[0].reset();
+                newProductVariants = [];
+                renderVariantRows();
+
+                if (window.iziToast) {
+                    window.iziToast.success({
+                        title: 'Product Ingested',
+                        message: `${title} is now in the ${category} catalog.`,
+                        position: 'topRight'
+                    });
+                }
+            });
+
+            // 2. Download Sample CSV Template
+            $('#btnDownloadTemplate').on('click', function () {
+                const headers = ["title", "category", "brand", "price", "stock", "unitLabel", "moq", "description", "variants"];
+                const sampleRows = [
+                    ["Century 2.0L Fast-Boil Electric Kettle", "appliances", "Century", "18500", "30", "unit", "1", "2200W Rapid boil with auto cut-off", "Black:0:15|Silver:500:15"],
+                    ["Pure Gold Refined Vegetable Oil 5L", "groceries", "Pure Gold", "6800", "50", "jerrycan", "2", "Triple filtered cholesterol free cooking oil", "Standard:0:50"],
+                    ["Heavyweight Fleece Cotton Hoodie", "fashion", "Urban Wear", "14500", "25", "piece", "1", "380 GSM combed cotton with kangaroo pocket", "M-Black:0:10|L-Black:0:10|XL-Grey:500:5"]
+                ];
+                let csvContent = "data:text/csv;charset=utf-8," + headers.join(",") + "\n" + sampleRows.map(r => r.map(cell => `"${cell}"`).join(",")).join("\n");
+                const encodedUri = encodeURI(csvContent);
+                const link = document.createElement("a");
+                link.setAttribute("href", encodedUri);
+                link.setAttribute("download", "uwanbuy_products_sample_template.csv");
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            });
+
+            // 3. Bulk Upload Excel / CSV handling
+            $('#fileSpreadsheetInput').on('change', function (e) {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                const fileName = file.name.toLowerCase();
+                if (fileName.endsWith('.csv')) {
+                    Papa.parse(file, {
+                        header: true,
+                        skipEmptyLines: true,
+                        complete: function (results) {
+                            processParsedData(results.data);
+                        }
+                    });
+                } else if (fileName.endsWith('.xlsx') || fileName.endsWith('.xls')) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        const data = new Uint8Array(e.target.result);
+                        const workbook = XLSX.read(data, { type: 'array' });
+                        const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+                        const jsonData = XLSX.utils.sheet_to_json(firstSheet);
+                        processParsedData(jsonData);
+                    };
+                    reader.readAsArrayBuffer(file);
+                } else {
+                    if (window.iziToast) window.iziToast.error({ title: 'Unsupported File', message: 'Please upload .csv or .xlsx' });
+                }
+            });
+
+            function processParsedData(rows) {
+                parsedBulkRows = [];
+                rows.forEach((r, idx) => {
+                    const title = r.title || r.Title || r.name || r.Name;
+                    if (!title) return;
+
+                    const cat = (r.category || r.Category || 'groceries').toLowerCase();
+                    const brand = r.brand || r.Brand || 'Verified';
+                    const price = parseFloat(r.price || r.Price) || 1000;
+                    const stock = parseInt(r.stock || r.Stock, 10) || 20;
+                    const unitLabel = r.unitLabel || r.unit || 'unit';
+                    const moq = parseInt(r.moq || r.MOQ, 10) || 1;
+                    const desc = r.description || r.Description || 'Bulk ingested product';
+
+                    // Parse variants string if available (e.g. "Color:PriceDelta:Stock|...")
+                    const varStr = r.variants || r.Variants || '';
+                    const parsedVars = [];
+                    if (varStr) {
+                        const parts = varStr.split('|');
+                        parts.forEach(p => {
+                            const sub = p.split(':');
+                            if (sub[0]) {
+                                parsedVars.push({
+                                    id: 'var_' + Math.random().toString(36).substring(2, 7),
+                                    name: 'Option',
+                                    value: sub[0].trim(),
+                                    priceDelta: parseFloat(sub[1]) || 0,
+                                    stock: parseInt(sub[2], 10) || 10
+                                });
+                            }
+                        });
+                    }
+
+                    parsedBulkRows.push({
+                        id: 'uw_bulk_' + Date.now() + '_' + idx,
+                        title: title,
+                        name: title,
+                        categoryId: cat,
+                        category: cat,
+                        categoryName: cat.charAt(0).toUpperCase() + cat.slice(1),
+                        brand: brand,
+                        price: price,
+                        priceMinor: price * 100,
+                        unitLabel: unitLabel,
+                        stockQty: stock,
+                        stock: { quantity: stock, moq: moq },
+                        description: desc,
+                        image: '../assets/images/placeholders/water-boiler.svg',
+                        published: true,
+                        isAuction: false,
+                        variants: parsedVars
+                    });
+                });
+
+                // Render preview
+                $('#parsedRowCount').text(parsedBulkRows.length);
+                const $pTable = $('#parsedPreviewTableBody');
+                $pTable.empty();
+                parsedBulkRows.slice(0, 15).forEach((item, idx) => {
+                    $pTable.append(`
+                        <tr>
+                            <td>${idx + 1}</td>
+                            <td><strong>${item.title}</strong></td>
+                            <td><span class="badge bg-light text-dark border">${item.categoryId}</span></td>
+                            <td>₦${item.price.toLocaleString()}</td>
+                            <td>${item.stockQty}</td>
+                            <td>${item.variants.length}</td>
+                            <td><span class="badge bg-success-subtle text-success">Valid</span></td>
+                        </tr>
+                    `);
+                });
+
+                $('#bulkPreviewSection').removeClass('d-none');
+                $('#btnConfirmBulkIngest').prop('disabled', parsedBulkRows.length === 0);
+            }
+
+            $('#btnConfirmBulkIngest').on('click', function () {
+                if (parsedBulkRows.length === 0) return;
+                parsedBulkRows.forEach(p => products.unshift(p));
+                saveAdminState();
+                renderProductsTable();
+
+                $('#modalBulkUpload').modal('hide');
+                if (window.iziToast) {
+                    window.iziToast.success({
+                        title: 'Bulk Ingestion Complete',
+                        message: `Successfully ingested ${parsedBulkRows.length} products into catalog.`,
+                        position: 'topRight'
+                    });
+                }
+                parsedBulkRows = [];
+                $('#bulkPreviewSection').addClass('d-none');
+                $('#fileSpreadsheetInput').val('');
+            });
+
+            // 4. View Details Modal
+            $(document).on('click', '.btn-view-prod', function () {
+                const id = $(this).data('id');
+                const p = products.find(x => x.id === id);
+                if (!p) return;
+
+                let varsHtml = '<p class="text-muted small">No extra variants for this product.</p>';
+                if (p.variants && p.variants.length > 0) {
+                    varsHtml = `
+                        <table class="table table-sm table-bordered small align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Variant Option</th>
+                                    <th>Price Delta (₦)</th>
+                                    <th>Variant Price (₦)</th>
+                                    <th>Allocated Stock</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${p.variants.map(v => `
+                                    <tr>
+                                        <td><strong>${v.name}: ${v.value}</strong></td>
+                                        <td>${v.priceDelta >= 0 ? '+' : ''}₦${(v.priceDelta || 0).toLocaleString()}</td>
+                                        <td class="text-danger fw-bold">₦${((p.price || (p.priceMinor/100)) + (v.priceDelta || 0)).toLocaleString()}</td>
+                                        <td>${v.stock || 0} units</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    `;
+                }
+
+                $('#modalViewDetailsBody').html(`
+                    <div class="row g-4 align-items-center mb-3">
+                        <div class="col-md-4 text-center">
+                            <img src="${p.image || '../assets/images/placeholders/water-boiler.svg'}" alt="${p.title}" class="img-fluid rounded-3 border p-2 bg-light" style="max-height: 180px; object-fit: contain;">
+                        </div>
+                        <div class="col-md-8">
+                            <span class="badge bg-danger-subtle text-danger mb-1">${p.categoryId || p.category}</span>
+                            <h5 class="fw-bold text-dark mb-1">${p.title}</h5>
+                            <p class="text-muted small mb-2">${p.description}</p>
+                            <div class="row g-2 small">
+                                <div class="col-6"><strong>SKU:</strong> ${p.id}</div>
+                                <div class="col-6"><strong>Brand:</strong> ${p.brand || 'Verified'}</div>
+                                <div class="col-6"><strong>Base Price:</strong> <span class="text-danger fw-bold">₦${((p.priceMinor ? p.priceMinor/100 : p.price) || 0).toLocaleString()}</span></div>
+                                <div class="col-6"><strong>Stock Level:</strong> ${p.stockQty} ${p.unitLabel || 'units'}</div>
+                                <div class="col-6"><strong>MOQ:</strong> ${(p.stock && p.stock.moq) || 1} units</div>
+                                <div class="col-6"><strong>Status:</strong> ${p.published ? '<span class="text-success fw-bold">Published</span>' : '<span class="text-secondary fw-bold">Draft</span>'}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <h6 class="fw-bold mb-2"><i class="bi bi-diagram-3 text-danger me-1"></i> Configured Variants Breakdown</h6>
+                    ${varsHtml}
+                `);
+
+                $('#modalViewDetails').modal('show');
+            });
+
+            // 5. Single Price Adjustment
+            $(document).on('click', '.btn-edit-price', function () {
+                const id = $(this).data('id');
+                const p = products.find(x => x.id === id);
+                if (!p) return;
+
+                const curPrice = p.priceMinor ? (p.priceMinor / 100) : (p.price || 0);
+                $('#priceProductId').val(p.id);
+                $('#priceProductTitle').text(p.title);
+                $('#priceProductCurrent').text(`₦${curPrice.toLocaleString()}`);
+                $('#priceProductNew').val(curPrice);
+                $('#modalSinglePrice').modal('show');
+            });
+
+            $('#btnSaveSinglePrice').on('click', function () {
+                const id = $('#priceProductId').val();
+                const newPrice = parseFloat($('#priceProductNew').val()) || 0;
+                if (newPrice < 100) return;
+
+                const p = products.find(x => x.id === id);
+                if (p) {
+                    p.price = newPrice;
+                    p.priceMinor = newPrice * 100;
+                    saveAdminState();
+                    renderProductsTable();
+                    $('#modalSinglePrice').modal('hide');
+                    if (window.iziToast) window.iziToast.success({ title: 'Price Updated', message: `${p.title} is now ₦${newPrice.toLocaleString()}` });
+                }
+            });
+
+            // 6. Stock Add / Drop
+            $(document).on('click', '.btn-adj-stock', function () {
+                const id = $(this).data('id');
+                const p = products.find(x => x.id === id);
+                if (!p) return;
+
+                $('#adjProductId').val(p.id);
+                $('#adjProductTitle').text(p.title);
+                $('#adjCurrentStock').text(p.stockQty !== undefined ? p.stockQty : 20);
+                $('#modalStockAdjustment').modal('show');
+            });
+
+            $('#btnSaveStockAdjustment').on('click', function () {
+                const id = $('#adjProductId').val();
+                const type = $('input[name="adjType"]:checked').val();
+                const qty = parseInt($('#adjQty').val(), 10) || 0;
+                const reason = $('#adjReason').val();
+
+                const p = products.find(x => x.id === id);
+                if (p) {
+                    let current = p.stockQty !== undefined ? p.stockQty : 20;
+                    if (type === 'add') {
+                        current += qty;
+                    } else {
+                        current = Math.max(0, current - qty);
+                    }
+                    p.stockQty = current;
+                    if (p.stock) p.stock.quantity = current;
+
+                    saveAdminState();
+                    renderProductsTable();
+                    $('#modalStockAdjustment').modal('hide');
+
+                    if (window.iziToast) {
+                        window.iziToast.success({
+                            title: 'Inventory Adjusted',
+                            message: `${type === 'add' ? '+' : '-'}${qty} units (${reason}). New stock: ${current}`
+                        });
+                    }
+                }
+            });
+
+            // 7. Toggle Publish / Unpublish (Single)
+            $(document).on('click', '.btn-toggle-pub', function () {
+                const id = $(this).data('id');
+                const p = products.find(x => x.id === id);
+                if (p) {
+                    p.published = !p.published;
+                    saveAdminState();
+                    renderProductsTable();
+                    if (window.iziToast) {
+                        window.iziToast.info({
+                            title: p.published ? 'Published' : 'Unpublished',
+                            message: `${p.title} is now ${p.published ? 'visible on storefront' : 'hidden as draft'}.`
+                        });
+                    }
+                }
+            });
+
+            // 8. List on Auction (Single or Multi)
+            $(document).on('click', '.btn-list-auction', function () {
+                const id = $(this).data('id');
+                const p = products.find(x => x.id === id);
+                if (p) {
+                    p.isAuction = true;
+                    saveAdminState();
+                    renderProductsTable();
+                    // Redirect to Auction Prep with pre-fill
+                    window.location.href = `auctions.html?adopt_prod_id=${p.id}`;
+                }
+            });
+
+            // Batch Actions
+            $('#btnBatchPrice').on('click', function () {
+                $('#batchPriceCount').text(selectedProductIds.size);
+                $('#modalBatchPrice').modal('show');
+            });
+
+            $('#btnApplyBatchPrice').on('click', function () {
+                const mode = $('#batchPriceMode').val();
+                const val = parseFloat($('#batchPriceValue').val()) || 0;
+                if (!val && mode !== 'set_uniform') return;
+
+                products.forEach(p => {
+                    if (selectedProductIds.has(p.id)) {
+                        let price = p.priceMinor ? (p.priceMinor / 100) : (p.price || 0);
+                        if (mode === 'set_uniform') price = val;
+                        else if (mode === 'inc_fixed') price += val;
+                        else if (mode === 'dec_fixed') price = Math.max(100, price - val);
+                        else if (mode === 'inc_percent') price = Math.round(price * (1 + val / 100));
+                        else if (mode === 'dec_percent') price = Math.max(100, Math.round(price * (1 - val / 100)));
+
+                        p.price = price;
+                        p.priceMinor = price * 100;
+                    }
+                });
+
+                saveAdminState();
+                renderProductsTable();
+                $('#modalBatchPrice').modal('hide');
+                if (window.iziToast) window.iziToast.success({ title: 'Batch Price Applied', message: `Adjusted prices for ${selectedProductIds.size} products.` });
+            });
+
+            $('#btnBatchStockStatus').on('click', function () {
+                const choice = confirm(`Toggle In Stock / Out of Stock for ${selectedProductIds.size} selected items? Click OK to set to In Stock (25 units) or Cancel to set Out of Stock (0 units).`);
+                products.forEach(p => {
+                    if (selectedProductIds.has(p.id)) {
+                        p.stockQty = choice ? 25 : 0;
+                        if (p.stock) p.stock.quantity = p.stockQty;
+                    }
+                });
+                saveAdminState();
+                renderProductsTable();
+                if (window.iziToast) window.iziToast.info({ title: 'Stock Updated', message: `Bulk stock set to ${choice ? '25' : '0'}` });
+            });
+
+            $('#btnBatchPublish').on('click', function () {
+                const choice = confirm(`Publish or unpublish ${selectedProductIds.size} selected products? Click OK to Publish all, or Cancel to Unpublish (Draft) all.`);
+                products.forEach(p => {
+                    if (selectedProductIds.has(p.id)) {
+                        p.published = choice;
+                    }
+                });
+                saveAdminState();
+                renderProductsTable();
+                if (window.iziToast) window.iziToast.info({ title: 'Batch Publish', message: `Set ${selectedProductIds.size} items to ${choice ? 'Published' : 'Draft'}.` });
+            });
+
+            $('#btnBatchListAuction').on('click', function () {
+                const ids = Array.from(selectedProductIds);
+                products.forEach(p => {
+                    if (selectedProductIds.has(p.id)) {
+                        p.isAuction = true;
+                    }
+                });
+                saveAdminState();
+                renderProductsTable();
+                // Bridge to Auction Prep
+                sessionStorage.setItem('uwanbuy_batch_auction_adopt', JSON.stringify(ids));
+                window.location.href = `auctions.html?batch_adopt=1`;
+            });
+        });
+    </script>
+</body>
+
+</html>

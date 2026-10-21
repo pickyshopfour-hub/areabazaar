@@ -424,6 +424,255 @@
             </div>
         </div>
 
+        <!-- Active Hyperlocal Bazaar & Live Auction Deals Gallery -->
+        <div class="mb-5">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div>
+                    <span class="text-uppercase text-danger fw-bold small">
+                        <i class="bi bi-hammer me-1"></i> Live Hub Bazaars & Drops
+                    </span>
+                    <h2 class="h3 fw-bold text-dark m-0">Active Bazaar & Live Auction Deals</h2>
+                    <p class="text-muted small mb-0">Live competitive bidding, uniform flat-rate pools, dropping price waves, and collective volume discounts in <span class="storefront-current-location">Tanke Hub</span></p>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <a href="auctions/index.html" class="btn btn-outline-danger btn-sm rounded-pill fw-bold px-3">
+                        View All Auctions <i class="bi bi-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Auction Filter Tabs on Landing Page -->
+            <div class="d-flex flex-wrap gap-2 mb-3">
+                <button class="btn btn-sm btn-dark rounded-pill px-3 fw-bold landing-auction-pill active" data-fmt="all">All Live Auctions (8)</button>
+                <button class="btn btn-sm btn-outline-secondary rounded-pill px-3 fw-bold landing-auction-pill" data-fmt="bid-win">Bid & Win</button>
+                <button class="btn btn-sm btn-outline-secondary rounded-pill px-3 fw-bold landing-auction-pill" data-fmt="flat-rate">Flat-Rate Pool</button>
+                <button class="btn btn-sm btn-outline-secondary rounded-pill px-3 fw-bold landing-auction-pill" data-fmt="price-wave">Price Wave</button>
+                <button class="btn btn-sm btn-outline-secondary rounded-pill px-3 fw-bold landing-auction-pill" data-fmt="stock-cap">Stock Cap</button>
+                <button class="btn btn-sm btn-outline-secondary rounded-pill px-3 fw-bold landing-auction-pill" data-fmt="time-cap">Time Cap</button>
+            </div>
+
+            <div class="row g-3 g-md-4" id="landingAuctionDealsRow">
+                <!-- Lot 1: Bid & Win Cooker -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 landing-auction-card" data-fmt="bid-win">
+                    <div class="card h-100 border rounded-4 shadow-sm product-card bg-white position-relative">
+                        <span class="badge bg-danger position-absolute top-0 start-0 m-2 rounded-pill px-2 py-1 small"><i class="bi bi-hammer me-1"></i> Bid & Win</span>
+                        <div class="p-3 bg-light rounded-top-4 text-center" style="height: 160px; display: flex; align-items: center; justify-content: center;">
+                            <img src="../assetsecm/images/soups/egusi-soup-roundbowl.png" alt="Cooker" class="img-fluid" style="max-height: 120px; object-fit: contain;">
+                        </div>
+                        <div class="card-body p-3 d-flex flex-column">
+                            <small class="text-muted text-xs text-uppercase fw-bold">Appliances</small>
+                            <h6 class="fw-bold text-dark mb-1 text-truncate" title="4-Burner Glass-Top Gas Cooker">4-Burner Glass-Top Cooker</h6>
+                            <div class="d-flex align-items-center justify-content-between small text-muted mb-2">
+                                <span>14 Bids &bull; MOQ: 2</span>
+                                <span class="badge bg-warning-subtle text-warning-emphasis">Ends in 24m</span>
+                            </div>
+                            <div class="mt-auto">
+                                <div class="bg-light p-2 rounded-3 mb-2 d-flex justify-content-between align-items-baseline">
+                                    <span class="text-xs text-muted">Current Bid:</span>
+                                    <span class="fw-bold text-danger fs-5">₦36,500</span>
+                                </div>
+                                <a href="auctions/bid-and-win.html" class="btn btn-sm btn-danger w-100 fw-bold rounded-3">
+                                    <i class="bi bi-hammer me-1"></i> Enter Bid Room
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lot 2: Flat Rate Kettle -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 landing-auction-card" data-fmt="flat-rate">
+                    <div class="card h-100 border rounded-4 shadow-sm product-card bg-white position-relative">
+                        <span class="badge bg-primary position-absolute top-0 start-0 m-2 rounded-pill px-2 py-1 small"><i class="bi bi-tag-fill me-1"></i> Flat-Rate Pool</span>
+                        <div class="p-3 bg-light rounded-top-4 text-center" style="height: 160px; display: flex; align-items: center; justify-content: center;">
+                            <img src="assets/images/placeholders/water-boiler.svg" alt="Kettle" class="img-fluid" style="max-height: 120px; object-fit: contain;">
+                        </div>
+                        <div class="card-body p-3 d-flex flex-column">
+                            <small class="text-muted text-xs text-uppercase fw-bold">Century 2.0L</small>
+                            <h6 class="fw-bold text-dark mb-1 text-truncate" title="Century 2.0L Fast-Boil Electric Kettle">Fast-Boil Electric Kettle</h6>
+                            <div class="d-flex align-items-center justify-content-between small text-muted mb-2">
+                                <span>Retail: <span class="text-decoration-line-through">₦18,500</span></span>
+                                <span class="badge bg-success-subtle text-success">Save ₦6k</span>
+                            </div>
+                            <div class="mt-auto">
+                                <div class="bg-light p-2 rounded-3 mb-2 d-flex justify-content-between align-items-baseline">
+                                    <span class="text-xs text-muted">Flat Price:</span>
+                                    <span class="fw-extrabold text-primary fs-5">₦12,500</span>
+                                </div>
+                                <a href="auctions/flat-rate.html" class="btn btn-sm btn-primary w-100 fw-bold rounded-3">
+                                    <i class="bi bi-tag-fill me-1"></i> Claim @ ₦12,500
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lot 3: Price Wave AC -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 landing-auction-card" data-fmt="price-wave">
+                    <div class="card h-100 border rounded-4 shadow-sm product-card bg-white position-relative">
+                        <span class="badge bg-dark position-absolute top-0 start-0 m-2 rounded-pill px-2 py-1 small"><i class="bi bi-activity me-1"></i> Price Wave</span>
+                        <div class="p-3 bg-light rounded-top-4 text-center" style="height: 160px; display: flex; align-items: center; justify-content: center;">
+                            <img src="../assetsecm/images/soups/afang-soup-roundbowl.png" alt="AC" class="img-fluid" style="max-height: 120px; object-fit: contain;">
+                        </div>
+                        <div class="card-body p-3 d-flex flex-column">
+                            <small class="text-muted text-xs text-uppercase fw-bold">Cooling</small>
+                            <h6 class="fw-bold text-dark mb-1 text-truncate" title="1.5 HP Inverter Split AC Unit">1.5 HP Inverter AC Unit</h6>
+                            <div class="d-flex align-items-center justify-content-between small text-muted mb-2">
+                                <span>Floor: ₦150k</span>
+                                <span class="text-danger fw-bold">-₦2.5k / 25s</span>
+                            </div>
+                            <div class="mt-auto">
+                                <div class="bg-light p-2 rounded-3 mb-2 d-flex justify-content-between align-items-baseline">
+                                    <span class="text-xs text-muted">Wave Current:</span>
+                                    <span class="fw-extrabold text-danger fs-5">₦182,500</span>
+                                </div>
+                                <a href="auctions/price-wave.html" class="btn btn-sm btn-dark w-100 fw-bold rounded-3">
+                                    <i class="bi bi-activity me-1"></i> Ride Price Wave
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lot 4: Stock Cap Oil -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 landing-auction-card" data-fmt="stock-cap">
+                    <div class="card h-100 border rounded-4 shadow-sm product-card bg-white position-relative">
+                        <span class="badge bg-success position-absolute top-0 start-0 m-2 rounded-pill px-2 py-1 small"><i class="bi bi-pie-chart-fill me-1"></i> Stock Cap</span>
+                        <div class="p-3 bg-light rounded-top-4 text-center" style="height: 160px; display: flex; align-items: center; justify-content: center;">
+                            <img src="../assetsecm/images/soups/egusi-soup-roundbowl.png" alt="Oil" class="img-fluid" style="max-height: 120px; object-fit: contain;">
+                        </div>
+                        <div class="card-body p-3 d-flex flex-column">
+                            <small class="text-muted text-xs text-uppercase fw-bold">Pure Gold 5L</small>
+                            <h6 class="fw-bold text-dark mb-1 text-truncate" title="Pure Gold Refined Vegetable Oil 5L">Refined Vegetable Oil 5L</h6>
+                            <div class="progress mb-2" style="height: 6px;">
+                                <div class="progress-bar bg-success" style="width: 80%;"></div>
+                            </div>
+                            <div class="d-flex justify-content-between text-xs text-muted mb-2">
+                                <span>Progress: 48/60</span>
+                                <span>MOQ: 4 cans</span>
+                            </div>
+                            <div class="mt-auto">
+                                <div class="bg-light p-2 rounded-3 mb-2 d-flex justify-content-between align-items-baseline">
+                                    <span class="text-xs text-muted">Cap Price:</span>
+                                    <span class="fw-extrabold text-success fs-5">₦6,800</span>
+                                </div>
+                                <a href="auctions/stock-cap.html" class="btn btn-sm btn-success w-100 fw-bold rounded-3">
+                                    <i class="bi bi-pie-chart-fill me-1"></i> Join Stock Cap
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lot 5: Time Cap Smartphone -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 landing-auction-card" data-fmt="time-cap">
+                    <div class="card h-100 border rounded-4 shadow-sm product-card bg-white position-relative">
+                        <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-2 rounded-pill px-2 py-1 small"><i class="bi bi-alarm me-1"></i> Time Cap</span>
+                        <div class="p-3 bg-light rounded-top-4 text-center" style="height: 160px; display: flex; align-items: center; justify-content: center;">
+                            <img src="../assetsecm/images/soups/ogbono-soup-roundbowl.png" alt="Smartphone" class="img-fluid" style="max-height: 120px; object-fit: contain;">
+                        </div>
+                        <div class="card-body p-3 d-flex flex-column">
+                            <small class="text-muted text-xs text-uppercase fw-bold">Smartphone</small>
+                            <h6 class="fw-bold text-dark mb-1 text-truncate" title="Pro 5G Flagship Smartphone 256GB">Pro 5G Flagship 256GB</h6>
+                            <div class="d-flex align-items-center justify-content-between small text-muted mb-2">
+                                <span>Retail: <span class="text-decoration-line-through">₦220k</span></span>
+                                <span class="text-danger fw-bold"><i class="bi bi-alarm"></i> 18m left</span>
+                            </div>
+                            <div class="mt-auto">
+                                <div class="bg-light p-2 rounded-3 mb-2 d-flex justify-content-between align-items-baseline">
+                                    <span class="text-xs text-muted">Blitz Price:</span>
+                                    <span class="fw-extrabold text-danger fs-5">₦175,000</span>
+                                </div>
+                                <a href="auctions/time-cap.html" class="btn btn-sm btn-dark w-100 fw-bold rounded-3">
+                                    <i class="bi bi-lightning-charge-fill text-warning me-1"></i> Grab Blitz Deal
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lot 6: Bid & Win Generator -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 landing-auction-card" data-fmt="bid-win">
+                    <div class="card h-100 border rounded-4 shadow-sm product-card bg-white position-relative">
+                        <span class="badge bg-danger position-absolute top-0 start-0 m-2 rounded-pill px-2 py-1 small"><i class="bi bi-hammer me-1"></i> Bid & Win</span>
+                        <div class="p-3 bg-light rounded-top-4 text-center" style="height: 160px; display: flex; align-items: center; justify-content: center;">
+                            <img src="../assetsecm/images/soups/afang-soup-roundbowl.png" alt="Generator" class="img-fluid" style="max-height: 120px; object-fit: contain;">
+                        </div>
+                        <div class="card-body p-3 d-flex flex-column">
+                            <small class="text-muted text-xs text-uppercase fw-bold">Power Systems</small>
+                            <h6 class="fw-bold text-dark mb-1 text-truncate" title="3.5kVA Key-Start Petrol Generator">3.5kVA Generator</h6>
+                            <div class="d-flex align-items-center justify-content-between small text-muted mb-2">
+                                <span>9 Bids &bull; MOQ: 1</span>
+                                <span class="text-success"><i class="bi bi-shield-check"></i> Copper</span>
+                            </div>
+                            <div class="mt-auto">
+                                <div class="bg-light p-2 rounded-3 mb-2 d-flex justify-content-between align-items-baseline">
+                                    <span class="text-xs text-muted">Current Bid:</span>
+                                    <span class="fw-bold text-danger fs-5">₦185,000</span>
+                                </div>
+                                <a href="auctions/bid-and-win.html" class="btn btn-sm btn-danger w-100 fw-bold rounded-3">
+                                    <i class="bi bi-hammer me-1"></i> Enter Bid Room
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lot 7: Flat Rate Blender -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 landing-auction-card" data-fmt="flat-rate">
+                    <div class="card h-100 border rounded-4 shadow-sm product-card bg-white position-relative">
+                        <span class="badge bg-primary position-absolute top-0 start-0 m-2 rounded-pill px-2 py-1 small"><i class="bi bi-tag-fill me-1"></i> Flat-Rate Pool</span>
+                        <div class="p-3 bg-light rounded-top-4 text-center" style="height: 160px; display: flex; align-items: center; justify-content: center;">
+                            <img src="../assetsecm/images/soups/egusi-soup-roundbowl.png" alt="Blender" class="img-fluid" style="max-height: 120px; object-fit: contain;">
+                        </div>
+                        <div class="card-body p-3 d-flex flex-column">
+                            <small class="text-muted text-xs text-uppercase fw-bold">Binatone 1.5L</small>
+                            <h6 class="fw-bold text-dark mb-1 text-truncate" title="Binatone 1.5L Blender with Grinder Mill">Blender with Grinder Mill</h6>
+                            <div class="d-flex align-items-center justify-content-between small text-muted mb-2">
+                                <span>Retail: <span class="text-decoration-line-through">₦22,000</span></span>
+                                <span class="badge bg-success-subtle text-success">Save ₦9.5k</span>
+                            </div>
+                            <div class="mt-auto">
+                                <div class="bg-light p-2 rounded-3 mb-2 d-flex justify-content-between align-items-baseline">
+                                    <span class="text-xs text-muted">Flat Price:</span>
+                                    <span class="fw-extrabold text-primary fs-5">₦12,500</span>
+                                </div>
+                                <a href="auctions/flat-rate.html" class="btn btn-sm btn-primary w-100 fw-bold rounded-3">
+                                    <i class="bi bi-tag-fill me-1"></i> Claim @ ₦12,500
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lot 8: Time Cap Laptop -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 landing-auction-card" data-fmt="time-cap">
+                    <div class="card h-100 border rounded-4 shadow-sm product-card bg-white position-relative">
+                        <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-2 rounded-pill px-2 py-1 small"><i class="bi bi-alarm me-1"></i> Time Cap</span>
+                        <div class="p-3 bg-light rounded-top-4 text-center" style="height: 160px; display: flex; align-items: center; justify-content: center;">
+                            <img src="../assetsecm/images/soups/afang-soup-roundbowl.png" alt="Laptop" class="img-fluid" style="max-height: 120px; object-fit: contain;">
+                        </div>
+                        <div class="card-body p-3 d-flex flex-column">
+                            <small class="text-muted text-xs text-uppercase fw-bold">Computing</small>
+                            <h6 class="fw-bold text-dark mb-1 text-truncate" title="Business Elite 15.6-inch Core i7 Laptop">Business Elite i7 Laptop</h6>
+                            <div class="d-flex align-items-center justify-content-between small text-muted mb-2">
+                                <span>Retail: <span class="text-decoration-line-through">₦185k</span></span>
+                                <span class="text-danger fw-bold"><i class="bi bi-alarm"></i> 12m left</span>
+                            </div>
+                            <div class="mt-auto">
+                                <div class="bg-light p-2 rounded-3 mb-2 d-flex justify-content-between align-items-baseline">
+                                    <span class="text-xs text-muted">Blitz Price:</span>
+                                    <span class="fw-extrabold text-danger fs-5">₦132,000</span>
+                                </div>
+                                <a href="auctions/time-cap.html" class="btn btn-sm btn-dark w-100 fw-bold rounded-3">
+                                    <i class="bi bi-lightning-charge-fill text-warning me-1"></i> Grab Blitz Deal
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Browse Categories Section -->
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
@@ -1904,6 +2153,19 @@
                     }, 1000);
                 }
             }
+
+            // Landing Page Auction Deals Filter Pills
+            $('.landing-auction-pill').on('click', function () {
+                $('.landing-auction-pill').removeClass('active btn-dark').addClass('btn-outline-secondary');
+                $(this).addClass('active btn-dark').removeClass('btn-outline-secondary');
+                const fmt = $(this).data('fmt');
+                if (fmt === 'all') {
+                    $('.landing-auction-card').fadeIn(200);
+                } else {
+                    $('.landing-auction-card').hide();
+                    $(`.landing-auction-card[data-fmt="${fmt}"]`).fadeIn(250);
+                }
+            });
         });
     </script>
 </body>

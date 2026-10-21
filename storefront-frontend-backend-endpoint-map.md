@@ -639,3 +639,187 @@ Transforms the flat-rate auction format from single-item sales into a **curated 
   - Calculates total as `totalQuantity * 1250000 kobo`.
   - Atomically locks pool slots and transitions into checkout quote validation.
 
+---
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+### 7.9 UWB-Adm Products, Variants, Auction Prep & Session Control Suite
+
+This section documents the endpoints and data models for the autonomous storefront administration console (`uwanbuy/admin/products.html` and `uwanbuy/admin/auctions.html`), supporting category segment uploads, spreadsheet ingestion, variant management, and real-time live auction session orchestration.
+
+#### 7.9.1 Admin Products & Variants Management (`products.html`)
+
+##### A. Single Product Ingestion
+- **HTTP Method & Route:** `POST /api/v1/admin/{storeKey}/products`
+- **Request Payload:**
+```json
+{
+  "title": "Binatone 1.5L Blender with Grinder Mill",
+  "categoryId": "gadgets",
+  "brand": "Binatone",
+  "priceMinor": 1850000,
+  "unitLabel": "unit",
+  "stockQty": 30,
+  "moq": 1,
+  "description": "450W motor with overheat protection and dry mill attachment",
+  "image": "assets/images/placeholders/water-boiler.svg",
+  "published": true,
+  "variants": [
+    { "name": "Color", "value": "White/Blue", "priceDeltaMinor": 0, "stock": 15 },
+    { "name": "Color", "value": "Stainless Black", "priceDeltaMinor": 150000, "stock": 15 }
+  ]
+}
+```
+- **Response `data` (201 Created):** Returns generated `productId` (`uw_adm_1729501234`), catalog segment assignment, and live status.
+
+##### B. Mass Load Products from Excel / CSV
+- **HTTP Method & Route:** `POST /api/v1/admin/{storeKey}/products/bulk-upload`
+- **Supported Formats:** `.xlsx`, `.xls`, `.csv` (parsed client-side via SheetJS/PapaParse with optional server validation).
+- **Template Schema:**
+```csv
+title,category,brand,price,stock,unitLabel,moq,description,variants
+"Century 2.0L Kettle","appliances","Century",18500,30,"unit",1,"2200W Rapid Boil","Black:0:15|Silver:500:15"
+"Pure Gold 5L Oil","groceries","Pure Gold",6800,50,"jerrycan",2,"Cholesterol free","Standard:0:50"
+```
+- **Response `data` (200 OK):**
+```json
+{
+  "totalIngested": 25,
+  "segments": { "groceries": 10, "gadgets": 8, "fashion": 4, "home": 3 },
+  "validationErrors": []
+}
+```
+
+##### C. Multi-Select Batch Action Endpoint
+- **HTTP Method & Route:** `PATCH /api/v1/admin/{storeKey}/products/batch`
+- **Actions Supported:**
+  - `price_adjust`: Apply uniform price, fixed +/- delta, or percentage +/- delta.
+  - `stock_status`: Set In Stock, Low Stock, or Out of Stock across selected IDs.
+  - `publish_toggle`: Batch publish or draft.
+  - `auction_export`: Flag products as active auction candidates.
+- **Request Payload:**
+```json
+{
+  "productIds": ["uw_gdt_101", "uw_gdt_102", "uw_adm_103"],
+  "action": "price_adjust",
+  "mode": "inc_percent",
+  "value": 10
+}
+```
+
+##### D. Stock Add / Drop Audit Adjustment
+- **HTTP Method & Route:** `POST /api/v1/admin/{storeKey}/products/{productId}/stock-adjustment`
+- **Request Payload:**
+```json
+{
+  "type": "add" | "drop",
+  "quantity": 15,
+  "reason": "Restock from Supplier" | "Damaged Goods Write-off" | "Audit Count Correction" | "Transferred to Other Hub",
+  "hubCode": "hub_tanke_01",
+  "operatorId": "admin_ops_01"
+}
+```
+
+---
+
+#### 7.9.2 UWB-Adm Auction Prep & Item Staging (`auctions.html` Tab 1)
+
+Allows operators to stage auction items containing complex product-variant bundles with split inventory allocation, diagnostic certificates, and internal pricing safeguard reserves.
+
+- **HTTP Method & Route:** `POST /api/v1/admin/{storeKey}/auction-items`
+- **Request Payload:**
+```json
+{
+  "productId": "uw_gdt_101",
+  "title": "4-Burner Glass-Top Gas Cooker Unit",
+  "format": "bid_and_win" | "flat_rate" | "price_wave" | "stock_cap" | "time_cap",
+  "variantAllocations": [
+    { "variantId": "var_black_01", "name": "Black Glass", "allocatedQty": 8 },
+    { "variantId": "var_silver_02", "name": "Silver Trim", "allocatedQty": 4 }
+  ],
+  "extras": "1-Yr Extended Warranty + Free Delivery Voucher",
+  "pricing": {
+    "format": "price_wave",
+    "startingPriceMinor": 18500000,
+    "floorPriceMinor": 15000000,
+    "stepDropMinor": 250000,
+    "stepIntervalSeconds": 25,
+    "uniformFlatRateMinor": 1250000,
+    "moq": 1
+  },
+  "conditionDiagnostics": {
+    "physicalGrade": "Grade A (Pre-Inspected)",
+    "checks": ["Burners 100% OK", "Auto-Ignition Spark Passed", "Safety Valve Seal Intact"],
+    "specGrounded": "product-specs.pdf"
+  },
+  "internalAdminNotes": "Reserve floor: ₦150,000 wholesale safeguard. Sourced from Lagos distributor.",
+  "assignedSessionId": "sess_uwb_202610_01"
+}
+```
+
+---
+
+#### 7.9.3 Build Auction Session List + Waves (`auctions.html` Tab 2)
+
+- **Create / Update Session:** `POST /api/v1/admin/{storeKey}/auction-sessions`
+- **Adopt Multiple Auction Items:** `POST /api/v1/admin/{storeKey}/auction-sessions/{sessionId}/adopt-items`
+  - Payload: `{ "auctionItemIds": ["auc_item_101", "auc_item_102", "auc_item_103"] }`
+- **Auto Wave Curve Generator:** `POST /api/v1/admin/{storeKey}/auction-sessions/{sessionId}/waves/auto-generate`
+  - Automatically calculates 4 progressive downward steps towards floor reserve:
+    - Step 1: Base Starting Price (0% drop)
+    - Step 2: -10% progressive drop
+    - Step 3: -20% progressive drop
+    - Step 4: Reserve Floor Price (locked)
+
+---
+
+#### 7.9.4 Control Auction Sessions & Live Master Console (`auctions.html` Tab 3)
+
+Real-time live session controller enabling operators to manage broadcast lifecycle, trigger manual wave drops, accept winning bids, and immediately lock inventory.
+
+- **HTTP Method & Route:** `POST /api/v1/admin/{storeKey}/auction-sessions/{sessionId}/control`
+- **Request Payload:**
+```json
+{
+  "action": "start" | "pause" | "resume" | "advance_wave" | "accept_winning_bid" | "conclude",
+  "activeLotId": "auc_item_103",
+  "winningBidPayload": {
+    "bidderName": "Ibrahim K.",
+    "phone": "0803***8891",
+    "acceptedPriceMinor": 18250000,
+    "variantAllocated": "1.5HP Copper Inverter"
+  }
+}
+```
+- **Response `data` (200 OK):**
+```json
+{
+  "sessionStatus": "LIVE",
+  "activeLot": "auc_item_103",
+  "currentWaveIndex": 2,
+  "currentPriceMinor": 18250000,
+  "orderGenerated": {
+    "orderId": "ORD-UWB-202610-9921",
+    "deliveryPasscode": "UWB-PASS-8821",
+    "status": "confirmed_awaiting_payment"
+  }
+}
+```
+
+---
+
+#### 7.9.5 Customer Storefront Product Galleries per Auction Format
+
+- **Storefront Route:** `uwanbuy/auctions/index.html` (Admin summary card removed from customer view).
+- **Galleries Structure:** 5 dedicated product galleries by auction format:
+  1. `bid_and_win`: Competitive bidding lots with live bid count & timer.
+  2. `flat_rate`: Configurable uniform liquidation pool with single flat price for range of products (e.g. ₦12,500 active pool).
+  3. `price_wave`: Dynamic step-down items with live wave price vs floor reserve.
+  4. `stock_cap`: Community collective volume pools with visual lock progress bar.
+  5. `time_cap`: Strict deadline blitz lots with active countdown timers.
+- **Landing Page Integration (`uwanbuy/index.html`):**
+  - Section `#landingAuctionDealsRow` directly below hero banner.
+  - Interactive filter pills (`All Live Auctions`, `Bid & Win`, `Flat-Rate Pool`, `Price Wave`, `Stock Cap`, `Time Cap`).
+
+
