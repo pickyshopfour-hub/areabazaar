@@ -84,6 +84,12 @@
                     <a class="nav-link active" href="orders.html">
                         <i class="bi bi-bag-check"></i> Orders & Dispatch
                     </a>
+                    <a class="nav-link text-info bg-dark bg-opacity-50 mt-2 border border-info border-opacity-25" href="../../whm/index.html">
+                        <i class="bi bi-boxes text-info"></i> WHM Warehouse Command
+                    </a>
+                    <a class="nav-link text-success bg-dark bg-opacity-50 mt-1 border border-success border-opacity-25" href="../../frm/index.html">
+                        <i class="bi bi-map text-success"></i> FRM Field Marketing
+                    </a>
                 </nav>
 
                 <div class="border-top border-secondary pt-3 mt-4">
@@ -97,25 +103,30 @@
             <div class="col-md-9 col-lg-10 p-4">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <div>
-                        <span class="badge bg-danger-subtle text-danger fw-bold small">Local Fulfillment</span>
+                        <span class="badge bg-danger-subtle text-danger fw-bold small">Storefront Operations</span>
                         <h2 class="fw-bold text-dark m-0">Storefront Orders & Dispatch Console</h2>
-                        <small class="text-muted">Validate delivery passcodes for Tanke Hub 2-4 hour local fulfillment</small>
+                        <small class="text-muted">Direct customer shopping lists & storefront order management for Tanke Hub</small>
                     </div>
                 </div>
 
-                <!-- Passcode Quick Verification Card -->
+                <!-- Field Delivery & Tracking Operations Bridge (FRM Suite) -->
                 <div class="card border-0 rounded-4 shadow-sm bg-white p-4 mb-4">
-                    <h5 class="fw-bold text-dark mb-2"><i class="bi bi-qr-code-scan text-danger me-2"></i> Instant Delivery Passcode Verification</h5>
-                    <p class="text-muted small mb-3">When a customer arrives at the pickup point or delivery agent arrives at their address, verify their 4-digit passcode.</p>
-
-                    <div class="row g-2 align-items-center" style="max-width: 520px;">
-                        <div class="col-7">
-                            <input type="text" id="verifyPasscodeInput" class="form-control form-control-lg fw-bold text-center letter-spacing-2 font-monospace" placeholder="e.g. 5892" maxlength="4">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+                        <div>
+                            <span class="badge bg-success-subtle text-success fw-bold small"><i class="bi bi-map me-1"></i> Dedicated Field Operations</span>
+                            <h5 class="fw-bold text-dark mb-1 mt-1">Field Regional Marketing (FRM) Operations</h5>
+                            <p class="text-muted small mb-0">Customer delivery passcode verification and 15-minute bulk dispatch tracking are centralized in the FRM suite.</p>
                         </div>
-                        <div class="col-5">
-                            <button class="btn btn-brand btn-lg w-100 fw-bold" id="btnVerifyPasscode">
-                                <i class="bi bi-check-circle me-1"></i> Verify Code
-                            </button>
+                        <div class="d-flex flex-wrap gap-2">
+                            <a href="../../frm/order-delivery.html" class="btn btn-outline-success btn-sm fw-bold">
+                                <i class="bi bi-qr-code-scan me-1"></i> FRM Delivery Passcode Desk
+                            </a>
+                            <a href="../../frm/order-track.html" class="btn btn-outline-info btn-sm fw-bold">
+                                <i class="bi bi-geo-alt me-1"></i> FRM Dispatch Tracking Queue
+                            </a>
+                            <a href="../../frm/index.html" class="btn btn-success btn-sm fw-bold shadow-sm">
+                                <i class="bi bi-speedometer2 me-1"></i> Open FRM Dashboard
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -142,38 +153,6 @@
                                 </tr>
                             </thead>
                             <tbody id="adminSubmittedListsTableBody">
-                                <!-- Loaded dynamically -->
-                            </tbody>
-                        </table>
-                    </div>
-                <!-- 15-Minute Bulk Delivery Tracking Dispatch Console -->
-                <div class="card border-0 rounded-4 shadow-sm bg-white p-4 mb-4">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <div>
-                            <span class="badge bg-warning-subtle text-warning-emphasis fw-bold small">Automated 15-Minute Bulk Cycle</span>
-                            <h5 class="fw-bold text-dark mb-0 mt-1"><i class="bi bi-truck text-danger me-2"></i> Bulk Delivery Tracking Dispatch Queue</h5>
-                        </div>
-                        <div class="d-flex align-items-center gap-2">
-                            <span class="badge bg-light text-dark border px-3 py-2 fw-bold" id="trackingBatchTimerDisplay">Next Batch: 14m 25s</span>
-                            <button class="btn btn-brand btn-sm px-3 py-2 fw-bold" id="btnTriggerTrackingBatch">
-                                <i class="bi bi-lightning-charge-fill me-1"></i> Dispatch Bulk Batch Now
-                            </button>
-                        </div>
-                    </div>
-                    <p class="text-muted small mb-3">Customer tracking requests are batched and dispatched in bulk every 15 minutes. Dispatching assigns riders and sends automated tracking notification emails to customers.</p>
-                    <div class="table-responsive">
-                        <table class="table table-hover align-middle mb-0">
-                            <thead class="table-light">
-                                <tr>
-                                    <th>Request ID</th>
-                                    <th>Order ID</th>
-                                    <th>Customer Email</th>
-                                    <th>Phone</th>
-                                    <th>Requested At</th>
-                                    <th>Queue Status</th>
-                                </tr>
-                            </thead>
-                            <tbody id="adminTrackingRequestsTableBody">
                                 <!-- Loaded dynamically -->
                             </tbody>
                         </table>

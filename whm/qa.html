@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WHM Product QA (per categ) | AreaBazaar Logistics</title>
+  
+  <link rel="shortcut icon" type="image/x-icon" href="../assetsecm/images/uwanbuy-favicon-brief-color.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
+  <link rel="stylesheet" href="assets/css/whm-style.css">
+</head>
+<body>
+
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-md-3 col-lg-2 whm-sidebar p-3 d-flex flex-column">
+      <div class="d-flex align-items-center justify-content-between mb-3 px-2">
+        <a href="index.html" class="d-flex align-items-center text-decoration-none text-white gap-2">
+          <div class="bg-primary text-white rounded p-1 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+            <i class="fa fa-warehouse fs-6"></i>
+          </div>
+          <div>
+            <span class="fw-bold fs-6 tracking-tight d-block">AreaBazaar</span>
+            <span class="whm-brand-badge">WHM Suite</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="whm-nav-header">Command Center</div>
+      <nav class="nav flex-column">
+        <a class="nav-link" href="index.html">
+          <span><i class="bi bi-speedometer2"></i> Operations Dashboard</span>
+        </a>
+      </nav>
+
+      <div class="whm-nav-header">Catalog & Inventory</div>
+      <nav class="nav flex-column">
+        <a class="nav-link" href="products-pricing.html">
+          <span><i class="bi bi-tag"></i> Products Price Update</span>
+        </a>
+        <a class="nav-link" href="inventory.html">
+          <span><i class="bi bi-boxes"></i> Product Inventory Update</span>
+        </a>
+        <a class="nav-link" href="handling.html">
+          <span><i class="bi bi-shield-check"></i> Product Handling Update</span>
+        </a>
+      </nav>
+
+      <div class="whm-nav-header">Fulfillment & Sourcing</div>
+      <nav class="nav flex-column mb-auto">
+        <a class="nav-link" href="order-items.html">
+          <span><i class="bi bi-list-check"></i> Order-Items Update</span>
+        </a>
+        <a class="nav-link" href="collation.html">
+          <span><i class="bi bi-diagram-3"></i> Collation (per categ)</span>
+        </a>
+        <a class="nav-link" href="sourcing.html">
+          <span><i class="bi bi-truck"></i> SBA Sourcing (per categ)</span>
+        </a>
+        <a class="nav-link active" href="qa.html">
+          <span><i class="bi bi-patch-check"></i> Product QA (per categ)</span>
+        </a>
+      </nav>
+
+      <div class="border-top border-secondary pt-3 mt-4">
+        <a href="../uwanbuy/admin/index.html" class="btn btn-sm btn-outline-secondary w-100 text-start text-white-50 d-flex align-items-center justify-content-between">
+          <span><i class="bi bi-arrow-left me-1"></i> Storefront Admin</span>
+          <i class="bi bi-box-arrow-up-right small"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="col-md-9 col-lg-10 p-4">
+      <!-- Top Bar -->
+      <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 pb-2 border-bottom border-secondary border-opacity-25 gap-3">
+        <div>
+          <div class="d-flex align-items-center gap-2 mb-1">
+            <span class="badge badge-whm-red py-1 px-2"><i class="bi bi-patch-check me-1"></i> Module 07</span>
+            <span class="text-secondary small">| Technical Quality Assurance & Diagnostics</span>
+          </div>
+          <h2 class="fw-bold m-0 text-white font-outfit">WHM Product QA (per categ)</h2>
+          <small class="text-secondary">Execute category-tailored diagnostic checklists grounded in <code>product-specs.pdf</code> before shelving or order packaging</small>
+        </div>
+
+        <div class="d-flex align-items-center gap-2">
+          <button class="btn btn-sm btn-outline-secondary text-white" onclick="renderQaPage()">
+            <i class="fa fa-sync-alt me-1"></i> Refresh Queue
+          </button>
+        </div>
+      </div>
+
+      <!-- QA Stats -->
+      <div class="row g-3 mb-4">
+        <div class="col-sm-6 col-xl-3">
+          <div class="whm-kpi-tile kpi-amber">
+            <div class="text-secondary small fw-bold text-uppercase mb-1">Pending Inspection</div>
+            <div class="whm-kpi-val text-warning" id="qaPendingCount">0</div>
+            <div class="small text-muted mt-1">Awaiting technician diagnostic</div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+          <div class="whm-kpi-tile kpi-green">
+            <div class="text-secondary small fw-bold text-uppercase mb-1">Passed (Grade A)</div>
+            <div class="whm-kpi-val text-success" id="qaPassedCount">0</div>
+            <div class="small text-muted mt-1">Shelved & cleared for dispatch</div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+          <div class="whm-kpi-tile kpi-purple">
+            <div class="text-secondary small fw-bold text-uppercase mb-1">Quarantined</div>
+            <div class="whm-kpi-val text-purple" id="qaQuarantineCount">0</div>
+            <div class="small text-muted mt-1">Held for supervisor review</div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+          <div class="whm-kpi-tile kpi-red">
+            <div class="text-secondary small fw-bold text-uppercase mb-1">Rejected / Returned</div>
+            <div class="whm-kpi-val text-danger" id="qaRejectedCount">0</div>
+            <div class="small text-muted mt-1">Returned to SBA / Supplier</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Category Filter Pills -->
+      <div class="d-flex flex-wrap gap-2 mb-4">
+        <button class="whm-cat-pill active" onclick="filterQaCategory('all', this)">All Categories</button>
+        <button class="whm-cat-pill" onclick="filterQaCategory('gadgets', this)"><i class="bi bi-phone"></i> Gadgets & Electronics</button>
+        <button class="whm-cat-pill" onclick="filterQaCategory('foodstuff', this)"><i class="bi bi-egg-fried"></i> Foodstuff & Agro</button>
+        <button class="whm-cat-pill" onclick="filterQaCategory('groceries', this)"><i class="bi bi-basket"></i> Packaged Groceries</button>
+        <button class="whm-cat-pill" onclick="filterQaCategory('fashion', this)"><i class="bi bi-handbag"></i> Fashion & Apparel</button>
+        <button class="whm-cat-pill" onclick="filterQaCategory('home', this)"><i class="bi bi-lamp"></i> Home Essentials</button>
+      </div>
+
+      <!-- QA Inspection Queue Table -->
+      <div class="whm-card p-0 overflow-hidden mb-5">
+        <div class="whm-card-header d-flex justify-content-between align-items-center">
+          <div>
+            <h5 class="fw-bold text-white m-0 font-outfit">Active Inspection Worklist</h5>
+            <small class="text-secondary">Batch intake from SBA suppliers & picked order line verifications</small>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table whm-table align-middle">
+            <thead>
+              <tr>
+                <th>Ticket ID</th>
+                <th>Source Origin</th>
+                <th>Product & Qty</th>
+                <th>Category</th>
+                <th>Diagnostic Protocol</th>
+                <th>Current Disposition</th>
+                <th>Inspector</th>
+                <th class="text-end pe-4">Diagnostic Action</th>
+              </tr>
+            </thead>
+            <tbody id="qaTableBody">
+              <tr>
+                <td colspan="8" class="text-center text-muted py-5">Loading inspection tickets...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Perform QA Inspection Modal -->
+<div class="modal fade whm-modal" id="inspectModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title fw-bold text-white font-outfit" id="modalQaTitle">Category Quality Assurance Inspection</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body p-4">
+        <input type="hidden" id="inspectTicketId">
+        <input type="hidden" id="inspectCategoryId">
+
+        <!-- Target Item Specs Header -->
+        <div class="p-3 rounded bg-dark border border-secondary border-opacity-25 mb-4 d-flex justify-content-between align-items-center">
+          <div>
+            <span class="badge badge-whm-blue mb-1" id="inspectCatBadge">GADGETS</span>
+            <div class="h5 fw-bold text-white m-0" id="inspectItemTitle">Product Title</div>
+            <div class="text-muted small" id="inspectItemMeta">Batch: SBA-041 &bull; Qty: 16 units</div>
+          </div>
+          <div class="text-end">
+            <span class="badge bg-secondary-subtle text-light border border-secondary border-opacity-25 py-2 px-3">
+              <i class="bi bi-file-earmark-pdf me-1"></i> Benchmark: <span id="inspectDocRef">product-specs.pdf</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Dynamic Category-Specific Checklist -->
+        <div class="mb-4">
+          <h6 class="fw-bold text-white mb-3 font-outfit border-bottom border-secondary border-opacity-25 pb-2">
+            <i class="bi bi-check2-square text-primary me-2"></i> Category Diagnostic Checklist
+          </h6>
+          <div id="dynamicChecklistContainer" class="d-flex flex-column gap-2">
+            <!-- Injected dynamically based on category -->
+          </div>
+        </div>
+
+        <!-- QA Disposition Decision -->
+        <div class="mb-3">
+          <label class="form-label small text-secondary fw-bold text-uppercase">QA Final Disposition</label>
+          <select id="inspectDispositionSelect" class="form-select whm-form-select fw-bold">
+            <option value="pass_grade_a" class="text-success">PASS (Grade A - Factory Standard & Cleared)</option>
+            <option value="pass_grade_b_clearance" class="text-info">PASS WITH NOTE (Grade B - Route to Clearance / Auction Wave)</option>
+            <option value="quarantine" class="text-warning">QUARANTINE (Hold for Senior Supervisor Review)</option>
+            <option value="reject" class="text-danger">REJECT (Return to SBA / Vendor with Defect Notice)</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label small text-secondary fw-bold text-uppercase">Inspector Technician ID / Name</label>
+          <input type="text" id="inspectorNameInput" class="form-control whm-form-control fw-bold" value="QA Inspector Tanke 02">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label small text-secondary fw-bold text-uppercase">Diagnostic Findings & Technical Notes</label>
+          <textarea id="inspectNotesTextarea" class="form-control whm-form-control" rows="2" placeholder="Record diagnostic notes, battery percentage, IMEI number, or perishable freshness observations..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary text-white" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary fw-bold" onclick="executeSubmitInspection()">
+          <i class="bi bi-patch-check me-1"></i> Submit QA Decision
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+<script src="assets/js/whm-engine.js"></script>
+<script>
+  let qaTickets = [];
+  let currentCategory = 'all';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    renderQaPage();
+  });
+
+  function renderQaPage() {
+    qaTickets = whmEngine.getQaInspections();
+    
+    // Stats
+    const pending = qaTickets.filter(t => t.status === 'pending').length;
+    const passed = qaTickets.filter(t => t.status === 'passed').length;
+    const quarantined = qaTickets.filter(t => t.status === 'quarantined').length;
+    const rejected = qaTickets.filter(t => t.status === 'rejected').length;
+
+    document.getElementById('qaPendingCount').textContent = pending;
+    document.getElementById('qaPassedCount').textContent = passed;
+    document.getElementById('qaQuarantineCount').textContent = quarantined;
+    document.getElementById('qaRejectedCount').textContent = rejected;
+
+    renderQaTable();
+  }
+
+  function filterQaCategory(cat, btn) {
+    currentCategory = cat;
+    document.querySelectorAll('.whm-cat-pill').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderQaTable();
+  }
+
+  function renderQaTable() {
+    let filtered = qaTickets;
+    if (currentCategory !== 'all') {
+      filtered = filtered.filter(t => t.categoryId === currentCategory);
+    }
+
+    const tbody = document.getElementById('qaTableBody');
+    if (filtered.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="8" class="text-center text-muted py-5">No QA inspection tickets found.</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = filtered.map(t => {
+      let dispBadge = '<span class="badge badge-whm-amber">Pending Diagnostic</span>';
+      if (t.disposition === 'pass_grade_a') dispBadge = '<span class="badge badge-whm-green"><i class="bi bi-patch-check me-1"></i>Pass (Grade A)</span>';
+      else if (t.disposition === 'pass_grade_b_clearance') dispBadge = '<span class="badge badge-whm-cyan"><i class="bi bi-tag me-1"></i>Pass (Grade B / Auction)</span>';
+      else if (t.disposition === 'quarantine') dispBadge = '<span class="badge badge-whm-purple"><i class="bi bi-shield-exclamation me-1"></i>Quarantined</span>';
+      else if (t.disposition === 'reject') dispBadge = '<span class="badge badge-whm-red"><i class="bi bi-x-circle me-1"></i>Rejected</span>';
+
+      return `
+        <tr>
+          <td><span class="badge badge-whm-purple font-monospace fw-bold">${t.ticketId}</span></td>
+          <td>
+            <div class="fw-bold text-white text-capitalize">${t.sourceType.replace(/_/g, ' ')}</div>
+            <div class="text-muted small font-monospace">${t.batchId || t.orderId || 'Direct'}</div>
+          </td>
+          <td>
+            <div class="fw-bold text-white">${t.productTitle}</div>
+            <div class="small text-muted"><span class="fw-bold text-primary">Qty: ${t.quantity}</span></div>
+          </td>
+          <td><span class="badge badge-whm-blue">${t.categoryId.toUpperCase()}</span></td>
+          <td>
+            <span class="badge badge-whm-slate font-monospace"><i class="bi bi-file-earmark-pdf me-1"></i>${t.specBenchmarkDoc}</span>
+          </td>
+          <td>${dispBadge}</td>
+          <td>
+            <span class="text-secondary small">${t.inspectorId || '<span class="text-muted">Unassigned</span>'}</span>
+          </td>
+          <td class="text-end pe-4">
+            <button class="btn btn-sm btn-outline-danger fw-bold" onclick="openInspectModal('${t.ticketId}')">
+              <i class="bi bi-shield-check me-1"></i> ${t.status === 'pending' ? 'Run Diagnostics' : 'Re-inspect'}
+            </button>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  function openInspectModal(ticketId) {
+    const ticket = qaTickets.find(t => t.ticketId === ticketId);
+    if (!ticket) return;
+
+    document.getElementById('inspectTicketId').value = ticket.ticketId;
+    document.getElementById('inspectCategoryId').value = ticket.categoryId;
+    document.getElementById('modalQaTitle').textContent = `Quality Inspection: ${ticket.productTitle}`;
+    document.getElementById('inspectItemTitle').textContent = ticket.productTitle;
+    document.getElementById('inspectCatBadge').textContent = ticket.categoryId.toUpperCase();
+    document.getElementById('inspectItemMeta').textContent = `Source: ${ticket.sourceType} | Qty: ${ticket.quantity} units`;
+    document.getElementById('inspectDocRef').textContent = ticket.specBenchmarkDoc;
+    document.getElementById('inspectNotesTextarea').value = ticket.notes || '';
+
+    // Render Checklist based on Category
+    renderCategoryChecklist(ticket.categoryId, ticket.checklist || {});
+
+    new bootstrap.Modal(document.getElementById('inspectModal')).show();
+  }
+
+  function renderCategoryChecklist(cat, currentChecks) {
+    const container = document.getElementById('dynamicChecklistContainer');
+    let items = [];
+
+    if (cat === 'gadgets') {
+      items = [
+        { key: 'chk_power', label: '1. Power-On & Boot Diagnostics: Unit powers on normally without boot-loop.' },
+        { key: 'chk_screen', label: '2. Display & Chassis Inspection: Screen free of dead pixels, cracks, or deep abrasions.' },
+        { key: 'chk_specs', label: '3. Technical Specs Verification: RAM, Storage capacity, and Model number match product-specs.pdf.' },
+        { key: 'chk_battery', label: '4. Battery Health Index: Battery health verified >= 95% charge capacity.' },
+        { key: 'chk_imei', label: '5. Serial / IMEI Authentication: Valid identifier logged to warehouse registry.' },
+        { key: 'chk_accessories', label: '6. In-Box Accessories Completeness: Charging cable, power adapter, and warranty insert present.' }
+      ];
+    } else if (cat === 'foodstuff' || cat === 'groceries') {
+      items = [
+        { key: 'chk_seal', label: '1. Package & Seal Integrity: Factory airtight seal intact without punctures.' },
+        { key: 'chk_expiry', label: '2. Shelf-Life Expiry Rule: Minimum 90 days validity remaining from intake date.' },
+        { key: 'chk_freshness', label: '3. Freshness & Organoleptic Test: Normal color, texture, and natural aroma without rot.' },
+        { key: 'chk_pest', label: '4. Contamination & Pest Audit: Free of weevils, mold, moisture dampness, or insect damage.' },
+        { key: 'chk_temp', label: '5. Temperature Receiving Standard: Compliant with cold-chain protocol (2°C - 8°C if refrigerated).' }
+      ];
+    } else if (cat === 'fashion') {
+      items = [
+        { key: 'chk_size', label: '1. Size & Fit Tag Verification: Size label matches catalog description.' },
+        { key: 'chk_stitch', label: '2. Stitch & Hem Integrity: No fraying, loose threads, or seam tears.' },
+        { key: 'chk_zipper', label: '3. Hardware Functionality: Zippers, buttons, and drawstrings operate smoothly.' },
+        { key: 'chk_stain', label: '4. Fabric Cleanliness: Free of dust marks, dye transfer, or storage odors.' }
+      ];
+    } else {
+      items = [
+        { key: 'chk_parts', label: '1. Hardware Completeness: All assembly parts, screws, and manuals included.' },
+        { key: 'chk_structure', label: '2. Structural Stability: No cracks, warped surfaces, or mechanical rattling.' },
+        { key: 'chk_electric', label: '3. Electrical Rating Compliance: Voltage (220-240V / 50Hz) matches Nigerian power grid.' }
+      ];
+    }
+
+    container.innerHTML = items.map(item => `
+      <div class="p-2 rounded bg-dark border border-secondary border-opacity-25 d-flex align-items-center justify-content-between">
+        <label class="form-check-label text-white small fw-medium cursor-pointer" for="${item.key}">
+          ${item.label}
+        </label>
+        <div class="form-check form-switch m-0 ms-3">
+          <input class="form-check-input qa-check-input" type="checkbox" id="${item.key}" data-key="${item.key}" ${currentChecks[item.key] ? 'checked' : ''}>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function executeSubmitInspection() {
+    const ticketId = document.getElementById('inspectTicketId').value;
+    const disposition = document.getElementById('inspectDispositionSelect').value;
+    const inspector = document.getElementById('inspectorNameInput').value || 'QA Technician';
+    const notes = document.getElementById('inspectNotesTextarea').value;
+
+    const checklistEvaluation = {};
+    document.querySelectorAll('.qa-check-input').forEach(inp => {
+      checklistEvaluation[inp.dataset.key] = inp.checked;
+    });
+
+    const res = whmEngine.inspectQaTicket(ticketId, disposition, checklistEvaluation, notes, inspector);
+    iziToast.success({ title: 'QA Decision Recorded', message: `Disposition ${disposition.toUpperCase()} logged for ticket.`, position: 'topRight' });
+    bootstrap.Modal.getInstance(document.getElementById('inspectModal')).hide();
+    renderQaPage();
+  }
+</script>
+</body>
+</html>

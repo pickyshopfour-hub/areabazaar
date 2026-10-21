@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WHM Product Handling Update | AreaBazaar Logistics</title>
+  
+  <link rel="shortcut icon" type="image/x-icon" href="../assetsecm/images/uwanbuy-favicon-brief-color.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
+  <link rel="stylesheet" href="assets/css/whm-style.css">
+</head>
+<body>
+
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-md-3 col-lg-2 whm-sidebar p-3 d-flex flex-column">
+      <div class="d-flex align-items-center justify-content-between mb-3 px-2">
+        <a href="index.html" class="d-flex align-items-center text-decoration-none text-white gap-2">
+          <div class="bg-primary text-white rounded p-1 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+            <i class="fa fa-warehouse fs-6"></i>
+          </div>
+          <div>
+            <span class="fw-bold fs-6 tracking-tight d-block">AreaBazaar</span>
+            <span class="whm-brand-badge">WHM Suite</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="whm-nav-header">Command Center</div>
+      <nav class="nav flex-column">
+        <a class="nav-link" href="index.html">
+          <span><i class="bi bi-speedometer2"></i> Operations Dashboard</span>
+        </a>
+      </nav>
+
+      <div class="whm-nav-header">Catalog & Inventory</div>
+      <nav class="nav flex-column">
+        <a class="nav-link" href="products-pricing.html">
+          <span><i class="bi bi-tag"></i> Products Price Update</span>
+        </a>
+        <a class="nav-link" href="inventory.html">
+          <span><i class="bi bi-boxes"></i> Product Inventory Update</span>
+        </a>
+        <a class="nav-link active" href="handling.html">
+          <span><i class="bi bi-shield-check"></i> Product Handling Update</span>
+        </a>
+      </nav>
+
+      <div class="whm-nav-header">Fulfillment & Sourcing</div>
+      <nav class="nav flex-column mb-auto">
+        <a class="nav-link" href="order-items.html">
+          <span><i class="bi bi-list-check"></i> Order-Items Update</span>
+        </a>
+        <a class="nav-link" href="collation.html">
+          <span><i class="bi bi-diagram-3"></i> Collation (per categ)</span>
+        </a>
+        <a class="nav-link" href="sourcing.html">
+          <span><i class="bi bi-truck"></i> SBA Sourcing (per categ)</span>
+        </a>
+        <a class="nav-link" href="qa.html">
+          <span><i class="bi bi-patch-check"></i> Product QA (per categ)</span>
+        </a>
+      </nav>
+
+      <div class="border-top border-secondary pt-3 mt-4">
+        <a href="../uwanbuy/admin/index.html" class="btn btn-sm btn-outline-secondary w-100 text-start text-white-50 d-flex align-items-center justify-content-between">
+          <span><i class="bi bi-arrow-left me-1"></i> Storefront Admin</span>
+          <i class="bi bi-box-arrow-up-right small"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="col-md-9 col-lg-10 p-4">
+      <!-- Top Bar -->
+      <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 pb-2 border-bottom border-secondary border-opacity-25 gap-3">
+        <div>
+          <div class="d-flex align-items-center gap-2 mb-1">
+            <span class="badge badge-whm-green py-1 px-2"><i class="bi bi-shield-check me-1"></i> Module 03</span>
+            <span class="text-secondary small">| Physical Handling & Storage Protocols</span>
+          </div>
+          <h2 class="fw-bold m-0 text-white font-outfit">WHM Product Handling Update</h2>
+          <small class="text-secondary">Configure temperature regimes, fragility, hazard classifications, package dimensions, weights, and heavy lift warnings</small>
+        </div>
+
+        <div class="d-flex align-items-center gap-2">
+          <button class="btn btn-sm btn-outline-secondary text-white" onclick="renderHandlingTable()">
+            <i class="fa fa-sync-alt me-1"></i> Refresh Protocols
+          </button>
+        </div>
+      </div>
+
+      <!-- Protocol Summary Cards -->
+      <div class="row g-3 mb-4">
+        <div class="col-sm-6 col-xl-3">
+          <div class="whm-kpi-tile kpi-cyan">
+            <div class="text-secondary small fw-bold text-uppercase mb-1">Cold Chain Protocols</div>
+            <div class="whm-kpi-val text-info" id="countColdChain">0</div>
+            <div class="small text-muted mt-1">Requires 2°C - 8°C chilled storage</div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+          <div class="whm-kpi-tile kpi-amber">
+            <div class="text-secondary small fw-bold text-uppercase mb-1">Fragile Class SKUs</div>
+            <div class="whm-kpi-val text-warning" id="countFragile">0</div>
+            <div class="small text-muted mt-1">Glass, optics & high-precision tech</div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+          <div class="whm-kpi-tile kpi-red">
+            <div class="text-secondary small fw-bold text-uppercase mb-1">Heavy Lift Warnings (&gt;15kg)</div>
+            <div class="whm-kpi-val text-danger" id="countHeavyLift">0</div>
+            <div class="small text-muted mt-1">Requires 2-person lift or forklift</div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+          <div class="whm-kpi-tile kpi-purple">
+            <div class="text-secondary small fw-bold text-uppercase mb-1">Hazmat / Lithium Battery</div>
+            <div class="whm-kpi-val text-purple" id="countHazmat">0</div>
+            <div class="small text-muted mt-1">Specific transit packaging compliant</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filters & Controls -->
+      <div class="whm-card p-3 mb-4">
+        <div class="row g-2 align-items-center">
+          <div class="col-md-5">
+            <div class="input-group">
+              <span class="input-group-text bg-dark border-secondary border-opacity-50 text-secondary"><i class="bi bi-search"></i></span>
+              <input type="text" id="searchInput" class="form-control whm-form-control" placeholder="Search by product title or handling characteristics..." onkeyup="filterHandling()">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <select id="storageFilter" class="form-select whm-form-select" onchange="filterHandling()">
+              <option value="all">All Storage Conditions</option>
+              <option value="ambient">Ambient (15°C - 25°C)</option>
+              <option value="cold_chain">Cold Chain (2°C - 8°C)</option>
+              <option value="frozen">Frozen (-18°C)</option>
+              <option value="dry_ventilated">Dry & Ventilated</option>
+              <option value="climate_controlled">Climate-Controlled (Anti-Static)</option>
+            </select>
+          </div>
+          <div class="col-md-3 text-end">
+            <span class="text-secondary small" id="showingCount">0 profiles</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Handling Table -->
+      <div class="whm-card p-0 overflow-hidden mb-5">
+        <div class="table-responsive">
+          <table class="table whm-table align-middle">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Storage Condition</th>
+                <th>Fragility & Hazard</th>
+                <th>Dimensions (L×W×H)</th>
+                <th>Gross Weight</th>
+                <th>Handling Cost</th>
+                <th>Packaging Requirement</th>
+                <th>Max Stack Tiers</th>
+                <th class="text-end pe-4">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="handlingTableBody">
+              <tr>
+                <td colspan="8" class="text-center text-muted py-5">Loading handling profiles...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Handling Specs Edit Modal -->
+<div class="modal fade whm-modal" id="handlingModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title fw-bold text-white font-outfit" id="modalHandlingTitle">Configure Handling Specifications</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body p-4">
+        <input type="hidden" id="handlingProductId">
+
+        <div class="row g-3 mb-3">
+          <div class="col-md-6">
+            <label class="form-label small text-secondary fw-bold text-uppercase">Storage Condition</label>
+            <select id="editStorageCondition" class="form-select whm-form-select">
+              <option value="ambient">Ambient (15°C - 25°C)</option>
+              <option value="cold_chain">Cold Chain (2°C - 8°C Chilled)</option>
+              <option value="frozen">Frozen (-18°C or below)</option>
+              <option value="dry_ventilated">Dry & Well Ventilated (<60% Humidity)</option>
+              <option value="climate_controlled">Climate-Controlled (Anti-Static Tech)</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label small text-secondary fw-bold text-uppercase">Target Temperature Range</label>
+            <input type="text" id="editTemperatureTarget" class="form-control whm-form-control" placeholder="e.g. 2°C - 8°C or Ambient">
+          </div>
+        </div>
+
+        <div class="row g-3 mb-3">
+          <div class="col-md-6">
+            <label class="form-label small text-secondary fw-bold text-uppercase">Fragility Classification</label>
+            <select id="editFragilityClass" class="form-select whm-form-select">
+              <option value="non_fragile">Non-Fragile (Standard Goods)</option>
+              <option value="fragile_glass">Fragile (Glass, Ceramics, Cooktops)</option>
+              <option value="high_fragility_optics">High Sensitivity (Optics, Displays, Electronics)</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label small text-secondary fw-bold text-uppercase">Hazard Classification</label>
+            <select id="editHazardClass" class="form-select whm-form-select">
+              <option value="none">None (Standard Consumer Good)</option>
+              <option value="lithium_battery">Lithium Battery (UN3481 Electronics)</option>
+              <option value="flammable_aerosol">Flammable (Aerosols / Pressurized Cans)</option>
+              <option value="corrosive">Corrosive / Chemical</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row g-3 mb-3">
+          <div class="col-md-3">
+            <label class="form-label small text-secondary fw-bold text-uppercase">Length (cm)</label>
+            <input type="number" id="editDimLength" class="form-control whm-form-control text-center" placeholder="cm">
+          </div>
+          <div class="col-3 col-md-3">
+            <label class="form-label small text-secondary fw-bold text-uppercase">Width (cm)</label>
+            <input type="number" id="editDimWidth" class="form-control whm-form-control text-center" placeholder="cm">
+          </div>
+          <div class="col-3 col-md-3">
+            <label class="form-label small text-secondary fw-bold text-uppercase">Height (cm)</label>
+            <input type="number" id="editDimHeight" class="form-control whm-form-control text-center" placeholder="cm">
+          </div>
+          <div class="col-3 col-md-3">
+            <label class="form-label small text-secondary fw-bold text-uppercase">Weight (kg)</label>
+            <input type="number" step="0.1" id="editGrossWeight" class="form-control whm-form-control text-center fw-bold text-primary" oninput="checkHeavyLift()">
+          </div>
+        </div>
+
+        <!-- Heavy Lift Alert Box -->
+        <div id="heavyLiftAlert" class="p-3 rounded mb-3" style="display: none; background-color: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4);">
+          <div class="d-flex align-items-center gap-2 text-danger fw-bold">
+            <i class="bi bi-exclamation-octagon-fill fs-5"></i>
+            <span>HEAVY LIFT MANDATORY PROTOCOL: Weight exceeds 15.0 kg!</span>
+          </div>
+          <small class="text-secondary d-block mt-1">Requires 2-person team lift or mechanical equipment. Do not store on top tiers.</small>
+        </div>
+
+        <div class="row g-3 mb-3">
+          <div class="col-md-6">
+            <label class="form-label small text-secondary fw-bold text-uppercase">Packaging Prescription</label>
+            <select id="editPackagingReq" class="form-select whm-form-select">
+              <option value="corrugated_box">Corrugated Carton Box</option>
+              <option value="bubble_wrap_box">Bubble-Wrap + Reinforced Box</option>
+              <option value="vacuum_sealed_cooler">Thermal Insulated Cooler Box</option>
+              <option value="shrink_wrap">Heavy-Duty Shrink Wrap</option>
+              <option value="polybag">Anti-Static / Waterproof Polybag</option>
+              <option value="breathable_crate">Ventilated Wooden / Plastic Crate</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label small text-secondary fw-bold text-uppercase">Max Safe Stacking Tiers</label>
+            <input type="number" id="editMaxStackTiers" class="form-control whm-form-control text-center" min="1" max="50" placeholder="e.g. 4">
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <div class="form-check form-switch mb-2">
+            <input class="form-check-input" type="checkbox" id="editTamperSeal">
+            <label class="form-check-label text-white small" for="editTamperSeal">Tamper-Evident Security Seal Required</label>
+          </div>
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="editExpiryTracking">
+            <label class="form-check-label text-white small" for="editExpiryTracking">Perishable / Shelf-Life Expiry Tracking Enabled</label>
+          </div>
+        </div>
+
+        <!-- Physical Handling Cost Breakdown (Inputs for Algorithmic Pricing) -->
+        <div class="p-3 rounded mb-3" style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(59, 130, 246, 0.3);">
+          <div class="d-flex justify-content-between align-items-center mb-1">
+            <span class="small fw-bold text-info text-uppercase"><i class="bi bi-calculator me-1"></i> Physical Handling Cost Breakdown (Per Unit)</span>
+            <span class="badge badge-whm-blue">Feeds Pricing Algorithm</span>
+          </div>
+          <small class="text-secondary d-block mb-3">Itemized costs to handle product (transportation, washing, loading, bagging). Used to calculate algorithmic suggested price.</small>
+
+          <div class="row g-2 mb-2">
+            <div class="col-6 col-md-4">
+              <label class="form-label small text-secondary">Transportation (₦)</label>
+              <input type="number" id="editCostTransport" class="form-control whm-form-control text-end font-monospace" placeholder="0" oninput="calcHandlingCosts()">
+            </div>
+            <div class="col-6 col-md-4">
+              <label class="form-label small text-secondary">Washing / Cleaning (₦)</label>
+              <input type="number" id="editCostWashing" class="form-control whm-form-control text-end font-monospace" placeholder="0" oninput="calcHandlingCosts()">
+            </div>
+            <div class="col-6 col-md-4">
+              <label class="form-label small text-secondary">Loading / Labor (₦)</label>
+              <input type="number" id="editCostLoading" class="form-control whm-form-control text-end font-monospace" placeholder="0" oninput="calcHandlingCosts()">
+            </div>
+            <div class="col-6 col-md-4">
+              <label class="form-label small text-secondary">Bagging / Packaging (₦)</label>
+              <input type="number" id="editCostBagging" class="form-control whm-form-control text-end font-monospace" placeholder="0" oninput="calcHandlingCosts()">
+            </div>
+            <div class="col-6 col-md-4">
+              <label class="form-label small text-secondary">Storage Overhead (₦)</label>
+              <input type="number" id="editCostOverhead" class="form-control whm-form-control text-end font-monospace" placeholder="0" oninput="calcHandlingCosts()">
+            </div>
+            <div class="col-12 col-md-4">
+              <label class="form-label small text-info fw-bold">Total Handling Cost</label>
+              <div class="form-control whm-form-control text-end font-monospace fw-bold text-info" id="displayTotalHandlingCost">₦0.00</div>
+            </div>
+          </div>
+
+          <!-- Algorithmic Suggested Price Banner -->
+          <div class="p-2 rounded mt-2 d-flex justify-content-between align-items-center" style="background: rgba(16, 185, 129, 0.12); border: 1px dashed rgba(16, 185, 129, 0.4);">
+            <div>
+              <span class="badge bg-success-subtle text-success fw-bold small me-1">Backend Algorithmic Suggestion</span>
+              <small class="text-white-50 d-block mt-1">Suggested retail price based on cost floor + handling costs (not forced):</small>
+            </div>
+            <div class="text-end">
+              <span class="fs-6 fw-bold text-success font-monospace" id="displaySuggestedPrice">₦0.00</span>
+              <small class="text-secondary d-block" id="displaySuggestedMargin">Margin: ~0%</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label small text-secondary fw-bold text-uppercase">Handling Logistics Notes</label>
+          <textarea id="editHandlingNotes" class="form-control whm-form-control" rows="2" placeholder="e.g. Keep upright, do not stack other pallets above this item..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary text-white" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary fw-bold" onclick="saveHandlingSpecs()">
+          <i class="bi bi-shield-check me-1"></i> Save Handling Protocol
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+<script src="assets/js/whm-engine.js"></script>
+<script>
+  let products = [];
+
+  document.addEventListener('DOMContentLoaded', () => {
+    renderHandlingTable();
+  });
+
+  function renderHandlingTable() {
+    products = whmEngine.getProducts();
+    const allSpecs = whmEngine.getAllHandlingSpecs();
+
+    let coldChain = 0;
+    let fragile = 0;
+    let heavy = 0;
+    let hazmat = 0;
+
+    products.forEach(p => {
+      const sp = allSpecs[p.id] || whmEngine.getHandlingSpecs(p.id);
+      if (sp.storageCondition === 'cold_chain' || sp.storageCondition === 'frozen') coldChain++;
+      if (sp.fragilityClass !== 'non_fragile') fragile++;
+      if (sp.grossWeightKg > 15.0) heavy++;
+      if (sp.hazardClass && sp.hazardClass !== 'none') hazmat++;
+    });
+
+    document.getElementById('countColdChain').textContent = coldChain;
+    document.getElementById('countFragile').textContent = fragile;
+    document.getElementById('countHeavyLift').textContent = heavy;
+    document.getElementById('countHazmat').textContent = hazmat;
+
+    filterHandling();
+  }
+
+  function filterHandling() {
+    const q = (document.getElementById('searchInput').value || '').toLowerCase();
+    const storage = document.getElementById('storageFilter').value;
+    const allSpecs = whmEngine.getAllHandlingSpecs();
+
+    let filtered = products.filter(p => {
+      const sp = allSpecs[p.id] || whmEngine.getHandlingSpecs(p.id);
+      const matchQ = p.title.toLowerCase().includes(q) || (sp.handlingNotes || '').toLowerCase().includes(q) || (sp.packagingRequirement || '').toLowerCase().includes(q);
+      const matchStorage = storage === 'all' || sp.storageCondition === storage;
+      return matchQ && matchStorage;
+    });
+
+    document.getElementById('showingCount').textContent = `${filtered.length} profiles`;
+    const tbody = document.getElementById('handlingTableBody');
+
+    if (filtered.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="9" class="text-center text-muted py-5">No handling protocols match the filter.</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = filtered.map(p => {
+      const sp = allSpecs[p.id] || whmEngine.getHandlingSpecs(p.id);
+      
+      let storageBadge = '<span class="badge badge-whm-slate">Ambient</span>';
+      if (sp.storageCondition === 'cold_chain') storageBadge = '<span class="badge badge-whm-cyan"><i class="bi bi-snow me-1"></i>Cold Chain (2-8°C)</span>';
+      else if (sp.storageCondition === 'frozen') storageBadge = '<span class="badge badge-whm-blue"><i class="bi bi-snow2 me-1"></i>Frozen (-18°C)</span>';
+      else if (sp.storageCondition === 'climate_controlled') storageBadge = '<span class="badge badge-whm-purple"><i class="bi bi-thermometer-half me-1"></i>Anti-Static Tech</span>';
+      else if (sp.storageCondition === 'dry_ventilated') storageBadge = '<span class="badge badge-whm-amber"><i class="bi bi-wind me-1"></i>Dry & Ventilated</span>';
+
+      const isFragile = sp.fragilityClass && sp.fragilityClass !== 'non_fragile';
+      const isHazmat = sp.hazardClass && sp.hazardClass !== 'none';
+      const dims = sp.dimensionsCm ? `${sp.dimensionsCm.length}×${sp.dimensionsCm.width}×${sp.dimensionsCm.height}cm` : 'N/A';
+      const isHeavy = sp.grossWeightKg > 15.0;
+
+      const hCost = sp.handlingCostBreakdown ? sp.handlingCostBreakdown.totalHandlingCostMinor || 0 : 0;
+      const sugg = whmEngine.calculateAlgorithmicSuggestedPrice(p.id);
+
+      return `
+        <tr>
+          <td>
+            <div class="fw-bold text-white">${p.title}</div>
+            <div class="text-muted small">${p.brand || 'Unbranded'} &bull; <span class="badge badge-whm-slate">${p.categoryId.toUpperCase()}</span></div>
+          </td>
+          <td>
+            ${storageBadge}
+            <div class="text-secondary small mt-1">${sp.temperatureTarget || ''}</div>
+          </td>
+          <td>
+            <div class="d-flex flex-column gap-1">
+              ${isFragile ? '<span class="badge badge-whm-amber"><i class="bi bi-exclamation-triangle me-1"></i>Fragile</span>' : '<span class="text-muted small">Standard</span>'}
+              ${isHazmat ? `<span class="badge badge-whm-red"><i class="bi bi-lightning-charge me-1"></i>${sp.hazardClass}</span>` : ''}
+            </div>
+          </td>
+          <td class="font-monospace text-secondary">${dims}</td>
+          <td>
+            <span class="font-monospace fw-bold ${isHeavy ? 'text-danger' : 'text-white'}">${sp.grossWeightKg || 0.5} kg</span>
+            ${isHeavy ? '<span class="badge badge-whm-red ms-1">HEAVY</span>' : ''}
+          </td>
+          <td>
+            <span class="font-monospace fw-bold text-info">${whmEngine.formatNaira(hCost)}</span>
+            <div class="small text-muted" title="Backend Algorithmic Suggestion">Sugg: ${sugg ? whmEngine.formatNaira(sugg.suggestedPriceMinor) : 'N/A'}</div>
+          </td>
+          <td>
+            <span class="badge badge-whm-slate text-capitalize">${(sp.packagingRequirement || 'box').replace(/_/g, ' ')}</span>
+            ${sp.tamperEvidentSeal ? '<div class="small text-info mt-1"><i class="bi bi-lock me-1"></i>Tamper Seal</div>' : ''}
+          </td>
+          <td class="font-monospace text-secondary text-center">${sp.maxStackTiers || 4} tiers</td>
+          <td class="text-end pe-4">
+            <button class="btn btn-sm btn-outline-success" onclick="openHandlingModal('${p.id}')">
+              <i class="bi bi-pencil me-1"></i> Configure
+            </button>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  function openHandlingModal(productId) {
+    const p = whmEngine.getProductById(productId);
+    if (!p) return;
+
+    const sp = whmEngine.getHandlingSpecs(productId);
+    document.getElementById('handlingProductId').value = p.id;
+    document.getElementById('modalHandlingTitle').textContent = `Handling Protocol: ${p.title}`;
+    
+    document.getElementById('editStorageCondition').value = sp.storageCondition || 'ambient';
+    document.getElementById('editTemperatureTarget').value = sp.temperatureTarget || 'Ambient';
+    document.getElementById('editFragilityClass').value = sp.fragilityClass || 'non_fragile';
+    document.getElementById('editHazardClass').value = sp.hazardClass || 'none';
+
+    document.getElementById('editDimLength').value = sp.dimensionsCm ? sp.dimensionsCm.length : 20;
+    document.getElementById('editDimWidth').value = sp.dimensionsCm ? sp.dimensionsCm.width : 15;
+    document.getElementById('editDimHeight').value = sp.dimensionsCm ? sp.dimensionsCm.height : 10;
+    document.getElementById('editGrossWeight').value = sp.grossWeightKg || 1.0;
+
+    document.getElementById('editPackagingReq').value = sp.packagingRequirement || 'corrugated_box';
+    document.getElementById('editMaxStackTiers').value = sp.maxStackTiers || 4;
+    document.getElementById('editTamperSeal').checked = !!sp.tamperEvidentSeal;
+    document.getElementById('editExpiryTracking').checked = !!sp.expiryTracking;
+    document.getElementById('editHandlingNotes').value = sp.handlingNotes || '';
+
+    // Handling Costs
+    const hb = sp.handlingCostBreakdown || {};
+    document.getElementById('editCostTransport').value = hb.transportationMinor ? hb.transportationMinor / 100 : 0;
+    document.getElementById('editCostWashing').value = hb.washingMinor ? hb.washingMinor / 100 : 0;
+    document.getElementById('editCostLoading').value = hb.loadingMinor ? hb.loadingMinor / 100 : 0;
+    document.getElementById('editCostBagging').value = hb.baggingMinor ? hb.baggingMinor / 100 : 0;
+    document.getElementById('editCostOverhead').value = hb.overheadMinor ? hb.overheadMinor / 100 : 0;
+
+    calcHandlingCosts();
+    checkHeavyLift();
+    new bootstrap.Modal(document.getElementById('handlingModal')).show();
+  }
+
+  function calcHandlingCosts() {
+    const transport = Math.round((parseFloat(document.getElementById('editCostTransport').value) || 0) * 100);
+    const washing = Math.round((parseFloat(document.getElementById('editCostWashing').value) || 0) * 100);
+    const loading = Math.round((parseFloat(document.getElementById('editCostLoading').value) || 0) * 100);
+    const bagging = Math.round((parseFloat(document.getElementById('editCostBagging').value) || 0) * 100);
+    const overhead = Math.round((parseFloat(document.getElementById('editCostOverhead').value) || 0) * 100);
+
+    const total = transport + washing + loading + bagging + overhead;
+    document.getElementById('displayTotalHandlingCost').textContent = whmEngine.formatNaira(total);
+
+    // Calculate algorithmic suggested price preview
+    const productId = document.getElementById('handlingProductId').value;
+    const p = whmEngine.getProductById(productId);
+    if (p) {
+      const baseCost = p.costFloorMinor || 0;
+      const effectiveCostFloor = baseCost + total;
+      let marginMultiplier = 1.15;
+      if (p.categoryId === 'groceries') marginMultiplier = 1.12;
+      else if (p.categoryId === 'foodstuff') marginMultiplier = 1.18;
+      else if (p.categoryId === 'gadgets') marginMultiplier = 1.14;
+      else if (p.categoryId === 'fashion') marginMultiplier = 1.25;
+      else if (p.categoryId === 'home') marginMultiplier = 1.20;
+
+      const rawSuggested = Math.round(effectiveCostFloor * marginMultiplier);
+      const suggestedPriceMinor = Math.ceil(rawSuggested / 10000) * 10000;
+      const marginMinor = suggestedPriceMinor - effectiveCostFloor;
+      const marginPct = suggestedPriceMinor > 0 ? (marginMinor / suggestedPriceMinor) * 100 : 0;
+
+      document.getElementById('displaySuggestedPrice').textContent = whmEngine.formatNaira(suggestedPriceMinor);
+      document.getElementById('displaySuggestedMargin').textContent = `Suggested Margin: ${marginPct.toFixed(1)}% (₦${(marginMinor / 100).toLocaleString()})`;
+    }
+  }
+
+  function checkHeavyLift() {
+    const wt = parseFloat(document.getElementById('editGrossWeight').value) || 0;
+    const alertBox = document.getElementById('heavyLiftAlert');
+    if (wt > 15.0) {
+      alertBox.style.display = 'block';
+    } else {
+      alertBox.style.display = 'none';
+    }
+  }
+
+  function saveHandlingSpecs() {
+    const productId = document.getElementById('handlingProductId').value;
+
+    const transportMinor = Math.round((parseFloat(document.getElementById('editCostTransport').value) || 0) * 100);
+    const washingMinor = Math.round((parseFloat(document.getElementById('editCostWashing').value) || 0) * 100);
+    const loadingMinor = Math.round((parseFloat(document.getElementById('editCostLoading').value) || 0) * 100);
+    const baggingMinor = Math.round((parseFloat(document.getElementById('editCostBagging').value) || 0) * 100);
+    const overheadMinor = Math.round((parseFloat(document.getElementById('editCostOverhead').value) || 0) * 100);
+    const totalHandlingCostMinor = transportMinor + washingMinor + loadingMinor + baggingMinor + overheadMinor;
+
+    const specs = {
+      storageCondition: document.getElementById('editStorageCondition').value,
+      temperatureTarget: document.getElementById('editTemperatureTarget').value,
+      fragilityClass: document.getElementById('editFragilityClass').value,
+      hazardClass: document.getElementById('editHazardClass').value,
+      dimensionsCm: {
+        length: parseFloat(document.getElementById('editDimLength').value) || 10,
+        width: parseFloat(document.getElementById('editDimWidth').value) || 10,
+        height: parseFloat(document.getElementById('editDimHeight').value) || 10
+      },
+      grossWeightKg: parseFloat(document.getElementById('editGrossWeight').value) || 1.0,
+      packagingRequirement: document.getElementById('editPackagingReq').value,
+      maxStackTiers: parseInt(document.getElementById('editMaxStackTiers').value) || 4,
+      tamperEvidentSeal: document.getElementById('editTamperSeal').checked,
+      expiryTracking: document.getElementById('editExpiryTracking').checked,
+      handlingNotes: document.getElementById('editHandlingNotes').value,
+      handlingCostBreakdown: {
+        transportationMinor: transportMinor,
+        washingMinor: washingMinor,
+        loadingMinor: loadingMinor,
+        baggingMinor: baggingMinor,
+        overheadMinor: overheadMinor,
+        totalHandlingCostMinor: totalHandlingCostMinor
+      }
+    };
+
+    whmEngine.saveHandlingSpecs(productId, specs);
+    iziToast.success({ title: 'Protocol Saved', message: 'Physical handling configuration and cost inputs updated.', position: 'topRight' });
+    bootstrap.Modal.getInstance(document.getElementById('handlingModal')).hide();
+    renderHandlingTable();
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,326 @@
+/* AreaBazaar WHM - Warehouse Management Enterprise Style */
+:root {
+  --whm-bg: #090d16;
+  --whm-surface: #0f172a;
+  --whm-surface-card: #151f32;
+  --whm-surface-card-hover: #1c2a44;
+  --whm-border: #23324d;
+  --whm-border-subtle: #1c273c;
+  
+  --whm-text-primary: #f8fafc;
+  --whm-text-secondary: #94a3b8;
+  --whm-text-muted: #64748b;
+  
+  --whm-primary: #3b82f6;
+  --whm-primary-hover: #2563eb;
+  --whm-primary-subtle: rgba(59, 130, 246, 0.15);
+  
+  --whm-success: #10b981;
+  --whm-success-subtle: rgba(16, 185, 129, 0.15);
+  
+  --whm-warning: #f59e0b;
+  --whm-warning-subtle: rgba(245, 158, 11, 0.15);
+  
+  --whm-danger: #ef4444;
+  --whm-danger-subtle: rgba(239, 68, 68, 0.15);
+  
+  --whm-info: #06b6d4;
+  --whm-info-subtle: rgba(6, 182, 212, 0.15);
+  
+  --whm-purple: #8b5cf6;
+  --whm-purple-subtle: rgba(139, 92, 246, 0.15);
+  
+  --whm-amber: #d97706;
+  --whm-cyan: #0891b2;
+}
+
+body {
+  background-color: var(--whm-bg);
+  color: var(--whm-text-primary);
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  min-height: 100vh;
+  letter-spacing: -0.01em;
+}
+
+/* Sidebar */
+.whm-sidebar {
+  background-color: var(--whm-surface);
+  border-right: 1px solid var(--whm-border);
+  min-height: 100vh;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.whm-brand-badge {
+  background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+  color: #fff;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  padding: 4px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+}
+
+.whm-nav-header {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--whm-text-muted);
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+  padding-left: 0.75rem;
+}
+
+.whm-sidebar .nav-link {
+  color: var(--whm-text-secondary);
+  font-weight: 600;
+  font-size: 0.88rem;
+  padding: 0.7rem 0.85rem;
+  border-radius: 10px;
+  margin-bottom: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-decoration: none;
+  transition: all 0.18s ease-in-out;
+}
+
+.whm-sidebar .nav-link:hover {
+  color: var(--whm-text-primary);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.whm-sidebar .nav-link.active {
+  color: #fff;
+  background: linear-gradient(90deg, rgba(59, 130, 246, 0.25) 0%, rgba(59, 130, 246, 0.1) 100%);
+  border-left: 3px solid var(--whm-primary);
+}
+
+.whm-sidebar .nav-link i {
+  width: 20px;
+  font-size: 1rem;
+  margin-right: 8px;
+}
+
+/* Cards & Surfaces */
+.whm-card {
+  background-color: var(--whm-surface-card);
+  border: 1px solid var(--whm-border);
+  border-radius: 14px;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.35);
+  transition: border-color 0.15s ease;
+}
+
+.whm-card:hover {
+  border-color: #2e4164;
+}
+
+.whm-card-header {
+  background-color: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid var(--whm-border);
+  padding: 1rem 1.25rem;
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
+}
+
+/* Metric KPI Tile */
+.whm-kpi-tile {
+  background-color: var(--whm-surface-card);
+  border: 1px solid var(--whm-border);
+  border-radius: 14px;
+  padding: 1.25rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.whm-kpi-tile::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+}
+
+.whm-kpi-tile.kpi-blue::before { background-color: var(--whm-primary); }
+.whm-kpi-tile.kpi-green::before { background-color: var(--whm-success); }
+.whm-kpi-tile.kpi-amber::before { background-color: var(--whm-warning); }
+.whm-kpi-tile.kpi-purple::before { background-color: var(--whm-purple); }
+.whm-kpi-tile.kpi-cyan::before { background-color: var(--whm-cyan); }
+.whm-kpi-tile.kpi-red::before { background-color: var(--whm-danger); }
+
+.whm-kpi-val {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.85rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+/* Tables */
+.whm-table {
+  color: var(--whm-text-primary);
+  margin-bottom: 0;
+  vertical-align: middle;
+}
+
+.whm-table thead th {
+  background-color: rgba(15, 23, 42, 0.85);
+  color: var(--whm-text-secondary);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-bottom: 1px solid var(--whm-border);
+  padding: 0.85rem 1rem;
+}
+
+.whm-table tbody td {
+  background-color: transparent;
+  color: var(--whm-text-primary);
+  border-bottom: 1px solid var(--whm-border-subtle);
+  padding: 0.85rem 1rem;
+  font-size: 0.86rem;
+}
+
+.whm-table tbody tr:hover td {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+/* Badges */
+.badge-whm-blue { background-color: var(--whm-primary-subtle); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
+.badge-whm-green { background-color: var(--whm-success-subtle); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+.badge-whm-amber { background-color: var(--whm-warning-subtle); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+.badge-whm-purple { background-color: var(--whm-purple-subtle); color: #c084fc; border: 1px solid rgba(139, 92, 246, 0.3); }
+.badge-whm-red { background-color: var(--whm-danger-subtle); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+.badge-whm-cyan { background-color: var(--whm-info-subtle); color: #22d3ee; border: 1px solid rgba(6, 182, 212, 0.3); }
+.badge-whm-slate { background-color: rgba(100, 116, 139, 0.15); color: #cbd5e1; border: 1px solid rgba(100, 116, 139, 0.3); }
+
+/* Form Controls */
+.whm-form-control,
+.whm-form-select {
+  background-color: #0b111e;
+  border: 1px solid var(--whm-border);
+  color: var(--whm-text-primary);
+  border-radius: 8px;
+  padding: 0.6rem 0.85rem;
+  font-size: 0.86rem;
+  transition: all 0.15s ease;
+}
+
+.whm-form-control:focus,
+.whm-form-select:focus {
+  background-color: #0d1527;
+  border-color: var(--whm-primary);
+  color: #fff;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+}
+
+.whm-form-control::placeholder {
+  color: var(--whm-text-muted);
+}
+
+/* Modals */
+.whm-modal .modal-content {
+  background-color: var(--whm-surface);
+  border: 1px solid var(--whm-border);
+  border-radius: 16px;
+  color: var(--whm-text-primary);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+}
+
+.whm-modal .modal-header {
+  border-bottom: 1px solid var(--whm-border);
+  padding: 1.25rem 1.5rem;
+}
+
+.whm-modal .modal-footer {
+  border-top: 1px solid var(--whm-border);
+  padding: 1.25rem 1.5rem;
+}
+
+/* Floating Batch Action Bar */
+.whm-floating-bar {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #1e293b;
+  border: 1px solid #3b82f6;
+  border-radius: 50px;
+  padding: 0.75rem 1.5rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  z-index: 1050;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  backdrop-filter: blur(8px);
+}
+
+/* Category Filter Pills */
+.whm-cat-pill {
+  padding: 0.45rem 1rem;
+  border-radius: 30px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.04);
+  color: var(--whm-text-secondary);
+  border: 1px solid var(--whm-border);
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.whm-cat-pill:hover,
+.whm-cat-pill.active {
+  background-color: var(--whm-primary);
+  color: #fff;
+  border-color: var(--whm-primary);
+}
+
+/* Pigeon Hole / Tote Grid */
+.whm-tote-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.whm-tote-card {
+  background-color: var(--whm-surface-card);
+  border: 1px solid var(--whm-border);
+  border-radius: 12px;
+  padding: 1rem;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.whm-tote-card.complete {
+  border-color: var(--whm-success);
+  background: linear-gradient(180deg, rgba(16, 185, 129, 0.05) 0%, rgba(21, 31, 50, 1) 100%);
+}
+
+.whm-tote-card:hover {
+  transform: translateY(-2px);
+  border-color: #3b82f6;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #090d16;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}

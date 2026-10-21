@@ -1,0 +1,298 @@
+/**
+ * Field Regional Marketing (FRM) Dashboard Suite - Design System
+ * AreaBazaar Hyperlocal Commerce & Logistics
+ */
+
+:root {
+  --frm-brand: #059669;          /* Emerald primary */
+  --frm-brand-light: #10b981;    /* Vibrant teal/emerald */
+  --frm-brand-dark: #047857;     /* Deep forest */
+  --frm-dark: #0f172a;           /* Slate 900 */
+  --frm-dark-surface: #1e293b;   /* Slate 800 */
+  --frm-dark-card: #0f172a;
+  --frm-sidebar-bg: #090d16;
+  --frm-accent-cyan: #06b6d4;
+  --frm-accent-amber: #f59e0b;
+  --frm-accent-rose: #f43f5e;
+  --frm-accent-indigo: #6366f1;
+}
+
+body {
+  background-color: #0c1220;
+  color: #e2e8f0;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.font-outfit {
+  font-family: 'Outfit', sans-serif;
+}
+
+/* Sidebar Styling */
+.frm-sidebar {
+  background: linear-gradient(180deg, #090d16 0%, #0d1527 100%);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  min-height: 100vh;
+}
+
+.frm-sidebar .nav-link {
+  color: #94a3b8;
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.65rem 0.9rem;
+  border-radius: 8px;
+  margin-bottom: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-decoration: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.frm-sidebar .nav-link i {
+  font-size: 1.1rem;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+.frm-sidebar .nav-link:hover {
+  color: #ffffff;
+  background-color: rgba(16, 185, 129, 0.12);
+  transform: translateX(3px);
+}
+
+.frm-sidebar .nav-link.active {
+  color: #ffffff;
+  background: linear-gradient(135deg, rgba(5, 150, 105, 0.9) 0%, rgba(16, 185, 129, 0.85) 100%);
+  box-shadow: 0 4px 14px -2px rgba(5, 150, 105, 0.4);
+}
+
+.frm-nav-header {
+  font-size: 0.675rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #64748b;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+  padding-left: 0.75rem;
+}
+
+.frm-brand-badge {
+  font-size: 0.65rem;
+  background: rgba(16, 185, 129, 0.18);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  padding: 2px 7px;
+  border-radius: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Cards & Panels */
+.frm-card {
+  background: #131c2e;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.25);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.frm-card:hover {
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.frm-kpi-tile {
+  background: #131c2e;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  padding: 1.25rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.frm-kpi-tile:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.35);
+}
+
+.frm-kpi-tile::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+}
+
+.kpi-emerald::before { background: linear-gradient(90deg, #059669, #10b981); }
+.kpi-cyan::before { background: linear-gradient(90deg, #0284c7, #06b6d4); }
+.kpi-amber::before { background: linear-gradient(90deg, #d97706, #f59e0b); }
+.kpi-purple::before { background: linear-gradient(90deg, #7c3aed, #a855f7); }
+.kpi-rose::before { background: linear-gradient(90deg, #e11d48, #f43f5e); }
+
+.frm-kpi-val {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.85rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+/* Tables */
+.frm-table {
+  color: #e2e8f0;
+  margin-bottom: 0;
+}
+
+.frm-table thead th {
+  background-color: #0b111e;
+  color: #94a3b8;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+  white-space: nowrap;
+}
+
+.frm-table tbody td {
+  padding: 0.95rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background-color: transparent;
+  vertical-align: middle;
+}
+
+.frm-table tbody tr:hover td {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+/* Form Controls */
+.frm-form-control, .frm-form-select {
+  background-color: #0b111e;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  padding: 0.55rem 0.85rem;
+  transition: all 0.2s ease;
+}
+
+.frm-form-control:focus, .frm-form-select:focus {
+  background-color: #090e1a;
+  border-color: #10b981;
+  color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+}
+
+.frm-form-control::placeholder {
+  color: #64748b;
+}
+
+/* Badges */
+.badge-frm-emerald {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.35);
+}
+
+.badge-frm-cyan {
+  background: rgba(6, 182, 212, 0.15);
+  color: #38bdf8;
+  border: 1px solid rgba(6, 182, 212, 0.35);
+}
+
+.badge-frm-amber {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+}
+
+.badge-frm-red {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.35);
+}
+
+.badge-frm-slate {
+  background: rgba(148, 163, 184, 0.12);
+  color: #cbd5e1;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+}
+
+/* Modals */
+.frm-modal .modal-content {
+  background: #131c2e;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  color: #e2e8f0;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+}
+
+.frm-modal .modal-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 1.25rem 1.5rem;
+}
+
+.frm-modal .modal-footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 1rem 1.5rem;
+}
+
+/* Step Timeline in Order Track */
+.track-step-node {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: bold;
+  z-index: 2;
+  transition: all 0.3s ease;
+}
+
+.track-step-node.completed {
+  background: #10b981;
+  color: #ffffff;
+  box-shadow: 0 0 14px rgba(16, 185, 129, 0.5);
+}
+
+.track-step-node.active {
+  background: #0284c7;
+  color: #ffffff;
+  box-shadow: 0 0 14px rgba(2, 132, 199, 0.6);
+  animation: pulse-ring 2s infinite;
+}
+
+.track-step-node.pending {
+  background: #1e293b;
+  color: #64748b;
+  border: 2px dashed rgba(255, 255, 255, 0.15);
+}
+
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgba(2, 132, 199, 0.6); }
+  70% { box-shadow: 0 0 0 10px rgba(2, 132, 199, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(2, 132, 199, 0); }
+}
+
+.track-line {
+  position: absolute;
+  top: 19px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  z-index: 1;
+}
+
+.track-line-progress {
+  height: 100%;
+  background: linear-gradient(90deg, #10b981, #0284c7);
+  transition: width 0.4s ease;
+}

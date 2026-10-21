@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WHM Operations Command Center | AreaBazaar Logistics</title>
+  
+  <link rel="shortcut icon" type="image/x-icon" href="../assetsecm/images/uwanbuy-favicon-brief-color.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
+  <link rel="stylesheet" href="assets/css/whm-style.css">
+</head>
+<body>
+
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-md-3 col-lg-2 whm-sidebar p-3 d-flex flex-column">
+      <div class="d-flex align-items-center justify-content-between mb-3 px-2">
+        <a href="index.html" class="d-flex align-items-center text-decoration-none text-white gap-2">
+          <div class="bg-primary text-white rounded p-1 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+            <i class="fa fa-warehouse fs-6"></i>
+          </div>
+          <div>
+            <span class="fw-bold fs-6 tracking-tight d-block">AreaBazaar</span>
+            <span class="whm-brand-badge">WHM Suite</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="whm-nav-header">Command Center</div>
+      <nav class="nav flex-column">
+        <a class="nav-link active" href="index.html">
+          <span><i class="bi bi-speedometer2"></i> Operations Dashboard</span>
+        </a>
+      </nav>
+
+      <div class="whm-nav-header">Catalog & Inventory</div>
+      <nav class="nav flex-column">
+        <a class="nav-link" href="products-pricing.html">
+          <span><i class="bi bi-tag"></i> Products Price Update</span>
+        </a>
+        <a class="nav-link" href="inventory.html">
+          <span><i class="bi bi-boxes"></i> Product Inventory Update</span>
+          <span class="badge badge-whm-amber" id="badgeLowStock">0</span>
+        </a>
+        <a class="nav-link" href="handling.html">
+          <span><i class="bi bi-shield-check"></i> Product Handling Update</span>
+        </a>
+      </nav>
+
+      <div class="whm-nav-header">Fulfillment & Sourcing</div>
+      <nav class="nav flex-column mb-auto">
+        <a class="nav-link" href="order-items.html">
+          <span><i class="bi bi-list-check"></i> Order-Items Update</span>
+          <span class="badge badge-whm-blue" id="badgePendingItems">0</span>
+        </a>
+        <a class="nav-link" href="collation.html">
+          <span><i class="bi bi-diagram-3"></i> Collation (per categ)</span>
+          <span class="badge badge-whm-cyan" id="badgeCollation">0</span>
+        </a>
+        <a class="nav-link" href="sourcing.html">
+          <span><i class="bi bi-truck"></i> SBA Sourcing (per categ)</span>
+          <span class="badge badge-whm-purple" id="badgeSba">0</span>
+        </a>
+        <a class="nav-link" href="qa.html">
+          <span><i class="bi bi-patch-check"></i> Product QA (per categ)</span>
+          <span class="badge badge-whm-red" id="badgeQa">0</span>
+        </a>
+      </nav>
+
+      <div class="border-top border-secondary pt-3 mt-4">
+        <a href="../frm/index.html" class="btn btn-sm btn-outline-success w-100 text-start text-success d-flex align-items-center justify-content-between mb-2">
+          <span><i class="bi bi-map me-1"></i> FRM Field Marketing</span>
+          <i class="bi bi-box-arrow-up-right small"></i>
+        </a>
+        <a href="../uwanbuy/admin/index.html" class="btn btn-sm btn-outline-secondary w-100 text-start text-white-50 d-flex align-items-center justify-content-between">
+          <span><i class="bi bi-arrow-left me-1"></i> Storefront Admin</span>
+          <i class="bi bi-box-arrow-up-right small"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="col-md-9 col-lg-10 p-4">
+      <!-- Top Bar -->
+      <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 pb-2 border-bottom border-secondary border-opacity-25 gap-3">
+        <div>
+          <div class="d-flex align-items-center gap-2 mb-1">
+            <span class="badge bg-success-subtle text-success border border-success border-opacity-25 py-1 px-2">
+              <i class="fa fa-circle text-success me-1" style="font-size: 8px;"></i> Tanke Central Warehouse
+            </span>
+            <span class="text-secondary small">| Decoupled Root Logistics Node</span>
+          </div>
+          <h2 class="fw-bold m-0 text-white font-outfit">Warehouse Operations Command</h2>
+          <small class="text-secondary">Enterprise control surface for inventory pricing, physical handling, collation, SBA sourcing & QA</small>
+        </div>
+
+        <div class="d-flex align-items-center gap-2">
+          <button class="btn btn-sm btn-outline-secondary text-white" onclick="location.reload()">
+            <i class="fa fa-sync-alt me-1"></i> Sync Live Data
+          </button>
+          <a href="order-items.html" class="btn btn-sm btn-primary">
+            <i class="fa fa-barcode me-1"></i> Start Picking Queue
+          </a>
+        </div>
+      </div>
+
+      <!-- KPI Summary Cards -->
+      <div class="row g-3 mb-4">
+        <div class="col-sm-6 col-xl-3">
+          <div class="whm-kpi-tile kpi-blue">
+            <div class="text-secondary small fw-bold text-uppercase mb-1">Managed SKUs</div>
+            <div class="whm-kpi-val text-white" id="kpiTotalSkus">0</div>
+            <div class="small text-muted mt-1"><i class="bi bi-box-seam text-primary me-1"></i> In warehouse catalog</div>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-xl-3">
+          <div class="whm-kpi-tile kpi-amber">
+            <div class="text-secondary small fw-bold text-uppercase mb-1">Stock Deficits / Low Stock</div>
+            <div class="whm-kpi-val text-warning" id="kpiDeficits">0</div>
+            <div class="small text-muted mt-1"><i class="bi bi-exclamation-triangle text-warning me-1"></i> Triggering SBA sourcing</div>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-xl-3">
+          <div class="whm-kpi-tile kpi-cyan">
+            <div class="text-secondary small fw-bold text-uppercase mb-1">Active Collation Totes</div>
+            <div class="whm-kpi-val text-info" id="kpiCollationTotes">0</div>
+            <div class="small text-muted mt-1"><i class="bi bi-diagram-3 text-info me-1"></i> Orders in pigeon-hole hubs</div>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-xl-3">
+          <div class="whm-kpi-tile kpi-purple">
+            <div class="text-secondary small fw-bold text-uppercase mb-1">Pending QA Tickets</div>
+            <div class="whm-kpi-val text-purple" id="kpiPendingQa">0</div>
+            <div class="small text-muted mt-1"><i class="bi bi-patch-check text-purple me-1"></i> Awaiting spec checks</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7 Functional Module Launchers -->
+      <h5 class="fw-bold text-white mb-3 font-outfit"><i class="bi bi-grid-3x3-gap-fill text-primary me-2"></i> Warehouse Functional Subsystems</h5>
+      
+      <div class="row g-3 mb-4">
+        <!-- 1. Price Update -->
+        <div class="col-md-6 col-xl-4">
+          <div class="whm-card h-100 p-3 d-flex flex-column justify-content-between">
+            <div>
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="badge badge-whm-blue"><i class="bi bi-tag me-1"></i> Module 01</span>
+                <span class="text-muted small">Pricing & Margins</span>
+              </div>
+              <h5 class="fw-bold text-white mb-1">Products Price Update</h5>
+              <p class="text-secondary small mb-3">Adjust base & variant prices, cost floor benchmarks, profit margin calculations, and bulk price shifts.</p>
+            </div>
+            <div>
+              <a href="products-pricing.html" class="btn btn-sm btn-outline-primary w-100 fw-semibold">
+                Open Price Console <i class="bi bi-arrow-right ms-1"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Inventory Update -->
+        <div class="col-md-6 col-xl-4">
+          <div class="whm-card h-100 p-3 d-flex flex-column justify-content-between">
+            <div>
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="badge badge-whm-amber"><i class="bi bi-boxes me-1"></i> Module 02</span>
+                <span class="text-muted small">Slotting & Stock</span>
+              </div>
+              <h5 class="fw-bold text-white mb-1">Product Inventory Update</h5>
+              <p class="text-secondary small mb-3">Physical stock tracking, stock add/drop audits with reason codes, and Zone/Aisle/Bay/Bin location slotting.</p>
+            </div>
+            <div>
+              <a href="inventory.html" class="btn btn-sm btn-outline-warning w-100 fw-semibold">
+                Open Inventory Console <i class="bi bi-arrow-right ms-1"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Handling Update -->
+        <div class="col-md-6 col-xl-4">
+          <div class="whm-card h-100 p-3 d-flex flex-column justify-content-between">
+            <div>
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="badge badge-whm-green"><i class="bi bi-shield-check me-1"></i> Module 03</span>
+                <span class="text-muted small">Safety & Storage</span>
+              </div>
+              <h5 class="fw-bold text-white mb-1">Product Handling Update</h5>
+              <p class="text-secondary small mb-3">Storage conditions (Ambient, Cold Chain, Frozen), fragility, hazard classifications, package weights & heavy lift rules.</p>
+            </div>
+            <div>
+              <a href="handling.html" class="btn btn-sm btn-outline-success w-100 fw-semibold">
+                Open Handling Console <i class="bi bi-arrow-right ms-1"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Order-Items Update -->
+        <div class="col-md-6 col-xl-4">
+          <div class="whm-card h-100 p-3 d-flex flex-column justify-content-between">
+            <div>
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="badge badge-whm-cyan"><i class="bi bi-list-check me-1"></i> Module 04</span>
+                <span class="text-muted small">Picking Line Items</span>
+              </div>
+              <h5 class="fw-bold text-white mb-1">Order-Items Update</h5>
+              <p class="text-secondary small mb-3">Line-by-line item lifecycle tracking from pending pick to dispatched, shortage logging, and item substitutions.</p>
+            </div>
+            <div>
+              <a href="order-items.html" class="btn btn-sm btn-outline-info w-100 fw-semibold">
+                Open Order-Items Console <i class="bi bi-arrow-right ms-1"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. Collation per Category -->
+        <div class="col-md-6 col-xl-4">
+          <div class="whm-card h-100 p-3 d-flex flex-column justify-content-between">
+            <div>
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="badge badge-whm-blue"><i class="bi bi-diagram-3 me-1"></i> Module 05</span>
+                <span class="text-muted small">Batch Picking & Totes</span>
+              </div>
+              <h5 class="fw-bold text-white mb-1">Product Collation (per categ)</h5>
+              <p class="text-secondary small mb-3">Batch picking grouped by category segment, pigeon-hole customer order totes, and completion progress matrix.</p>
+            </div>
+            <div>
+              <a href="collation.html" class="btn btn-sm btn-outline-primary w-100 fw-semibold">
+                Open Collation Hub <i class="bi bi-arrow-right ms-1"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. Sourcing & SBA -->
+        <div class="col-md-6 col-xl-4">
+          <div class="whm-card h-100 p-3 d-flex flex-column justify-content-between">
+            <div>
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="badge badge-whm-purple"><i class="bi bi-truck me-1"></i> Module 06</span>
+                <span class="text-muted small">Procurement Agents</span>
+              </div>
+              <h5 class="fw-bold text-white mb-1">Sourcing - Assign to SBA (per categ)</h5>
+              <p class="text-secondary small mb-3">Deficit aggregation, procurement batch creation for specialized SBAs, budget tracking, and dock intake logging.</p>
+            </div>
+            <div>
+              <a href="sourcing.html" class="btn btn-sm btn-outline-secondary text-white w-100 fw-semibold">
+                Open SBA Sourcing Console <i class="bi bi-arrow-right ms-1"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 7. QA per Category -->
+        <div class="col-md-12 col-xl-12">
+          <div class="whm-card p-3 d-flex flex-wrap justify-content-between align-items-center gap-3" style="border-left: 4px solid #ef4444;">
+            <div class="d-flex align-items-center gap-3">
+              <div class="bg-danger bg-opacity-10 text-danger rounded-circle p-3">
+                <i class="bi bi-patch-check fs-3"></i>
+              </div>
+              <div>
+                <span class="badge badge-whm-red mb-1"><i class="bi bi-award me-1"></i> Module 07 (Quality Assurance)</span>
+                <h5 class="fw-bold text-white m-0">Product QA Inspection (per categ)</h5>
+                <p class="text-secondary small m-0">Grounded in <code>product-specs.pdf</code>: Groceries freshness & 90-day expiry check, Gadgets power/RAM/IMEI diagnostics, Fashion stitch checks.</p>
+              </div>
+            </div>
+            <div>
+              <a href="qa.html" class="btn btn-danger px-4 fw-bold">
+                Open QA Station <i class="bi bi-arrow-right ms-1"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Warehouse Audit Stream -->
+      <div class="whm-card p-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="fw-bold text-white m-0 font-outfit"><i class="bi bi-activity text-success me-2"></i> Real-Time Warehouse Activity Stream</h5>
+          <span class="text-secondary small" id="auditCount">0 events logged</span>
+        </div>
+        <div class="table-responsive">
+          <table class="table whm-table align-middle">
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+                <th>Subsystem</th>
+                <th>Action</th>
+                <th>Details</th>
+                <th>Operator</th>
+              </tr>
+            </thead>
+            <tbody id="auditStreamBody">
+              <tr>
+                <td colspan="5" class="text-center text-muted py-4">Loading warehouse event stream...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+<script src="assets/js/whm-engine.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const products = whmEngine.getProducts();
+    const orderItems = whmEngine.getOrderItems();
+    const deficits = whmEngine.getDeficits();
+    const collation = whmEngine.getCollationOverview();
+    const sbaBatches = whmEngine.getSbaAssignments();
+    const qaQueue = whmEngine.getQaInspections();
+    const auditLogs = whmEngine.getAuditLogs();
+
+    // Set KPI tiles
+    document.getElementById('kpiTotalSkus').textContent = products.length;
+    document.getElementById('kpiDeficits').textContent = deficits.length;
+    document.getElementById('kpiCollationTotes').textContent = collation.activeOrders.length;
+    document.getElementById('kpiPendingQa').textContent = qaQueue.filter(q => q.status === 'pending').length;
+
+    // Badges
+    const lowStockCount = products.filter(p => p.stock.status === 'low_stock' || p.stock.status === 'out_of_stock').length;
+    document.getElementById('badgeLowStock').textContent = lowStockCount;
+    document.getElementById('badgePendingItems').textContent = orderItems.filter(i => ['pending_pick', 'picking'].includes(i.status)).length;
+    document.getElementById('badgeCollation').textContent = collation.activeOrders.filter(o => !o.isComplete).length;
+    document.getElementById('badgeSba').textContent = sbaBatches.filter(b => b.status === 'in_transit' || b.status === 'assigned').length;
+    document.getElementById('badgeQa').textContent = qaQueue.filter(q => q.status === 'pending').length;
+
+    // Render Audit Stream
+    const auditBody = document.getElementById('auditStreamBody');
+    document.getElementById('auditCount').textContent = auditLogs.length + ' events logged';
+
+    if (auditLogs.length === 0) {
+      auditBody.innerHTML = '<tr><td colspan="5" class="text-center text-muted py-4">No recent audit logs found.</td></tr>';
+    } else {
+      auditBody.innerHTML = auditLogs.slice(0, 10).map(log => `
+        <tr>
+          <td class="text-secondary small font-monospace">${new Date(log.timestamp).toLocaleTimeString()}</td>
+          <td><span class="badge badge-whm-blue">${log.module}</span></td>
+          <td class="fw-bold text-white">${log.action}</td>
+          <td class="text-secondary small">${log.details}</td>
+          <td><span class="badge badge-whm-slate"><i class="bi bi-person me-1"></i>${log.operatorId}</span></td>
+        </tr>
+      `).join('');
+    }
+  });
+</script>
+</body>
+</html>

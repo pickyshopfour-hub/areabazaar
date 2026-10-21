@@ -453,4 +453,222 @@ stateDiagram-v2
 - **Customer Landing Page (`index.html`):**
   - Live cross-format auction gallery section with real-time format pills, active bid/wave metrics, and direct auction room entry points.
 
+--------------------------------------------------------------------------------
+## 9. Warehouse Management System (WHM) Contract & Operations Lifecycle
+
+### 9.1 Root Folder Architecture & Decoupled Logistics Control
+The WHM platform is deployed exclusively at the application root (`c:\xampp\htdocs\areabazaar\whm/`), establishing a dedicated logistics control surface separated from customer-facing storefronts (`uwanbuy/`, `thriftz/`, `betasup/`). It maintains bidirectional state synchronization with storefront product catalogs (`uwanbuy_admin_products`) and order queues (`uwanbuy_orders`).
+
+### 9.2 Products Price & Cost Floor Contract
+1. **Benchmark Cost Floor (`costFloorMinor`):**
+   - Represents the verified minimum procurement or supplier replenishment unit cost.
+   - The effective retail selling price (`priceMinor`) must never violate the cost floor constraint:
+     $$\text{priceMinor} \ge \text{costFloorMinor}$$
+   - When a batch markdown, percentage drop, or liquidation flat rate is applied, the backend clamps the new price:
+     $$\text{newPriceMinor} = \max(\text{costFloorMinor}, \text{calculatedPriceMinor})$$
+2. **Gross Margin Metrics:**
+   $$\text{Margin Amount} = \text{priceMinor} - \text{costFloorMinor}$$
+   $$\text{Margin \%} = \frac{\text{priceMinor} - \text{costFloorMinor}}{\text{priceMinor}} \times 100$$
+3. **Audit Trail Requirement:** Every price adjustment persists an immutable record containing `productId`, `oldPriceMinor`, `newPriceMinor`, `reasonCode`, `operatorId`, and `timestamp`.
+
+### 9.3 Inventory Location Matrix & Delta Accounting
+1. **Location Slotting Taxonomy:**
+   - Every physical item or variant is assignable to a 5-tier warehouse coordinate:
+     $$\text{Zone} \rightarrow \text{Aisle} \rightarrow \text{Bay} \rightarrow \text{Shelf} \rightarrow \text{Bin}$$
+     *(e.g., `Zone A - Groceries` / `Aisle 02` / `Bay B4` / `Shelf S3` / `Bin 12` $\Rightarrow$ `A-02-B4-S3-12`)*
+2. **Stock Delta Equation:**
+   $$\text{Available Stock} = \text{Physical Stock} - \text{Reserved (Allocated to Active Orders)}$$
+   - `Stock Add` actions increment `Physical Stock` with mandatory reasons: `inbound_shipment`, `return_restock`, `audit_surplus`.
+   - `Stock Drop` actions decrement `Physical Stock` with mandatory reasons: `damaged`, `expired`, `theft_shrinkage`, `audit_deficit`.
+
+### 9.4 Physical Handling & Storage Specifications Contract
+The handling schema validates environmental and transit constraints before stock can be allocated or dispatched:
+```typescript
+interface WhmHandlingSpecs {
+  productId: string;
+  storageCondition: "ambient" | "cold_chain" | "frozen" | "dry_ventilated" | "climate_controlled";
+  temperatureTargetCelsius?: { min: number; max: number };
+  fragilityClass: "non_fragile" | "fragile_glass" | "high_fragility_optics";
+  hazardClass: "none" | "flammable_aerosol" | "lithium_battery" | "corrosive";
+  dimensionsCm: { length: number; width: number; height: number };
+  grossWeightKg: number;
+  heavyLiftRequired: boolean; // Flagged true automatically if grossWeightKg > 15.0
+  maxStackTiers: number;      // Maximum vertical carton tiers allowed in pallet/shelf racking
+  packagingRequirement: "shrink_wrap" | "bubble_wrap_box" | "thermal_cooler_pack" | "pouch";
+  tamperEvidentSealRequired: boolean;
+  expiryTrackingEnabled: boolean;
+  shelfLifeDaysFromIntake?: number;
+  handlingNotes?: string;
+  // Itemized Physical Handling Cost Inputs for Algorithmic Suggested Pricing
+  handlingCostBreakdown?: {
+    transportationMinor: number;
+    washingMinor: number;
+    loadingMinor: number;
+    baggingMinor: number;
+    overheadMinor: number;
+    totalHandlingCostMinor: number;
+  };
+  effectiveCostFloorMinor?: number; // Base cost floor + total handling cost
+  suggestedPriceMinor?: number;     // Backend algorithmic advisory suggestion (not forced)
+}
+```
+
+### 9.5 Granular Order-Items State Machine
+Order fulfillment operates on discrete order lines rather than monolithic orders. Each order item moves through an explicit state machine:
+
+```mermaid
+stateDiagram-v2
+    [*] --> PENDING_PICK: Order Confirmed
+    PENDING_PICK --> PICKING: Picker Scans Bin
+    PICKING --> PICKED: Item Verified & Scanned
+    PICKING --> SHORTAGE_REPORTED: Item Missing / Damaged
+    SHORTAGE_REPORTED --> SUBSTITUTED: Customer Approves Alternate
+    SHORTAGE_REPORTED --> CANCELLED_OUT_OF_STOCK: Shortage Confirmed
+    PICKED --> IN_COLLATION: Moved to Pigeon-Hole Hub
+    IN_COLLATION --> PACKED: All Category Lines Collated
+    PACKED --> STAGED_DISPATCH: Staged in Dispatch Bay
+    STAGED_DISPATCH --> DISPATCHED: Handed to Courier / Customer Pickup
+    DISPATCHED --> [*]
+```
+
+### 9.6 Category-Segment Collation & Order Pigeon-Holes
+1. **Multi-Order Category Batch Picking:**
+   - To optimize warehouse travel time, pickers execute batch pick lists grouped by category segment (`groceries`, `foodstuff`, `gadgets`, `fashion`, `home`).
+2. **Order Pigeon-Hole (Tote) Allocation:**
+   - At the central Collation Station, items picked across category batches are sorted into dedicated order totes (`TOTE-XX`).
+3. **Collation Completion Condition:**
+   - An order cannot transition to `PACKED` until:
+     $$\forall c \in \text{OrderCategories}, \quad \text{CollatedQty}(c) = \text{OrderedQty}(c)$$
+   - When all category lines reach 100%, the system automatically generates an inspection ticket and routes the order to the packing bench.
+
+### 9.7 Sourcing & Buying Agent (SBA) Acquisition Pipeline
+1. **Deficit Calculation:**
+   $$\text{Deficit}(p) = \max\left(0, \sum \text{DemandLines}(p) - \text{PhysicalStock}(p)\right)$$
+2. **Category-Specialized Procurement Assignment:**
+   - Deficits are grouped into category batches and assigned to specialized SBAs (e.g., `SBA-AGRO` for perishable tubers/grains from Ipata/Mandate wholesale markets; `SBA-FMCG` for packaged goods).
+3. **Acquisition Lifecycle:**
+   `UNASSIGNED` $\rightarrow$ `ASSIGNED_TO_SBA` $\rightarrow$ `SBA_ACKNOWLEDGED` $\rightarrow$ `IN_TRANSIT` $\rightarrow$ `SUPPLIED_AT_DOCK` $\rightarrow$ `QA_INSPECTED`.
+4. **Financial Reconciliation:**
+   - Sourcing batches record `disbursementBudgetMinor` vs `actualTotalCostMinor`. Positive variance (cost savings) and negative variance (market surcharges) are recorded against SBA transaction logs.
+
+### 9.8 Category-Specific QA Inspection & Spec Diagnostics Standards
+Grounding inspections in established product benchmark documents (such as `product-specs.pdf`):
+1. **Groceries & Foodstuff QA:**
+   - Seal integrity test.
+   - Perishable freshness index & odor test.
+   - Expiry date verification: Packaged goods must have at least **90 days** remaining shelf life from intake date.
+   - Temperature compliance upon receipt for cold-chain items ($2^\circ\text{C} - 8^\circ\text{C}$).
+2. **Gadgets & Electronics QA:**
+   - Boot & power test.
+   - Physical screen & chassis inspection.
+   - Spec matching against `product-specs.pdf`: Verify Model number, RAM/Storage capacity, IMEI/Serial logging.
+   - Battery health indicator check ($\ge 95\%$ for Grade A new/certified).
+   - In-box accessories completeness (power adapter, charging cable, SIM pin).
+3. **Fashion & Apparel QA:**
+   - Size tag verification against order line specifications.
+   - Seam, hem, and stitch integrity inspection.
+   - Zipper and button operational testing.
+   - Fabric surface defect and stain audit.
+4. **Dispositions:**
+   - `PASS_GRADE_A`: Unlocks immediate stock allocation or order dispatch.
+   - `PASS_GRADE_B_CLEARANCE`: Permits inventory ingestion at discounted liquidation / auction wave tiers.
+   - `QUARANTINE`: Temporarily holds batch for supervisor escalation or vendor inspection.
+   - `REJECT`: Triggers return-to-vendor / return-to-SBA workflow with mandatory defect photographic evidence.
+
+--------------------------------------------------------------------------------
+## 10. Field Regional Marketing (FRM) Operations, Remittance Lifecycle & Algorithmic Handling Model
+
+### 10.1 Architecture & Role Segregation
+The Field Regional Marketing (FRM) platform is deployed at the application root (`c:\xampp\htdocs\areabazaar\frm/`), operating in parallel with the Warehouse Management System (`whm/`) and decoupled from the storefront admin (`uwanbuy/admin/`).
+- **Target Users:** Regional Sales Agents, Field Merchandisers, Cluster Coordinators, Cash Remittance Officers, and Last-Mile Riders.
+- **Overlapping Functions Removed from Storefront Admin:**
+  1. *Customer-Order Dispatch Tracking & 15-Minute Countdown Timers:* Removed from `uwanbuy/admin/orders.html` and migrated to `frm/order-track.html`.
+  2. *Last-Mile 4-Digit Passcode Verification & Proof of Delivery (POD):* Removed from `uwanbuy/admin/orders.html` and migrated to `frm/order-delivery.html`.
+  3. *Field Payment Intake & Reconciliation:* Removed from `uwanbuy/admin/reconciliation.html` and consolidated into `frm/payment-report.html` and `frm/payment-remittance.html`.
+  4. *Add Product Protection:* `uwanbuy/admin/products.html` **strictly preserves** Add Product functionality (both Single Product and Bulk CSV/Excel Import).
+
+### 10.2 Field Agent Hierarchy & Operational Safeguards
+1. **Agent Metadata Schema:**
+```typescript
+interface FrmRegionalAgent {
+  id: string;               // e.g. "AGT-ILORIN-01"
+  name: string;
+  phone: string;
+  territory: string;        // e.g. "Ilorin Central (Fate / GRA / Post Office)"
+  role: "field_agent" | "cluster_coordinator" | "remittance_supervisor";
+  cashLimitMinor: number;   // Max unremitted cash allowed before block (e.g. 15000000 = N150,000)
+  unremittedCashMinor: number;
+  status: "active" | "flagged_overlimit" | "suspended";
+}
+```
+2. **Cash-in-Hand Safety Lock:**
+   - Agents collecting cash on delivery (`cash`) increment their `unremittedCashMinor`.
+   - If `unremittedCashMinor >= cashLimitMinor`, the agent is locked from submitting new COD orders until an open remittance batch is approved by HQ Treasury.
+
+### 10.3 Payment Intake & Batch Remittance State Machine
+Field payment intake is tracked per transaction, then aggregated into tamper-evident bank remittance batches:
+
+```mermaid
+stateDiagram-v2
+    [*] --> REPORTED_UNREMITTED: Field Payment Intake (Cash / POS / Transfer)
+    REPORTED_UNREMITTED --> BATCHED_IN_TRANSIT: Agent Bundles Payments into Remittance Batch
+    BATCHED_IN_TRANSIT --> VERIFIED_HQ: Treasury Confirms Bank Teller / Transfer Match
+    BATCHED_IN_TRANSIT --> RECONCILIATION_FLAGGED: Teller Amount Discrepancy Detected
+    RECONCILIATION_FLAGGED --> BATCHED_IN_TRANSIT: Discrepancy Resolved / Adjustment Logged
+    VERIFIED_HQ --> [*]: Agent Unremitted Balance Cleared
+```
+
+1. **Payment Report Contract:** Records customer receipt, payment channel, collecting agent, reference, and bank account into `frm_payment_reports`.
+2. **Remittance Batch Contract:** Generates an immutable batch token (`REM-YYYYMMDD-XXXX`), locks included report IDs, records bank deposit slips/teller numbers, and calculates net remitted funds into `frm_remittance_batches`.
+
+### 10.4 Customer Order Intake & Dispatch Tracking Protocol
+1. **Direct Order Capture (`frm/order-submit.html`):**
+   - Captures customer name, phone, delivery address, territory, payment terms (`prepaid`, `cod`, `wallet`), and multi-item line items.
+   - Automatically provisions a unique 4-digit numeric fulfillment passcode (`UWB-PASS-XXXX`).
+   - Syncs directly to `uwanbuy_orders` with origin tagged as `field_regional_agent`.
+2. **5-Stage Granular Tracking (`frm/order-track.html`):**
+   - Tracks fulfillment across: `ORDER_PLACED` $\rightarrow$ `WAREHOUSE_PREPPING` $\rightarrow$ `DISPATCHED_IN_TRANSIT` $\rightarrow$ `ARRIVED_NEARBY` $\rightarrow$ `DELIVERED`.
+   - Integrates a real-time **15-Minute Critical Delivery Window** countdown timer once the order transitions to `DISPATCHED_IN_TRANSIT`.
+   - Fires customer status notifications and dispatch alert logs.
+
+### 10.5 Last-Mile Delivery & 4-Digit Passcode Verification Protocol
+1. **Passcode Protection:**
+   - Delivery personnel cannot mark an order as `DELIVERED` without supplying the exact 4-digit customer passcode (`passcodeCheck`).
+   - If incorrect: System increments failed attempt counter; locks order after 3 invalid attempts.
+2. **Proof of Delivery (POD) Audit Ledger (`frm/order-delivery.html`):**
+   - Captures: `recipientName`, `recipientRelationship` (`customer_direct`, `family_member`, `colleague_staff`, `security_gate`), `proofReference` (signed slip, photo ID, POS terminal receipt ID), and `deliveryNotes`.
+   - Upon successful verification:
+     - Order status transitions to `delivered`.
+     - Delivery timestamp is recorded.
+     - Cash-on-delivery payments automatically generate an associated `REPORTED_UNREMITTED` payment report in the agent's ledger.
+
+### 10.6 Backend Algorithmic Suggested Pricing & Handling Cost Model
+Handling products in regional wholesale, agro-processing, and electronics requires labor, transit, and packaging expenses that must be accounted for before pricing:
+
+1. **Itemized Physical Handling Cost Inputs:**
+   - **Transportation Cost (`transportationMinor`):** Haulage from farmgate/wholesaler to central consolidation hub.
+   - **Washing & Sorting Cost (`washingMinor`):** De-sanding, cleaning, peeling, grading, or cosmetic refurbishment.
+   - **Loading & Offloading Cost (`loadingMinor`):** Porterage, dock handling, and bin placement labor.
+   - **Bagging & Packaging Cost (`baggingMinor`):** Sacks, retail pouches, cartons, bubble wrap, or security seals.
+   - **Storage Overhead Cost (`overheadMinor`):** Cold-chain electricity, shelf-life shrinkage allowance, and fumigation.
+
+2. **Total Handling Cost Equation:**
+   $$\text{TotalHandlingCostMinor} = \text{transportationMinor} + \text{washingMinor} + \text{loadingMinor} + \text{baggingMinor} + \text{overheadMinor}$$
+
+3. **Effective Cost Floor:**
+   $$\text{EffectiveCostFloorMinor} = \text{baseCostFloorMinor} + \text{TotalHandlingCostMinor}$$
+
+4. **Algorithmic Suggested Price Formula (Backend Recommendation):**
+   The backend applies an automated margin algorithm incorporating category baseline markups, perishable shelf-life factors, and handling complexity:
+   $$\text{SuggestedPriceMinor} = \text{EffectiveCostFloorMinor} \times (1 + \text{CategoryTargetMargin})$$
+   *(Rounded up to the nearest 100 Naira / 10,000 Minor Kobo convention)*
+
+5. **CRITICAL ARCHITECTURAL RULE — Advisory Suggestion (Never Forced):**
+   - The price returned by the backend algorithm is strictly an **advisory suggestion / benchmark recommendation**.
+   - The system **never** forces or auto-overwrites the product's retail selling price without explicit operator intent.
+   - In the frontend UI (`whm/products-pricing.html` and `whm/handling.html`), the algorithmic price is rendered as a distinct "Suggested Retail Price" badge with an optional `Apply Suggested Price` action button.
+   - Merchandisers and administrators retain complete autonomy to accept, adjust, override, or discount the selling price according to local competitive conditions, bulk promotional deals, or clearance strategies.
+
+
+
 

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FRM Product Listing & Regional Rate Cards | AreaBazaar</title>
+  
+  <link rel="shortcut icon" type="image/x-icon" href="../assetsecm/images/uwanbuy-favicon-brief-color.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
+  <link rel="stylesheet" href="assets/css/frm-style.css">
+</head>
+<body>
+
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-md-3 col-lg-2 frm-sidebar p-3 d-flex flex-column">
+      <div class="d-flex align-items-center justify-content-between mb-3 px-2">
+        <a href="index.html" class="d-flex align-items-center text-decoration-none text-white gap-2">
+          <div class="bg-success text-white rounded p-1 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+            <i class="fa fa-map-marked-alt fs-6"></i>
+          </div>
+          <div>
+            <span class="fw-bold fs-6 tracking-tight d-block">AreaBazaar</span>
+            <span class="frm-brand-badge">FRM Marketing</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="frm-nav-header">Command Center</div>
+      <nav class="nav flex-column">
+        <a class="nav-link" href="index.html">
+          <span><i class="bi bi-speedometer2"></i> Operations Center</span>
+        </a>
+      </nav>
+
+      <div class="frm-nav-header">Field Commercials</div>
+      <nav class="nav flex-column">
+        <a class="nav-link active" href="product-listing.html">
+          <span><i class="bi bi-grid-3x3-gap"></i> Product Listing</span>
+        </a>
+        <a class="nav-link" href="payment-report.html">
+          <span><i class="bi bi-receipt"></i> Payment Report</span>
+        </a>
+        <a class="nav-link" href="payment-remittance.html">
+          <span><i class="bi bi-bank"></i> Payment Remittance</span>
+        </a>
+      </nav>
+
+      <div class="frm-nav-header">Customer Fulfillment</div>
+      <nav class="nav flex-column mb-auto">
+        <a class="nav-link" href="order-submit.html">
+          <span><i class="bi bi-cart-plus"></i> Customer-Order Submit</span>
+        </a>
+        <a class="nav-link" href="order-track.html">
+          <span><i class="bi bi-geo-alt"></i> Customer-Order Track</span>
+        </a>
+        <a class="nav-link" href="order-delivery.html">
+          <span><i class="bi bi-check2-circle"></i> Customer-Order Delivery</span>
+        </a>
+      </nav>
+
+      <div class="border-top border-secondary border-opacity-25 pt-3 mt-4">
+        <a href="../uwanbuy/admin/index.html" class="btn btn-sm btn-outline-secondary w-100 text-start text-white-50 d-flex align-items-center justify-content-between">
+          <span><i class="bi bi-shop me-1"></i> Storefront Admin</span>
+          <i class="bi bi-box-arrow-up-right small"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="col-md-9 col-lg-10 p-4">
+      <!-- Top Bar -->
+      <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 pb-2 border-bottom border-secondary border-opacity-25 gap-3">
+        <div>
+          <div class="d-flex align-items-center gap-2 mb-1">
+            <span class="badge badge-frm-emerald py-1 px-2"><i class="bi bi-grid-3x3-gap me-1"></i> Module 01</span>
+            <span class="text-secondary small">| Field Product Catalog & Regional Pitch Sheet</span>
+          </div>
+          <h2 class="fw-bold m-0 text-white font-outfit">FRM Product Listing</h2>
+          <small class="text-secondary">Browse live warehouse inventory, benchmark wholesale prices, and recommended regional selling rates for field marketing</small>
+        </div>
+
+        <div class="d-flex align-items-center gap-2">
+          <button class="btn btn-sm btn-outline-success fw-bold" onclick="openRateCardModal()">
+            <i class="bi bi-printer me-1"></i> Generate Rate Card
+          </button>
+          <a href="order-submit.html" class="btn btn-sm btn-success fw-bold shadow-sm">
+            <i class="bi bi-cart-plus me-1"></i> Create Customer Order
+          </a>
+        </div>
+      </div>
+
+      <!-- Filters & Search Toolbar -->
+      <div class="frm-card p-3 mb-4">
+        <div class="row g-2 align-items-center">
+          <div class="col-md-5">
+            <div class="input-group">
+              <span class="input-group-text bg-dark border-secondary border-opacity-50 text-secondary"><i class="bi bi-search"></i></span>
+              <input type="text" id="searchInput" class="form-control frm-form-control" placeholder="Search products by title, brand, or SKU..." onkeyup="filterProducts()">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <select id="categoryFilter" class="form-select frm-form-select" onchange="filterProducts()">
+              <option value="all">All Regional Categories</option>
+              <option value="groceries">Packaged Groceries</option>
+              <option value="foodstuff">Foodstuff & Agro Commodities</option>
+              <option value="gadgets">Gadgets & Tech</option>
+              <option value="fashion">Fashion & Apparel</option>
+              <option value="home">Home & Living</option>
+            </select>
+          </div>
+          <div class="col-md-3 text-end">
+            <span class="text-secondary small" id="showingCount">0 SKUs listed</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Products Table -->
+      <div class="frm-card p-0 overflow-hidden mb-5">
+        <div class="table-responsive">
+          <table class="table frm-table align-middle">
+            <thead>
+              <tr>
+                <th>Product SKU</th>
+                <th>Category</th>
+                <th>Warehouse Stock</th>
+                <th>Wholesale Floor</th>
+                <th>Retail Selling Price</th>
+                <th>Marketer Margin</th>
+                <th>Unit Type</th>
+                <th class="text-end pe-4">Field Action</th>
+              </tr>
+            </thead>
+            <tbody id="productsTableBody">
+              <tr>
+                <td colspan="8" class="text-center text-muted py-5">Loading catalog products...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Printable Regional Rate Card -->
+<div class="modal fade frm-modal" id="rateCardModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <h5 class="modal-title fw-bold text-white font-outfit">Regional Marketer Daily Rate Card</h5>
+          <small class="text-secondary">Official AreaBazaar wholesale & retail price list for Kwara Regional Hubs</small>
+        </div>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body p-4" id="printableRateCardContent">
+        <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom border-secondary border-opacity-25">
+          <div>
+            <h6 class="fw-bold text-success m-0">AreaBazaar Hyperlocal Commerce</h6>
+            <small class="text-muted">Field Sales Sheet &bull; Valid for: <span id="rateCardDate">Today</span></small>
+          </div>
+          <span class="badge badge-frm-emerald">Kwara Regional Hubs</span>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-sm frm-table">
+            <thead>
+              <tr>
+                <th>Item Description</th>
+                <th>Category</th>
+                <th>Unit</th>
+                <th>Wholesale Floor</th>
+                <th>Recommended Retail</th>
+              </tr>
+            </thead>
+            <tbody id="rateCardTableBody">
+              <!-- Populated dynamically -->
+            </tbody>
+          </table>
+        </div>
+        <small class="text-muted mt-2 d-block">* Prices are subject to daily replenishment updates. Passcode must be verified upon delivery.</small>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary text-white" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success fw-bold" onclick="window.print()">
+          <i class="bi bi-printer me-1"></i> Print / Save PDF
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+<script src="assets/js/frm-engine.js"></script>
+<script>
+  let allProducts = [];
+
+  document.addEventListener('DOMContentLoaded', () => {
+    loadProducts();
+  });
+
+  function loadProducts() {
+    allProducts = frmEngine.getProducts();
+    filterProducts();
+  }
+
+  function filterProducts() {
+    const q = (document.getElementById('searchInput').value || '').toLowerCase();
+    const cat = document.getElementById('categoryFilter').value;
+
+    const filtered = allProducts.filter(p => {
+      const matchQ = p.title.toLowerCase().includes(q) || (p.brand || '').toLowerCase().includes(q) || p.id.toLowerCase().includes(q);
+      const matchCat = cat === 'all' || p.categoryId === cat;
+      return matchQ && matchCat;
+    });
+
+    document.getElementById('showingCount').textContent = `${filtered.length} SKUs listed`;
+    const tbody = document.getElementById('productsTableBody');
+
+    if (filtered.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="8" class="text-center text-muted py-5">No products matched the filter.</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = filtered.map(p => {
+      const costFloor = p.costFloorMinor || (p.priceMinor * 0.8);
+      const price = p.priceMinor || 0;
+      const marginMinor = price - costFloor;
+      const marginPct = price > 0 ? (marginMinor / price) * 100 : 0;
+      const stockQty = p.stock ? p.stock.quantity : 0;
+      const isOutOfStock = stockQty <= 0;
+
+      let stockBadge = `<span class="badge badge-frm-emerald">${stockQty} in stock</span>`;
+      if (isOutOfStock) stockBadge = `<span class="badge badge-frm-red">Out of Stock</span>`;
+      else if (stockQty <= 5) stockBadge = `<span class="badge badge-frm-amber">Low Stock (${stockQty})</span>`;
+
+      return `
+        <tr>
+          <td>
+            <div class="fw-bold text-white">${p.title}</div>
+            <div class="text-muted small">${p.brand || 'AreaBazaar Sourced'} &bull; <span class="font-monospace">${p.id}</span></div>
+          </td>
+          <td><span class="badge badge-frm-slate">${(p.categoryId || 'General').toUpperCase()}</span></td>
+          <td>${stockBadge}</td>
+          <td class="font-monospace text-secondary">${frmEngine.formatNaira(costFloor)}</td>
+          <td class="font-monospace fw-bold text-white">${frmEngine.formatNaira(price)}</td>
+          <td>
+            <span class="font-monospace text-success fw-bold">${frmEngine.formatNaira(marginMinor)}</span>
+            <small class="text-muted d-block">${marginPct.toFixed(1)}% margin</small>
+          </td>
+          <td><span class="badge bg-dark text-white-50 border border-secondary border-opacity-25">${p.unitLabel || 'unit'}</span></td>
+          <td class="text-end pe-4">
+            <a href="order-submit.html?productId=${p.id}" class="btn btn-sm btn-outline-success ${isOutOfStock ? 'disabled' : ''}">
+              <i class="bi bi-cart-plus me-1"></i> Sell SKU
+            </a>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  function openRateCardModal() {
+    document.getElementById('rateCardDate').textContent = new Date().toLocaleDateString('en-NG', { dateStyle: 'full' });
+    const tbody = document.getElementById('rateCardTableBody');
+    tbody.innerHTML = allProducts.map(p => {
+      const costFloor = p.costFloorMinor || (p.priceMinor * 0.8);
+      return `
+        <tr>
+          <td class="fw-bold text-white">${p.title}</td>
+          <td><span class="badge badge-frm-slate">${p.categoryId.toUpperCase()}</span></td>
+          <td class="text-white-50">${p.unitLabel || 'unit'}</td>
+          <td class="font-monospace text-secondary">${frmEngine.formatNaira(costFloor)}</td>
+          <td class="font-monospace fw-bold text-success">${frmEngine.formatNaira(p.priceMinor)}</td>
+        </tr>
+      `;
+    }).join('');
+
+    new bootstrap.Modal(document.getElementById('rateCardModal')).show();
+  }
+</script>
+</body>
+</html>

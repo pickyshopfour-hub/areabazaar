@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FRM Customer-Order Submit | Field Order Intake</title>
+  
+  <link rel="shortcut icon" type="image/x-icon" href="../assetsecm/images/uwanbuy-favicon-brief-color.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
+  <link rel="stylesheet" href="assets/css/frm-style.css">
+</head>
+<body>
+
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-md-3 col-lg-2 frm-sidebar p-3 d-flex flex-column">
+      <div class="d-flex align-items-center justify-content-between mb-3 px-2">
+        <a href="index.html" class="d-flex align-items-center text-decoration-none text-white gap-2">
+          <div class="bg-success text-white rounded p-1 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+            <i class="fa fa-map-marked-alt fs-6"></i>
+          </div>
+          <div>
+            <span class="fw-bold fs-6 tracking-tight d-block">AreaBazaar</span>
+            <span class="frm-brand-badge">FRM Marketing</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="frm-nav-header">Command Center</div>
+      <nav class="nav flex-column">
+        <a class="nav-link" href="index.html">
+          <span><i class="bi bi-speedometer2"></i> Operations Center</span>
+        </a>
+      </nav>
+
+      <div class="frm-nav-header">Field Commercials</div>
+      <nav class="nav flex-column">
+        <a class="nav-link" href="product-listing.html">
+          <span><i class="bi bi-grid-3x3-gap"></i> Product Listing</span>
+        </a>
+        <a class="nav-link" href="payment-report.html">
+          <span><i class="bi bi-receipt"></i> Payment Report</span>
+        </a>
+        <a class="nav-link" href="payment-remittance.html">
+          <span><i class="bi bi-bank"></i> Payment Remittance</span>
+        </a>
+      </nav>
+
+      <div class="frm-nav-header">Customer Fulfillment</div>
+      <nav class="nav flex-column mb-auto">
+        <a class="nav-link active" href="order-submit.html">
+          <span><i class="bi bi-cart-plus"></i> Customer-Order Submit</span>
+        </a>
+        <a class="nav-link" href="order-track.html">
+          <span><i class="bi bi-geo-alt"></i> Customer-Order Track</span>
+        </a>
+        <a class="nav-link" href="order-delivery.html">
+          <span><i class="bi bi-check2-circle"></i> Customer-Order Delivery</span>
+        </a>
+      </nav>
+
+      <div class="border-top border-secondary border-opacity-25 pt-3 mt-4">
+        <a href="../uwanbuy/admin/index.html" class="btn btn-sm btn-outline-secondary w-100 text-start text-white-50 d-flex align-items-center justify-content-between">
+          <span><i class="bi bi-shop me-1"></i> Storefront Admin</span>
+          <i class="bi bi-box-arrow-up-right small"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="col-md-9 col-lg-10 p-4">
+      <!-- Top Bar -->
+      <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 pb-2 border-bottom border-secondary border-opacity-25 gap-3">
+        <div>
+          <div class="d-flex align-items-center gap-2 mb-1">
+            <span class="badge badge-frm-emerald py-1 px-2"><i class="bi bi-cart-plus me-1"></i> Module 04</span>
+            <span class="text-secondary small">| Field Marketer Direct Order Capture</span>
+          </div>
+          <h2 class="fw-bold m-0 text-white font-outfit">FRM Customer-Order Submit</h2>
+          <small class="text-secondary">Capture customer retail & bulk orders on the ground, issue instant delivery passcodes, and trigger warehouse dispatch</small>
+        </div>
+
+        <div class="d-flex align-items-center gap-2">
+          <a href="order-track.html" class="btn btn-sm btn-outline-light">
+            <i class="bi bi-geo-alt me-1"></i> View Order Pipeline
+          </a>
+        </div>
+      </div>
+
+      <!-- Main Order Intake Form Layout -->
+      <form id="orderSubmitForm" onsubmit="handleOrderSubmit(event)">
+        <div class="row g-4">
+          <!-- Left Column: Customer & Items -->
+          <div class="col-lg-8">
+            <!-- Customer Information Card -->
+            <div class="frm-card p-4 mb-4">
+              <h5 class="fw-bold text-white mb-3 font-outfit"><i class="bi bi-person-lines-fill text-success me-2"></i> 1. Customer Profile & Delivery Address</h5>
+              
+              <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                  <label class="form-label small text-secondary fw-bold text-uppercase">Customer Full Name *</label>
+                  <input type="text" id="custName" class="form-control frm-form-control" placeholder="e.g. Alhaji Mustapha / Mama Nkechi" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small text-secondary fw-bold text-uppercase">Customer Phone / WhatsApp *</label>
+                  <input type="text" id="custPhone" class="form-control frm-form-control" placeholder="e.g. 0803-882-9901" required>
+                </div>
+              </div>
+
+              <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                  <label class="form-label small text-secondary fw-bold text-uppercase">Delivery Hub Zone *</label>
+                  <select id="custHub" class="form-select frm-form-select" required>
+                    <option value="Tanke Hub, Ilorin">Tanke Hub (University Rd, Sanrab, Tipper Garage)</option>
+                    <option value="Fate Hub, Ilorin">Fate Hub (GRA, River Basin, Shoprite Axis)</option>
+                    <option value="Sanrab Hub, Ilorin">Sanrab Hub (Student Corridor, Mark Grounds)</option>
+                    <option value="Offa Garage Hub">Offa Garage Hub (Wholesale Agro, Michael Imoudu)</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small text-secondary fw-bold text-uppercase">Submitting Field Marketer *</label>
+                  <select id="custAgent" class="form-select frm-form-select">
+                    <!-- Populated dynamically -->
+                  </select>
+                </div>
+              </div>
+
+              <div class="mb-0">
+                <label class="form-label small text-secondary fw-bold text-uppercase">Specific Delivery Street Address & Landmark *</label>
+                <textarea id="custAddress" class="form-control frm-form-control" rows="2" placeholder="e.g. Suite 4, Beside Bovas Filling Station, University Road, Tanke..." required></textarea>
+              </div>
+            </div>
+
+            <!-- Product Selection Card -->
+            <div class="frm-card p-4">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="fw-bold text-white mb-0 font-outfit"><i class="bi bi-box-seam text-success me-2"></i> 2. Order Line Items</h5>
+                <button type="button" class="btn btn-sm btn-outline-success fw-bold" onclick="addOrderItemRow()">
+                  <i class="bi bi-plus-lg me-1"></i> Add Another Item
+                </button>
+              </div>
+
+              <div class="table-responsive">
+                <table class="table frm-table align-middle">
+                  <thead>
+                    <tr>
+                      <th style="min-width: 280px;">Select Product SKU</th>
+                      <th style="width: 130px;">Unit Price</th>
+                      <th style="width: 100px;">Quantity</th>
+                      <th style="width: 140px;">Line Total</th>
+                      <th style="width: 50px;"></th>
+                    </tr>
+                  </thead>
+                  <tbody id="orderItemsTableBody">
+                    <!-- Dynamically added rows -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Payment, Summary & Submit -->
+          <div class="col-lg-4">
+            <!-- Payment Method Card -->
+            <div class="frm-card p-4 mb-4">
+              <h6 class="fw-bold text-white mb-3 font-outfit"><i class="bi bi-credit-card-2-front text-success me-2"></i> 3. Payment Terms</h6>
+              
+              <div class="mb-3">
+                <div class="form-check p-3 rounded mb-2 bg-dark border border-secondary border-opacity-25">
+                  <input class="form-check-input" type="radio" name="paymentMode" id="payModeImmediate" value="immediate_field_payment" checked onchange="togglePaymentInputs()">
+                  <label class="form-check-label text-white fw-bold small" for="payModeImmediate">
+                    Immediate Field Payment
+                    <small class="text-secondary d-block mt-1">Marketer collected cash or POS swipe on the spot.</small>
+                  </label>
+                </div>
+
+                <div class="form-check p-3 rounded mb-2 bg-dark border border-secondary border-opacity-25">
+                  <input class="form-check-input" type="radio" name="paymentMode" id="payModePOD" value="pay_on_delivery" onchange="togglePaymentInputs()">
+                  <label class="form-check-label text-white fw-bold small" for="payModePOD">
+                    Pay on Delivery (Passcode Handover)
+                    <small class="text-secondary d-block mt-1">Customer pays upon receiving goods from dispatch rider.</small>
+                  </label>
+                </div>
+
+                <div class="form-check p-3 rounded bg-dark border border-secondary border-opacity-25">
+                  <input class="form-check-input" type="radio" name="paymentMode" id="payModeTransfer" value="bank_transfer" onchange="togglePaymentInputs()">
+                  <label class="form-check-label text-white fw-bold small" for="payModeTransfer">
+                    Prepaid Direct Bank Transfer
+                    <small class="text-secondary d-block mt-1">Paid directly to AreaBazaar corporate account.</small>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Extra inputs for immediate payment -->
+              <div id="immediatePaymentDetails" class="p-3 rounded bg-dark border border-success border-opacity-30 mb-3">
+                <label class="form-label small text-success fw-bold text-uppercase">Payment Channel Used</label>
+                <select id="immediateChannel" class="form-select frm-form-select form-select-sm mb-2">
+                  <option value="cash_in_hand">Cash Collected by Marketer</option>
+                  <option value="pos_terminal">Agent POS Terminal Swipe</option>
+                </select>
+                <input type="text" id="immediateRef" class="form-control frm-form-control form-control-sm font-monospace" placeholder="e.g. POS Slip / Receipt No.">
+              </div>
+            </div>
+
+            <!-- Order Grand Total Card -->
+            <div class="frm-card p-4">
+              <h6 class="fw-bold text-white mb-3 font-outfit"><i class="bi bi-receipt-cutoff text-success me-2"></i> Order Summary</h6>
+              
+              <div class="d-flex justify-content-between text-secondary small mb-2">
+                <span>Items Count:</span>
+                <span class="text-white fw-bold font-monospace" id="summaryItemsCount">0 items</span>
+              </div>
+              <div class="d-flex justify-content-between text-secondary small mb-2">
+                <span>Hub Logistics Fee:</span>
+                <span class="text-success fw-bold">FREE (Local Hub)</span>
+              </div>
+              <hr class="border-secondary border-opacity-25 my-3">
+              <div class="d-flex justify-content-between align-items-center mb-4">
+                <span class="fw-bold text-white fs-6">Order Total:</span>
+                <strong class="fs-4 text-success font-monospace" id="summaryGrandTotal">₦0.00</strong>
+              </div>
+
+              <button type="submit" class="btn btn-success btn-lg w-100 fw-bold shadow">
+                <i class="bi bi-check-circle-fill me-1"></i> Submit Customer Order
+              </button>
+              <small class="text-muted d-block text-center mt-2">Generates a unique 4-digit passcode for delivery verification.</small>
+            </div>
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Order Submitted Success Receipt -->
+<div class="modal fade frm-modal" id="modalOrderSuccess" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content text-center p-4">
+      <div class="mb-3">
+        <div class="bg-success text-white rounded-circle d-inline-flex p-3 shadow-lg">
+          <i class="bi bi-check-lg fs-1"></i>
+        </div>
+      </div>
+      <h4 class="fw-bold text-white font-outfit mb-1">Customer Order Submitted!</h4>
+      <p class="text-secondary small mb-3">Order has been dispatched to WHM Collation and local hub dispatch.</p>
+
+      <div class="p-3 rounded bg-dark border border-secondary border-opacity-25 text-start mb-3">
+        <div class="d-flex justify-content-between mb-1">
+          <span class="small text-secondary">Order ID:</span>
+          <strong class="font-monospace text-white" id="successOrderId">ORD-FRM-00000</strong>
+        </div>
+        <div class="d-flex justify-content-between mb-1">
+          <span class="small text-secondary">Customer:</span>
+          <strong class="text-white" id="successCustomer">Name</strong>
+        </div>
+        <div class="d-flex justify-content-between mb-2">
+          <span class="small text-secondary">Total Amount:</span>
+          <strong class="font-monospace text-success" id="successTotal">₦0.00</strong>
+        </div>
+        <hr class="border-secondary border-opacity-25 my-2">
+        <div class="p-2 rounded bg-success bg-opacity-10 border border-success border-opacity-30 text-center">
+          <small class="text-uppercase fw-bold text-success d-block">Customer Delivery Passcode</small>
+          <span class="fs-2 fw-bold text-warning font-monospace letter-spacing-2" id="successPasscode">0000</span>
+          <small class="text-muted d-block mt-1">Customer must present this 4-digit passcode to the delivery rider upon handover.</small>
+        </div>
+      </div>
+
+      <div class="d-flex gap-2">
+        <button type="button" class="btn btn-outline-secondary w-50" data-bs-dismiss="modal">Close</button>
+        <a href="order-track.html" class="btn btn-success fw-bold w-50">
+          <i class="bi bi-geo-alt me-1"></i> Track Order
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+<script src="assets/js/frm-engine.js"></script>
+<script>
+  let catalog = [];
+  let rowCounter = 0;
+
+  document.addEventListener('DOMContentLoaded', () => {
+    catalog = frmEngine.getProducts();
+    populateAgentDropdown();
+    
+    // Check if URL has a productId pre-selected
+    const urlParams = new URLSearchParams(window.location.search);
+    const prefillPrdId = urlParams.get('productId');
+    
+    addOrderItemRow(prefillPrdId);
+  });
+
+  function populateAgentDropdown() {
+    const agents = frmEngine.getAgents();
+    document.getElementById('custAgent').innerHTML = agents.map(a => `<option value="${a.id}|${a.name}">${a.name} (${a.hub})</option>`).join('');
+  }
+
+  function addOrderItemRow(selectedPrdId = null) {
+    rowCounter++;
+    const rowId = `item_row_${rowCounter}`;
+    const tbody = document.getElementById('orderItemsTableBody');
+
+    const tr = document.createElement('tr');
+    tr.id = rowId;
+
+    let options = catalog.map(p => {
+      const isSelected = selectedPrdId && selectedPrdId === p.id;
+      return `<option value="${p.id}" data-price="${p.priceMinor || 0}" ${isSelected ? 'selected' : ''}>${p.title} (${frmEngine.formatNaira(p.priceMinor)})</option>`;
+    }).join('');
+
+    tr.innerHTML = `
+      <td>
+        <select class="form-select frm-form-select form-select-sm prd-select" onchange="updateRowCalculations('${rowId}')">
+          ${options}
+        </select>
+      </td>
+      <td>
+        <span class="font-monospace text-white small row-unit-price">₦0.00</span>
+      </td>
+      <td>
+        <input type="number" class="form-control frm-form-control form-control-sm text-center row-qty font-monospace" min="1" value="1" oninput="updateRowCalculations('${rowId}')">
+      </td>
+      <td>
+        <strong class="font-monospace text-success small row-line-total">₦0.00</strong>
+      </td>
+      <td class="text-end">
+        <button type="button" class="btn btn-sm btn-outline-danger py-0 px-2" onclick="removeOrderItemRow('${rowId}')">
+          <i class="bi bi-x"></i>
+        </button>
+      </td>
+    `;
+
+    tbody.appendChild(tr);
+    updateRowCalculations(rowId);
+  }
+
+  function removeOrderItemRow(rowId) {
+    const row = document.getElementById(rowId);
+    if (row) {
+      row.remove();
+      updateGrandTotal();
+    }
+  }
+
+  function updateRowCalculations(rowId) {
+    const row = document.getElementById(rowId);
+    if (!row) return;
+
+    const select = row.querySelector('.prd-select');
+    const selectedOpt = select.options[select.selectedIndex];
+    const unitPriceMinor = selectedOpt ? Number(selectedOpt.dataset.price) : 0;
+    const qty = parseInt(row.querySelector('.row-qty').value) || 1;
+    const lineTotalMinor = unitPriceMinor * qty;
+
+    row.querySelector('.row-unit-price').textContent = frmEngine.formatNaira(unitPriceMinor);
+    row.querySelector('.row-line-total').textContent = frmEngine.formatNaira(lineTotalMinor);
+    row.dataset.lineTotalMinor = lineTotalMinor;
+    row.dataset.unitPriceMinor = unitPriceMinor;
+
+    updateGrandTotal();
+  }
+
+  function updateGrandTotal() {
+    let grandTotalMinor = 0;
+    let totalItems = 0;
+
+    document.querySelectorAll('#orderItemsTableBody tr').forEach(row => {
+      const lineTotal = Number(row.dataset.lineTotalMinor) || 0;
+      const qty = parseInt(row.querySelector('.row-qty').value) || 1;
+      grandTotalMinor += lineTotal;
+      totalItems += qty;
+    });
+
+    document.getElementById('summaryItemsCount').textContent = `${totalItems} units`;
+    document.getElementById('summaryGrandTotal').textContent = frmEngine.formatNaira(grandTotalMinor);
+  }
+
+  function togglePaymentInputs() {
+    const isImmediate = document.getElementById('payModeImmediate').checked;
+    document.getElementById('immediatePaymentDetails').style.display = isImmediate ? 'block' : 'none';
+  }
+
+  function handleOrderSubmit(e) {
+    e.preventDefault();
+
+    const items = [];
+    document.querySelectorAll('#orderItemsTableBody tr').forEach(row => {
+      const select = row.querySelector('.prd-select');
+      const prdId = select.value;
+      const prd = catalog.find(p => p.id === prdId);
+      const qty = parseInt(row.querySelector('.row-qty').value) || 1;
+      const unitPriceMinor = Number(row.dataset.unitPriceMinor) || 0;
+      const lineTotalMinor = Number(row.dataset.lineTotalMinor) || 0;
+
+      if (prd) {
+        items.push({
+          productId: prd.id,
+          title: prd.title,
+          quantity: qty,
+          unitPriceMinor: unitPriceMinor,
+          lineTotalMinor: lineTotalMinor
+        });
+      }
+    });
+
+    if (items.length === 0) {
+      iziToast.warning({ title: 'No Items', message: 'Please add at least one product item to the order.', position: 'topRight' });
+      return;
+    }
+
+    const [agentId, agentName] = document.getElementById('custAgent').value.split('|');
+    const paymentMode = document.querySelector('input[name="paymentMode"]:checked').value;
+    const totalMinor = items.reduce((acc, it) => acc + it.lineTotalMinor, 0);
+
+    const data = {
+      customerName: document.getElementById('custName').value,
+      customerPhone: document.getElementById('custPhone').value,
+      customerAddress: document.getElementById('custAddress').value,
+      hub: document.getElementById('custHub').value,
+      agentId: agentId,
+      agentName: agentName,
+      items: items,
+      totalAmountMinor: totalMinor,
+      paymentMode: paymentMode,
+      immediatePaymentChannel: document.getElementById('immediateChannel').value,
+      immediatePaymentRef: document.getElementById('immediateRef').value
+    };
+
+    const res = frmEngine.submitCustomerOrder(data);
+
+    // Show Success Modal
+    document.getElementById('successOrderId').textContent = res.order.id;
+    document.getElementById('successCustomer').textContent = res.order.customerName;
+    document.getElementById('successTotal').textContent = frmEngine.formatNaira(res.order.totalAmountMinor);
+    document.getElementById('successPasscode').textContent = res.order.passcode;
+
+    new bootstrap.Modal(document.getElementById('modalOrderSuccess')).show();
+    document.getElementById('orderSubmitForm').reset();
+    document.getElementById('orderItemsTableBody').innerHTML = '';
+    addOrderItemRow();
+  }
+</script>
+</body>
+</html>
