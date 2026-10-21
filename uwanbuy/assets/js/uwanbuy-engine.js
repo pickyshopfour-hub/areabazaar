@@ -111,7 +111,24 @@
         },
 
         getAllProducts() {
-            return (this.data && this.data.products) || [];
+            const base = (this.data && this.data.products) || [];
+            try {
+                const adminProds = JSON.parse(localStorage.getItem('uwanbuy_admin_products') || '[]');
+                if (adminProds && adminProds.length) {
+                    const idMap = new Map();
+                    adminProds.forEach(p => idMap.set(p.id, p));
+                    const merged = base.map(p => idMap.has(p.id) ? idMap.get(p.id) : p);
+                    adminProds.forEach(p => {
+                        if (!merged.some(m => m.id === p.id)) {
+                            merged.unshift(p);
+                        }
+                    });
+                    return merged;
+                }
+            } catch (e) {
+                console.warn('Error reading admin products:', e);
+            }
+            return base;
         },
 
         getProductById(id) {
@@ -119,12 +136,12 @@
         },
 
         getProductsBySection(sectionKey) {
-            return this.getAllProducts().filter(p => p.sectionKey === sectionKey);
+            return this.getAllProducts().filter(p => (p.sectionKey === sectionKey || p.categoryId === sectionKey || p.category === sectionKey) && p.published !== false);
         },
 
         getProductsByCategory(categoryId) {
-            if (!categoryId || categoryId === 'all') return this.getAllProducts();
-            return this.getAllProducts().filter(p => p.categoryId === categoryId || p.sectionKey === categoryId);
+            if (!categoryId || categoryId === 'all') return this.getAllProducts().filter(p => p.published !== false);
+            return this.getAllProducts().filter(p => (p.categoryId === categoryId || p.sectionKey === categoryId || p.category === categoryId) && p.published !== false);
         },
 
         bindEvents() {

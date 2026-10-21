@@ -348,3 +348,109 @@ To conserve computational resources and eliminate unbounded catalog scans:
   - `moq` (Minimum Order Quantity): Client and server enforce that total units selected across any combination of pool items satisfy `sum(quantities) >= moq`.
 - **Storefront Parity:** This multi-product flat-rate liquidation architecture, responsive offcanvas drawer, and 15-minute batch tracking queue serve as the standard reference implementation for Thrift-Z and Betasup.
 
+---
+
+### 8. Autonomous Admin Suite: Catalog, Variants, Auction Prep & Session Wave Controller
+
+This section specifies the data structures, operational lifecycles, and state machine transitions governing autonomous storefront administration (`uwanbuy/admin/products.html` and `uwanbuy/admin/auctions.html`).
+
+#### 8.1 Product & Variant Data Model with Split Inventory Allocation
+
+Storefronts maintain autonomous product catalogs segmented by departmental categories (`groceries`, `gadgets`, `fashion`, `home`, `appliances`, `foodstuff`).
+
+```json
+{
+  "id": "uw_adm_1729501234",
+  "title": "Binatone 1.5L Blender with Grinder Mill",
+  "categoryId": "gadgets",
+  "categoryName": "Gadgets & Tech",
+  "brand": "Binatone",
+  "priceMinor": 1850000,
+  "unitLabel": "unit",
+  "stockQty": 30,
+  "moq": 1,
+  "description": "450W motor with overheat protection and dry mill attachment",
+  "image": "assets/images/placeholders/water-boiler.svg",
+  "published": true,
+  "isAuction": false,
+  "variants": [
+    {
+      "id": "var_991",
+      "name": "Color",
+      "value": "White/Blue",
+      "priceDeltaMinor": 0,
+      "stock": 15
+    },
+    {
+      "id": "var_992",
+      "name": "Color",
+      "value": "Stainless Black",
+      "priceDeltaMinor": 150000,
+      "stock": 15
+    }
+  ]
+}
+```
+
+- **Variant Price Evaluation:** Computed dynamically as `effectivePriceMinor = basePriceMinor + variant.priceDeltaMinor`.
+- **Inventory Decrement:** Orders decrements both the root `stockQty` and the specific variant `stock`. When total `stockQty === 0`, status changes to `out_of_stock`.
+
+#### 8.2 Bulk Spreadsheet Ingestion (Excel / CSV)
+
+- **Engine Ingestion Support:** Compatible with `.xlsx`, `.xls`, and `.csv` files.
+- **Header Parsing Validation:**
+  - Mandatory columns: `title`, `category`, `price`, `stock`.
+  - Optional columns: `brand`, `unitLabel`, `moq`, `description`, `variants`.
+  - Serialized Variant Syntax: `OptionName:PriceDelta:Stock|OptionName2:PriceDelta2:Stock2` (e.g. `Black:0:15|Silver:500:15`).
+- **Validation Constraints:** Prices must be $\ge 100$ NGN; stock must be $\ge 0$; category must match registered storefront taxonomy.
+
+#### 8.3 UWB-Adm Auction Prep & Diagnostics Integration
+
+Transforms standard catalog SKUs into complex auction items before assigning them to broadcast sessions:
+
+- **Variant-Bundle Allocation (`prod-var + qnty/split`):** Enables single or multi-variant bundling with specified inventory allocation per variant.
+- **Condition Diagnostics:** Grounded in technical inspection benchmarks (e.g., `product-specs.pdf`):
+  - Physical Grade: `Brand New (Factory Sealed)`, `Grade A (Pre-Inspected)`, `Certified Open Box`, `Factory Overstock Tested`.
+  - Diagnostic Checklists: Component-level health certifications (Heating Coil, Magnetron, Inverter Motor, Battery Health, Safety Seals).
+- **Configurable Pricing Models:**
+  - `flat_rate`: Configurable uniform pool price (e.g. ₦12,500, ₦5,000, or custom pool tier).
+  - `price_wave`: Starting wave price, step decrement amount, step duration interval, and reserve floor price.
+  - `bid_and_win`: Opening bid, reserve price floor, and minimum increment step.
+  - `stock_cap`: Community volume target and unlocked wholesale price.
+  - `time_cap`: Blitz deal price and strict countdown minutes.
+- **Admin Internal Safeguards:** Wholesale cost floor, vendor source tracking, and minimum profit margins hidden from public view.
+
+#### 8.4 Auction Session List Builder & Auto Wave Curves
+
+- **Session Entities:** Encompass session code, fulfillment hub, scheduled window, and adopted item IDs.
+- **Auto Wave Generator:**
+  $$\text{Wave Price}_i = \max\left(\text{Floor Price}, \text{Start Price} \times (1 - 0.10 \times i)\right)$$
+  Generates an optimal 4-step progressive drop schedule towards the operator's floor reserve.
+
+#### 8.5 Live Session Controller State Machine
+
+```mermaid
+stateDiagram-v2
+    [*] --> DRAFT
+    DRAFT --> SCHEDULED: Assign Session & Adopt Lots
+    SCHEDULED --> LIVE: Start Session (Go Live)
+    LIVE --> PAUSED: Pause Session
+    PAUSED --> LIVE: Resume Session
+    LIVE --> WAVE_ADVANCED: Advance Wave Interval
+    WAVE_ADVANCED --> LIVE: New Step Broadcast
+    LIVE --> WINNER_LOCKED: Accept Winning Bid
+    WINNER_LOCKED --> CONCLUDED: End Session & Generate Passcodes
+    CONCLUDED --> [*]
+```
+
+- **Winner Settlement:** Accepting a winning bid locks the item price, binds the winning customer credentials, decrements allocated variant stock, generates a 4-digit pickup passcode (`UWB-PASS-XXXX`), and places the order in `confirmed_awaiting_payment` state.
+
+#### 8.6 Customer Storefront Gallery Segregation
+
+- **Customer Auction Deals Page (`auctions/index.html`):**
+  - Dedicated storefront admin card removed from customer view.
+  - Replaced with 5 distinct product galleries by auction format, equipped with instant filter pills.
+- **Customer Landing Page (`index.html`):**
+  - Live cross-format auction gallery section with real-time format pills, active bid/wave metrics, and direct auction room entry points.
+
+

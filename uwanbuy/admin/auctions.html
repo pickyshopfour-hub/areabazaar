@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auction Setup & MOQ Control | UwanBUY Storefront Admin</title>
+    <title>UWB-Adm Auction Prep, Session Waves & Live Controller | UwanBUY Admin</title>
 
     <link rel="shortcut icon" type="image/x-icon" href="../../assetsecm/images/uwanbuy-favicon-brief-color.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -54,6 +54,53 @@
         .admin-sidebar .nav-link.active {
             background-color: var(--uw-brand);
         }
+
+        .nav-tabs-custom .nav-link {
+            font-weight: 700;
+            color: #64748b;
+            border: none;
+            border-bottom: 3px solid transparent;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0;
+        }
+
+        .nav-tabs-custom .nav-link.active {
+            color: var(--uw-brand);
+            border-bottom: 3px solid var(--uw-brand);
+            background: transparent;
+        }
+
+        .live-stage-card {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #ffffff;
+            border-radius: 16px;
+            padding: 1.5rem;
+        }
+
+        .wave-curve-pill {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .pulse-live {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #ef4444;
+            animation: pulse-dot 1.5s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.4); opacity: 0.4; }
+            100% { transform: scale(1); opacity: 1; }
+        }
     </style>
 </head>
 
@@ -72,8 +119,11 @@
                     <a class="nav-link" href="index.html">
                         <i class="bi bi-speedometer2"></i> Dashboard
                     </a>
+                    <a class="nav-link" href="products.html">
+                        <i class="bi bi-box-seam"></i> Products + Variants
+                    </a>
                     <a class="nav-link active" href="auctions.html">
-                        <i class="bi bi-hammer"></i> Auction Setup & MOQ
+                        <i class="bi bi-hammer"></i> Auction Prep & Waves
                     </a>
                     <a class="nav-link" href="reconciliation.html">
                         <i class="bi bi-receipt-cutoff"></i> Reconciliation
@@ -85,49 +135,439 @@
 
                 <div class="border-top border-secondary pt-3 mt-4">
                     <a href="../auctions/index.html" class="btn btn-sm btn-outline-light w-100">
-                        <i class="bi bi-hammer me-1"></i> View Live Auctions
+                        <i class="bi bi-shop me-1"></i> View Live Storefront Auctions
                     </a>
                 </div>
             </div>
 
             <!-- Main Content Area -->
             <div class="col-md-9 col-lg-10 p-4">
-                <div class="d-flex justify-content-between align-items-center mb-4">
+
+                <!-- Header -->
+                <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
                     <div>
-                        <span class="badge bg-danger-subtle text-danger fw-bold small">Hyperlocal Auction Rules</span>
-                        <h2 class="fw-bold text-dark m-0">Auction Setup & MOQ Control</h2>
-                        <small class="text-muted">Configure live auction formats, set backend-enforced Minimum Order Quantities (MOQ)</small>
+                        <span class="badge bg-danger-subtle text-danger fw-bold small">UWB-Adm Auction Suite</span>
+                        <h2 class="fw-bold text-dark m-0">Auction Prep, Session Waves & Live Control</h2>
+                        <small class="text-muted">Item preparation with variant bundles & diagnostics, session wave engine, and real-time controller</small>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <span class="badge bg-white text-dark border p-2 d-flex align-items-center gap-2">
+                            <span class="pulse-live"></span>
+                            <span>Session Status: <strong id="headerSessionStatus" class="text-danger">READY</strong></span>
+                        </span>
                     </div>
                 </div>
 
-                <!-- Info Alert -->
-                <div class="alert alert-info border-0 rounded-3 shadow-sm p-3 mb-4 d-flex align-items-center gap-3">
-                    <i class="bi bi-info-circle-fill fs-3 text-info"></i>
-                    <div class="small">
-                        <strong>MOQ Rule Verification:</strong> When any customer wins or checks out from an auction page, the backend validates their order quantity against the configured <code>moq</code> parameter. Updating it here immediately applies to customer checkout flows.
-                    </div>
-                </div>
+                <!-- Navigation Tabs -->
+                <ul class="nav nav-tabs nav-tabs-custom mb-4" id="auctionTabs" role="tablist">
+                    <li class="nav-item">
+                        <button class="nav-link active" id="tab-prep-btn" data-bs-toggle="tab" data-bs-target="#tab-prep" type="button">
+                            <i class="bi bi-clipboard2-plus me-1"></i> 1. Auction Prep & Items
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" id="tab-session-btn" data-bs-toggle="tab" data-bs-target="#tab-session" type="button">
+                            <i class="bi bi-diagram-3 me-1"></i> 2. Build Session List + Waves
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" id="tab-controller-btn" data-bs-toggle="tab" data-bs-target="#tab-controller" type="button">
+                            <i class="bi bi-broadcast me-1 text-danger"></i> 3. Control Auction Sessions ==&gt;&gt;
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" id="tab-moq-btn" data-bs-toggle="tab" data-bs-target="#tab-moq" type="button">
+                            <i class="bi bi-sliders me-1"></i> 4. MOQ & Format Rules
+                        </button>
+                    </li>
+                </ul>
 
-                <!-- Auctions Table -->
-                <div class="card border-0 rounded-4 shadow-sm bg-white p-4">
-                    <h5 class="fw-bold text-dark mb-3">Live Storefront Auctions</h5>
-                    <div class="table-responsive">
-                        <table class="table table-hover align-middle mb-0">
-                            <thead class="table-light">
-                                <tr>
-                                    <th>Auction Format</th>
-                                    <th>Item Title</th>
-                                    <th>Category</th>
-                                    <th>Base / Current Price</th>
-                                    <th style="width: 140px;">MOQ (Units)</th>
-                                    <th class="text-end">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody id="adminAuctionsTableBody">
-                                <!-- Populated dynamically -->
-                            </tbody>
-                        </table>
+                <!-- Tabs Content -->
+                <div class="tab-content">
+
+                    <!-- ========================================== -->
+                    <!-- TAB 1: AUCTION PREP & ITEM CREATION -->
+                    <!-- ========================================== -->
+                    <div class="tab-pane fade show active" id="tab-prep" role="tabpanel">
+                        <div class="row g-4">
+                            <!-- Left: Create Auction Item Form -->
+                            <div class="col-lg-5">
+                                <div class="card border-0 rounded-4 shadow-sm bg-white p-4">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <h5 class="fw-bold text-dark m-0"><i class="bi bi-plus-circle text-danger me-2"></i> Create Auction Item</h5>
+                                        <span class="badge bg-light text-dark border">UWB-Prep</span>
+                                    </div>
+                                    <form id="formCreateAuctionItem">
+                                        <!-- Product Selection -->
+                                        <div class="mb-3">
+                                            <label class="form-label small fw-bold">Select Base Product <span class="text-danger">*</span></label>
+                                            <select class="form-select" id="prepProductSelect" required>
+                                                <!-- Populated dynamically from catalog -->
+                                            </select>
+                                        </div>
+
+                                        <!-- Variants & Quantity / Split Allocation -->
+                                        <div class="border rounded-3 p-3 bg-light mb-3">
+                                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                                <label class="form-label small fw-bold m-0"><i class="bi bi-diagram-2 text-danger me-1"></i> Product-Variants Allocation (prod-var + qnty/split)</label>
+                                            </div>
+                                            <div id="prepVariantsAllocationContainer" class="d-flex flex-column gap-2">
+                                                <!-- Dynamic variant splits -->
+                                            </div>
+                                            <div class="d-flex justify-content-between small text-muted mt-2">
+                                                <span>Total Item Lot Quantity:</span>
+                                                <strong class="text-dark" id="prepTotalAllocatedQty">10 units</strong>
+                                            </div>
+                                        </div>
+
+                                        <!-- Auction Format & Pricing Structure -->
+                                        <div class="mb-3">
+                                            <label class="form-label small fw-bold">Auction Format <span class="text-danger">*</span></label>
+                                            <select class="form-select" id="prepAuctionFormat" required>
+                                                <option value="bid_and_win">Bid & Win (Live Incremental Bids)</option>
+                                                <option value="flat_rate">Flat-Rate Liquidation Pool (Uniform Flat Price)</option>
+                                                <option value="price_wave" selected>Price Wave (Dynamic Step-Down Curve)</option>
+                                                <option value="stock_cap">Stock Cap (Community Bulk Target)</option>
+                                                <option value="time_cap">Time Cap (Strict Countdown Blitz)</option>
+                                            </select>
+                                        </div>
+
+                                        <!-- Dynamic Pricing Inputs depending on format -->
+                                        <div class="p-3 border rounded-3 bg-light mb-3" id="prepPricingFields">
+                                            <!-- Injected dynamically based on format -->
+                                        </div>
+
+                                        <!-- Extras & Bundles -->
+                                        <div class="mb-3">
+                                            <label class="form-label small fw-bold">Add Extras & Perks</label>
+                                            <input type="text" class="form-control" id="prepExtras" placeholder="e.g. 1-Yr Extended Warranty + Free Tanke Hub Delivery + Safety Kit">
+                                        </div>
+
+                                        <!-- Intro & Marketing Description -->
+                                        <div class="mb-3">
+                                            <label class="form-label small fw-bold">Intro & Marketing Description</label>
+                                            <textarea class="form-control" id="prepDescription" rows="2" placeholder="Catchy hook and essential specs for storefront buyers"></textarea>
+                                        </div>
+
+                                        <!-- Conditions & Diagnostics (product-specs.pdf) -->
+                                        <div class="border rounded-3 p-3 bg-light mb-3">
+                                            <label class="form-label small fw-bold text-dark"><i class="bi bi-patch-check text-success me-1"></i> Physical Condition & Spec Diagnostics</label>
+                                            <div class="row g-2 mb-2">
+                                                <div class="col-6">
+                                                    <select class="form-select form-select-sm" id="prepConditionGrade">
+                                                        <option value="Brand New (Factory Sealed)">Brand New (Factory Sealed)</option>
+                                                        <option value="Grade A (Pre-Inspected)" selected>Grade A (Pre-Inspected)</option>
+                                                        <option value="Certified Open Box">Certified Open Box</option>
+                                                        <option value="Factory Overstock Tested">Factory Overstock Tested</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-6">
+                                                    <input type="text" class="form-control form-control-sm" id="prepDiagnosticNotes" placeholder="e.g. Coil/Compressor 100% OK">
+                                                </div>
+                                            </div>
+                                            <div class="d-flex flex-wrap gap-2 text-xs">
+                                                <span class="badge bg-white text-dark border"><i class="bi bi-check text-success"></i> 220-240V Rated</span>
+                                                <span class="badge bg-white text-dark border"><i class="bi bi-check text-success"></i> Pressure Checked</span>
+                                                <span class="badge bg-white text-dark border"><i class="bi bi-check text-success"></i> Thermal Safe</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Admin Internal Notes -->
+                                        <div class="mb-3">
+                                            <label class="form-label small fw-bold text-secondary">Admin Internal Notes (Confidential)</label>
+                                            <input type="text" class="form-control form-control-sm" id="prepInternalNotes" placeholder="Supplier source, wholesale cost reserve floor, margins">
+                                        </div>
+
+                                        <!-- Assign to Session List -->
+                                        <div class="mb-3">
+                                            <label class="form-label small fw-bold">Assign to Auction-Session List</label>
+                                            <select class="form-select" id="prepAssignSession">
+                                                <option value="sess_evening_blitz">Tanke Evening Mega Blitz (Active Session)</option>
+                                                <option value="sess_weekend_market">Weekend Liquidation Fair (Draft Session)</option>
+                                                <option value="unassigned">Keep in Prepared Queue (Unassigned)</option>
+                                            </select>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-danger w-100 fw-bold py-2 shadow-sm">
+                                            <i class="bi bi-check2-circle me-1"></i> Save & Queue Auction Item
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <!-- Right: Prepared Auction Items Roster -->
+                            <div class="col-lg-7">
+                                <div class="card border-0 rounded-4 shadow-sm bg-white p-4">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <div>
+                                            <h5 class="fw-bold text-dark m-0">Prepared Auction Items Roster</h5>
+                                            <small class="text-muted">Items staged with variant bundles ready for adoption into live sessions</small>
+                                        </div>
+                                        <span class="badge bg-dark rounded-pill px-3 py-2 fw-bold" id="preparedItemsCountBadge">0 Items</span>
+                                    </div>
+
+                                    <div class="table-responsive">
+                                        <table class="table table-hover align-middle mb-0" id="preparedItemsTable">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th>Item & Title</th>
+                                                    <th>Format</th>
+                                                    <th>Pricing / Rate</th>
+                                                    <th>Allocated Variants</th>
+                                                    <th>Assigned Session</th>
+                                                    <th class="text-end">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="preparedItemsTableBody">
+                                                <!-- Dynamic rows -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
+                    <!-- ========================================== -->
+                    <!-- TAB 2: BUILD AUCTION SESSION LIST + WAVES -->
+                    <!-- ========================================== -->
+                    <div class="tab-pane fade" id="tab-session" role="tabpanel">
+                        <div class="row g-4">
+                            <!-- Session Configuration -->
+                            <div class="col-lg-4">
+                                <div class="card border-0 rounded-4 shadow-sm bg-white p-4 mb-4">
+                                    <h5 class="fw-bold text-dark mb-3"><i class="bi bi-sliders2 text-danger me-2"></i> Session Configuration</h5>
+                                    <form id="formSessionConfig">
+                                        <div class="mb-3">
+                                            <label class="form-label small fw-bold">Session Title</label>
+                                            <input type="text" class="form-control" id="sessTitle" value="Tanke Hyperlocal Evening Mega Auction">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label small fw-bold">Session Code / ID</label>
+                                            <input type="text" class="form-control" id="sessCode" value="SESS-UWB-202610-01" readonly>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label small fw-bold">Fulfillment Hub</label>
+                                            <input type="text" class="form-control" id="sessHub" value="Tanke Hub, Ilorin" readonly>
+                                        </div>
+                                        <div class="row g-2 mb-3">
+                                            <div class="col-6">
+                                                <label class="form-label small fw-bold">Scheduled Date</label>
+                                                <input type="date" class="form-control" id="sessDate" value="2026-10-21">
+                                            </div>
+                                            <div class="col-6">
+                                                <label class="form-label small fw-bold">Start Time</label>
+                                                <input type="time" class="form-control" id="sessTime" value="18:00">
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn btn-outline-dark w-100 fw-bold" id="btnSaveSessionConfig">
+                                            <i class="bi bi-save me-1"></i> Save Configuration
+                                        </button>
+                                    </form>
+                                </div>
+
+                                <!-- Auto Wave Curve Generator -->
+                                <div class="card border-0 rounded-4 shadow-sm bg-white p-4">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <h5 class="fw-bold text-dark m-0"><i class="bi bi-activity text-danger me-2"></i> Wave Curve Engine</h5>
+                                        <span class="badge bg-primary-subtle text-primary fw-bold">Dynamic Step-Down</span>
+                                    </div>
+                                    <p class="text-muted small mb-3">For Price Wave items, build a progressive downward step curve automatically or with custom intervals.</p>
+                                    
+                                    <button type="button" class="btn btn-danger w-100 fw-bold py-2 shadow-sm mb-3" id="btnAutoWaveCurve">
+                                        <i class="bi bi-magic me-1"></i> Set Default - Auto Wave Curve
+                                    </button>
+
+                                    <div class="d-flex flex-column gap-2" id="waveCurvePreviewContainer">
+                                        <!-- Injected wave step preview -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Build Session List (Adopt Multiple Items) -->
+                            <div class="col-lg-8">
+                                <div class="card border-0 rounded-4 shadow-sm bg-white p-4">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <div>
+                                            <h5 class="fw-bold text-dark m-0">Adopt Auction Items into Active Session</h5>
+                                            <small class="text-muted">Select multiple prepared auction lots to include in the scheduled broadcast roster</small>
+                                        </div>
+                                        <button class="btn btn-danger btn-sm rounded-pill fw-bold px-3 shadow-sm" id="btnAdoptSelectedItems">
+                                            <i class="bi bi-check-all me-1"></i> Adopt Selected into Session
+                                        </button>
+                                    </div>
+
+                                    <div class="table-responsive">
+                                        <table class="table table-hover align-middle mb-0">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th style="width: 40px;">
+                                                        <input type="checkbox" class="form-check-input" id="checkAdoptAll">
+                                                    </th>
+                                                    <th>Item Title</th>
+                                                    <th>Format</th>
+                                                    <th>Base / Flat / Floor Price</th>
+                                                    <th>MOQ</th>
+                                                    <th>Status in Session</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="sessionAdoptTableBody">
+                                                <!-- Dynamic items list -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ========================================== -->
+                    <!-- TAB 3: CONTROL AUCTION SESSIONS (LIVE CONTROLLER) -->
+                    <!-- ========================================== -->
+                    <div class="tab-pane fade" id="tab-controller" role="tabpanel">
+                        <!-- Live Master Switch & Control Bar -->
+                        <div class="live-stage-card mb-4 shadow">
+                            <div class="row align-items-center g-3">
+                                <div class="col-lg-6">
+                                    <div class="d-flex align-items-center gap-3 mb-2">
+                                        <span class="pulse-live"></span>
+                                        <span class="badge bg-danger rounded-pill px-3 py-1 fw-bold text-uppercase" id="liveSessionBadge">LIVE BROADCAST</span>
+                                        <span class="text-white-50 small">&bull; Tanke Evening Mega Blitz</span>
+                                    </div>
+                                    <h3 class="fw-bold text-white m-0">Active Lot: <span id="liveActiveLotTitle" class="text-warning">1.5 HP Inverter Split AC Unit</span></h3>
+                                    <p class="text-white-50 small mb-0 mt-1">Stage Format: <strong class="text-white" id="liveActiveLotFormat">Price Wave Dynamic Downward Curve</strong></p>
+                                </div>
+                                <div class="col-lg-6 text-lg-end">
+                                    <div class="d-flex flex-wrap justify-content-lg-end gap-2">
+                                        <button class="btn btn-outline-light btn-sm rounded-pill fw-bold px-3" id="btnCtrlPause">
+                                            <i class="bi bi-pause-circle me-1"></i> Pause Session
+                                        </button>
+                                        <button class="btn btn-warning btn-sm rounded-pill fw-bold px-3 text-dark shadow-sm" id="btnCtrlAdvanceWave">
+                                            <i class="bi bi-arrow-down-right-circle-fill me-1"></i> Advance to Next Wave
+                                        </button>
+                                        <button class="btn btn-success btn-sm rounded-pill fw-bold px-3 shadow-sm" id="btnCtrlAcceptBid">
+                                            <i class="bi bi-hammer me-1"></i> Accept Winning Bid & Lock Winner
+                                        </button>
+                                        <button class="btn btn-danger btn-sm rounded-pill fw-bold px-3" id="btnCtrlEndSession">
+                                            <i class="bi bi-stop-circle me-1"></i> End Session
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Live Lot Feed & Real-time Metrics -->
+                        <div class="row g-4">
+                            <!-- Left: Active Lot Real-time Dashboard -->
+                            <div class="col-lg-6">
+                                <div class="card border-0 rounded-4 shadow-sm bg-white p-4">
+                                    <h5 class="fw-bold text-dark mb-3"><i class="bi bi-speedometer text-danger me-2"></i> Stage Metrics & Live Ticker</h5>
+                                    
+                                    <div class="row g-3 mb-3">
+                                        <div class="col-6">
+                                            <div class="p-3 bg-light rounded-3">
+                                                <small class="text-muted text-uppercase fw-bold text-xs d-block">Current Stage Price</small>
+                                                <h3 class="fw-extrabold text-danger m-0" id="liveTickerPrice">₦182,500</h3>
+                                                <small class="text-muted" id="liveTickerSub">Wave Drop: -₦2,500</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="p-3 bg-light rounded-3">
+                                                <small class="text-muted text-uppercase fw-bold text-xs d-block">Stage Timer / Interval</small>
+                                                <h3 class="fw-extrabold text-dark m-0" id="liveTickerTimer">00:18s</h3>
+                                                <small class="text-success fw-bold">Active Interval</small>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="p-3 border rounded-3 bg-light mb-3">
+                                        <div class="d-flex justify-content-between align-items-center mb-1">
+                                            <span class="small fw-bold">Floor Reserve Safeguard:</span>
+                                            <strong class="text-dark">₦150,000.00</strong>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center mb-1">
+                                            <span class="small fw-bold">Enforced MOQ:</span>
+                                            <strong class="text-danger">1 Unit</strong>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="small fw-bold">Active Variant Allocation:</span>
+                                            <span class="badge bg-dark">1.5HP Copper Inverter (10 Units)</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="alert alert-success border-0 rounded-3 d-none p-3" id="liveWinnerAlert">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <i class="bi bi-trophy-fill fs-3 text-success"></i>
+                                            <div>
+                                                <strong class="d-block">WINNER LOCKED & ORDER GENERATED!</strong>
+                                                <small id="liveWinnerText">Buyer: <strong>Ibrahim K. (0803***8891)</strong> &bull; Locked @ ₦182,500. Passcode: <strong>UWB-PASS-8821</strong></small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Right: Real-time Bidding & Event Log -->
+                            <div class="col-lg-6">
+                                <div class="card border-0 rounded-4 shadow-sm bg-white p-4">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <h5 class="fw-bold text-dark m-0"><i class="bi bi-clock-history text-danger me-2"></i> Live Event Stream</h5>
+                                        <span class="badge bg-success-subtle text-success fw-bold">Sync Active</span>
+                                    </div>
+
+                                    <div class="d-flex flex-column gap-2" id="liveEventStreamList" style="max-height: 280px; overflow-y: auto;">
+                                        <!-- Stream rows -->
+                                        <div class="p-2 border rounded-3 bg-light d-flex justify-content-between align-items-center text-xs">
+                                            <span><i class="bi bi-broadcast text-danger me-1"></i> Session SESS-UWB-202610-01 started by Storefront Admin</span>
+                                            <span class="text-muted">10:40:02</span>
+                                        </div>
+                                        <div class="p-2 border rounded-3 bg-light d-flex justify-content-between align-items-center text-xs">
+                                            <span><i class="bi bi-arrow-down text-warning me-1"></i> Price Wave Step 2 applied: ₦185,000 &rarr; ₦182,500</span>
+                                            <span class="text-muted">10:41:15</span>
+                                        </div>
+                                        <div class="p-2 border rounded-3 bg-light d-flex justify-content-between align-items-center text-xs">
+                                            <span><i class="bi bi-person-check text-primary me-1"></i> 34 live customers tuned into Tanke Hub auction arena</span>
+                                            <span class="text-muted">10:41:40</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ========================================== -->
+                    <!-- TAB 4: MOQ & FORMAT RULES -->
+                    <!-- ========================================== -->
+                    <div class="tab-pane fade" id="tab-moq" role="tabpanel">
+                        <div class="alert alert-info border-0 rounded-3 shadow-sm p-3 mb-4 d-flex align-items-center gap-3">
+                            <i class="bi bi-info-circle-fill fs-3 text-info"></i>
+                            <div class="small">
+                                <strong>MOQ Rule Verification:</strong> When any customer wins or checks out from an auction page, the backend validates their order quantity against the configured <code>moq</code> parameter. Updating it here immediately applies to customer checkout flows.
+                            </div>
+                        </div>
+
+                        <div class="card border-0 rounded-4 shadow-sm bg-white p-4">
+                            <h5 class="fw-bold text-dark mb-3">Live Storefront Auctions & MOQ Limits</h5>
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Auction Format</th>
+                                            <th>Item Title</th>
+                                            <th>Category</th>
+                                            <th>Base / Current Price</th>
+                                            <th style="width: 140px;">MOQ (Units)</th>
+                                            <th class="text-end">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="adminAuctionsTableBody">
+                                        <!-- Populated dynamically -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
             </div>
@@ -142,11 +582,498 @@
     <script src="../assets/js/uwanbuy.js"></script>
     <script src="../assets/js/uwanbuy-engine.js"></script>
 
+    <!-- Auction Prep & Controller Script -->
     <script>
         $(document).ready(function () {
+            // Load base catalog products for selection
+            const catalog = window.UwanBuyEngine.getAllProducts();
+            const $prepProdSelect = $('#prepProductSelect');
+            $prepProdSelect.empty();
+
+            catalog.forEach(p => {
+                const price = p.priceMinor ? (p.priceMinor / 100) : (p.price || 0);
+                $prepProdSelect.append(`<option value="${p.id}" data-price="${price}" data-title="${p.title}" data-category="${p.categoryId || p.category}">${p.title} (₦${price.toLocaleString()})</option>`);
+            });
+
+            // Handle pre-fill from products page
+            const urlParams = new URLSearchParams(window.location.search);
+            const adoptProdId = urlParams.get('adopt_prod_id');
+            if (adoptProdId) {
+                $prepProdSelect.val(adoptProdId);
+            }
+
+            // Injected dynamic pricing fields based on auction format
+            function renderPricingFields(format) {
+                const $container = $('#prepPricingFields');
+                $container.empty();
+
+                if (format === 'flat_rate') {
+                    $container.html(`
+                        <label class="form-label small fw-bold">Configurable Uniform Flat-Rate Price (₦) <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" id="prepFlatRatePrice" value="12500" min="500" step="100">
+                        <small class="text-muted d-block mt-1">Every item in this liquidation pool will sell for this exact flat rate (e.g. ₦12,500 or any custom flat tier).</small>
+                        <div class="row g-2 mt-2">
+                            <div class="col-6">
+                                <label class="form-label small fw-bold">Pool MOQ (Units)</label>
+                                <input type="number" class="form-control" id="prepFlatRateMoq" value="3" min="1">
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label small fw-bold">Total Pool Slots</label>
+                                <input type="number" class="form-control" id="prepFlatRateSlots" value="50" min="1">
+                            </div>
+                        </div>
+                    `);
+                } else if (format === 'price_wave') {
+                    $container.html(`
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <label class="form-label small fw-bold">Starting Wave Price (₦)</label>
+                                <input type="number" class="form-control" id="prepWaveStart" value="185000" min="1000">
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label small fw-bold">Floor Reserve Price (₦)</label>
+                                <input type="number" class="form-control" id="prepWaveFloor" value="150000" min="1000">
+                            </div>
+                            <div class="col-6 mt-2">
+                                <label class="form-label small fw-bold">Step Decrement Amount (₦)</label>
+                                <input type="number" class="form-control" id="prepWaveStep" value="2500" min="100">
+                            </div>
+                            <div class="col-6 mt-2">
+                                <label class="form-label small fw-bold">Step Interval (Seconds)</label>
+                                <input type="number" class="form-control" id="prepWaveInterval" value="25" min="5">
+                            </div>
+                        </div>
+                    `);
+                } else if (format === 'bid_and_win') {
+                    $container.html(`
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <label class="form-label small fw-bold">Starting Opening Bid (₦)</label>
+                                <input type="number" class="form-control" id="prepBidOpening" value="35000" min="500">
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label small fw-bold">Reserve Price (₦)</label>
+                                <input type="number" class="form-control" id="prepBidReserve" value="45000" min="500">
+                            </div>
+                            <div class="col-6 mt-2">
+                                <label class="form-label small fw-bold">Min Next Bid Increment (₦)</label>
+                                <input type="number" class="form-control" id="prepBidStep" value="1000" min="100">
+                            </div>
+                            <div class="col-6 mt-2">
+                                <label class="form-label small fw-bold">Enforced MOQ</label>
+                                <input type="number" class="form-control" id="prepBidMoq" value="2" min="1">
+                            </div>
+                        </div>
+                    `);
+                } else if (format === 'stock_cap') {
+                    $container.html(`
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <label class="form-label small fw-bold">Target Volume Cap (Units)</label>
+                                <input type="number" class="form-control" id="prepCapTarget" value="60" min="5">
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label small fw-bold">Unlocked Bulk Price (₦)</label>
+                                <input type="number" class="form-control" id="prepCapPrice" value="6800" min="500">
+                            </div>
+                            <div class="col-6 mt-2">
+                                <label class="form-label small fw-bold">Baseline Retail Price (₦)</label>
+                                <input type="number" class="form-control" id="prepCapRetail" value="9500" min="500">
+                            </div>
+                            <div class="col-6 mt-2">
+                                <label class="form-label small fw-bold">Member MOQ (Units)</label>
+                                <input type="number" class="form-control" id="prepCapMoq" value="4" min="1">
+                            </div>
+                        </div>
+                    `);
+                } else if (format === 'time_cap') {
+                    $container.html(`
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <label class="form-label small fw-bold">Blitz Deal Price (₦)</label>
+                                <input type="number" class="form-control" id="prepBlitzPrice" value="132000" min="1000">
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label small fw-bold">Countdown Deadline (Minutes)</label>
+                                <input type="number" class="form-control" id="prepBlitzMinutes" value="15" min="1">
+                            </div>
+                            <div class="col-6 mt-2">
+                                <label class="form-label small fw-bold">Original Retail Price (₦)</label>
+                                <input type="number" class="form-control" id="prepBlitzRetail" value="185000" min="1000">
+                            </div>
+                            <div class="col-6 mt-2">
+                                <label class="form-label small fw-bold">Enforced MOQ</label>
+                                <input type="number" class="form-control" id="prepBlitzMoq" value="1" min="1">
+                            </div>
+                        </div>
+                    `);
+                }
+            }
+
+            $('#prepAuctionFormat').on('change', function () {
+                renderPricingFields($(this).val());
+            });
+            renderPricingFields('price_wave');
+
+            // Render variants split allocation for chosen product
+            function updateVariantAllocations() {
+                const prodId = $prepProdSelect.val();
+                const p = catalog.find(x => x.id === prodId);
+                const $cont = $('#prepVariantsAllocationContainer');
+                $cont.empty();
+
+                if (p && p.variants && p.variants.length > 0) {
+                    p.variants.forEach((v, idx) => {
+                        $cont.append(`
+                            <div class="d-flex justify-content-between align-items-center bg-white p-2 rounded-2 border">
+                                <span class="small"><strong>${v.name || 'Option'}:</strong> ${v.value || 'Standard'}</span>
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="text-xs text-muted">Allocated:</span>
+                                    <input type="number" class="form-control form-control-sm text-center var-split-qty" style="width: 70px;" value="${v.stock || 5}" min="0">
+                                </div>
+                            </div>
+                        `);
+                    });
+                } else {
+                    $cont.html(`
+                        <div class="d-flex justify-content-between align-items-center bg-white p-2 rounded-2 border">
+                            <span class="small"><strong>Standard Catalog Unit</strong></span>
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="text-xs text-muted">Total Lot Units:</span>
+                                <input type="number" class="form-control form-control-sm text-center var-split-qty" style="width: 70px;" value="10" min="1">
+                            </div>
+                        </div>
+                    `);
+                }
+                calcTotalAllocatedQty();
+            }
+
+            function calcTotalAllocatedQty() {
+                let total = 0;
+                $('.var-split-qty').each(function () {
+                    total += parseInt($(this).val(), 10) || 0;
+                });
+                $('#prepTotalAllocatedQty').text(`${total} units`);
+            }
+
+            $prepProdSelect.on('change', updateVariantAllocations);
+            $(document).on('input', '.var-split-qty', calcTotalAllocatedQty);
+            updateVariantAllocations();
+
+            // Load and render prepared auction items roster
+            let preparedItems = JSON.parse(localStorage.getItem('uwanbuy_admin_auction_items') || 'null');
+            if (!preparedItems) {
+                // Seed initial roster grounded in product-specs.pdf
+                preparedItems = [
+                    {
+                        id: 'auc_item_101',
+                        title: '4-Burner Glass-Top Gas Cooker',
+                        format: 'bid_and_win',
+                        formatName: 'Bid & Win',
+                        priceDisplay: '₦36,500 (Bid)',
+                        variantsSummary: 'Black Glass (x8), Silver Trim (x4)',
+                        session: 'Tanke Evening Mega Blitz',
+                        moq: 2,
+                        condition: 'Grade A Tested'
+                    },
+                    {
+                        id: 'auc_item_102',
+                        title: 'Century 2.0L Fast-Boil Electric Kettle',
+                        format: 'flat_rate',
+                        formatName: 'Flat-Rate Pool',
+                        priceDisplay: '₦12,500 (Flat Pool)',
+                        variantsSummary: 'Silver Matte (x15), Gloss Black (x15)',
+                        session: 'Tanke Evening Mega Blitz',
+                        moq: 3,
+                        condition: 'Factory Sealed'
+                    },
+                    {
+                        id: 'auc_item_103',
+                        title: '1.5 HP Inverter Split AC Unit',
+                        format: 'price_wave',
+                        formatName: 'Price Wave',
+                        priceDisplay: '₦182,500 &rarr; ₦150k floor',
+                        variantsSummary: '1.5HP Copper Inverter (x10)',
+                        session: 'Tanke Evening Mega Blitz',
+                        moq: 1,
+                        condition: 'Grade A Tested'
+                    },
+                    {
+                        id: 'auc_item_104',
+                        title: 'Pure Gold Refined Vegetable Oil 5L',
+                        format: 'stock_cap',
+                        formatName: 'Stock Cap',
+                        priceDisplay: '₦6,800 (Cap Target: 60)',
+                        variantsSummary: '5L Jerrycan (x60)',
+                        session: 'Tanke Evening Mega Blitz',
+                        moq: 4,
+                        condition: 'Fresh Batch'
+                    },
+                    {
+                        id: 'auc_item_105',
+                        title: 'Business Elite Core i7 Laptop',
+                        format: 'time_cap',
+                        formatName: 'Time Cap Blitz',
+                        priceDisplay: '₦132,000 (15m Blitz)',
+                        variantsSummary: '16GB RAM / 512GB SSD (x5)',
+                        session: 'Tanke Evening Mega Blitz',
+                        moq: 1,
+                        condition: 'Certified Open Box'
+                    }
+                ];
+                localStorage.setItem('uwanbuy_admin_auction_items', JSON.stringify(preparedItems));
+            }
+
+            function renderPreparedItems() {
+                const $tbody = $('#preparedItemsTableBody');
+                $tbody.empty();
+                $('#preparedItemsCountBadge').text(`${preparedItems.length} Items`);
+
+                preparedItems.forEach((item, idx) => {
+                    let badgeClass = 'bg-danger';
+                    if (item.format === 'flat_rate') badgeClass = 'bg-primary';
+                    else if (item.format === 'price_wave') badgeClass = 'bg-dark';
+                    else if (item.format === 'stock_cap') badgeClass = 'bg-success';
+                    else if (item.format === 'time_cap') badgeClass = 'bg-warning text-dark';
+
+                    $tbody.append(`
+                        <tr>
+                            <td>
+                                <strong class="text-dark d-block">${item.title}</strong>
+                                <small class="text-muted"><i class="bi bi-shield-check text-success"></i> ${item.condition || 'Tested'}</small>
+                            </td>
+                            <td><span class="badge ${badgeClass}">${item.formatName}</span></td>
+                            <td><strong class="text-danger">${item.priceDisplay}</strong></td>
+                            <td><small class="text-muted">${item.variantsSummary}</small></td>
+                            <td><span class="badge bg-light text-dark border">${item.session || 'Queue'}</span></td>
+                            <td class="text-end">
+                                <button class="btn btn-sm btn-link text-danger p-0 btn-delete-prep-item" data-idx="${idx}"><i class="bi bi-trash"></i></button>
+                            </td>
+                        </tr>
+                    `);
+                });
+
+                // Also populate Session Adopt Table
+                const $adoptTbody = $('#sessionAdoptTableBody');
+                $adoptTbody.empty();
+                preparedItems.forEach((item, idx) => {
+                    $adoptTbody.append(`
+                        <tr>
+                            <td>
+                                <input type="checkbox" class="form-check-input adopt-item-check" data-id="${item.id}" checked>
+                            </td>
+                            <td><strong>${item.title}</strong></td>
+                            <td><span class="badge bg-light text-dark border">${item.formatName}</span></td>
+                            <td>${item.priceDisplay}</td>
+                            <td><span class="badge bg-warning-subtle text-warning-emphasis">MOQ: ${item.moq || 1}</span></td>
+                            <td><span class="badge bg-success-subtle text-success">Adopted in SESS-01</span></td>
+                        </tr>
+                    `);
+                });
+            }
+
+            renderPreparedItems();
+
+            // Submit Create Auction Item Form
+            $('#formCreateAuctionItem').on('submit', function (e) {
+                e.preventDefault();
+                const prodId = $prepProdSelect.val();
+                const p = catalog.find(x => x.id === prodId);
+                const format = $('#prepAuctionFormat').val();
+                const formatName = $('#prepAuctionFormat option:selected').text().split('(')[0].trim();
+                const extras = $('#prepExtras').val();
+                const condition = $('#prepConditionGrade').val();
+                const session = $('#prepAssignSession option:selected').text();
+
+                let priceDisplay = '₦10,000';
+                let moq = 1;
+                if (format === 'flat_rate') {
+                    const fp = parseFloat($('#prepFlatRatePrice').val()) || 12500;
+                    priceDisplay = `₦${fp.toLocaleString()} (Flat Pool)`;
+                    moq = parseInt($('#prepFlatRateMoq').val(), 10) || 3;
+                } else if (format === 'price_wave') {
+                    const startP = parseFloat($('#prepWaveStart').val()) || 185000;
+                    const floorP = parseFloat($('#prepWaveFloor').val()) || 150000;
+                    priceDisplay = `₦${startP.toLocaleString()} &rarr; ₦${floorP.toLocaleString()} floor`;
+                    moq = 1;
+                } else if (format === 'bid_and_win') {
+                    const bidP = parseFloat($('#prepBidOpening').val()) || 35000;
+                    priceDisplay = `₦${bidP.toLocaleString()} (Starting)`;
+                    moq = parseInt($('#prepBidMoq').val(), 10) || 2;
+                } else if (format === 'stock_cap') {
+                    const capP = parseFloat($('#prepCapPrice').val()) || 6800;
+                    const capT = parseInt($('#prepCapTarget').val(), 10) || 60;
+                    priceDisplay = `₦${capP.toLocaleString()} (Target: ${capT})`;
+                    moq = parseInt($('#prepCapMoq').val(), 10) || 4;
+                } else if (format === 'time_cap') {
+                    const blitzP = parseFloat($('#prepBlitzPrice').val()) || 132000;
+                    priceDisplay = `₦${blitzP.toLocaleString()} (Blitz)`;
+                    moq = parseInt($('#prepBlitzMoq').val(), 10) || 1;
+                }
+
+                const newItem = {
+                    id: 'auc_item_' + Date.now(),
+                    title: p ? p.title : 'Auction Product',
+                    format: format,
+                    formatName: formatName,
+                    priceDisplay: priceDisplay,
+                    variantsSummary: `Allocated lot: ${$('#prepTotalAllocatedQty').text()}`,
+                    session: session,
+                    moq: moq,
+                    condition: condition,
+                    extras: extras
+                };
+
+                preparedItems.unshift(newItem);
+                localStorage.setItem('uwanbuy_admin_auction_items', JSON.stringify(preparedItems));
+                renderPreparedItems();
+
+                if (window.iziToast) {
+                    window.iziToast.success({
+                        title: 'Auction Item Prepared',
+                        message: `${newItem.title} added to ${session}`,
+                        position: 'topRight'
+                    });
+                }
+            });
+
+            // Delete prepared item
+            $(document).on('click', '.btn-delete-prep-item', function () {
+                const idx = $(this).data('idx');
+                preparedItems.splice(idx, 1);
+                localStorage.setItem('uwanbuy_admin_auction_items', JSON.stringify(preparedItems));
+                renderPreparedItems();
+            });
+
+            // Auto Wave Curve Generator
+            $('#btnAutoWaveCurve').on('click', function () {
+                const $preview = $('#waveCurvePreviewContainer');
+                $preview.empty();
+
+                const steps = [
+                    { step: 'Wave 1 (Start)', drop: 'Base Price', price: '₦185,000', interval: '0s - 30s' },
+                    { step: 'Wave 2 (-10%)', drop: '-₦18,500', price: '₦166,500', interval: '30s - 60s' },
+                    { step: 'Wave 3 (-20%)', drop: '-₦18,500', price: '₦148,000', interval: '60s - 90s' },
+                    { step: 'Wave 4 (Floor)', drop: 'Floor Limit', price: '₦140,000', interval: 'Final Step' }
+                ];
+
+                steps.forEach(s => {
+                    $preview.append(`
+                        <div class="wave-curve-pill">
+                            <div>
+                                <strong class="d-block small text-dark">${s.step}</strong>
+                                <small class="text-muted">${s.interval}</small>
+                            </div>
+                            <div class="text-end">
+                                <span class="fw-bold text-danger d-block">${s.price}</span>
+                                <small class="text-muted text-xs">${s.drop}</small>
+                            </div>
+                        </div>
+                    `);
+                });
+
+                if (window.iziToast) {
+                    window.iziToast.success({
+                        title: 'Auto Wave Curve Generated',
+                        message: 'Calculated 4-step progressive drop curve towards floor reserve.',
+                        position: 'topRight'
+                    });
+                }
+            });
+
+            // Adopt Selected Items into Session
+            $('#btnAdoptSelectedItems').on('click', function () {
+                const count = $('.adopt-item-check:checked').length;
+                if (window.iziToast) {
+                    window.iziToast.success({
+                        title: 'Session Roster Updated',
+                        message: `Adopted ${count} auction lots into SESS-UWB-202610-01 broadcast schedule.`
+                    });
+                }
+            });
+
+            // Live Controller Actions
+            let isSessionLive = true;
+            let currentLivePrice = 182500;
+            let timerSeconds = 18;
+            let timerInterval = null;
+
+            function startLiveTimer() {
+                clearInterval(timerInterval);
+                timerInterval = setInterval(() => {
+                    if (!isSessionLive) return;
+                    timerSeconds--;
+                    if (timerSeconds <= 0) {
+                        timerSeconds = 25;
+                        currentLivePrice = Math.max(150000, currentLivePrice - 2500);
+                        $('#liveTickerPrice').text(`₦${currentLivePrice.toLocaleString()}`);
+                        addStreamLog(`Price Wave step triggered: New lot price ₦${currentLivePrice.toLocaleString()}`, 'bi-arrow-down text-danger');
+                    }
+                    const s = timerSeconds < 10 ? '0' + timerSeconds : timerSeconds;
+                    $('#liveTickerTimer').text(`00:${s}s`);
+                }, 1000);
+            }
+            startLiveTimer();
+
+            function addStreamLog(msg, icon) {
+                const time = new Date().toLocaleTimeString();
+                $('#liveEventStreamList').prepend(`
+                    <div class="p-2 border rounded-3 bg-light d-flex justify-content-between align-items-center text-xs">
+                        <span><i class="bi ${icon || 'bi-info-circle'} me-1"></i> ${msg}</span>
+                        <span class="text-muted">${time}</span>
+                    </div>
+                `);
+            }
+
+            $('#btnCtrlPause').on('click', function () {
+                isSessionLive = !isSessionLive;
+                if (isSessionLive) {
+                    $(this).html('<i class="bi bi-pause-circle me-1"></i> Pause Session').removeClass('btn-success').addClass('btn-outline-light');
+                    $('#headerSessionStatus').text('LIVE').removeClass('text-warning').addClass('text-danger');
+                    $('#liveSessionBadge').text('LIVE BROADCAST').removeClass('bg-warning').addClass('bg-danger');
+                    addStreamLog('Session resumed by admin', 'bi-play-circle text-success');
+                } else {
+                    $(this).html('<i class="bi bi-play-circle me-1"></i> Resume Session').removeClass('btn-outline-light').addClass('btn-success');
+                    $('#headerSessionStatus').text('PAUSED').removeClass('text-danger').addClass('text-warning');
+                    $('#liveSessionBadge').text('PAUSED').removeClass('bg-danger').addClass('bg-warning text-dark');
+                    addStreamLog('Session paused by admin', 'bi-pause-circle text-warning');
+                }
+            });
+
+            $('#btnCtrlAdvanceWave').on('click', function () {
+                currentLivePrice = Math.max(150000, currentLivePrice - 2500);
+                timerSeconds = 25;
+                $('#liveTickerPrice').text(`₦${currentLivePrice.toLocaleString()}`);
+                addStreamLog(`Admin manually advanced wave &rarr; New price ₦${currentLivePrice.toLocaleString()}`, 'bi-fast-forward text-warning');
+                if (window.iziToast) window.iziToast.info({ title: 'Wave Advanced', message: `Current lot price is now ₦${currentLivePrice.toLocaleString()}` });
+            });
+
+            $('#btnCtrlAcceptBid').on('click', function () {
+                $('#liveWinnerAlert').removeClass('d-none');
+                addStreamLog(`Winning bid accepted! Lot locked at ₦${currentLivePrice.toLocaleString()}`, 'bi-trophy-fill text-success');
+                if (window.iziToast) {
+                    window.iziToast.success({
+                        title: 'Winner Locked!',
+                        message: `Order generated for Ibrahim K. @ ₦${currentLivePrice.toLocaleString()}. Pickup Passcode: UWB-PASS-8821`,
+                        position: 'topRight'
+                    });
+                }
+            });
+
+            $('#btnCtrlEndSession').on('click', function () {
+                if (confirm('Are you sure you want to conclude and close this live auction session?')) {
+                    clearInterval(timerInterval);
+                    isSessionLive = false;
+                    $('#headerSessionStatus').text('CONCLUDED').removeClass('text-danger').addClass('text-secondary');
+                    $('#liveSessionBadge').text('CONCLUDED').removeClass('bg-danger').addClass('bg-secondary');
+                    addStreamLog('Session SESS-UWB-202610-01 concluded by admin', 'bi-stop-circle text-danger');
+                }
+            });
+
+            // MOQ Control Table population
             const auctions = window.UwanBuyEngine.getAuctions();
-            const $tbody = $('#adminAuctionsTableBody');
-            $tbody.empty();
+            const $moqTbody = $('#adminAuctionsTableBody');
+            $moqTbody.empty();
 
             auctions.forEach((a, idx) => {
                 let priceDisplay = '';
@@ -156,27 +1083,18 @@
                 else if (a.auctionType === 'time_cap') priceDisplay = window.UwanBuyEngine.formatNaira(a.blitzPriceMinor, true);
                 else priceDisplay = window.UwanBuyEngine.formatNaira(a.currentBidMinor, true);
 
-                $tbody.append(`
+                $moqTbody.append(`
                     <tr>
+                        <td><span class="badge bg-light text-dark border fw-bold">${a.auctionType.toUpperCase()}</span></td>
+                        <td><strong>${a.title}</strong></td>
+                        <td>${a.category}</td>
+                        <td><span class="text-danger fw-bold">${priceDisplay}</span></td>
                         <td>
-                            <strong class="d-block text-dark">${a.typeName}</strong>
-                            <small class="badge bg-light text-secondary border">${a.auctionType}</small>
-                        </td>
-                        <td>
-                            <div class="fw-bold text-dark text-truncate" style="max-width: 280px;" title="${a.title}">${a.title}</div>
-                            <small class="text-muted font-monospace">${a.id}</small>
-                        </td>
-                        <td><span class="badge bg-secondary-subtle text-secondary">${a.category}</span></td>
-                        <td class="fw-bold text-danger">${priceDisplay}</td>
-                        <td>
-                            <div class="input-group input-group-sm">
-                                <span class="input-group-text bg-light fw-bold">MOQ</span>
-                                <input type="number" class="form-control text-center fw-bold moq-input" data-id="${a.id}" value="${a.moq}" min="1" max="50">
-                            </div>
+                            <input type="number" class="form-control form-control-sm text-center fw-bold moq-input" data-index="${idx}" value="${a.moq}" min="1" max="100">
                         </td>
                         <td class="text-end">
-                            <button class="btn btn-sm btn-dark btn-save-moq px-3 fw-bold" data-id="${a.id}">
-                                <i class="bi bi-save me-1"></i> Save
+                            <button class="btn btn-sm btn-outline-danger fw-bold btn-save-moq" data-index="${idx}">
+                                <i class="bi bi-save me-1"></i> Update MOQ
                             </button>
                         </td>
                     </tr>
@@ -184,16 +1102,18 @@
             });
 
             $(document).on('click', '.btn-save-moq', function () {
-                const id = $(this).data('id');
-                const newMoq = parseInt($(`.moq-input[data-id="${id}"]`).val(), 10) || 1;
-                const auc = window.UwanBuyEngine.getAuctionById(id);
-                if (auc) {
-                    auc.moq = newMoq;
-                    iziToast.success({
-                        title: 'MOQ Updated!',
-                        message: `${auc.typeName} MOQ set to ${newMoq} units.`,
-                        position: 'topRight'
-                    });
+                const idx = $(this).data('index');
+                const newMoq = parseInt($(`.moq-input[data-index="${idx}"]`).val(), 10);
+                if (newMoq >= 1) {
+                    auctions[idx].moq = newMoq;
+                    window.UwanBuyEngine.saveLocalState();
+                    if (window.iziToast) {
+                        window.iziToast.success({
+                            title: 'MOQ Updated',
+                            message: `${auctions[idx].title} MOQ set to ${newMoq} units.`,
+                            position: 'topRight'
+                        });
+                    }
                 }
             });
         });
