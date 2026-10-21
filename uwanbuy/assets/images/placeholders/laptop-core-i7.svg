@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320" width="100%" height="100%">
+  <defs>
+    <linearGradient id="laptopBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc"/><stop offset="100%" stop-color="#e2e8f0"/>
+    </linearGradient>
+    <linearGradient id="screen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e1b4b"/><stop offset="100%" stop-color="#312e81"/>
+    </linearGradient>
+  </defs>
+  <rect width="100%" height="100%" rx="16" fill="url(#laptopBg)"/>
+  <!-- Screen Lid -->
+  <rect x="85" y="55" width="230" height="150" rx="8" fill="#1e293b" stroke="#0f172a" stroke-width="2"/>
+  <!-- Display Screen -->
+  <rect x="95" y="65" width="210" height="130" rx="4" fill="url(#screen)"/>
+  <!-- Code lines or graphic on screen -->
+  <rect x="110" y="80" width="90" height="8" rx="3" fill="#38bdf8"/>
+  <rect x="110" y="95" width="130" height="6" rx="3" fill="#818cf8"/>
+  <rect x="110" y="108" width="110" height="6" rx="3" fill="#818cf8"/>
+  <rect x="110" y="121" width="140" height="6" rx="3" fill="#c084fc"/>
+  <circle cx="200" cy="60" r="2.5" fill="#22c55e"/>
+  <!-- Base Keyboard Chassis -->
+  <path d="M 60 210 L 340 210 L 355 240 L 45 240 Z" fill="#334155" stroke="#1e293b" stroke-width="2"/>
+  <rect x="100" y="214" width="200" height="12" rx="2" fill="#0f172a"/>
+  <!-- Trackpad -->
+  <rect x="175" y="228" width="50" height="10" rx="2" fill="#475569"/>
+  <text x="200" y="285" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#1e293b" text-anchor="middle">CORE i7 ULTRA-SLIM LAPTOP (16GB/512GB)</text>
+</svg>

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320" width="100%" height="100%">
+  <defs>
+    <linearGradient id="microBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc"/><stop offset="100%" stop-color="#e2e8f0"/>
+    </linearGradient>
+  </defs>
+  <rect width="100%" height="100%" rx="16" fill="url(#microBg)"/>
+  <!-- Microwave Chassis -->
+  <rect x="50" y="65" width="300" height="180" rx="10" fill="#1e293b" stroke="#0f172a" stroke-width="3"/>
+  <!-- Glass Door -->
+  <rect x="65" y="80" width="200" height="150" rx="6" fill="#0f172a" stroke="#475569" stroke-width="2"/>
+  <rect x="80" y="95" width="170" height="120" rx="4" fill="#334155" opacity="0.6"/>
+  <!-- Turntable Plate -->
+  <ellipse cx="165" cy="190" rx="55" ry="12" fill="#94a3b8" opacity="0.7"/>
+  <!-- Control Panel -->
+  <rect x="275" y="80" width="60" height="150" rx="6" fill="#0f172a"/>
+  <!-- Digital Display -->
+  <rect x="282" y="90" width="46" height="25" rx="3" fill="#000000"/>
+  <text x="305" y="108" font-family="monospace" font-size="14" font-weight="900" fill="#22c55e" text-anchor="middle">02:30</text>
+  <!-- Buttons -->
+  <circle cx="295" cy="130" r="6" fill="#475569"/>
+  <circle cx="315" cy="130" r="6" fill="#475569"/>
+  <circle cx="295" cy="150" r="6" fill="#475569"/>
+  <circle cx="315" cy="150" r="6" fill="#475569"/>
+  <rect x="285" y="180" width="40" height="20" rx="4" fill="#16a34a"/>
+  <text x="305" y="195" font-family="system-ui" font-size="10" font-weight="700" fill="#ffffff" text-anchor="middle">START</text>
+  <text x="200" y="285" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#1e293b" text-anchor="middle">DIGITAL MICROWAVE OVEN 25L</text>
+</svg>

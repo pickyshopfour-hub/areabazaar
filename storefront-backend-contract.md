@@ -255,3 +255,96 @@ Use common Product fields plus `sellerId`, `condition` (`like_new`, `gently_used
 - `thriftz.html` now links seller calls to a separate `thriftz-seller.html`; the public seller modal and client-only listing publish path have been removed.
 - `thriftz-seller.html` fails closed unless `GET /api/v1/seller/me` returns an authorized seller. It contains a single-listing flow with multiple images/optional video and a Google Sheets/Drive source-preview-apply flow.
 - The seller portal expects the endpoints above and must not be considered production-secure until those server checks, upload validation, storage controls, and moderation rules exist.
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+# UwanBuy Storefront Architecture & Lifecycle Extensions (October 2026)
+
+This section extends the shared backend contract with storefront-level autonomous features pioneered on **UwanBuy** and standardized for future storefront updates (Thrift-Z and Betasup).
+
+---
+
+### 1. Storefront Autonomous Auctions & MOQ Contract
+
+Storefront auctions are managed locally within each storefront's administration boundary (`uwanbuy/admin/`) rather than originating from the centralized AreaBazaar live session engine.
+
+- **MOQ (Minimum Order Quantity):** All auction types must include `moq: integer` in their initial payload. The server validates that all bid bids, spot purchases, and claims satisfy `quantity >= moq`.
+- **Supported Formats:**
+  1. `bid_and_win`: Open bidding with minimum increment (`minimumNextBidMinor`), auto anti-sniping extension (+120 seconds if bid placed within 60s of deadline), and MOQ enforcement.
+  2. `flat_rate`: Fixed steep discount liquidation requiring bulk purchase quantity meeting or exceeding `moq`.
+  3. `price_wave`: Scheduled hourly step-downs (`waves: [{ waveNumber, priceMinor, startsAt }]`) with price locks honoring wave-specific MOQ.
+  4. `stock_cap`: Total pool quantity allocation with hard-capped inventory limits and client MOQ thresholds.
+  5. `time_cap`: Strict deadline sales expiring unconditionally at `00:00:00`.
+
+---
+
+### 2. Asynchronous Checkout Validation & Delivery Contract
+
+- **Order Identification:** Every checkout initiation assigns an immutable server-generated `orderId` (format: `ORD-[STORE]-[YEAR][MONTH]-[RANDOM]`).
+- **Asynchronous Quote Validation (`POST /api/v1/checkout/validate`):**
+  - Evaluates fulfillment options:
+    - **Pickup Point (Free):** Returns active hub collection points (`pku_*`) with address and operating hours; delivery fee = 0 kobo.
+    - **Address Delivery:** Computes standard shipping fee based on registered or input delivery destination.
+    - **Express Delivery:** Adds an express handling surcharge when requested.
+  - Dynamically computes VAT (7.5% where applicable) and server-calculated `totalMinor`.
+  - Compares against user's wallet balance and returns `isSufficient: boolean` and `deficitMinor`.
+
+---
+
+### 3. Storefront Payment Request, Reference Generation & Dual Reconciliation
+
+- **Dual-Channel Payment Request (`POST /api/v1/payments/request`):**
+  - **Agent Channel:** Returns verified agent contact credentials, phone, WhatsApp link, and hub accreditation code.
+  - **Direct Channel:** Returns company bank account details (bank name, account number, account name).
+- **Payment Reference Generation (`POST /api/v1/payments/generate-ref`):**
+  - Produces an alphanumeric reference (e.g. `REF-UWB-202610-xxxx`) with a 24-hour expiration window.
+- **Payment Reporting & Dual Reconciliation (`POST /api/v1/payments/report`):**
+  - Client submits payment reference, amount paid in minor kobo, bank paid from, and receipt notes.
+  - **Reconciliation Path A (Wallet Top-Up):** Approving the report credits the customer's wallet balance; the user is prompted to return to cart and settle with wallet.
+  - **Reconciliation Path B (Direct Order Payment):** If created directly for the order, approving the report bypasses wallet balance crediting and directly transitions the order to `paid`/`confirmed`, generating a delivery passcode.
+- **Cart Top Alert State:** Unpaid orders with pending payment requests persist at the top of the user's cart drawer (`#cart-pending-orders-container`) with an actionable "Complete Purchase" trigger.
+
+---
+
+### 4. Category-Scoped Shopping List Matching
+
+To conserve computational resources and eliminate unbounded catalog scans:
+- List suggestions (`GET /api/v1/stores/uwanbuy/list-suggestions`) require an explicit `categoryId`.
+- The frontend enforces category selection; typing without an active category highlights the selector with an animated red-glow state.
+- Unlisted items submitted through the modal are retained as custom line items (`state: "unlisted"`) with user-provided descriptions.
+
+---
+
+### 5. Asynchronous Post-Payment Bulk Delivery Tracking Contract (15-Minute Interval)
+
+- **Post-Payment Lifecycle Transition:** An order transitions to `paid_and_confirmed` once wallet balance deduction or payment report reconciliation is verified.
+- **Customer Tracking Request Queue (`POST /api/v1/orders/{orderId}/tracking/request`):**
+  - Customer can submit tracking requests across mobile and desktop.
+  - Tracking requests are enqueued in `pending_tracking_dispatch` state, preventing redundant or duplicate external courier pings.
+- **15-Minute Cron Batch Processing (`POST /api/v1/orders/tracking/bulk-dispatch`):**
+  - Ingestion interval is fixed at **15 minutes** to aggregate orders efficiently for hyperlocal rider route grouping.
+  - Server assigns active fulfillment riders (`riderName`, `riderPhone`, `dispatchStation`).
+  - Automatically dispatches transactional email notifications to all customers whose tracking requests were queued in that 15-minute window.
+  - Order status atomically transitions to `in_transit`.
+- **Delivery Handover Verification:** Order handoff requires customer disclosure of the 4-digit numeric delivery passcode (`POST /api/v1/orders/{orderId}/confirm-delivery`).
+
+---
+
+### 6. Navigation-Triggered Self-Service Wallet Funding & Direct Reconciliation
+
+- **Entrypoint:** Available globally from navigation `#btnNavWallet` across all storefront headers.
+- **Top-Up Isolation:** Wallet top-ups carry `purpose: "wallet_topup"`. They generate dedicated references (`REF-UWB-YYYYMM-XXXXX`) and do not link to immediate order lines.
+- **Idempotent Crediting:** When the payment report is reconciled by an administrator or accredited hub agent, the server credits the customer's wallet account in minor kobo and dispatches an instant confirmation notification.
+
+---
+
+### 7. Multi-Item Uniform Flat-Rate Auction Pool Contract & Cross-Store Parity
+
+- **Pool Structure:** Flat-rate auctions can host a heterogeneous pool of eligible SKUs spanning multiple categories (appliances, cookware, fashion, tech accessories) all priced at an identical flat liquidation rate (e.g. ₦12,500.00).
+- **Enforcement Rules:**
+  - `uniformFlatPriceMinor`: Immutable across all pool items in the lot.
+  - `poolCapacity` and `claimedSlots`: Decremented atomically when a batch is confirmed.
+  - `moq` (Minimum Order Quantity): Client and server enforce that total units selected across any combination of pool items satisfy `sum(quantities) >= moq`.
+- **Storefront Parity:** This multi-product flat-rate liquidation architecture, responsive offcanvas drawer, and 15-minute batch tracking queue serve as the standard reference implementation for Thrift-Z and Betasup.
+

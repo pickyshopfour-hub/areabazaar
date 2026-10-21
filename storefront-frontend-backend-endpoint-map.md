@@ -248,3 +248,394 @@ Displays a real-time modal notification if an AreaBazaar session is actively run
 | **Order History** | `/api/v1/orders` | `GET` | `cursor?`, `limit?` | `items: Order[]`, `pageInfo` |
 | **Order Tracking**| `/api/v1/orders/{orderId}/tracking` | `GET` | — | `timeline[]`, `driverContact?`, `hubStatus` |
 | **Confirm Delivery**| `/api/v1/orders/{orderId}/confirm-delivery`| `POST` | `deliveryPasscode` | `order`: status `delivered` |
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+# 7. UwanBuy Storefront & Unified Template Updates (October 2026)
+
+This section documents the enhanced storefront capabilities introduced for **UwanBuy** and established as the reference architecture for Betasup and Thrift-Z. Everything above this dashed separator represents the baseline contract; the specifications below detail the October 2026 interactive updates.
+
+---
+
+### 7.1 Type-Your-List Scoped Suggestions Endpoint
+
+Replaces the unstructured file upload with an interactive category-scoped list builder that minimizes backend search load.
+
+- **UI Trigger:** `#modal-type-shopping-list` search input while typing.
+- **Client Constraint:** Category selection is mandatory. If the user attempts to type without selecting a category, the UI prevents execution and displays an active red-glow animation on the category selector (`.category-glow-alert`).
+- **HTTP Method & Route:** `GET /api/v1/stores/uwanbuy/list-suggestions`
+- **Query Parameters:**
+  - `categoryId`: required (e.g. `groceries`, `gadgets`, `fashion`, `home`)
+  - `q`: search string (minimum 2 characters)
+  - `limit`: default 8
+  - `locationId`: active hub ID
+- **Response `data` (200 OK):**
+```json
+{
+  "items": [
+    {
+      "productId": "uw_gro_001",
+      "title": "Mama Gold Parboiled Rice 50kg",
+      "brand": "Mama Gold",
+      "sku": "GRO-RIC-50KG",
+      "categoryId": "groceries",
+      "subCategoryId": "grains-staples",
+      "priceMinor": 4500000,
+      "currency": "NGN",
+      "unitLabel": "bag (50kg)",
+      "thumbnailUrl": "../assetsecm/images/soups/egusi-soup-roundbowl.png",
+      "availability": {
+        "status": "in_stock",
+        "quantity": 32,
+        "moq": 1
+      }
+    }
+  ],
+  "unlistedAllowed": true
+}
+```
+- **UI Behavior:**
+  - Clicking any suggested item appends it to the shopping list table with its suggested unit price, quantity stepper, and matched indicator.
+  - Clicking the explicit **"Add to List"** button allows adding unlisted / custom items with estimated pricing and "Pending Match" status.
+  - Clicking **"Transfer List to Cart"** calls `POST /api/v1/cart/bulk-add` with all matched items.
+
+---
+
+### 7.2 The 5 UwanBuy Auction Systems Mapping (with MOQ)
+
+Unlike the main AreaBazaar platform auction sessions, storefront-specific auctions run directly within the storefront domain (`uwanbuy/auctions/`) and are managed via the storefront admin suite (`uwanbuy/admin/`). Every auction format returns and enforces a Minimum Order Quantity (`moq`).
+
+#### 7.2.1 Auction Type 1: Bid & Win (`bid-and-win.html`)
+- **Concept:** Open competitive bidding with minimum bid increments, real-time bid log, anti-sniping timer extensions (+2 minutes on last-minute bids), and MOQ rules.
+- **Fetch Auction Details:** `GET /api/v1/stores/{storeKey}/auctions/{auctionId}`
+  - Returns `{ "auctionType": "bid_and_win", "openingPriceMinor": 4000000, "currentBidMinor": 5500000, "minimumNextBidMinor": 5800000, "bidIncrementMinor": 300000, "moq": 2, "unitLabel": "units", "endsAt": "2026-10-21T18:00:00Z", "bidCount": 14 }`.
+- **Submit Bid:** `POST /api/v1/stores/{storeKey}/auctions/{auctionId}/bid`
+  - **Payload:** `{ "bidAmountMinor": 5800000, "quantity": 2, "walletPin": "1234" }` (quantity must be $\ge$ `moq`).
+  - **Response (200 OK):** `{ "bidId": "bid_901", "newCurrentBidMinor": 5800000, "newMinimumNextBidMinor": 6100000, "endsAt": "..." }`.
+
+#### 7.2.2 Auction Type 2: Flat-Rate Auction (`flat-rate.html`)
+- **Concept:** Fixed steep discount clearance with a mandatory bulk Minimum Order Quantity (MOQ).
+- **Fetch Details:** `GET /api/v1/stores/{storeKey}/auctions/{auctionId}`
+  - Returns `{ "auctionType": "flat_rate", "flatPriceMinor": 1200000, "regularPriceMinor": 2500000, "moq": 5, "availableUnits": 80, "unitLabel": "cartons" }`.
+- **Instant Buy:** Routes to the Checkout Validation Modal with quantity locked to $\ge$ `moq`.
+
+#### 7.2.3 Auction Type 3: Price Wave Auction (`price-wave.html`)
+- **Concept:** Stepped price reductions across scheduled hourly intervals (Wave 1 $\rightarrow$ Wave 2 $\rightarrow$ Wave 3) with MOQ per wave.
+- **Fetch Wave Schedule:** `GET /api/v1/stores/{storeKey}/auctions/{auctionId}/waves`
+  - Returns:
+```json
+{
+  "auctionType": "price_wave",
+  "currentWave": 2,
+  "moq": 3,
+  "currentPriceMinor": 1850000,
+  "nextWaveStartsAt": "2026-10-21T14:00:00Z",
+  "nextWavePriceMinor": 1450000,
+  "totalAvailable": 18
+}
+```
+- **Lock Price & Buy:** Dispatches quote validation with current wave price lock and MOQ verification.
+
+#### 7.2.4 Auction Type 4: Stock Cap Auction (`stock-cap.html`)
+- **Concept:** Limited units pool allocated at flash discount. Displays dynamic stock depletion progress bar; locks permanently when the stock cap is reached.
+- **Fetch Details:** `GET /api/v1/stores/{storeKey}/auctions/{auctionId}`
+  - Returns `{ "auctionType": "stock_cap", "capUnits": 50, "soldUnits": 38, "remainingUnits": 12, "moq": 2, "discountPriceMinor": 3200000 }`.
+
+#### 7.2.5 Auction Type 5: Time Cap Auction (`time-cap.html`)
+- **Concept:** Flash drop tied to a strict countdown timer (e.g. 2 hours). Terminates automatically when the countdown hits zero, regardless of remaining stock.
+- **Fetch Details:** `GET /api/v1/stores/{storeKey}/auctions/{auctionId}`
+  - Returns `{ "auctionType": "time_cap", "expiresAt": "2026-10-21T16:00:00Z", "moq": 1, "dealPriceMinor": 850000 }`.
+
+---
+
+### 7.3 Asynchronous Order Validation & Delivery Quote Engine
+
+When a customer clicks "Checkout" from the Cart Drawer or an Auction Buy action, the backend initializes an order validation record with a distinct `order_id` and opens the **Validation Modal** (`#modal-checkout-validate`).
+
+- **HTTP Method & Route:** `POST /api/v1/checkout/validate`
+- **Request Payload:**
+```json
+{
+  "orderId": "ORD-UWB-202610-8472",
+  "cartId": "cart_uw_1092",
+  "fulfillmentType": "pickup" | "address",
+  "pickupPointId": "pku_tanke_01",
+  "deliveryAddress": {
+    "recipientName": "Adebayo Salami",
+    "phone": "08031234567",
+    "address": "15 University Road, Tanke, Ilorin"
+  },
+  "isExpress": false
+}
+```
+- **Response `data` (200 OK):**
+```json
+{
+  "orderId": "ORD-UWB-202610-8472",
+  "status": "validated_awaiting_payment",
+  "breakdown": {
+    "subtotalMinor": 4500000,
+    "fulfillmentType": "address",
+    "deliveryFeeMinor": 120000,
+    "expressSurchargeMinor": 0,
+    "vatPercent": 7.5,
+    "vatAmountMinor": 346500,
+    "totalMinor": 4966500
+  },
+  "wallet": {
+    "currentBalanceMinor": 2500000,
+    "isSufficient": false,
+    "deficitMinor": 2466500
+  },
+  "pickupPoints": [
+    { "id": "pku_tanke_01", "name": "Tanke Central Hub Pickup", "address": "12 University Road, Tanke, Ilorin", "operatingHours": "8:00 AM - 7:00 PM", "phone": "08039991122" },
+    { "id": "pku_sanrab_02", "name": "Sanrab Station Collection Center", "address": "Sanrab Junction, Tanke, Ilorin", "operatingHours": "9:00 AM - 6:00 PM", "phone": "08039993344" }
+  ]
+}
+```
+- **Asynchronous Recalculation Behavior:**
+  - Toggling between "Deliver at Pickup Point (Free)" and "Deliver to My Address" (+ delivery cost) asynchronously triggers a re-calculation.
+  - Toggling the "Express Delivery" checkbox adds an express surcharge (e.g. +₦1,500) and recalculates the VAT and total without closing or reloading the modal.
+
+---
+
+### 7.4 Storefront Payment Request, Reference Generation & Reconciliation
+
+Storefronts manage their own payment request and reporting flows independently of the core AreaBazaar platform.
+
+#### 7.4.1 Create Payment Request
+- **UI Trigger:** Validation modal when user chooses "Create Payment Request" or when wallet balance is insufficient.
+- **HTTP Method & Route:** `POST /api/v1/payments/request`
+- **Request Payload:**
+```json
+{
+  "orderId": "ORD-UWB-202610-8472",
+  "paymentPurpose": "order_direct" | "wallet_topup",
+  "paymentChannel": "agent" | "direct",
+  "amountMinor": 4966500,
+  "storeKey": "uwanbuy"
+}
+```
+- **Response `data` (200 OK):**
+  - If `paymentChannel === "agent"`: Returns designated local agent contact information (`agentName`, `agentPhone`, `whatsapp`, `hubCode`, `photoUrl`, `instructions`).
+  - If `paymentChannel === "direct"`: Returns designated corporate bank account details (`bankName`, `accountNumber`, `accountName`, `instructions`).
+
+#### 7.4.2 Generate Payment Reference
+- **UI Trigger:** Clicking "Generate Payment Ref" in the Payment Request modal.
+- **HTTP Method & Route:** `POST /api/v1/payments/generate-ref`
+- **Request Payload:** `{ "orderId": "ORD-UWB-202610-8472", "storeKey": "uwanbuy", "amountMinor": 4966500 }`
+- **Response `data` (201 Created):**
+```json
+{
+  "paymentRef": "REF-UWB-202610-7712",
+  "expiresAt": "2026-10-22T00:00:00Z",
+  "orderId": "ORD-UWB-202610-8472",
+  "amountMinor": 4966500
+}
+```
+
+#### 7.4.3 Submit Payment Report Form
+- **UI Trigger:** User clicks "Submit Payment Report" after making transfer to the agent or company bank account.
+- **HTTP Method & Route:** `POST /api/v1/payments/report`
+- **Request Payload:**
+```json
+{
+  "paymentRef": "REF-UWB-202610-7712",
+  "orderId": "ORD-UWB-202610-8472",
+  "amountPaidMinor": 4966500,
+  "bankPaidFrom": "Access Bank",
+  "payerName": "Adebayo Salami",
+  "paymentDate": "2026-10-21T09:30:00Z",
+  "remarks": "Transfer for order ORD-UWB-202610-8472"
+}
+```
+- **Response `data` (200 OK):** `{ "reportId": "rep_4091", "status": "submitted_pending_reconciliation" }`
+
+#### 7.4.4 Payment Reconciliation Rules
+- **Wallet Top-Up Path:** When admin/agent reconciles the report:
+  - User wallet balance is credited with `amountPaidMinor`.
+  - Notification sent to user: "Wallet funded! Proceed to complete your order."
+- **Direct Order Payment Path:** When admin/agent reconciles the report:
+  - Wallet balance remains untouched.
+  - The order status atomically updates to `paid` and `confirmed`.
+  - Delivery passcode generated and visible in order tracking.
+
+#### 7.4.5 Unpaid Orders in Cart Top
+- Validated orders awaiting payment reconciliation are automatically pinned to the **top of the shopping cart drawer** (`#cart-pending-orders-container`).
+- Displays:
+  - `Order ID: ORD-UWB-202610-8472`
+  - Total amount and items count
+  - Status badge: `Awaiting Payment`
+  - Action button: **"Complete Purchase"** (re-opens the payment details or report modal).
+
+---
+
+### 7.5 Storefront Dedicated Admin Endpoints (`uwanbuy/admin/`)
+
+Each storefront hosts its internal administration suite inside its project directory (e.g. `uwanbuy/admin/`).
+
+| Endpoint | Method | Purpose |
+| :--- | :--- | :--- |
+| `GET /api/v1/admin/{storeKey}/auctions` | `GET` | List active, scheduled, and completed auctions |
+| `POST /api/v1/admin/{storeKey}/auctions` | `POST` | Create an auction (Bid & Win, Flat-Rate, Wave, Stock Cap, Time Cap) with MOQ |
+| `GET /api/v1/admin/{storeKey}/reconciliations` | `GET` | List submitted payment reports awaiting approval |
+| `POST /api/v1/admin/{storeKey}/reconciliations/{reportId}/approve` | `POST` | Approve payment; credits wallet or marks order paid |
+| `GET /api/v1/admin/{storeKey}/orders` | `GET` | View orders, delivery method, and passcode verification |
+| `POST /api/v1/admin/{storeKey}/orders/{orderId}/verify-passcode` | `POST` | Verify customer handover passcode |
+
+---
+
+### 7.6 Post-Payment Bulk Delivery Tracking & 15-Minute Dispatch Contract
+
+Once an order is confirmed and paid (`status: "paid_and_confirmed"`), delivery tracking requests are handled asynchronously through a **15-minute batch dispatch queue**:
+
+#### 7.6.1 Customer Queue Tracking Request
+- **UI Trigger:** Customer clicks "Track Delivery" / "Request Tracking Update" in the Purchased Orders drawer (`#boughtItemsOffcanvas`) or order completion notification.
+- **HTTP Method & Route:** `POST /api/v1/orders/{orderId}/tracking/request`
+- **Request Payload:**
+```json
+{
+  "orderId": "ORD-UWB-202610-8472",
+  "customerEmail": "customer@example.com",
+  "customerPhone": "08034567890",
+  "deliveryPasscode": "4892"
+}
+```
+- **Response `data` (200 OK):**
+```json
+{
+  "requestId": "TRK-REQ-17295012345",
+  "orderId": "ORD-UWB-202610-8472",
+  "status": "queued",
+  "batchCycleMinutes": 15,
+  "nextScheduledBatchAt": "2026-10-21T09:30:00Z",
+  "message": "Tracking request queued. Automated email will be dispatched in the next 15-minute bulk cycle."
+}
+```
+
+#### 7.6.2 Automated 15-Minute Bulk Batch Dispatch Engine
+- **Trigger:** Server-side cron job running every 15 minutes, or manual operator trigger from the admin orders console (`#btnTriggerTrackingBatch` in `admin/orders.html`).
+- **HTTP Method & Route:** `POST /api/v1/orders/tracking/bulk-dispatch`
+- **Request Payload:**
+```json
+{
+  "hubId": "hub_tanke_ilorin",
+  "dispatchedBy": "admin_console_or_cron",
+  "batchTimestamp": "2026-10-21T09:30:00Z"
+}
+```
+- **Response `data` (200 OK):**
+```json
+{
+  "batchId": "BATCH-TRK-20261021-004",
+  "dispatchedCount": 8,
+  "items": [
+    {
+      "orderId": "ORD-UWB-202610-8472",
+      "customerEmail": "customer@example.com",
+      "status": "in_transit",
+      "rider": {
+        "name": "Musa Garba",
+        "phone": "+234 802 345 6789",
+        "station": "Tanke Central Hub"
+      },
+      "estimatedDeliveryMins": 45,
+      "emailNotificationSent": true
+    }
+  ]
+}
+```
+- **Notification Rule:** When the bulk batch completes, an automated transactional email (`UwanBUY Hyperlocal Dispatch`) is sent to each customer containing live dispatch status, assigned rider details, delivery passcode reminder, and ETA.
+
+---
+
+### 7.7 Navigation Bar Wallet Top-Up & Reconciliation Workflow
+
+Provides instant self-service wallet funding directly from the navigation bar (`#btnNavWallet`) across all storefront pages.
+
+- **UI Trigger:** Customer clicks the Wallet balance badge in the header navigation.
+- **Workflow:**
+  1. Opens `#modal-fund-wallet` displaying current balance and quick funding amounts (₦5,000, ₦10,000, ₦20,000, ₦50,000, or custom amount $\ge ₦500$).
+  2. Clicking "Proceed to Payment" routes into `#modal-payment-request` with `purpose: "wallet_topup"`.
+  3. Generates verified reference (`REF-UWB-YYYYMM-XXXXX`) and prompts bank transfer or accredited agent payment.
+  4. Customer submits payment report form (`POST /api/v1/payments/report`).
+  5. Operator approves in `admin/reconciliation.html`, which atomically credits the user's wallet balance:
+     ```
+     Wallet New Balance = Wallet Old Balance + Amount Paid
+     ```
+
+---
+
+### 7.8 Multi-Product Flat-Rate Auction Liquidation Pool
+
+Transforms the flat-rate auction format from single-item sales into a **curated multi-product liquidation pool** selling a range of distinct products at the exact same flat price:
+
+- **Catalog Endpoint:** `GET /api/v1/stores/{storeKey}/auctions/{auctionId}/flat-rate-pool`
+- **Response `data` (200 OK):**
+```json
+{
+  "auctionId": "uw_auc_flat_01",
+  "title": "Multi-Product Liquidation Clearance Pool",
+  "uniformFlatPriceMinor": 1250000,
+  "poolCapacity": 50,
+  "claimedSlots": 36,
+  "remainingSlots": 14,
+  "moq": 3,
+  "eligibleProducts": [
+    {
+      "productId": "uw_auc_flat_kettle",
+      "name": "Century 2.2L Stainless Electric Kettle",
+      "category": "Appliances",
+      "originalPriceMinor": 1850000,
+      "flatPriceMinor": 1250000,
+      "specs": "2.2L • 1800W • Detachable 360°"
+    },
+    {
+      "productId": "uw_auc_flat_blender",
+      "name": "Binatone 1.5L Heavy Duty Speed Blender",
+      "category": "Appliances",
+      "originalPriceMinor": 2200000,
+      "flatPriceMinor": 1250000,
+      "specs": "1.5L Jug • 450W • Dry Mill Grinder"
+    },
+    {
+      "productId": "uw_auc_flat_pan",
+      "name": "MasterChef 28cm Non-Stick Granite Pan",
+      "category": "Cookware",
+      "originalPriceMinor": 1950000,
+      "flatPriceMinor": 1250000,
+      "specs": "28cm Dia • Multi-layer Granite"
+    },
+    {
+      "productId": "uw_auc_flat_iron",
+      "name": "Philips EasySpeed Plus 2000W Steam Iron",
+      "category": "Appliances",
+      "originalPriceMinor": 2100000,
+      "flatPriceMinor": 1250000,
+      "specs": "2000W • Ceramic Soleplate • Calc-Clean"
+    },
+    {
+      "productId": "uw_auc_flat_sneakers",
+      "name": "Clean Minimalist Leather Low-Top Sneakers",
+      "category": "Fashion",
+      "originalPriceMinor": 2200000,
+      "flatPriceMinor": 1250000,
+      "specs": "Sizes 40-45 • Leather • Vulcanized"
+    },
+    {
+      "productId": "uw_auc_flat_microwave",
+      "name": "Nexus 20L Compact Solo Microwave Oven",
+      "category": "Appliances",
+      "originalPriceMinor": 2450000,
+      "flatPriceMinor": 1250000,
+      "specs": "20L • 700W • 5 Power Levels"
+    }
+  ]
+}
+```
+- **Lock Batch Endpoint:** `POST /api/v1/stores/{storeKey}/auctions/{auctionId}/lock-flat-rate-batch`
+  - Validates `sum(item.quantity) >= moq` (minimum 3 units across any combination of items in the pool).
+  - Calculates total as `totalQuantity * 1250000 kobo`.
+  - Atomically locks pool slots and transitions into checkout quote validation.
+

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Reconciliation | UwanBUY Storefront Admin</title>
+
+    <link rel="shortcut icon" type="image/x-icon" href="../../assetsecm/images/uwanbuy-favicon-brief-color.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
+    <link rel="stylesheet" href="../assets/css/uwanbuy-updates.css">
+
+    <style>
+        :root {
+            --uw-brand: #ff0000;
+            --uw-dark: #0f172a;
+        }
+
+        body {
+            background-color: #f1f5f9;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #1e293b;
+        }
+
+        .admin-sidebar {
+            background-color: #0f172a;
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        .admin-sidebar .nav-link {
+            color: #94a3b8;
+            font-weight: 600;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .admin-sidebar .nav-link.active,
+        .admin-sidebar .nav-link:hover {
+            color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .admin-sidebar .nav-link.active {
+            background-color: var(--uw-brand);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 admin-sidebar p-3 d-flex flex-column">
+                <a href="../index.html" class="d-flex align-items-center mb-4 text-decoration-none text-white gap-2">
+                    <img src="../../assetsecm/images/uwanbuy-logo-long-full-color-01.png" alt="Logo" style="height: 32px; background: white; padding: 4px 8px; border-radius: 6px;">
+                </a>
+
+                <small class="text-uppercase text-secondary fw-bold text-xs mb-2 px-2">Storefront Console</small>
+                <nav class="nav flex-column mb-auto">
+                    <a class="nav-link" href="index.html">
+                        <i class="bi bi-speedometer2"></i> Dashboard
+                    </a>
+                    <a class="nav-link" href="auctions.html">
+                        <i class="bi bi-hammer"></i> Auction Setup & MOQ
+                    </a>
+                    <a class="nav-link active" href="reconciliation.html">
+                        <i class="bi bi-receipt-cutoff"></i> Reconciliation
+                    </a>
+                    <a class="nav-link" href="orders.html">
+                        <i class="bi bi-bag-check"></i> Orders & Dispatch
+                    </a>
+                </nav>
+
+                <div class="border-top border-secondary pt-3 mt-4">
+                    <div class="small text-secondary mb-1">User Wallet Balance:</div>
+                    <strong class="text-white d-block fs-6 mb-3" id="adminSidebarWallet">₦25,000.00</strong>
+                    <a href="../index.html" class="btn btn-sm btn-outline-light w-100">
+                        <i class="bi bi-shop me-1"></i> Return to Storefront
+                    </a>
+                </div>
+            </div>
+
+            <!-- Main Content Area -->
+            <div class="col-md-9 col-lg-10 p-4">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <span class="badge bg-success-subtle text-success fw-bold small">Audit & Accounting</span>
+                        <h2 class="fw-bold text-dark m-0">Payment Report Reconciliation</h2>
+                        <small class="text-muted">Dual reconciliation engine: approve wallet top-ups or direct order payments</small>
+                    </div>
+                    <button class="btn btn-sm btn-outline-primary fw-bold" id="btnSeedDemoReport">
+                        <i class="bi bi-plus-circle me-1"></i> Add Demo Payment Report
+                    </button>
+                </div>
+
+                <!-- Explanation Banner -->
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <div class="p-3 bg-white rounded-3 border-start border-primary border-4 shadow-sm">
+                            <h6 class="fw-bold text-primary mb-1"><i class="bi bi-wallet2 me-1"></i> Wallet Top-Up Reconciliation</h6>
+                            <p class="small text-muted mb-0">
+                                When a user reports payment for a <strong>wallet top-up</strong>, clicking <em>Approve</em> directly credits their wallet balance by the paid amount so they can complete future purchases seamlessly.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="p-3 bg-white rounded-3 border-start border-success border-4 shadow-sm">
+                            <h6 class="fw-bold text-success mb-1"><i class="bi bi-check-circle-fill me-1"></i> Direct Order Reconciliation</h6>
+                            <p class="small text-muted mb-0">
+                                When a user reports payment for a <strong>direct order</strong>, clicking <em>Approve</em> confirms the order as paid, generates a local hub delivery passcode, and leaves their wallet balance untouched.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reconciliations Table Card -->
+                <div class="card border-0 rounded-4 shadow-sm bg-white p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="fw-bold text-dark mb-0">Submitted Payment Reports</h5>
+                        <span class="badge bg-light text-secondary border px-3 py-2" id="reportsCountBadge">0 Reports</span>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Payment Ref</th>
+                                    <th>Order ID</th>
+                                    <th>Payer & Bank</th>
+                                    <th>Amount Paid</th>
+                                    <th>Purpose</th>
+                                    <th>Status</th>
+                                    <th class="text-end">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="reconciliationTableBody">
+                                <!-- Loaded dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+    <script src="../assets/js/storefront-core.js"></script>
+    <script src="../assets/js/uwanbuy.js"></script>
+    <script src="../assets/js/uwanbuy-engine.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            function refreshAdminUI() {
+                const wallet = (window.AreaBazaarStorefront && window.AreaBazaarStorefront.getWalletValue()) || 25000;
+                $('#adminSidebarWallet').text(window.UwanBuyEngine.formatNaira(wallet * 100, true));
+
+                let recons = window.UwanBuyEngine.getPendingReconciliations();
+
+                // If empty on first load, seed with demo records
+                if (recons.length === 0) {
+                    recons = [
+                        {
+                            reportId: 'REP-DEMO-001',
+                            orderId: 'ORD-UWB-202610-8401',
+                            paymentRef: 'REF-UWB-202610-18492',
+                            amountPaidMinor: 3820000,
+                            bankPaidFrom: 'First Bank of Nigeria',
+                            payerName: 'Emeka Okafor',
+                            remarks: 'Transfer via FirstMobile for Gas Cooker',
+                            status: 'submitted_pending_reconciliation',
+                            createdAt: new Date().toISOString()
+                        },
+                        {
+                            reportId: 'REP-DEMO-002',
+                            orderId: 'ORD-UWB-202610-9122',
+                            paymentRef: 'REF-UWB-202610-57124',
+                            amountPaidMinor: 2000000,
+                            bankPaidFrom: 'GTBank',
+                            payerName: 'Fatima Bello',
+                            remarks: 'Top-up wallet deficit via USSD',
+                            status: 'submitted_pending_reconciliation',
+                            createdAt: new Date(Date.now() - 3600000).toISOString()
+                        }
+                    ];
+                    window.UwanBuyEngine.reconciliations = recons;
+                    window.UwanBuyEngine.saveLocalState();
+                }
+
+                $('#reportsCountBadge').text(recons.length + ' Reports');
+                const $tbody = $('#reconciliationTableBody');
+                $tbody.empty();
+
+                recons.forEach(r => {
+                    const pendingOrder = (window.UwanBuyEngine.pendingOrders || []).find(o => o.orderId === r.orderId);
+                    const purpose = (pendingOrder && pendingOrder.purpose) || (r.remarks && r.remarks.toLowerCase().includes('top-up') ? 'wallet_topup' : 'order_direct');
+
+                    const purposeBadge = purpose === 'wallet_topup'
+                        ? '<span class="badge bg-primary-subtle text-primary fw-bold"><i class="bi bi-wallet2 me-1"></i> Wallet Top-Up</span>'
+                        : '<span class="badge bg-success-subtle text-success fw-bold"><i class="bi bi-bag-check me-1"></i> Direct Order</span>';
+
+                    let statusBadge = '';
+                    if (r.status === 'reconciled_approved') {
+                        statusBadge = '<span class="badge bg-success"><i class="bi bi-check2 me-1"></i> Approved</span>';
+                    } else if (r.status === 'reconciled_rejected') {
+                        statusBadge = '<span class="badge bg-danger"><i class="bi bi-x-circle me-1"></i> Rejected</span>';
+                    } else {
+                        statusBadge = '<span class="badge bg-warning text-dark"><i class="bi bi-clock me-1"></i> Pending Review</span>';
+                    }
+
+                    const isPending = r.status === 'submitted_pending_reconciliation';
+
+                    $tbody.append(`
+                        <tr>
+                            <td><strong class="font-monospace text-dark">${r.paymentRef}</strong></td>
+                            <td><span class="font-monospace text-muted small">${r.orderId}</span></td>
+                            <td>
+                                <strong class="d-block text-dark">${r.payerName}</strong>
+                                <small class="text-muted">${r.bankPaidFrom}</small>
+                            </td>
+                            <td class="fw-bold text-danger">${window.UwanBuyEngine.formatNaira(r.amountPaidMinor, true)}</td>
+                            <td>${purposeBadge}</td>
+                            <td>${statusBadge}</td>
+                            <td class="text-end">
+                                ${isPending ? `
+                                    <button class="btn btn-sm btn-success fw-bold btn-approve-recon me-1" data-id="${r.reportId}" data-purpose="${purpose}">
+                                        <i class="bi bi-check2-circle me-1"></i> Approve
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-danger btn-reject-recon" data-id="${r.reportId}">
+                                        Reject
+                                    </button>
+                                ` : `
+                                    <span class="text-muted small">Processed</span>
+                                `}
+                            </td>
+                        </tr>
+                    `);
+                });
+            }
+
+            refreshAdminUI();
+
+            // Handle Approve
+            $(document).on('click', '.btn-approve-recon', function () {
+                const reportId = $(this).data('id');
+                const purpose = $(this).data('purpose');
+                const res = window.UwanBuyEngine.reconcilePayment(reportId, 'approve');
+
+                if (res.success) {
+                    if (purpose === 'wallet_topup') {
+                        iziToast.success({
+                            title: 'Wallet Credited!',
+                            message: `Payment approved! User wallet credited with ${window.UwanBuyEngine.formatNaira(res.report.amountPaidMinor, true)}.`,
+                            position: 'topRight'
+                        });
+                    } else {
+                        iziToast.success({
+                            title: 'Order Confirmed!',
+                            message: `Payment approved! Order confirmed directly. Wallet balance remains untouched.`,
+                            position: 'topRight'
+                        });
+                    }
+                    refreshAdminUI();
+                }
+            });
+
+            // Handle Reject
+            $(document).on('click', '.btn-reject-recon', function () {
+                const reportId = $(this).data('id');
+                window.UwanBuyEngine.reconcilePayment(reportId, 'reject', 'Bank reference unverified');
+                iziToast.info({ title: 'Report Rejected', message: 'Payment report marked as rejected.' });
+                refreshAdminUI();
+            });
+
+            // Seed Demo
+            $('#btnSeedDemoReport').on('click', function () {
+                const newRep = {
+                    reportId: 'REP-' + Date.now(),
+                    orderId: 'ORD-UWB-' + Math.floor(100000 + Math.random() * 900000),
+                    paymentRef: 'REF-UWB-' + Math.floor(100000 + Math.random() * 900000),
+                    amountPaidMinor: 1550000,
+                    bankPaidFrom: 'OPay',
+                    payerName: 'Adeola Sanusi',
+                    remarks: 'Quick agent transfer',
+                    status: 'submitted_pending_reconciliation',
+                    createdAt: new Date().toISOString()
+                };
+                window.UwanBuyEngine.reconciliations.unshift(newRep);
+                window.UwanBuyEngine.saveLocalState();
+                iziToast.success({ title: 'Demo Report Added' });
+                refreshAdminUI();
+            });
+        });
+    </script>
+</body>
+
+</html>

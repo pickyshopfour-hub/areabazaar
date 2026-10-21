@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flat-Rate Flash Auction | UwanBUY Hyperlocal</title>
+
+    <link rel="shortcut icon" type="image/x-icon" href="../../assetsecm/images/uwanbuy-favicon-brief-color.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.6.1/css/iziModal.min.css">
+    <link rel="stylesheet" href="../assets/css/uwanbuy-updates.css">
+
+    <style>
+        :root {
+            --uw-brand: #ff0000;
+            --uw-brand-hover: #b80000;
+        }
+
+        body {
+            background-color: #f8fafc;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #1e293b;
+        }
+
+        .flat-pool-card {
+            background: linear-gradient(135deg, #ffffff 0%, #eff6ff 100%);
+            border: 2px solid #bfdbfe;
+            border-radius: 18px;
+            padding: 1.5rem;
+        }
+
+        .slot-meter {
+            height: 12px;
+            border-radius: 50px;
+            background: #e2e8f0;
+            overflow: hidden;
+        }
+
+        .slot-meter-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #2563eb, #3b82f6);
+            width: 72%;
+            border-radius: 50px;
+        }
+    </style>
+</head>
+
+<body data-store="uwanbuy">
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="../index.html">
+                <img src="../../assetsecm/images/uwanbuy-logo-long-full-color-01.png" alt="UwanBuy Logo" style="height: 38px; width: auto;">
+            </a>
+
+            <div class="d-flex ms-auto align-items-center gap-2">
+                <a href="index.html" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
+                    <i class="bi bi-arrow-left me-1"></i> All Auctions
+                </a>
+                
+                <div class="d-flex align-items-center gap-2 px-3 py-2 rounded-pill bg-light border cursor-pointer" id="btnNavWallet">
+                    <i class="bi bi-wallet2 text-danger"></i>
+                    <strong class="text-dark" id="wallet-balance-display">₦25,000.00</strong>
+                </div>
+                <button class="btn btn-brand position-relative shadow-sm px-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+                    <i class="bi bi-cart3"></i>
+                    <span id="cartBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark d-none">0</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <main class="container py-4">
+
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb small">
+                <li class="breadcrumb-item"><a href="../index.html" class="text-muted text-decoration-none">Home</a></li>
+                <li class="breadcrumb-item"><a href="index.html" class="text-muted text-decoration-none">Storefront Auctions</a></li>
+                <li class="breadcrumb-item active text-primary fw-bold">Flat-Rate Flash Auction</li>
+            </ol>
+        </nav>
+
+        <!-- Pool Header Banner -->
+        <div class="card border-0 rounded-4 shadow-sm p-4 mb-4 text-white position-relative overflow-hidden" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);">
+            <div class="row align-items-center g-4">
+                <div class="col-lg-8">
+                    <span class="badge bg-primary px-3 py-2 rounded-pill fw-bold text-uppercase mb-2">
+                        <i class="bi bi-tag-fill me-1"></i> Uniform Flat-Rate Tier &bull; ₦12,500 Any Item
+                    </span>
+                    <h1 class="h2 fw-extrabold text-white mb-2">Multi-Product Liquidation Clearance Pool</h1>
+                    <p class="text-white-50 mb-3 small">
+                        Every single item in this liquidation batch is priced at exactly <strong>₦12,500.00</strong> regardless of original retail value (up to ₦25,000). 
+                        Mix and match across appliances, cookware, and fashion gear to satisfy the required <strong>3-Unit Pool MOQ</strong>.
+                    </p>
+                    <div class="d-flex flex-wrap gap-3 small">
+                        <span class="badge bg-white text-dark py-2 px-3 fw-bold"><i class="bi bi-box-seam me-1 text-primary"></i> Total Pool: 50 Units</span>
+                        <span class="badge bg-success py-2 px-3 fw-bold"><i class="bi bi-check2-circle me-1"></i> Claimed: 36 Units</span>
+                        <span class="badge bg-warning text-dark py-2 px-3 fw-bold"><i class="bi bi-hourglass-split me-1"></i> Remaining: 14 Slots Only</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-lg-end">
+                    <div class="p-3 rounded-3 bg-white text-dark d-inline-block shadow text-start w-100" style="max-width: 320px;">
+                        <small class="text-muted text-uppercase fw-bold text-xs d-block">Guaranteed Flat Rate</small>
+                        <div class="d-flex align-items-baseline gap-2">
+                            <span class="display-6 fw-extrabold text-primary">₦12,500</span>
+                            <span class="text-muted text-decoration-line-through small">Up to ₦25,000</span>
+                        </div>
+                        <span class="badge bg-danger-subtle text-danger fw-bold rounded-pill text-xs mt-1">UP TO 50% SAVINGS</span>
+                        <div class="mt-2 text-xs text-muted">
+                            <i class="bi bi-info-circle-fill text-warning me-1"></i> Pool MOQ: 3 Units minimum
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6-Product Pool Grid -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h4 class="fw-bold text-dark mb-0">Eligible Flat-Rate Pool Items</h4>
+                <small class="text-muted">Select any item below for ₦12,500.00 each</small>
+            </div>
+            <span class="badge bg-light text-dark border fw-bold px-3 py-2">6 Products Available</span>
+        </div>
+
+        <div class="row g-4 mb-5" id="flatRatePoolGrid">
+            <!-- Item 1: Kettle / Boiler -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border rounded-4 shadow-sm p-3 product-card bg-white position-relative">
+                    <span class="badge bg-primary position-absolute top-0 end-0 m-3 fw-bold">Flat: ₦12,500</span>
+                    <div class="p-3 bg-light rounded-3 text-center mb-3" style="height: 180px; display: flex; align-items: center; justify-content: center;">
+                        <img src="../assets/images/placeholders/water-boiler.svg" alt="Electric Boiler" style="max-height: 150px; object-fit: contain;">
+                    </div>
+                    <span class="badge bg-secondary-subtle text-secondary rounded-pill px-2 py-1 text-xs mb-1 w-fit">Appliances &bull; Grade A</span>
+                    <h6 class="fw-bold text-dark mb-1">Century 2.2L Stainless Electric Kettle / Rapid Boiler</h6>
+                    <p class="text-muted text-xs mb-2">Detachable 360° cordless base, fast boil thermostat, dry-boil safety cut-off.</p>
+                    <div class="p-2 bg-light rounded-2 small text-xs mb-3">
+                        <i class="bi bi-check-circle-fill text-success me-1"></i> Specs: 2.2L &bull; 1800W &bull; Heating Optimal
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-auto pt-2 border-top">
+                        <div>
+                            <span class="fw-extrabold text-primary fs-5">₦12,500</span>
+                            <span class="text-decoration-line-through text-muted small ms-1">₦18,500</span>
+                        </div>
+                        <button class="btn btn-sm btn-outline-primary fw-bold px-3 btn-add-pool-item" data-id="uw_auc_flat_kettle" data-name="Century 2.2L Stainless Electric Kettle" data-price="12500" data-img="../assets/images/placeholders/water-boiler.svg">
+                            <i class="bi bi-plus-circle me-1"></i> Add to Batch
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 2: Blender -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border rounded-4 shadow-sm p-3 product-card bg-white position-relative">
+                    <span class="badge bg-primary position-absolute top-0 end-0 m-3 fw-bold">Flat: ₦12,500</span>
+                    <div class="p-3 bg-light rounded-3 text-center mb-3" style="height: 180px; display: flex; align-items: center; justify-content: center;">
+                        <img src="../assets/images/placeholders/blender.svg" alt="Blender" style="max-height: 150px; object-fit: contain;">
+                    </div>
+                    <span class="badge bg-secondary-subtle text-secondary rounded-pill px-2 py-1 text-xs mb-1 w-fit">Appliances &bull; Grade A</span>
+                    <h6 class="fw-bold text-dark mb-1">Binatone 1.5L Heavy Duty 3-Cup Speed Blender with Grinder</h6>
+                    <p class="text-muted text-xs mb-2">Heavy motor with dry mill cup for beans, spices, smoothies, and hard soup ingredients.</p>
+                    <div class="p-2 bg-light rounded-2 small text-xs mb-3">
+                        <i class="bi bi-check-circle-fill text-success me-1"></i> Specs: 1.5L Jug &bull; 450W Motor &bull; Tested
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-auto pt-2 border-top">
+                        <div>
+                            <span class="fw-extrabold text-primary fs-5">₦12,500</span>
+                            <span class="text-decoration-line-through text-muted small ms-1">₦22,000</span>
+                        </div>
+                        <button class="btn btn-sm btn-outline-primary fw-bold px-3 btn-add-pool-item" data-id="uw_auc_flat_blender" data-name="Binatone 1.5L Heavy Duty Speed Blender" data-price="12500" data-img="../assets/images/placeholders/blender.svg">
+                            <i class="bi bi-plus-circle me-1"></i> Add to Batch
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 3: Granite Pan -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border rounded-4 shadow-sm p-3 product-card bg-white position-relative">
+                    <span class="badge bg-primary position-absolute top-0 end-0 m-3 fw-bold">Flat: ₦12,500</span>
+                    <div class="p-3 bg-light rounded-3 text-center mb-3" style="height: 180px; display: flex; align-items: center; justify-content: center;">
+                        <img src="../assets/images/placeholders/granite-pan.svg" alt="Granite Pan" style="max-height: 150px; object-fit: contain;">
+                    </div>
+                    <span class="badge bg-secondary-subtle text-secondary rounded-pill px-2 py-1 text-xs mb-1 w-fit">Cookware &bull; Grade A</span>
+                    <h6 class="fw-bold text-dark mb-1">MasterChef 28cm Non-Stick Granite Frying Pan & Glass Lid</h6>
+                    <p class="text-muted text-xs mb-2">Multi-layer stone coating, zero oil cooking, compatible with gas and induction hobs.</p>
+                    <div class="p-2 bg-light rounded-2 small text-xs mb-3">
+                        <i class="bi bi-check-circle-fill text-success me-1"></i> Specs: 28cm Dia &bull; Granite Stone &bull; Heat-Safe
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-auto pt-2 border-top">
+                        <div>
+                            <span class="fw-extrabold text-primary fs-5">₦12,500</span>
+                            <span class="text-decoration-line-through text-muted small ms-1">₦19,500</span>
+                        </div>
+                        <button class="btn btn-sm btn-outline-primary fw-bold px-3 btn-add-pool-item" data-id="uw_auc_flat_pan" data-name="MasterChef 28cm Non-Stick Granite Pan" data-price="12500" data-img="../assets/images/placeholders/granite-pan.svg">
+                            <i class="bi bi-plus-circle me-1"></i> Add to Batch
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 4: Steam Iron -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border rounded-4 shadow-sm p-3 product-card bg-white position-relative">
+                    <span class="badge bg-primary position-absolute top-0 end-0 m-3 fw-bold">Flat: ₦12,500</span>
+                    <div class="p-3 bg-light rounded-3 text-center mb-3" style="height: 180px; display: flex; align-items: center; justify-content: center;">
+                        <img src="../assets/images/placeholders/pressing-iron.svg" alt="Steam Iron" style="max-height: 150px; object-fit: contain;">
+                    </div>
+                    <span class="badge bg-secondary-subtle text-secondary rounded-pill px-2 py-1 text-xs mb-1 w-fit">Appliances &bull; Grade A</span>
+                    <h6 class="fw-bold text-dark mb-1">Philips EasySpeed Plus 2000W Ceramic Steam Pressing Iron</h6>
+                    <p class="text-muted text-xs mb-2">Non-stick ceramic soleplate with continuous high steam output and calc-clean slider.</p>
+                    <div class="p-2 bg-light rounded-2 small text-xs mb-3">
+                        <i class="bi bi-check-circle-fill text-success me-1"></i> Specs: 2000W &bull; Ceramic &bull; Steam Optimal
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-auto pt-2 border-top">
+                        <div>
+                            <span class="fw-extrabold text-primary fs-5">₦12,500</span>
+                            <span class="text-decoration-line-through text-muted small ms-1">₦21,000</span>
+                        </div>
+                        <button class="btn btn-sm btn-outline-primary fw-bold px-3 btn-add-pool-item" data-id="uw_auc_flat_iron" data-name="Philips EasySpeed Plus 2000W Steam Iron" data-price="12500" data-img="../assets/images/placeholders/pressing-iron.svg">
+                            <i class="bi bi-plus-circle me-1"></i> Add to Batch
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 5: Sneakers -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border rounded-4 shadow-sm p-3 product-card bg-white position-relative">
+                    <span class="badge bg-primary position-absolute top-0 end-0 m-3 fw-bold">Flat: ₦12,500</span>
+                    <div class="p-3 bg-light rounded-3 text-center mb-3" style="height: 180px; display: flex; align-items: center; justify-content: center;">
+                        <img src="../assets/images/placeholders/streetwear-sneakers.svg" alt="Sneakers" style="max-height: 150px; object-fit: contain;">
+                    </div>
+                    <span class="badge bg-secondary-subtle text-secondary rounded-pill px-2 py-1 text-xs mb-1 w-fit">Fashion &bull; Brand New</span>
+                    <h6 class="fw-bold text-dark mb-1">Clean Minimalist Leather Low-Top Street Sneakers</h6>
+                    <p class="text-muted text-xs mb-2">Vulcanized anti-slip rubber sole, padded collar, breathable orthopedic cushioned footbed.</p>
+                    <div class="p-2 bg-light rounded-2 small text-xs mb-3">
+                        <i class="bi bi-check-circle-fill text-success me-1"></i> Specs: Sizes 40-45 &bull; Leather &bull; Vulcanized
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-auto pt-2 border-top">
+                        <div>
+                            <span class="fw-extrabold text-primary fs-5">₦12,500</span>
+                            <span class="text-decoration-line-through text-muted small ms-1">₦22,000</span>
+                        </div>
+                        <button class="btn btn-sm btn-outline-primary fw-bold px-3 btn-add-pool-item" data-id="uw_auc_flat_sneakers" data-name="Clean Minimalist Leather Low-Top Sneakers" data-price="12500" data-img="../assets/images/placeholders/streetwear-sneakers.svg">
+                            <i class="bi bi-plus-circle me-1"></i> Add to Batch
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 6: Microwave Oven -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border rounded-4 shadow-sm p-3 product-card bg-white position-relative">
+                    <span class="badge bg-primary position-absolute top-0 end-0 m-3 fw-bold">Flat: ₦12,500</span>
+                    <div class="p-3 bg-light rounded-3 text-center mb-3" style="height: 180px; display: flex; align-items: center; justify-content: center;">
+                        <img src="../assets/images/placeholders/microwave-oven.svg" alt="Microwave Oven" style="max-height: 150px; object-fit: contain;">
+                    </div>
+                    <span class="badge bg-secondary-subtle text-secondary rounded-pill px-2 py-1 text-xs mb-1 w-fit">Appliances &bull; Liquidation</span>
+                    <h6 class="fw-bold text-dark mb-1">Nexus 20L Compact Mechanical Solo Microwave Oven</h6>
+                    <p class="text-muted text-xs mb-2">5 power levels, 35-minute timer, defrost function, heat-resistant glass turntable plate.</p>
+                    <div class="p-2 bg-light rounded-2 small text-xs mb-3">
+                        <i class="bi bi-check-circle-fill text-success me-1"></i> Specs: 20L &bull; 700W &bull; Tested Optimal
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-auto pt-2 border-top">
+                        <div>
+                            <span class="fw-extrabold text-primary fs-5">₦12,500</span>
+                            <span class="text-decoration-line-through text-muted small ms-1">₦24,500</span>
+                        </div>
+                        <button class="btn btn-sm btn-outline-primary fw-bold px-3 btn-add-pool-item" data-id="uw_auc_flat_microwave" data-name="Nexus 20L Compact Solo Microwave Oven" data-price="12500" data-img="../assets/images/placeholders/microwave-oven.svg">
+                            <i class="bi bi-plus-circle me-1"></i> Add to Batch
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sticky Bottom / Floating Batch Selector Summary Bar -->
+        <div class="card border rounded-4 shadow-lg p-3 bg-white border-primary" id="flatBatchSummaryBar">
+            <div class="row align-items-center g-3">
+                <div class="col-lg-4">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="p-2 bg-primary-subtle text-primary rounded-3 fs-3">
+                            <i class="bi bi-boxes"></i>
+                        </div>
+                        <div>
+                            <h6 class="fw-bold text-dark mb-0">Your Flat-Rate Batch</h6>
+                            <span class="small text-muted" id="batchItemsSummaryText">3 Items pre-selected (MOQ satisfied)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <div class="d-inline-flex align-items-center gap-2">
+                        <span class="small fw-bold text-secondary">Total Units:</span>
+                        <div class="input-group input-group-sm" style="width: 100px;">
+                            <button class="btn btn-outline-secondary" id="btnMinusFlatBatch">-</button>
+                            <input type="text" id="flatBatchUnitsInput" class="form-control text-center fw-bold" value="3" readonly>
+                            <button class="btn btn-outline-secondary" id="btnPlusFlatBatch">+</button>
+                        </div>
+                        <span class="badge bg-success-subtle text-success fw-bold text-xs" id="batchMoqBadge">MOQ 3 Met!</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-lg-end">
+                    <div class="d-flex align-items-center justify-content-lg-end gap-3">
+                        <div>
+                            <small class="text-muted text-xs d-block">Batch Total (₦12,500/unit)</small>
+                            <strong class="fs-5 text-primary" id="flatBatchTotalDisplay">₦37,500.00</strong>
+                        </div>
+                        <button class="btn btn-primary px-4 py-2 fw-bold shadow-sm" id="btnLockFlatRateBatch">
+                            <i class="bi bi-bag-check-fill me-1"></i> Lock Batch & Checkout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-5 pb-4 mt-5">
+        <div class="container text-center small text-white-50">
+            <p>&copy; 2026 UwanBuy Hyperlocal Marketplace. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Cart Offcanvas -->
+    <div class="offcanvas offcanvas-end offcanvas-cart-responsive" tabindex="-1" id="cartOffcanvas" style="width: min(440px, 100vw);">
+        <div class="offcanvas-header border-bottom bg-light">
+            <h5 class="offcanvas-title fw-bold"><i class="bi bi-cart3 text-danger me-2"></i> Shopping Cart</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body d-flex flex-column p-0">
+            <!-- Pinned Top Cart Pending Orders (Awaiting Payment) -->
+            <div id="cart-pending-orders-container" class="p-3 pb-0"></div>
+
+            <!-- Customer Submitted Shopping Lists Status (Awaiting Admin Pricing) -->
+            <div id="cart-submitted-lists-container" class="px-3 pt-2"></div>
+
+            <!-- Select All & Summary Header -->
+            <div class="d-flex justify-content-between align-items-center px-3 py-2 bg-light border-bottom" id="cartSelectControlsBar">
+                <div class="form-check m-0 d-flex align-items-center gap-2">
+                    <input class="form-check-input" type="checkbox" id="selectAllCartCheck" checked>
+                    <label class="form-check-label small fw-bold" for="selectAllCartCheck">Select All</label>
+                </div>
+                <span class="badge bg-white text-dark border small" id="selectedCartSummary">0 selected</span>
+            </div>
+
+            <div id="cartItemsContainer" class="flex-grow-1 overflow-auto p-3">
+                <div id="cartDrawerItemsList">
+                    <div class="text-center text-muted mt-5" id="emptyCartState">
+                        <i class="bi bi-cart-x fs-1"></i>
+                        <p class="mt-2">Your cart is empty.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="border-top p-3 bg-light" id="cartFooter">
+                <div class="d-flex justify-content-between align-items-baseline mb-1">
+                    <span class="small text-muted">Selected Subtotal:</span>
+                    <span id="cartSelectedSubtotalDisplay" class="fw-extrabold text-danger fs-4">₦0.00</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="text-xs text-muted">Cart Full Total:</span>
+                    <span id="cartSubtotalDisplay" class="text-xs fw-bold text-secondary">₦0.00</span>
+                </div>
+                <div class="row g-2">
+                    <div class="col-6">
+                        <button class="btn btn-outline-danger w-100 py-2 fw-bold small" id="btnCheckoutSelected" disabled>
+                            <i class="bi bi-check2-square me-1"></i> Checkout Selected (<span id="countSelectedBadge">0</span>)
+                        </button>
+                    </div>
+                    <div class="col-6">
+                        <button class="btn btn-brand w-100 py-2 fw-bold small shadow-sm" id="btnCheckoutAll" disabled>
+                            <i class="bi bi-cart-check me-1"></i> Checkout All (<span id="countAllBadge">0</span>)
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+            <div class="border-top p-3 bg-light" id="cartFooter">
+                <div class="d-flex justify-content-between fw-bold mb-3 fs-5">
+                    <span>Subtotal:</span>
+                    <span id="cartSubtotalDisplay" class="text-danger">₦0.00</span>
+                </div>
+                <div class="d-grid gap-2">
+                    <button class="btn btn-brand w-100 py-3 fw-bold shadow-sm" id="btnProceedToCheckout">
+                        <i class="bi bi-shield-check me-2"></i> Proceed to Checkout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal fade" id="modal-checkout-validate" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-light">
+                    <div>
+                        <span class="badge bg-dark rounded-pill px-2 py-1 text-xs mb-1">Server Quote Validation</span>
+                        <h5 class="modal-title fw-bold">Order Checkout Validation</h5>
+                        <small class="text-muted">Order ID: <span class="badge-order-id" id="validateOrderIdDisplay">ORD-UWB-...</span></small>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <label class="form-label small fw-bold text-uppercase text-dark mb-2">Fulfillment & Delivery</label>
+                    <div class="row g-2 mb-3">
+                        <div class="col-sm-6">
+                            <div class="p-3 border rounded-3 bg-light">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="fulfillmentChoice" id="flat_fulfill_pickup" value="pickup" checked>
+                                    <label class="form-check-label fw-bold text-dark small" for="flat_fulfill_pickup">
+                                        <i class="bi bi-geo-alt-fill text-danger me-1"></i> Free Hub Pickup Point
+                                        <span class="badge bg-success-subtle text-success d-block mt-1">₦0.00 Free</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="p-3 border rounded-3 bg-light">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="fulfillmentChoice" id="flat_fulfill_address" value="address">
+                                    <label class="form-check-label fw-bold text-dark small" for="flat_fulfill_address">
+                                        <i class="bi bi-truck text-primary me-1"></i> Deliver to My Address
+                                        <span class="badge bg-primary-subtle text-primary d-block mt-1">+₦1,200.00</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="pickupAccordionWrapper" class="mb-3">
+                        <label class="form-label text-xs fw-bold text-muted text-uppercase mb-1">Select Local Hub Collection Point:</label>
+                        <div id="pickupPointsAccordionList" class="border rounded-3 p-2 bg-light" style="max-height: 180px; overflow-y: auto;"></div>
+                    </div>
+
+                    <div id="addressInputWrapper" class="mb-3 d-none">
+                        <label class="form-label text-xs fw-bold text-muted text-uppercase mb-1">Enter Delivery Address:</label>
+                        <textarea id="deliveryAddressInput" class="form-control" rows="2" placeholder="Street Address, Flat/House Number, Landmark, City"></textarea>
+                    </div>
+
+                    <div class="form-check form-switch p-3 border rounded-3 bg-light mb-4">
+                        <input class="form-check-input ms-0 me-3" type="checkbox" id="expressDeliveryToggle">
+                        <label class="form-check-label fw-bold text-dark small" for="expressDeliveryToggle">
+                            <i class="bi bi-lightning-charge-fill text-warning me-1"></i> Express Priority Delivery
+                            <span class="text-muted fw-normal d-block text-xs">Guaranteed 45-minute dispatch within hub radius (+₦1,500.00 surcharge)</span>
+                        </label>
+                    </div>
+
+                    <div class="p-3 bg-light rounded-3 border mb-3">
+                        <h6 class="fw-bold text-dark small text-uppercase mb-2">Price & Tax Breakdown</h6>
+                        <div class="d-flex justify-content-between small text-muted mb-1">
+                            <span>Items Subtotal:</span>
+                            <strong class="text-dark" id="summarySubtotal">₦0.00</strong>
+                        </div>
+                        <div class="d-flex justify-content-between small text-muted mb-1">
+                            <span>Delivery Fee:</span>
+                            <strong class="text-success" id="summaryDeliveryFee">FREE</strong>
+                        </div>
+                        <div class="d-flex justify-content-between small text-muted mb-1 d-none" id="summaryExpressRow">
+                            <span>Express Surcharge:</span>
+                            <strong class="text-warning-emphasis" id="summaryExpressFee">₦0.00</strong>
+                        </div>
+                        <div class="d-flex justify-content-between small text-muted mb-2">
+                            <span>VAT (7.5% applicable):</span>
+                            <strong class="text-dark" id="summaryVat">₦0.00</strong>
+                        </div>
+                        <div class="d-flex justify-content-between fw-extrabold fs-5 text-dark border-top pt-2">
+                            <span>Order Total:</span>
+                            <span class="text-danger" id="summaryTotalAmount">₦0.00</span>
+                        </div>
+                    </div>
+
+                    <div class="p-3 rounded-3 border mb-3 bg-white">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <small class="text-muted d-block text-xs">Your Wallet Balance</small>
+                                <strong class="fs-6 text-dark" id="validateWalletBalanceText">₦25,000.00</strong>
+                            </div>
+                            <span class="badge bg-dark-subtle text-dark">Verified Local Wallet</span>
+                        </div>
+                        <div id="walletInsufficientAlert" class="alert alert-warning p-2 small mt-2 mb-0 d-none">
+                            <i class="bi bi-exclamation-triangle-fill me-1"></i>
+                            Wallet balance is insufficient (Deficit: <strong id="walletDeficitAmount">₦0.00</strong>).
+                            <div class="mt-2 d-flex gap-2">
+                                <button type="button" class="btn btn-sm btn-outline-dark btn-open-payment-request" data-purpose="wallet_topup">
+                                    <i class="bi bi-wallet2 me-1"></i> Top Up Wallet
+                                </button>
+                                <button type="button" class="btn btn-sm btn-danger btn-open-payment-request" data-purpose="order_direct">
+                                    <i class="bi bi-credit-card me-1"></i> Pay Directly
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-light d-flex justify-content-between">
+                    <button type="button" class="btn btn-outline-secondary" id="btnCreatePaymentRequest" data-purpose="order_direct">
+                        <i class="bi bi-receipt me-1"></i> Create Payment Request
+                    </button>
+                    <button type="button" class="btn btn-brand px-4 py-2" id="btnPayWithWallet">
+                        <i class="bi bi-check2-circle me-1"></i> Pay with Wallet
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wallet PIN Modal -->
+    <div class="modal fade" id="modal-wallet-pin" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content text-center p-4">
+                <i class="bi bi-shield-lock display-4 text-danger mb-2"></i>
+                <h5 class="fw-bold mb-1">Enter Wallet PIN</h5>
+                <p class="text-muted small mb-3">Order: <span id="pinOrderIdDisplay" class="fw-bold"></span><br>Amount: <span id="pinAmountDisplay" class="text-danger fw-bold"></span></p>
+                <div class="mb-3">
+                    <input type="password" id="walletPinInput" class="form-control text-center fs-4 fw-bold letter-spacing-2" maxlength="4" placeholder="••••">
+                </div>
+                <button type="button" class="btn btn-brand w-100 py-2 fw-bold" id="btnConfirmWalletPin">
+                    Confirm & Settle
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Payment Request Modal -->
+    <div class="modal fade" id="modal-payment-request" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-light">
+                    <div>
+                        <h5 class="modal-title fw-bold">Create Payment Request</h5>
+                        <small class="text-muted">Order: <span id="reqOrderIdDisplay" class="fw-bold"></span> &bull; Amount: <span id="reqAmountDisplay" class="text-danger fw-bold"></span></small>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <input type="hidden" id="reqPurposeInput" value="order_direct">
+                    <label class="form-label small fw-bold text-uppercase text-dark mb-2">Choose Payment Channel</label>
+                    <div class="row g-2 mb-3">
+                        <div class="col-6">
+                            <div class="p-2 border rounded-3 bg-light">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="paymentChannelChoice" id="flat_channel_agent" value="agent" checked>
+                                    <label class="form-check-label fw-bold small text-dark" for="flat_channel_agent">
+                                        <i class="bi bi-person-badge-fill text-danger me-1"></i> Pay with Agent
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="p-2 border rounded-3 bg-light">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="paymentChannelChoice" id="flat_channel_direct" value="direct">
+                                    <label class="form-check-label fw-bold small text-dark" for="flat_channel_direct">
+                                        <i class="bi bi-bank text-primary me-1"></i> Bank Transfer
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="channelAgentCard" class="card border rounded-3 p-3 bg-light mb-3">
+                        <div class="d-flex align-items-center gap-2 mb-2">
+                            <span class="badge bg-danger rounded-circle p-2"><i class="bi bi-person text-white"></i></span>
+                            <div>
+                                <h6 class="fw-bold text-dark mb-0" id="agentNameDisplay">Chukwuma Adebayo</h6>
+                                <small class="text-muted"><span id="agentBadgeDisplay">Accredited Senior Agent</span> &bull; Hub: <strong id="agentHubCodeDisplay">FRM-ILN-042</strong></small>
+                            </div>
+                        </div>
+                        <p class="text-muted text-xs mb-2">Call or chat the agent via WhatsApp to arrange local POS, cash-at-hub, or verified agent transfer.</p>
+                        <div class="d-flex gap-2">
+                            <a href="tel:08012345678" class="btn btn-sm btn-outline-secondary flex-fill small"><i class="bi bi-telephone me-1"></i> Call</a>
+                            <a href="#" id="agentWhatsappBtn" target="_blank" class="btn btn-sm btn-success flex-fill small"><i class="bi bi-whatsapp me-1"></i> WhatsApp</a>
+                        </div>
+                    </div>
+
+                    <div id="channelDirectCard" class="card border rounded-3 p-3 bg-light mb-3">
+                        <div class="d-flex align-items-center gap-2 mb-2">
+                            <i class="bi bi-bank fs-4 text-primary"></i>
+                            <div>
+                                <h6 class="fw-bold text-dark mb-0" id="bankNameDisplay">First Bank of Nigeria</h6>
+                                <small class="text-muted">Account Name: <strong id="bankAccountNameDisplay">UwanBUY Direct Settlement</strong></small>
+                            </div>
+                        </div>
+                        <div class="bg-white p-2 border rounded-2 d-flex justify-content-between align-items-center mb-2">
+                            <span class="fs-5 fw-bold font-monospace text-dark" id="bankAccountDisplay">3109845210</span>
+                            <button class="btn btn-sm btn-outline-secondary py-0 text-xs" onclick="navigator.clipboard.writeText('3109845210'); if(window.iziToast) iziToast.info({title:'Copied'});">Copy</button>
+                        </div>
+                        <small class="text-muted text-xs">Transfer via your banking app, then generate a payment reference below.</small>
+                    </div>
+
+                    <div id="generatedRefAlert" class="alert alert-success p-3 rounded-3 mb-0 d-none">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div>
+                                <small class="text-muted d-block text-xs">Payment Reference Generated:</small>
+                                <strong class="fs-5 font-monospace text-dark" id="generatedRefText">REF-UWB-...</strong>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-success fw-bold" id="btnOpenPaymentReport">
+                                Submit Report <i class="bi bi-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-light d-flex justify-content-between">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-brand px-4" id="btnGeneratePaymentRef">
+                        <i class="bi bi-qr-code me-1"></i> Generate Payment Ref
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Report Form Modal -->
+    <div class="modal fade" id="modal-payment-report" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-light">
+                    <div>
+                        <h5 class="modal-title fw-bold">Payment Report Form</h5>
+                        <small class="text-muted">Submit payment proof for instant local hub reconciliation</small>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="formPaymentReport">
+                    <div class="modal-body p-4">
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Payment Reference <span class="text-danger">*</span></label>
+                            <input type="text" id="reportPaymentRefInput" class="form-control font-monospace fw-bold" readonly required>
+                        </div>
+                        <div class="row g-2 mb-3">
+                            <div class="col-6">
+                                <label class="form-label small fw-bold">Order ID</label>
+                                <input type="text" id="reportOrderIdInput" class="form-control form-control-sm font-monospace" readonly>
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label small fw-bold">Amount Paid (₦) <span class="text-danger">*</span></label>
+                                <input type="number" id="reportAmountPaidInput" class="form-control form-control-sm fw-bold" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Bank Paid From <span class="text-danger">*</span></label>
+                            <select id="reportBankSelect" class="form-select form-select-sm" required>
+                                <option value="">Select your bank...</option>
+                                <option value="Access Bank">Access Bank</option>
+                                <option value="GTBank">Guaranty Trust Bank (GTBank)</option>
+                                <option value="First Bank">First Bank of Nigeria</option>
+                                <option value="Zenith Bank">Zenith Bank</option>
+                                <option value="UBA">United Bank for Africa (UBA)</option>
+                                <option value="OPay">OPay</option>
+                                <option value="PalmPay">PalmPay</option>
+                                <option value="Kuda Bank">Kuda Microfinance Bank</option>
+                                <option value="Other Bank">Other Bank</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Payer Account Name <span class="text-danger">*</span></label>
+                            <input type="text" id="reportPayerNameInput" class="form-control form-control-sm" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Receipt / Remarks (Optional)</label>
+                            <input type="text" id="reportRemarksInput" class="form-control form-control-sm">
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-light d-flex justify-content-between">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Submit Later</button>
+                        <button type="submit" class="btn btn-brand px-4 fw-bold">
+                            <i class="bi bi-send-check me-1"></i> Submit Payment Report
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+        <!-- ==============================================================
+         MODAL 7: FUND WALLET FROM NAVIGATION MODAL
+         ============================================================== -->
+    <div class="modal fade" id="modal-fund-wallet" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="modal-header bg-light">
+                    <div>
+                        <h5 class="modal-title fw-bold mb-0"><i class="bi bi-wallet2 text-danger me-2"></i> Fund Your Wallet Balance</h5>
+                        <small class="text-muted">Direct transfer or accredited hub agent funding</small>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="p-3 bg-light rounded-3 border mb-3 d-flex justify-content-between align-items-center">
+                        <div>
+                            <small class="text-muted text-uppercase fw-bold text-xs d-block">Current Balance</small>
+                            <span class="fs-4 fw-extrabold text-dark" id="fundWalletCurrentBalanceDisplay">₦25,000.00</span>
+                        </div>
+                        <span class="badge bg-success-subtle text-success fw-bold px-3 py-2 rounded-pill">Active Wallet</span>
+                    </div>
+
+                    <label class="form-label small fw-bold text-uppercase text-secondary mb-2">Select Top-up Amount</label>
+                    <div class="row g-2 mb-3">
+                        <div class="col-3">
+                            <button type="button" class="btn btn-outline-secondary w-100 py-2 fw-bold small btn-wallet-preset" data-amount="5000">₦5,000</button>
+                        </div>
+                        <div class="col-3">
+                            <button type="button" class="btn btn-outline-secondary w-100 py-2 fw-bold small btn-wallet-preset" data-amount="10000">₦10,000</button>
+                        </div>
+                        <div class="col-3">
+                            <button type="button" class="btn btn-danger active w-100 py-2 fw-bold small btn-wallet-preset" data-amount="20000">₦20,000</button>
+                        </div>
+                        <div class="col-3">
+                            <button type="button" class="btn btn-outline-secondary w-100 py-2 fw-bold small btn-wallet-preset" data-amount="50000">₦50,000</button>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold text-secondary">Or Enter Custom Amount (₦)</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light fw-bold">₦</span>
+                            <input type="number" id="topupAmountInput" class="form-control form-control-lg fw-bold text-dark" value="20000" min="500" step="500">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-light d-flex justify-content-between">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-brand px-4 py-2" id="btnProceedFundWallet">
+                        <i class="bi bi-arrow-right-circle me-1"></i> Proceed to Payment
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==============================================================
+         MODAL 8: REQUEST DELIVERY TRACKING MODAL
+         ============================================================== -->
+    <div class="modal fade" id="modal-request-tracking" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="modal-header bg-light">
+                    <div>
+                        <h5 class="modal-title fw-bold mb-0"><i class="bi bi-truck text-danger me-2"></i> Request Delivery Tracking</h5>
+                        <small class="text-muted">Order: <span id="trackingReqOrderIdDisplay" class="fw-bold font-monospace"></span></small>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="alert alert-warning py-2 px-3 small mb-3 border-0 bg-warning-subtle text-dark rounded-3">
+                        <i class="bi bi-clock-history me-1 text-warning-emphasis"></i>
+                        <strong>15-Minute Bulk Batch Policy:</strong> Tracking requests are dispatched to fulfillment riders every 15 minutes. You will receive an automated tracking email once dispatched.
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold text-secondary">Customer Notification Email <span class="text-danger">*</span></label>
+                        <input type="email" id="trackingCustomerEmail" class="form-control" placeholder="your.name@example.com" value="customer@example.com" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold text-secondary">Phone Number for Rider SMS</label>
+                        <input type="tel" id="trackingCustomerPhone" class="form-control" value="08034567890">
+                    </div>
+                </div>
+                <div class="modal-footer bg-light d-flex justify-content-between">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-brand px-4 py-2" id="btnSubmitTrackingRequest">
+                        <i class="bi bi-send-check me-1"></i> Submit Tracking Request
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==============================================================
+         MODAL 9: AUTOMATED TRACKING EMAIL NOTIFICATION PREVIEW MODAL
+         ============================================================== -->
+    <div class="modal fade" id="modal-tracking-email-preview" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="modal-header text-white px-4 py-3" style="background-color: #0f172a;">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-envelope-check-fill text-warning fs-4"></i>
+                        <div>
+                            <h5 class="modal-title fw-bold mb-0">Automated Tracking Notification Email</h5>
+                            <small class="text-white-50">Bulk 15-min Dispatch Engine &bull; Customer Notification</small>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4 bg-light">
+                    <div class="card border rounded-3 p-4 bg-white shadow-sm">
+                        <div class="border-bottom pb-3 mb-3">
+                            <span class="small text-muted">From:</span> <strong>UwanBUY Hyperlocal Dispatch &lt;dispatch@areabazaar.com&gt;</strong><br>
+                            <span class="small text-muted">To:</span> <strong id="emailPreviewTo">customer@example.com</strong>
+                            <h5 class="fw-bold text-dark mt-3 mb-0" id="emailPreviewSubject">🚚 Order dispatched from Tanke Hub!</h5>
+                        </div>
+                        <p class="small text-dark mb-3">Your tracking request has been processed in our bulk 15-minute dispatch cycle. Rider <strong>Musa Garba (+234 802 345 6789)</strong> is en route with your package.</p>
+                    </div>
+                </div>
+                <div class="modal-footer bg-light">
+                    <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">Close Preview</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.6.1/js/iziModal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+    <script src="../assets/js/storefront-core.js"></script>
+    <script src="../assets/js/uwanbuy.js"></script>
+    <script src="../assets/js/uwanbuy-engine.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            const unitPrice = 12500;
+            const moq = 3;
+            let batchUnits = 3;
+
+            // Pool Items array
+            const poolItems = [
+                { id: 'uw_auc_flat_kettle', name: 'Century 2.2L Stainless Electric Kettle', price: 12500, img: '../assets/images/placeholders/water-boiler.svg' },
+                { id: 'uw_auc_flat_blender', name: 'Binatone 1.5L Heavy Duty Speed Blender', price: 12500, img: '../assets/images/placeholders/blender.svg' },
+                { id: 'uw_auc_flat_pan', name: 'MasterChef 28cm Non-Stick Granite Pan', price: 12500, img: '../assets/images/placeholders/granite-pan.svg' }
+            ];
+
+            function updateBatchUI() {
+                $('#flatBatchUnitsInput').val(batchUnits);
+                $('#flatBatchTotalDisplay').text('₦' + (batchUnits * unitPrice).toLocaleString() + '.00');
+                if (batchUnits >= moq) {
+                    $('#batchMoqBadge').removeClass('bg-warning text-dark').addClass('bg-success-subtle text-success').text('MOQ 3 Met!');
+                    $('#btnLockFlatRateBatch').prop('disabled', false);
+                } else {
+                    $('#batchMoqBadge').removeClass('bg-success-subtle text-success').addClass('bg-warning text-dark').text('MOQ 3 Required');
+                    $('#btnLockFlatRateBatch').prop('disabled', true);
+                }
+            }
+
+            $('#btnMinusFlatBatch').on('click', function () {
+                if (batchUnits > moq) {
+                    batchUnits--;
+                    updateBatchUI();
+                } else {
+                    if (window.iziToast) window.iziToast.warning({ title: 'MOQ Limit', message: 'Minimum Order Quantity is 3 units across the flat-rate pool.' });
+                }
+            });
+
+            $('#btnPlusFlatBatch').on('click', function () {
+                if (batchUnits < 14) {
+                    batchUnits++;
+                    updateBatchUI();
+                }
+            });
+
+            // Add to batch button on each card
+            $('.btn-add-pool-item').on('click', function () {
+                const id = $(this).data('id');
+                const name = $(this).data('name');
+                const price = $(this).data('price');
+                const img = $(this).data('img');
+
+                if (window.UwanBuyEngine) {
+                    window.UwanBuyEngine.cart.push({
+                        lineId: 'line_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
+                        productId: id,
+                        title: name,
+                        priceMinor: price * 100,
+                        unitLabel: 'pool item',
+                        quantity: 1,
+                        image: img
+                    });
+                    window.UwanBuyEngine.saveLocalState();
+                    window.UwanBuyEngine.syncCartUI();
+                    if (window.iziToast) {
+                        window.iziToast.success({
+                            title: 'Added to Cart @ ₦12,500',
+                            message: name + ' added to your order.'
+                        });
+                    }
+                }
+            });
+
+            // Lock Batch and Proceed to Validation
+            $('#btnLockFlatRateBatch').on('click', function () {
+                if (window.UwanBuyEngine) {
+                    // Populate default batch if cart is empty
+                    if (window.UwanBuyEngine.cart.length === 0) {
+                        poolItems.forEach(p => {
+                            window.UwanBuyEngine.cart.push({
+                                lineId: 'line_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
+                                productId: p.id,
+                                title: p.name,
+                                priceMinor: p.price * 100,
+                                unitLabel: 'pool item',
+                                quantity: 1,
+                                image: p.img
+                            });
+                        });
+                        window.UwanBuyEngine.saveLocalState();
+                    }
+                    window.UwanBuyEngine.openCheckoutValidateModal();
+                }
+            });
+
+            updateBatchUI();
+        });
+    </script>
+</body>
+
+</html>

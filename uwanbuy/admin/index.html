@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Storefront Admin Dashboard | UwanBUY Hyperlocal</title>
+
+    <link rel="shortcut icon" type="image/x-icon" href="../../assetsecm/images/uwanbuy-favicon-brief-color.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
+    <link rel="stylesheet" href="../assets/css/uwanbuy-updates.css">
+
+    <style>
+        :root {
+            --uw-brand: #ff0000;
+            --uw-dark: #0f172a;
+        }
+
+        body {
+            background-color: #f1f5f9;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #1e293b;
+        }
+
+        .admin-sidebar {
+            background-color: #0f172a;
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        .admin-sidebar .nav-link {
+            color: #94a3b8;
+            font-weight: 600;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .admin-sidebar .nav-link.active,
+        .admin-sidebar .nav-link:hover {
+            color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .admin-sidebar .nav-link.active {
+            background-color: var(--uw-brand);
+        }
+
+        .stat-card {
+            background: #ffffff;
+            border-radius: 14px;
+            border: 1px solid #e2e8f0;
+            padding: 1.5rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 admin-sidebar p-3 d-flex flex-column">
+                <a href="../index.html" class="d-flex align-items-center mb-4 text-decoration-none text-white gap-2">
+                    <img src="../../assetsecm/images/uwanbuy-logo-long-full-color-01.png" alt="Logo" style="height: 32px; background: white; padding: 4px 8px; border-radius: 6px;">
+                </a>
+
+                <small class="text-uppercase text-secondary fw-bold text-xs mb-2 px-2">Storefront Console</small>
+                <nav class="nav flex-column mb-auto">
+                    <a class="nav-link active" href="index.html">
+                        <i class="bi bi-speedometer2"></i> Dashboard
+                    </a>
+                    <a class="nav-link" href="auctions.html">
+                        <i class="bi bi-hammer"></i> Auction Setup & MOQ
+                    </a>
+                    <a class="nav-link" href="reconciliation.html">
+                        <i class="bi bi-receipt-cutoff"></i> Reconciliation
+                        <span class="badge bg-danger rounded-pill ms-auto" id="pendingReconBadge">0</span>
+                    </a>
+                    <a class="nav-link" href="orders.html">
+                        <i class="bi bi-bag-check"></i> Orders & Dispatch
+                    </a>
+                </nav>
+
+                <div class="border-top border-secondary pt-3 mt-4">
+                    <div class="small text-secondary mb-2">Connected Hub:</div>
+                    <strong class="text-white d-block small mb-3">Tanke Hub, Ilorin</strong>
+                    <a href="../index.html" class="btn btn-sm btn-outline-light w-100">
+                        <i class="bi bi-shop me-1"></i> Return to Storefront
+                    </a>
+                </div>
+            </div>
+
+            <!-- Main Content Area -->
+            <div class="col-md-9 col-lg-10 p-4">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <span class="badge bg-danger-subtle text-danger fw-bold small">Dedicated Operations</span>
+                        <h2 class="fw-bold text-dark m-0">UwanBUY Storefront Admin</h2>
+                        <small class="text-muted">Direct auction management, MOQ parameters & dual payment reconciliation</small>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <a href="reconciliation.html" class="btn btn-danger fw-bold shadow-sm">
+                            <i class="bi bi-receipt me-1"></i> Review Payment Reports
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Stats Overview -->
+                <div class="row g-3 mb-4">
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="stat-card">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="text-muted small fw-bold">ACTIVE AUCTIONS</span>
+                                <span class="badge bg-danger-subtle text-danger rounded-circle p-2"><i class="bi bi-hammer fs-6"></i></span>
+                            </div>
+                            <h3 class="fw-bold mb-1" id="statActiveAuctions">5 Formats</h3>
+                            <small class="text-muted">MOQs Enforced: 1 to 4 units</small>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="stat-card">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="text-muted small fw-bold">PENDING RECONCILIATIONS</span>
+                                <span class="badge bg-warning-subtle text-warning-emphasis rounded-circle p-2"><i class="bi bi-receipt fs-6"></i></span>
+                            </div>
+                            <h3 class="fw-bold mb-1 text-warning-emphasis" id="statPendingReconciliations">0</h3>
+                            <small class="text-muted">Awaiting bank/agent verification</small>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="stat-card">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="text-muted small fw-bold">STOREFRONT ORDERS</span>
+                                <span class="badge bg-success-subtle text-success rounded-circle p-2"><i class="bi bi-bag-check fs-6"></i></span>
+                            </div>
+                            <h3 class="fw-bold mb-1 text-success" id="statOrdersCount">0</h3>
+                            <small class="text-muted">Paid & confirmed orders</small>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="stat-card">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="text-muted small fw-bold">USER WALLET BALANCE</span>
+                                <span class="badge bg-primary-subtle text-primary rounded-circle p-2"><i class="bi bi-wallet2 fs-6"></i></span>
+                            </div>
+                            <h3 class="fw-bold mb-1 text-primary" id="statUserWallet">₦25,000.00</h3>
+                            <small class="text-muted">Local active session</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Quick-Cards -->
+                <div class="row g-4 mb-4">
+                    <div class="col-md-6">
+                        <div class="card border-0 rounded-4 shadow-sm p-4 bg-white h-100">
+                            <div class="d-flex align-items-center gap-3 mb-3">
+                                <span class="badge bg-danger rounded-circle p-3"><i class="bi bi-hammer fs-4 text-white"></i></span>
+                                <div>
+                                    <h5 class="fw-bold mb-0">Auction Pools & MOQ Engine</h5>
+                                    <small class="text-muted">Bid & Win, Flat-Rate, Price Wave, Stock Cap & Time Cap</small>
+                                </div>
+                            </div>
+                            <p class="text-muted small mb-4">
+                                Control live storefront auction pools. Set the minimum order quantity (MOQ) returned by the backend response, adjust base pricing, interval wave drops, and pool caps.
+                            </p>
+                            <a href="auctions.html" class="btn btn-outline-danger fw-bold mt-auto">
+                                <i class="bi bi-gear-wide-connected me-1"></i> Manage Storefront Auctions
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="card border-0 rounded-4 shadow-sm p-4 bg-white h-100">
+                            <div class="d-flex align-items-center gap-3 mb-3">
+                                <span class="badge bg-success rounded-circle p-3"><i class="bi bi-check2-circle fs-4 text-white"></i></span>
+                                <div>
+                                    <h5 class="fw-bold mb-0">Dual Payment Reconciliation</h5>
+                                    <small class="text-muted">Wallet Top-Up vs Direct Order Settlement</small>
+                                </div>
+                            </div>
+                            <p class="text-muted small mb-4">
+                                Review offline bank transfers and agent payment reports submitted with <code>payment_ref</code>. Approving a wallet top-up credits the user's wallet; approving a direct order confirms the order and issues a delivery passcode.
+                            </p>
+                            <a href="reconciliation.html" class="btn btn-outline-success fw-bold mt-auto">
+                                <i class="bi bi-receipt-cutoff me-1"></i> Open Reconciliation Console
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Storefront Activity -->
+                <div class="card border-0 rounded-4 shadow-sm p-4 bg-white">
+                    <h5 class="fw-bold mb-3">Recent Orders & Awaiting Payment Queue</h5>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Items Count</th>
+                                    <th>Total Amount</th>
+                                    <th>Status</th>
+                                    <th>Created At</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentOrdersTableBody">
+                                <tr>
+                                    <td colspan="5" class="text-center text-muted py-4 small">
+                                        No recent orders in local storage.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+    <script src="../assets/js/storefront-core.js"></script>
+    <script src="../assets/js/uwanbuy.js"></script>
+    <script src="../assets/js/uwanbuy-engine.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Load stats from engine
+            const recons = window.UwanBuyEngine.getPendingReconciliations();
+            const pendingRecons = recons.filter(r => r.status === 'submitted_pending_reconciliation');
+            $('#statPendingReconciliations').text(pendingRecons.length);
+            $('#pendingReconBadge').text(pendingRecons.length);
+
+            const pendingOrders = window.UwanBuyEngine.pendingOrders || [];
+            const confirmedOrders = pendingOrders.filter(o => o.status === 'paid_and_confirmed');
+            $('#statOrdersCount').text(confirmedOrders.length);
+
+            const wallet = (window.AreaBazaarStorefront && window.AreaBazaarStorefront.getWalletValue()) || 25000;
+            $('#statUserWallet').text(window.UwanBuyEngine.formatNaira(wallet * 100, true));
+
+            // Populate table
+            const $tbody = $('#recentOrdersTableBody');
+            if (pendingOrders.length > 0) {
+                $tbody.empty();
+                pendingOrders.slice(0, 5).forEach(o => {
+                    const statusBadge = o.status === 'paid_and_confirmed'
+                        ? '<span class="badge bg-success">Paid & Confirmed</span>'
+                        : '<span class="badge bg-warning text-dark">Awaiting Payment</span>';
+                    $tbody.append(`
+                        <tr>
+                            <td><strong class="font-monospace">${o.orderId}</strong></td>
+                            <td>${(o.items && o.items.length) || 1} items</td>
+                            <td class="fw-bold text-danger">${window.UwanBuyEngine.formatNaira(o.totalMinor, true)}</td>
+                            <td>${statusBadge}</td>
+                            <td class="small text-muted">${new Date(o.createdAt || Date.now()).toLocaleTimeString()}</td>
+                        </tr>
+                    `);
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
