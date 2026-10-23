@@ -641,10 +641,84 @@ Transforms the flat-rate auction format from single-item sales into a **curated 
 
 ---
 
+### 7.9 3-Level Taxonomy, Base Products vs Derived Variants, Modal Modes & Bazaar Variant Architecture
+
+This section documents the unified data models and endpoint contracts introduced to govern product hierarchies, interactive inspection modals, subcategory querying, and live bazaar variant drops.
+
+#### 7.9.1 3-Level Category Taxonomy Hierarchy
+Categories are structured strictly up to 3 levels: `category` $\rightarrow$ `subCategory` $\rightarrow$ `subSubCategory`.
+- **Schema Example:**
+```json
+{
+  "id": "fashion",
+  "name": "Fashion & Wears",
+  "subCategories": [
+    {
+      "id": "mens-wear",
+      "name": "Men's Wear",
+      "subSubCategories": [
+        { "id": "tops", "name": "Tops & Hoodies" },
+        { "id": "trousers", "name": "Jeans & Trousers" },
+        { "id": "footwear", "name": "Sneakers & Shoes" }
+      ]
+    },
+    {
+      "id": "womens-wear",
+      "name": "Women's Wear",
+      "subSubCategories": [
+        { "id": "tops", "name": "Blouses & Knitwear" },
+        { "id": "trousers", "name": "Pants & Skirts" }
+      ]
+    }
+  ]
+}
+```
+
+#### 7.9.2 Base Product vs Derived Product Variant Contract
+All catalog items are categorized as either a **Base Product** or a derived **Product Variant**:
+- **Base Product:** Represents the canonical product entity (e.g. `Redmi 13C Smartphone`, `Parboiled Long Grain Rice`, `Heavyweight Cotton Hoodie`). Contains high-level metadata, description, overall rating, and an array of `variants[]`. Single products without variants are cleanly expressed at the Base Product level (Mode C).
+- **Product Variant:** Inherits from and derives from the Base Product. Specifies attributes (RAM, storage, color, pack size, pot volume, dimensions), individual SKU, price minor, comparison price, and variant-specific media.
+- **Base Product Price Range Display:** On product cards across all landing page galleries, prices are computed as a range:
+  $$\text{Price Display} = \min(\text{variant.price}) \text{ to } \max(\text{variant.price}) \quad (\text{e.g. } ₦2,200 - ₦45,000)$$
+  If all variants share the same price or if there is only a single variant, a single formatted price is displayed.
+
+#### 7.9.3 Category & Subcategory Querying (`category/subcategory`)
+- **Query Format:** Storefront sections query products using compound keys:
+  `GET /api/v1/stores/{storeKey}/products?section={category}/{subcategory}`
+  Examples: `fashion/mens-wear`, `fashion/womens-wear`, `groceries/grains-staples`.
+- **Landing Page Integration:** The landing page renders dedicated galleries for configured subcategories (e.g. `#fashionMensGalleryRow` and `#fashionWomensGalleryRow`) allowing shoppers to browse subcategories directly.
+
+#### 7.9.4 Dual Inspection Modal Specifications
+When a customer clicks "View Details", "Options & Specs", or an autocomplete suggestion, the storefront dynamically initializes one of three modal modes:
+1. **Mode A — Groceries & Foodstuff (`modalType: "groceries_scroll_variants"`):**
+   - **Left Panel:** Scrollable vertical list of all product variants (`1kg pack`, `2kg pack`, `5kg bag`, `10kg bag`, `50kg bag`, etc.) featuring variant thumbnails, pack sizes, badges, and variant prices.
+   - **Right Panel:** Dynamically swaps upon selecting any variant to show that specific variant's verified price, nutritional/packaging specs, hub availability, and MOQ.
+2. **Mode B — Fashion, Tech & Home (`modalType: "attribute_options"`):**
+   - **Left Panel:** High-resolution Base Product media image.
+   - **Right Panel:** Interactive attribute modifier pills (e.g. Color chips: Black, Navy, Grey; Size pills: S, M, L, XL; RAM/Storage chips: 4GB+128GB, 8GB+256GB). Selecting attributes dynamically recalculates and selects the matching variant, its exact SKU, price, and technical specifications table.
+3. **Mode C — Single Base Products (No Variants):**
+   - Clean, direct product presentation with singular price and instant quantity stepper.
+
+#### 7.9.5 Bazaar Page Variant-Level Model (`uwanbuy/auctions/index.html`)
+- **Variant-Level Gallery:** All items displayed on the Bazaar page are queried and displayed at the **Product Variant Level** (`GET /api/v1/stores/{storeKey}/bazaar-variants`).
+- **No Up-Front Format Sorting:** The header gallery does not show format filtering tabs up-front.
+- **Revealed Format Inspection Modal:** Clicking any product variant card opens `#modal-auction-inspect`, revealing:
+  - The specific auction type: `Price Wave`, `Bid & Win`, `Flat-Rate Pool`, `Stock Cap`, or `Time Cap`.
+  - Detailed lot specifications, countdown timer, and MOQ.
+  - Action 1: **"Pay Immediately"** (`btn-pay-immediately`) $\rightarrow$ Routes directly to payment validation and order settlement.
+  - Action 2: **"Add to Cart"** (`btn-add-auction-to-cart`) $\rightarrow$ Adds variant to cart stamped with `auctionExpiresAt`.
+- **Cart Expiration Eviction Policy:** If an auction countdown timer expires while sitting in a user's cart without being paid for, the client automatically evicts the expired auction lot and notifies the shopper with an iziToast alert.
+
+#### 7.9.6 Price Wave Single-Fetch Lifecycle & Crossover Surprise
+1. **Single Backend Fetch:** To avoid server-taxing polling loops and continuous websocket overhead, Price Wave schedules are fetched **once** during page bootstrap (`GET /api/v1/stores/{storeKey}/price-waves`). Price changes update only upon manual browser refresh.
+2. **Wave-Crossover Surprise:** During normal category browsing (Groceries, Tech, Fashion), the engine cross-references variant IDs against `ACTIVE_WAVE_VARIANTS`. If an active wave matches the variant being inspected, the customer is surprised with an active wave discount badge and wave price lock.
+
+---
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-### 7.9 UWB-Adm Products, Variants, Auction Prep & Session Control Suite
+### 7.10 UWB-Adm Products, Variants, Auction Prep & Session Control Suite
 
 This section documents the endpoints and data models for the autonomous storefront administration console (`uwanbuy/admin/products.html` and `uwanbuy/admin/auctions.html`), supporting category segment uploads, spreadsheet ingestion, variant management, and real-time live auction session orchestration.
 

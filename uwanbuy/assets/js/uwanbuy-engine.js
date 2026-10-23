@@ -49,6 +49,7 @@
             this.syncCartUI();
             this.renderBoughtOrders();
             this.startTrackingBatchScheduler();
+            this.startAuctionCartPruneScheduler();
             this.renderPageSpecifics();
         },
 
@@ -75,26 +76,35 @@
 
         async loadCatalog() {
             // Attempt to load from JSON, or use window.AreaBazaarStorefront fallback
-            try {
-                let res = await fetch(DB_URL);
-                if (!res.ok) res = await fetch(ALT_DB_URL);
-                if (res.ok) {
-                    this.data = await res.json();
-                }
-            } catch (err) {
-                console.warn('Fetch products.json failed, checking global fallback:', err);
-            }
-
-            if (!this.data && window.AreaBazaarStorefront && window.AreaBazaarStorefront.UWANBUY_PRODUCTS) {
+            if (window.AreaBazaarStorefront && window.AreaBazaarStorefront.UWANBUY_PRODUCTS && window.AreaBazaarStorefront.UWANBUY_PRODUCTS.length) {
                 this.data = {
                     products: window.AreaBazaarStorefront.UWANBUY_PRODUCTS,
-                    sections: [],
+                    categories: window.AreaBazaarStorefront.UWANBUY_CATEGORIES || [],
+                    activeWaveVariants: window.AreaBazaarStorefront.ACTIVE_WAVE_VARIANTS || {},
                     pickupPoints: window.AreaBazaarStorefront.AVAILABLE_HUBS || []
                 };
+            } else {
+                try {
+                    let res = await fetch(DB_URL);
+                    if (!res.ok) res = await fetch(ALT_DB_URL);
+                    if (res.ok) {
+                        this.data = await res.json();
+                    }
+                } catch (err) {
+                    console.warn('Fetch products.json failed, checking global fallback:', err);
+                }
+
+                if (!this.data && window.AreaBazaarStorefront && window.AreaBazaarStorefront.UWANBUY_PRODUCTS) {
+                    this.data = {
+                        products: window.AreaBazaarStorefront.UWANBUY_PRODUCTS,
+                        categories: window.AreaBazaarStorefront.UWANBUY_CATEGORIES || [],
+                        activeWaveVariants: window.AreaBazaarStorefront.ACTIVE_WAVE_VARIANTS || {},
+                        pickupPoints: window.AreaBazaarStorefront.AVAILABLE_HUBS || []
+                    };
+                }
             }
         },
 
-        
         resolveAssetUrl(url) {
             if (!url) return 'assets/images/placeholders/gas-cooker.svg';
             const isInSubdir = window.location.pathname.includes('/auctions/') || window.location.pathname.includes('/admin/');
@@ -110,14 +120,47 @@
             return '₦' + Number(naira || 0).toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         },
 
+        getBaseProductPriceRange(product) {
+            if (!product) return '₦0.00';
+            const variants = product.variants || [];
+            if (variants.length > 0) {
+                const prices = variants.map(v => v.priceMinor || (v.price ? v.price * 100 : 0)).filter(p => p > 0);
+                if (prices.length > 0) {
+                    const min = Math.min(...prices);
+                    const max = Math.max(...prices);
+                    if (min === max) {
+                        return this.formatNaira(min, true);
+                    }
+                    return `${this.formatNaira(min, true)} - ${this.formatNaira(max, true)}`;
+                }
+            }
+            const single = product.priceMinor || (product.price ? product.price * 100 : 0);
+            return this.formatNaira(single, true);
+        },
+
         getAllProducts() {
-            const base = (this.data && this.data.products) || [];
+            const base = (this.data && this.data.products) || (window.AreaBazaarStorefront && window.AreaBazaarStorefront.UWANBUY_PRODUCTS) || [];
             try {
                 const adminProds = JSON.parse(localStorage.getItem('uwanbuy_admin_products') || '[]');
                 if (adminProds && adminProds.length) {
                     const idMap = new Map();
                     adminProds.forEach(p => idMap.set(p.id, p));
-                    const merged = base.map(p => idMap.has(p.id) ? idMap.get(p.id) : p);
+                    const merged = base.map(p => {
+                        if (idMap.has(p.id)) {
+                            const adm = idMap.get(p.id);
+                            return {
+                                ...p,
+                                ...adm,
+                                category: p.category || adm.categoryId || adm.category,
+                                categoryId: p.categoryId || adm.categoryId,
+                                subCategory: p.subCategory || adm.subCategory,
+                                image: p.image || adm.image || (p.media && p.media[0] && p.media[0].url),
+                                media: (p.media && p.media.length) ? p.media : adm.media,
+                                variants: (p.variants && p.variants.length) ? p.variants : (adm.variants || [])
+                            };
+                        }
+                        return p;
+                    });
                     adminProds.forEach(p => {
                         if (!merged.some(m => m.id === p.id)) {
                             merged.unshift(p);
@@ -136,12 +179,54 @@
         },
 
         getProductsBySection(sectionKey) {
-            return this.getAllProducts().filter(p => (p.sectionKey === sectionKey || p.categoryId === sectionKey || p.category === sectionKey) && p.published !== false);
+            return this.getAllProducts().filter(p => {
+                if (p.published === false) return false;
+                if (sectionKey.includes('/')) {
+                    const [cat, subcat] = sectionKey.split('/');
+                    const catMatches = (p.category === cat || p.categoryId === cat || p.sectionKey === cat);
+                    const subcatMatches = (p.subCategory === subcat || p.subCategoryId === subcat);
+                    return catMatches && subcatMatches;
+                }
+                if (sectionKey === 'groceries') {
+                    return (p.category === 'groceries' || p.categoryId === 'groceries' || p.categoryId === 'foodstuff' || p.sectionKey === 'groceries');
+                }
+                if (sectionKey === 'gadgets') {
+                    return (p.category === 'gadgets' || p.categoryId === 'gadgets' || p.sectionKey === 'gadgets');
+                }
+                if (sectionKey === 'fashion') {
+                    return (p.category === 'fashion' || p.categoryId === 'fashion' || p.sectionKey === 'fashion');
+                }
+                if (sectionKey === 'home') {
+                    return (p.category === 'home' || p.categoryId === 'home' || p.sectionKey === 'home');
+                }
+                return (p.sectionKey === sectionKey || p.categoryId === sectionKey || p.category === sectionKey);
+            });
         },
 
         getProductsByCategory(categoryId) {
             if (!categoryId || categoryId === 'all') return this.getAllProducts().filter(p => p.published !== false);
-            return this.getAllProducts().filter(p => (p.categoryId === categoryId || p.sectionKey === categoryId || p.category === categoryId) && p.published !== false);
+            return this.getAllProducts().filter(p => {
+                if (p.published === false) return false;
+                if (categoryId.includes('/')) {
+                    const [cat, subcat] = categoryId.split('/');
+                    const catMatches = (p.category === cat || p.categoryId === cat || p.sectionKey === cat);
+                    const subcatMatches = (p.subCategory === subcat || p.subCategoryId === subcat);
+                    return catMatches && subcatMatches;
+                }
+                if (categoryId === 'groceries') {
+                    return (p.category === 'groceries' || p.categoryId === 'groceries' || p.categoryId === 'foodstuff' || p.sectionKey === 'groceries');
+                }
+                if (categoryId === 'gadgets') {
+                    return (p.category === 'gadgets' || p.categoryId === 'gadgets' || p.sectionKey === 'gadgets');
+                }
+                if (categoryId === 'fashion') {
+                    return (p.category === 'fashion' || p.categoryId === 'fashion' || p.sectionKey === 'fashion');
+                }
+                if (categoryId === 'home') {
+                    return (p.category === 'home' || p.categoryId === 'home' || p.sectionKey === 'home');
+                }
+                return (p.categoryId === categoryId || p.sectionKey === categoryId || p.category === categoryId);
+            });
         },
 
         bindEvents() {
@@ -310,7 +395,12 @@
                 e.preventDefault();
                 const prodId = $(this).data('id');
                 const moq = parseInt($(this).data('moq'), 10) || 1;
-                self.addToCart(prodId, moq);
+                const prod = self.getProductById(prodId);
+                if (prod && prod.variants && prod.variants.length > 0) {
+                    self.openQuickViewModal(prodId);
+                } else {
+                    self.addToCart(prodId, moq);
+                }
             });
 
             // Quick View modal trigger
@@ -318,6 +408,212 @@
                 e.preventDefault();
                 const prodId = $(this).data('id');
                 self.openQuickViewModal(prodId);
+            });
+
+            // Quick Add Autocomplete on index.html
+            $(document).on('keyup input', '#quickAddInput', function () {
+                const query = $(this).val().toLowerCase().trim();
+                const $box = $('#suggestionsBox');
+                if (!$box.length) return;
+                $box.empty();
+
+                if (query.length < 2) {
+                    $box.addClass('d-none');
+                    return;
+                }
+
+                const catFilter = $('#categorySelect').val();
+                const allProducts = self.getAllProducts();
+                const matches = [];
+
+                allProducts.forEach(p => {
+                    if (catFilter && p.category !== catFilter && p.categoryId !== catFilter) return;
+
+                    const baseMatches = (p.title && p.title.toLowerCase().includes(query)) ||
+                                        (p.name && p.name.toLowerCase().includes(query)) ||
+                                        (p.category && p.category.toLowerCase().includes(query)) ||
+                                        (p.categoryName && p.categoryName.toLowerCase().includes(query)) ||
+                                        (p.subCategory && p.subCategory.toLowerCase().includes(query)) ||
+                                        (p.subSubCategory && p.subSubCategory.toLowerCase().includes(query));
+
+                    if (baseMatches) {
+                        matches.push({ product: p, variant: null });
+                    }
+
+                    if (p.variants && p.variants.length > 0) {
+                        p.variants.forEach(v => {
+                            const varMatches = (v.name && v.name.toLowerCase().includes(query)) ||
+                                               (v.sku && v.sku.toLowerCase().includes(query)) ||
+                                               (v.color && v.color.toLowerCase().includes(query)) ||
+                                               (v.memoryStorage && v.memoryStorage.toLowerCase().includes(query));
+                            if (varMatches) {
+                                if (!matches.some(m => m.product.id === p.id && m.variant && m.variant.id === v.id)) {
+                                    matches.push({ product: p, variant: v });
+                                }
+                            }
+                        });
+                    }
+                });
+
+                if (matches.length > 0) {
+                    matches.slice(0, 8).forEach(m => {
+                        const p = m.product;
+                        const v = m.variant;
+                        const title = v ? `${p.title || p.name} &bull; <span class="text-danger">${v.name}</span>` : (p.title || p.name);
+                        const priceText = v ? self.formatNaira(v.priceMinor || (v.price * 100), true) : self.getBaseProductPriceRange(p);
+                        const img = self.resolveAssetUrl((v && v.image) || (p.media && p.media[0] && p.media[0].thumbnailUrl) || p.image);
+                        const catBreadcrumb = [p.categoryName || p.category, p.subCategory].filter(Boolean).join(' &rsaquo; ');
+
+                        $box.append(`
+                            <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center suggestion-item p-2 cursor-pointer" data-id="${p.id}" ${v ? `data-variant-id="${v.id}"` : ''} style="cursor: pointer;">
+                                <div class="d-flex align-items-center gap-2 min-w-0">
+                                    <img src="${img}" alt="${p.title || p.name}" style="width: 42px; height: 42px; object-fit: contain; background: #fff;" class="rounded border flex-shrink-0">
+                                    <div class="text-truncate">
+                                        <div class="fw-bold text-dark small lh-sm text-truncate">${title}</div>
+                                        <small class="text-muted text-xs">${catBreadcrumb}</small>
+                                    </div>
+                                </div>
+                                <span class="fw-bold text-danger small text-nowrap ms-2">${priceText}</span>
+                            </div>
+                        `);
+                    });
+                    $box.removeClass('d-none');
+                } else {
+                    $box.append('<div class="list-group-item text-muted small p-2 text-center">No matching products or variants found</div>');
+                    $box.removeClass('d-none');
+                }
+            });
+
+            // Clicking suggestion opens the modal
+            $(document).on('click', '.suggestion-item', function () {
+                const id = $(this).data('id');
+                const variantId = $(this).data('variant-id');
+                self.openQuickViewModal(id, variantId);
+                $('#suggestionsBox').addClass('d-none');
+                $('#quickAddInput').val('');
+            });
+
+            // Quick View Trigger (works for card buttons, thumbnails, and legacy view-details)
+            $(document).on('click', '[data-action="quick-view"], .btn-view-details', function (e) {
+                e.preventDefault();
+                const id = $(this).data('id');
+                const variantId = $(this).data('variant-id');
+                self.openQuickViewModal(id, variantId);
+            });
+
+            $(document).on('click', function (e) {
+                if (!$(e.target).closest('#quickAddInput, #suggestionsBox').length) {
+                    $('#suggestionsBox').addClass('d-none');
+                }
+            });
+
+            // Groceries Modal: Selecting a variant on the left panel
+            $(document).on('click', '.grocery-variant-card', function () {
+                const baseId = $(this).data('base-id');
+                const varId = $(this).data('variant-id');
+                const p = self.getProductById(baseId);
+                if (!p || !p.variants) return;
+                const v = p.variants.find(item => item.id === varId);
+                if (!v) return;
+
+                $('.grocery-variant-card').removeClass('border-danger bg-danger-subtle shadow-sm').addClass('border bg-white');
+                $('.grocery-variant-card i.bi-check-circle-fill').removeClass('bi-check-circle-fill text-danger').addClass('bi-circle text-muted');
+                $(this).removeClass('border bg-white').addClass('border-danger bg-danger-subtle shadow-sm');
+                $(this).find('i.bi-circle').removeClass('bi-circle text-muted').addClass('bi-check-circle-fill text-danger');
+
+                const waveMap = (window.AreaBazaarStorefront && window.AreaBazaarStorefront.ACTIVE_WAVE_VARIANTS) || {};
+                $('#groceryVariantDetailsRightPanel').html(self.renderGroceryVariantRightPanel(p, v, waveMap[v.id]));
+            });
+
+            // Fashion / Gadgets / Home Modal: Selecting attribute pills
+            $(document).on('click', '.btn-attr-pill', function () {
+                const baseId = $(this).data('base-id');
+                const attrKey = $(this).data('attr-key');
+                const attrVal = String($(this).data('attr-val'));
+                const p = self.getProductById(baseId);
+                if (!p || !p.variants) return;
+
+                // Find variant that matches this attribute value
+                const matchingVariant = p.variants.find(v => String(v[attrKey]) === attrVal) || p.variants[0];
+                const waveMap = (window.AreaBazaarStorefront && window.AreaBazaarStorefront.ACTIVE_WAVE_VARIANTS) || {};
+                
+                const newHtml = self.renderAttributeOptionsModal(p, matchingVariant, waveMap);
+                $('#quickViewContent').html(newHtml);
+                $('#quickViewModalBody').html(newHtml);
+                $('#modal-quick-view .modal-body').html(newHtml);
+            });
+
+            // Modal: Variant Add-to-Cart
+            $(document).on('click', '.btn-modal-add-variant', function (e) {
+                e.preventDefault();
+                const baseId = $(this).data('base-id');
+                const varId = $(this).data('variant-id');
+                const qty = parseInt($('#modalSelectedVariantQty').val(), 10) || 1;
+                self.addVariantToCart(baseId, varId, qty);
+                if (window.jQuery && $.fn.iziModal && $('#quickViewModal').length) {
+                    $('#quickViewModal').iziModal('close');
+                }
+                const bModalEl = document.getElementById('modal-quick-view');
+                if (bModalEl && window.bootstrap) {
+                    const inst = bootstrap.Modal.getInstance(bModalEl);
+                    if (inst) inst.hide();
+                }
+            });
+
+            // Modal: Quantity Steppers
+            $(document).on('click', '.btn-var-qty-minus', function () {
+                const moq = parseInt($(this).data('moq'), 10) || 1;
+                const $input = $('#modalSelectedVariantQty');
+                let cur = parseInt($input.val(), 10) || moq;
+                if (cur > moq) $input.val(cur - 1);
+            });
+
+            $(document).on('click', '.btn-var-qty-plus', function () {
+                const $input = $('#modalSelectedVariantQty');
+                let cur = parseInt($input.val(), 10) || 1;
+                $input.val(cur + 1);
+            });
+
+            // Bazaar / Auction Modal Actions: "Pay Immediately" & "Add to Cart"
+            $(document).on('click', '.btn-pay-immediately', function (e) {
+                e.preventDefault();
+                const varId = $(this).data('variant-id');
+                const baseId = $(this).data('base-id');
+                const waveMap = (window.AreaBazaarStorefront && window.AreaBazaarStorefront.ACTIVE_WAVE_VARIANTS) || {};
+                const wave = waveMap[varId];
+
+                // Add to cart with zero delay and open validation immediately
+                self.addVariantToCart(baseId, varId, wave ? (wave.moq || 1) : 1, false);
+                if (window.jQuery && $.fn.iziModal) {
+                    if ($('#modal-auction-inspect').length) $('#modal-auction-inspect').iziModal('close');
+                    if ($('#quickViewModal').length) $('#quickViewModal').iziModal('close');
+                }
+                const bModalEl = document.getElementById('modal-quick-view');
+                if (bModalEl && window.bootstrap) {
+                    const inst = window.bootstrap.Modal.getInstance(bModalEl);
+                    if (inst) inst.hide();
+                }
+                $('.modal').modal('hide');
+                self.openCheckoutValidateModal();
+            });
+
+            $(document).on('click', '.btn-add-auction-to-cart', function (e) {
+                e.preventDefault();
+                const varId = $(this).data('variant-id');
+                const baseId = $(this).data('base-id');
+                const waveMap = (window.AreaBazaarStorefront && window.AreaBazaarStorefront.ACTIVE_WAVE_VARIANTS) || {};
+                const wave = waveMap[varId];
+                self.addVariantToCart(baseId, varId, wave ? (wave.moq || 1) : 1, true);
+                if (window.jQuery && $.fn.iziModal) {
+                    if ($('#modal-auction-inspect').length) $('#modal-auction-inspect').iziModal('close');
+                    if ($('#quickViewModal').length) $('#quickViewModal').iziModal('close');
+                }
+                const bModalEl = document.getElementById('modal-quick-view');
+                if (bModalEl && window.bootstrap) {
+                    const inst = window.bootstrap.Modal.getInstance(bModalEl);
+                    if (inst) inst.hide();
+                }
+                $('.modal').modal('hide');
             });
 
             // Checkout Validation Trigger (From Cart)
@@ -617,6 +913,12 @@
             const product = this.getProductById(productId);
             if (!product) return;
 
+            // If product has variants, open quick view modal for user to select variant
+            if (product.variants && product.variants.length > 0) {
+                this.openQuickViewModal(productId);
+                return;
+            }
+
             const moq = (product.stock && product.stock.moq) || 1;
             const finalQty = Math.max(quantity, moq);
 
@@ -629,10 +931,10 @@
                 this.cart.push({
                     lineId: newLineId,
                     productId: product.id,
-                    title: product.title,
-                    priceMinor: product.priceMinor,
+                    title: product.title || product.name,
+                    priceMinor: product.priceMinor || (product.price ? product.price * 100 : 0),
                     unitLabel: product.unitLabel || 'unit',
-                    image: (product.media && product.media[0] && (product.media[0].thumbnailUrl || product.media[0].url)) || product.image || 'assets/images/placeholders/gas-cooker.svg',
+                    image: this.resolveAssetUrl((product.media && product.media[0] && (product.media[0].thumbnailUrl || product.media[0].url)) || product.image || 'assets/images/placeholders/gas-cooker.svg'),
                     quantity: finalQty,
                     moq: moq
                 });
@@ -643,10 +945,129 @@
             if (showToast && window.iziToast) {
                 window.iziToast.success({
                     title: 'Added to Cart',
-                    message: `${product.title} (x${finalQty})`,
+                    message: `${product.title || product.name} (x${finalQty})`,
                     position: 'topRight'
                 });
             }
+        },
+
+        addVariantToCart(baseProductId, variantId, quantity = 1, showToast = true) {
+            const baseProduct = this.getProductById(baseProductId);
+            if (!baseProduct) return;
+
+            const variant = (baseProduct.variants || []).find(v => v.id === variantId) || {
+                id: variantId,
+                name: baseProduct.title || baseProduct.name,
+                priceMinor: baseProduct.priceMinor || (baseProduct.price ? baseProduct.price * 100 : 0),
+                stock: baseProduct.stock || { moq: 1 }
+            };
+
+            const waveMap = (window.AreaBazaarStorefront && window.AreaBazaarStorefront.ACTIVE_WAVE_VARIANTS) || {};
+            const wave = waveMap[variant.id] || waveMap[baseProduct.id];
+
+            let effectivePriceMinor = variant.priceMinor || (variant.price * 100);
+            let isAuctionSurprise = false;
+            let auctionExpiresAt = null;
+
+            if (wave) {
+                effectivePriceMinor = wave.wavePrice * 100;
+                isAuctionSurprise = true;
+                auctionExpiresAt = Date.now() + ((wave.timerMinutesLeft || 15) * 60 * 1000);
+            }
+
+            const moq = (variant.stock && variant.stock.moq) || 1;
+            const finalQty = Math.max(quantity, moq);
+
+            const existing = this.cart.find(c => c.variantId === variant.id || (c.productId === variant.id && !c.variantId));
+            if (existing) {
+                existing.quantity += finalQty;
+                if (isAuctionSurprise) {
+                    existing.isAuction = true;
+                    existing.auctionExpiresAt = auctionExpiresAt;
+                    existing.priceMinor = effectivePriceMinor;
+                }
+            } else {
+                const newLineId = 'line_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
+                this.selectedCartLineIds.add(newLineId);
+                this.cart.push({
+                    lineId: newLineId,
+                    productId: baseProduct.id,
+                    variantId: variant.id,
+                    title: `${baseProduct.title || baseProduct.name} - ${variant.name || ''}`.replace(/ - $/, ''),
+                    priceMinor: effectivePriceMinor,
+                    unitLabel: baseProduct.unitLabel || 'unit',
+                    image: this.resolveAssetUrl(variant.image || baseProduct.image || 'assets/images/placeholders/gas-cooker.svg'),
+                    quantity: finalQty,
+                    moq: moq,
+                    isAuction: isAuctionSurprise,
+                    auctionExpiresAt: auctionExpiresAt
+                });
+            }
+
+            this.saveLocalState();
+
+            if (showToast && window.iziToast) {
+                window.iziToast.success({
+                    title: isAuctionSurprise ? '⚡ Surprise Wave Price Applied!' : 'Added to Cart',
+                    message: `${variant.name || baseProduct.title} (x${finalQty}) @ ${this.formatNaira(effectivePriceMinor, true)}`,
+                    position: 'topRight'
+                });
+            }
+        },
+
+        checkAndEvictExpiredCartAuctions() {
+            const now = Date.now();
+            let evictedAny = false;
+            const kept = [];
+            (this.cart || []).forEach(item => {
+                if (item.isAuction && item.auctionExpiresAt && now > item.auctionExpiresAt) {
+                    evictedAny = true;
+                    if (window.iziToast) {
+                        window.iziToast.warning({
+                            title: 'Auction Time Ended',
+                            message: `Auction time ended for "${item.title}". It has been removed from your cart.`,
+                            timeout: 7000,
+                            position: 'topRight'
+                        });
+                    }
+                } else {
+                    kept.push(item);
+                }
+            });
+            if (evictedAny) {
+                this.cart = kept;
+                this.saveLocalState();
+                this.syncCartUI();
+            }
+        },
+
+        startAuctionCartPruneScheduler() {
+            if (this._auctionPruneTimer) clearInterval(this._auctionPruneTimer);
+            const self = this;
+            this._auctionPruneTimer = setInterval(() => {
+                self.checkAndEvictExpiredCartAuctions();
+                self.updateCartAuctionCountdowns();
+            }, 1000);
+        },
+
+        updateCartAuctionCountdowns() {
+            const self = this;
+            document.querySelectorAll('.cart-auction-countdown').forEach(el => {
+                const expiresAt = parseInt(el.getAttribute('data-expires'), 10);
+                if (!expiresAt) return;
+                const textEl = el.querySelector('.countdown-text');
+                if (textEl) {
+                    textEl.textContent = self.formatRemainingTime(expiresAt);
+                }
+            });
+        },
+
+        formatRemainingTime(expiresAt) {
+            const diffMs = Math.max(0, expiresAt - Date.now());
+            const totalSec = Math.floor(diffMs / 1000);
+            const mins = Math.floor(totalSec / 60);
+            const secs = totalSec % 60;
+            return `${mins}m ${secs < 10 ? '0' : ''}${secs}s`;
         },
 
         updateCartQty(lineId, delta) {
@@ -703,7 +1124,8 @@
             };
         },
 
-                syncCartUI() {
+        syncCartUI() {
+            this.checkAndEvictExpiredCartAuctions();
             if (!this.selectedCartLineIds) this.selectedCartLineIds = new Set();
             if (this.selectedCartLineIds.size === 0 && this.cart.length > 0) {
                 this.cart.forEach(c => this.selectedCartLineIds.add(c.lineId));
@@ -739,6 +1161,17 @@
                     this.cart.forEach(c => {
                         const isSelected = this.selectedCartLineIds.has(c.lineId);
                         const imgSrc = this.resolveAssetUrl(c.image);
+                        let auctionBadgeHtml = '';
+                        if (c.isAuction && c.auctionExpiresAt) {
+                            auctionBadgeHtml = `
+                                <div class="cart-auction-countdown mt-1" data-expires="${c.auctionExpiresAt}">
+                                    <span class="badge bg-warning-subtle text-danger border border-warning-subtle text-xs font-monospace py-1 px-2">
+                                        <i class="bi bi-clock-history me-1"></i> Deal ends in: <span class="countdown-text">${this.formatRemainingTime(c.auctionExpiresAt)}</span>
+                                    </span>
+                                </div>
+                            `;
+                        }
+
                         $cartDrawerList.append(`
                             <div class="card border rounded-3 p-2 mb-2 shadow-sm cart-drawer-item-card ${isSelected ? 'border-danger-subtle bg-white' : 'bg-light opacity-75'}">
                                 <!-- Top Row: Checkbox, Thumbnail, Title, Remove -->
@@ -750,6 +1183,7 @@
                                     <div class="flex-grow-1 min-w-0" style="overflow: hidden;">
                                         <h6 class="cart-item-title mb-0" title="${c.title}">${c.title}</h6>
                                         <small class="text-muted text-xs">${this.formatNaira(c.priceMinor, true)} / ${c.unitLabel}</small>
+                                        ${auctionBadgeHtml}
                                     </div>
                                     <button class="btn btn-sm btn-link text-muted cart-remove-btn p-0 flex-shrink-0" data-line-id="${c.lineId}" title="Remove item">
                                         <i class="bi bi-x-circle fs-6"></i>
@@ -1202,11 +1636,16 @@
            ========================================================================== */
         renderPageSpecifics() {
             const path = window.location.pathname.toLowerCase();
-            if (path.endsWith('index.html') || path.endsWith('/uwanbuy/') || path.endsWith('/uwanbuy')) {
+            if ($('#bazaarVariantGalleryRow').length || $('#landingAuctionDealsRow').length || path.includes('auctions/index.html') || path.includes('/auctions/') || path.includes('index.html') || path.endsWith('/uwanbuy/') || path.endsWith('/uwanbuy')) {
+                this.renderBazaarPage();
+            }
+            if ($('#groceriesGalleryRow').length || $('#gadgetsGalleryRow').length || path.includes('index.html') || path.endsWith('/uwanbuy/') || path.endsWith('/uwanbuy')) {
                 this.renderHomePageGalleries();
-            } else if (path.includes('category.html')) {
+            }
+            if ($('#categoryProductsGrid').length || path.includes('category.html')) {
                 this.renderCategoryPage();
-            } else if (path.includes('product-details.html')) {
+            }
+            if ($('#productSpecsTableBody').length || $('#detailTitle').length || path.includes('product-details.html')) {
                 this.renderProductDetailsPage();
             }
         },
@@ -1216,6 +1655,8 @@
                 { key: 'groceries', container: '#groceriesGalleryRow' },
                 { key: 'gadgets', container: '#gadgetsGalleryRow' },
                 { key: 'fashion', container: '#fashionGalleryRow' },
+                { key: 'fashion/mens-wear', container: '#fashionMensGalleryRow' },
+                { key: 'fashion/womens-wear', container: '#fashionWomensGalleryRow' },
                 { key: 'home', container: '#homeGalleryRow' }
             ];
 
@@ -1230,6 +1671,16 @@
                     $container.append(`<div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">${this.createProductCardHtml(p)}</div>`);
                 });
             });
+
+            // Populate Trending Hyperlocal Products Grid on index.html
+            const $trending = $('#trendingProductsGrid');
+            if ($trending.length) {
+                const trendingProds = this.getAllProducts().slice(0, 8);
+                $trending.empty();
+                trendingProds.forEach(p => {
+                    $trending.append(`<div class="col-6 col-md-4 col-lg-3">${this.createProductCardHtml(p)}</div>`);
+                });
+            }
         },
 
         renderCategoryPage() {
@@ -1258,13 +1709,13 @@
             const sort = $('#sortSelect').val() || 'featured';
 
             if (query) {
-                products = products.filter(p => p.title.toLowerCase().includes(query) || (p.brand && p.brand.toLowerCase().includes(query)));
+                products = products.filter(p => (p.title || p.name).toLowerCase().includes(query) || (p.brand && p.brand.toLowerCase().includes(query)));
             }
 
             if (sort === 'price_asc') {
-                products.sort((a, b) => a.priceMinor - b.priceMinor);
+                products.sort((a, b) => (a.priceMinor || a.price * 100) - (b.priceMinor || b.price * 100));
             } else if (sort === 'price_desc') {
-                products.sort((a, b) => b.priceMinor - a.priceMinor);
+                products.sort((a, b) => (b.priceMinor || b.price * 100) - (a.priceMinor || a.price * 100));
             } else if (sort === 'rating') {
                 products.sort((a, b) => (b.rating || 0) - (a.rating || 0));
             }
@@ -1290,19 +1741,39 @@
         },
 
         createProductCardHtml(p) {
-            const img = (p.media && p.media[0] && p.media[0].thumbnailUrl) || '../assetsecm/images/soups/egusi-soup-roundbowl.png';
-            const badge = (p.badges && p.badges[0]) || '';
+            const img = this.resolveAssetUrl((p.media && p.media[0] && (p.media[0].thumbnailUrl || p.media[0].url)) || p.image || '../assetsecm/images/soups/egusi-soup-roundbowl.png');
+            const priceDisplay = this.getBaseProductPriceRange(p);
+            const badge = (p.badges && p.badges[0]) || (p.subCategory ? p.subCategory.replace('-', ' ') : '');
             const moq = (p.stock && p.stock.moq) || 1;
+            const hasVariants = Array.isArray(p.variants) && p.variants.length > 0;
+            const variantCount = hasVariants ? p.variants.length : 0;
+
+            // Wave crossover surprise detection
+            const waveMap = (window.AreaBazaarStorefront && window.AreaBazaarStorefront.ACTIVE_WAVE_VARIANTS) || {};
+            let hasActiveWave = false;
+            let activeWaveBadge = '';
+            if (hasVariants) {
+                for (const v of p.variants) {
+                    if (waveMap[v.id]) {
+                        hasActiveWave = true;
+                        activeWaveBadge = waveMap[v.id].badge || '⚡ Price Wave Dropping';
+                        break;
+                    }
+                }
+            } else if (waveMap[p.id]) {
+                hasActiveWave = true;
+                activeWaveBadge = waveMap[p.id].badge || '⚡ Live Auction';
+            }
 
             return `
                 <div class="card h-100 border rounded-4 shadow-sm product-card position-relative bg-white overflow-hidden">
-                    ${badge ? `<span class="badge bg-danger position-absolute top-0 start-0 m-2 rounded-pill px-2 py-1 small">${badge}</span>` : ''}
-                    <div class="p-3 text-center bg-light rounded-top-4" style="height: 180px; display: flex; align-items: center; justify-content: center;">
-                        <img src="${img}" alt="${p.title}" class="img-fluid" style="max-height: 150px; object-fit: contain;">
+                    ${hasActiveWave ? `<span class="badge bg-danger position-absolute top-0 start-0 m-2 rounded-pill px-2 py-1 small animate-pulse"><i class="bi bi-lightning-fill me-1"></i>${activeWaveBadge}</span>` : (badge ? `<span class="badge bg-secondary position-absolute top-0 start-0 m-2 rounded-pill px-2 py-1 small text-capitalize">${badge}</span>` : '')}
+                    <div class="p-3 text-center bg-light rounded-top-4" style="height: 180px; display: flex; align-items: center; justify-content: center; cursor: pointer;" data-action="quick-view" data-id="${p.id}">
+                        <img src="${img}" alt="${p.title || p.name}" class="img-fluid" style="max-height: 150px; object-fit: contain;">
                     </div>
                     <div class="card-body p-3 d-flex flex-column">
-                        <small class="text-muted d-block text-xs text-uppercase fw-bold">${p.brand || 'Verified'}</small>
-                        <h6 class="fw-bold text-dark mb-1 text-truncate" title="${p.title}">${p.title}</h6>
+                        <small class="text-muted d-block text-xs text-uppercase fw-bold">${p.brand || 'Verified'}${variantCount ? ` &bull; ${variantCount} Variants` : ''}</small>
+                        <h6 class="fw-bold text-dark mb-1 text-truncate" title="${p.title || p.name}">${p.title || p.name}</h6>
                         <div class="d-flex align-items-center gap-1 text-warning small mb-2">
                             <i class="bi bi-star-fill"></i>
                             <span class="text-dark fw-bold">${p.rating || 4.8}</span>
@@ -1311,15 +1782,14 @@
                         </div>
                         <div class="mt-auto">
                             <div class="d-flex align-items-baseline gap-2 mb-2">
-                                <span class="fs-5 fw-extrabold text-danger">${this.formatNaira(p.priceMinor, true)}</span>
-                                ${p.compareAtPriceMinor ? `<small class="text-muted text-decoration-line-through">${this.formatNaira(p.compareAtPriceMinor, true)}</small>` : ''}
+                                <span class="fs-5 fw-extrabold text-danger">${priceDisplay}</span>
                             </div>
                             <div class="d-flex gap-2">
                                 <button class="btn btn-sm btn-outline-secondary flex-fill rounded-3 small fw-semibold" data-action="quick-view" data-id="${p.id}">
-                                    Specs
+                                    <i class="bi bi-sliders me-1"></i> ${hasVariants ? 'Options & Specs' : 'Specs'}
                                 </button>
-                                <button class="btn btn-sm btn-brand flex-fill rounded-3 small fw-bold" data-action="add-to-cart" data-id="${p.id}" data-moq="${moq}">
-                                    <i class="bi bi-cart-plus me-1"></i> Add
+                                <button class="btn btn-sm btn-brand flex-fill rounded-3 small fw-bold" data-action="quick-view" data-id="${p.id}">
+                                    <i class="bi bi-cart-plus me-1"></i> ${hasVariants ? 'Select Variant' : 'Add'}
                                 </button>
                             </div>
                         </div>
@@ -1330,22 +1800,19 @@
 
         renderProductDetailsPage() {
             const urlParams = new URLSearchParams(window.location.search);
-            const prodId = urlParams.get('id') || 'uw_gdt_101';
+            const prodId = urlParams.get('id') || 'uw_prd_1001';
             const p = this.getProductById(prodId) || this.getAllProducts()[0];
             if (!p) return;
 
             document.title = `${p.title || p.name} | UwanBUY Hyperlocal`;
             $('#productTitle, #detailTitle').text(p.title || p.name);
             $('#productBrand, #detailBrand').text(p.brand || 'Verified Supplier');
-            $('#productSku, #detailSku').text(p.sku || 'UWB-PRD');
-            $('#productPrice, #detailPrice').text(this.formatNaira(p.priceMinor || (p.price * 100), true));
+            $('#productSku, #detailSku').text(p.sku || p.id);
+            $('#productPrice, #detailPrice').text(this.getBaseProductPriceRange(p));
             
             const comparePrice = p.compareAtPriceMinor || (p.compareAtPrice ? p.compareAtPrice * 100 : 0);
             if (comparePrice) {
                 $('#productComparePrice, #detailComparePrice').text(this.formatNaira(comparePrice, true)).removeClass('d-none').show();
-                const currentPrice = p.priceMinor || (p.price * 100);
-                const savings = comparePrice - currentPrice;
-                $('#detailSavingsBadge').text(`SAVE ${this.formatNaira(savings, true)}`).show();
             } else {
                 $('#productComparePrice, #detailComparePrice, #detailSavingsBadge').addClass('d-none').hide();
             }
@@ -1365,42 +1832,33 @@
                 $('#productMoqBadge').addClass('d-none').hide();
             }
 
-            const img = (p.media && p.media[0] && (p.media[0].url || p.media[0].thumbnailUrl)) || p.image || '../assetsecm/images/soups/egusi-soup-roundbowl.png';
+            const img = this.resolveAssetUrl((p.media && p.media[0] && (p.media[0].url || p.media[0].thumbnailUrl)) || p.image || '../assetsecm/images/soups/egusi-soup-roundbowl.png');
             $('#productMainImage, #detailMainImage').attr('src', img).attr('alt', p.title || p.name);
 
-            // Render rich category specifications & diagnostics
             this.renderDetailedSpecsTable(p);
 
-            // Bind direct Add to Cart on details page
             const self = this;
             $('#btnDetailsAddToCart, #btnDetailAddToCart').off('click').on('click', function (e) {
                 e.preventDefault();
-                const qty = parseInt($('#productQtyInput, #detailQtyInput').val(), 10) || moq;
-                self.addToCart(p.id, qty);
+                self.openQuickViewModal(p.id);
             });
 
             $('#btnDetailsBuyNow, #btnDetailBuyNow').off('click').on('click', function (e) {
                 e.preventDefault();
-                const qty = parseInt($('#productQtyInput, #detailQtyInput').val(), 10) || moq;
-                self.addToCart(p.id, qty, false);
-                self.openCheckoutValidateModal();
+                self.openQuickViewModal(p.id);
             });
         },
 
         renderDetailedSpecsTable(p) {
             const $specsTable = $('#productSpecsTableBody, #specsTableBody');
-            const $diagWrapper = $('#productDiagnosticsWrapper');
             if (!$specsTable.length) return;
-
             $specsTable.empty();
-            if ($diagWrapper.length) $diagWrapper.empty();
 
             if (!p.specifications) {
                 $specsTable.html('<tr><td colspan="2" class="text-muted small">Standard specifications apply.</td></tr>');
                 return;
             }
 
-            // General specs
             Object.entries(p.specifications).forEach(([k, v]) => {
                 if (k === 'inspectionDiagnostics') return;
                 const label = k.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
@@ -1413,152 +1871,612 @@
                     </tr>
                 `);
             });
+        },
 
-            // If gadget diagnostics are present (from product-specs.pdf!)
-            const diag = p.specifications.inspectionDiagnostics;
-            if (diag && $diagWrapper.length) {
-                let diagHtml = `
-                    <div class="card border-0 rounded-4 shadow-sm bg-white p-4 mt-4">
-                        <div class="d-flex align-items-center gap-2 mb-3">
-                            <i class="bi bi-shield-check text-success fs-4"></i>
-                            <div>
-                                <h5 class="fw-bold mb-0">Hardware & Diagnostic Inspection Checklist</h5>
-                                <small class="text-muted">Standard multi-point inspection verified in accordance with product-specs.pdf</small>
+        /* ==========================================================================
+           DUAL MODAL SYSTEM (GROCERIES SCROLLABLE VS FASHION/TECH ATTRIBUTE OPTIONS)
+           ========================================================================== */
+        openQuickViewModal(productId, initialVariantId = null) {
+            let p = this.getProductById(productId);
+            if (!p) {
+                const all = this.getAllProducts();
+                for (const base of all) {
+                    if (base.variants && base.variants.some(v => v.id === productId)) {
+                        p = base;
+                        initialVariantId = productId;
+                        break;
+                    }
+                }
+            }
+            if (!p) return;
+
+            const waveMap = (window.AreaBazaarStorefront && window.AreaBazaarStorefront.ACTIVE_WAVE_VARIANTS) || {};
+            const isGroceries = (p.category === 'groceries' || p.categoryId === 'groceries' || p.modalType === 'groceries_scroll_variants');
+            const hasVariants = Array.isArray(p.variants) && p.variants.length > 0;
+            const self = this;
+
+            let activeVariant = null;
+            if (hasVariants) {
+                if (initialVariantId) {
+                    activeVariant = p.variants.find(v => v.id === initialVariantId) || p.variants[0];
+                } else {
+                    activeVariant = p.variants[0];
+                }
+            }
+
+            let modalHtml = '';
+
+            if (isGroceries && hasVariants) {
+                // MODE A: Groceries (Scrollable Left Panel with Variant Packs)
+                let variantCardsHtml = '';
+                p.variants.forEach(v => {
+                    const isSelected = (v.id === activeVariant.id);
+                    const vImg = self.resolveAssetUrl(v.image || p.image);
+                    const vWave = waveMap[v.id];
+                    const vPrice = vWave ? self.formatNaira(vWave.wavePrice * 100, true) : self.formatNaira(v.priceMinor || (v.price * 100), true);
+
+                    variantCardsHtml += `
+                        <div class="card p-2 mb-2 grocery-variant-card ${isSelected ? 'border-danger bg-danger-subtle shadow-sm' : 'border bg-white'} cursor-pointer" data-base-id="${p.id}" data-variant-id="${v.id}" style="cursor: pointer; transition: all 0.2s;">
+                            <div class="d-flex align-items-center gap-2">
+                                <img src="${vImg}" alt="${v.name}" class="rounded-2 border flex-shrink-0" style="width: 50px; height: 50px; object-fit: contain; background: #fff;">
+                                <div class="flex-grow-1 min-w-0">
+                                    <div class="fw-bold text-dark small lh-sm text-truncate">${v.name}</div>
+                                    <div class="d-flex align-items-center gap-1 mt-1">
+                                        <span class="fw-extrabold text-danger small">${vPrice}</span>
+                                        ${vWave ? `<span class="badge bg-danger rounded-pill px-1 text-xs">⚡ Surprise Wave</span>` : ''}
+                                    </div>
+                                </div>
+                                <i class="bi ${isSelected ? 'bi-check-circle-fill text-danger' : 'bi-circle text-muted'}"></i>
                             </div>
                         </div>
-                        <div class="table-responsive">
-                            <table class="table table-sm table-hover align-middle mb-0">
-                                <thead class="table-light">
-                                    <tr>
-                                        <th class="ps-3">Component / System</th>
-                                        <th>Verified State</th>
-                                        <th class="text-end pe-3">Certification</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                `;
-
-                Object.entries(diag).forEach(([comp, state]) => {
-                    const label = comp.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
-                    const isOptimal = String(state).toLowerCase().includes('optimal') || String(state).toLowerCase().includes('intact') || String(state).toLowerCase().includes('present') || String(state).toLowerCase().includes('clean');
-                    const badgeClass = isOptimal ? 'bg-success-subtle text-success border border-success-subtle' : 'bg-warning-subtle text-warning-emphasis border border-warning-subtle';
-
-                    diagHtml += `
-                        <tr>
-                            <td class="ps-3 fw-semibold small text-secondary">${label}</td>
-                            <td class="small fw-bold text-dark">${state}</td>
-                            <td class="text-end pe-3">
-                                <span class="badge ${badgeClass} rounded-pill px-2 py-1 small">
-                                    <i class="bi ${isOptimal ? 'bi-check2-circle' : 'bi-exclamation-circle'} me-1"></i> ${isOptimal ? 'PASS' : 'ATTN'}
-                                </span>
-                            </td>
-                        </tr>
                     `;
                 });
 
-                diagHtml += `
-                                </tbody>
-                            </table>
+                modalHtml = `
+                    <div class="row g-4">
+                        <!-- Left: Scrollable Variants List -->
+                        <div class="col-md-5 border-end">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <h6 class="fw-bold text-dark mb-0"><i class="bi bi-stack me-1 text-danger"></i> Choose Pack Size</h6>
+                                <span class="badge bg-light text-muted border">${p.variants.length} packs</span>
+                            </div>
+                            <p class="text-muted text-xs mb-3">Click any pack size below to view verified prices, specifications, and nutritional pack details.</p>
+                            <div class="grocery-variants-scroll-wrapper" style="max-height: 420px; overflow-y: auto; padding-right: 6px;">
+                                ${variantCardsHtml}
+                            </div>
+                        </div>
+
+                        <!-- Right: Selected Variant Details -->
+                        <div class="col-md-7" id="groceryVariantDetailsRightPanel">
+                            ${self.renderGroceryVariantRightPanel(p, activeVariant, waveMap[activeVariant.id])}
                         </div>
                     </div>
                 `;
-                $diagWrapper.html(diagHtml);
+            } else if (hasVariants) {
+                // MODE B: Fashion, Gadgets, Home (Attribute Pill Options)
+                modalHtml = self.renderAttributeOptionsModal(p, activeVariant, waveMap);
+            } else {
+                // MODE C: Single Base Product (No Variants)
+                modalHtml = self.renderSingleProductModal(p, waveMap[p.id]);
+            }
+
+            // Populate into DOM container
+            let container = document.getElementById('quickViewContent');
+            if (container) {
+                container.innerHTML = modalHtml;
+            }
+            let bModalBody = document.getElementById('quickViewModalBody') || document.querySelector('#modal-quick-view .modal-body');
+            if (bModalBody) {
+                bModalBody.innerHTML = modalHtml;
+            }
+
+            // Open Modal
+            if (window.jQuery && $.fn.iziModal && $('#quickViewModal').length) {
+                $('#quickViewModal').iziModal('open');
+            } else {
+                const bModalEl = document.getElementById('modal-quick-view');
+                if (bModalEl && window.bootstrap) {
+                    const modal = window.bootstrap.Modal.getOrCreateInstance ? window.bootstrap.Modal.getOrCreateInstance(bModalEl) : new window.bootstrap.Modal(bModalEl);
+                    modal.show();
+                }
             }
         },
 
-                openQuickViewModal(productId) {
-            const p = this.getProductById(productId);
-            if (!p) return;
+        renderGroceryVariantRightPanel(p, v, waveInfo) {
+            const self = this;
+            const priceMinor = v.priceMinor || (v.price * 100);
+            const compareMinor = v.compareAtPriceMinor || (v.compareAtPrice ? v.compareAtPrice * 100 : 0);
+            const moq = (v.stock && v.stock.moq) || 1;
+            const qtyAvailable = (v.stock && v.stock.quantity) || 15;
 
-            const modalEl = document.getElementById('modal-quick-view');
-            if (!modalEl) return;
-
-            const img = this.resolveAssetUrl((p.media && p.media[0] && (p.media[0].url || p.media[0].thumbnailUrl)) || p.image);
-            const moq = (p.stock && p.stock.moq) || 1;
-
-            $('#quickViewTitle').text(p.title);
-            $('#quickViewCategoryBadge').text(p.categoryName || p.categoryId || 'Verified');
-            $('#quickViewDescription').text(p.description || '');
-            $('#quickViewPrice').text(this.formatNaira(p.priceMinor, true));
-            $('#quickViewImage').attr('src', img).attr('alt', p.title);
-
-            const qtyAvailable = (p.stock && p.stock.quantity) || 12;
-            $('#quickViewStockStatus').html(`<i class="bi bi-check-circle-fill me-1"></i> In Stock (${qtyAvailable} available)`);
-
-            // Specs Chips
-            const $pills = $('#quickViewSpecsPills');
-            $pills.empty();
-
-            const specs = p.specifications || {};
-            let diag = specs.inspectionDiagnostics || null;
-            let regularSpecs = Object.entries(specs).filter(([k]) => k !== 'inspectionDiagnostics');
-
-            // Top specs as chips
-            const topSpecs = regularSpecs.slice(0, 8);
-            topSpecs.forEach(([k, v]) => {
-                let val = Array.isArray(v) ? v.join(', ') : String(v);
-                $pills.append(`<span class="badge bg-light text-dark border p-2 fw-medium rounded-3 small">${k}: ${val}</span>`);
-            });
-
-            // Extra specs or inspection diagnostics in Accordion
-            const remainingSpecs = regularSpecs.slice(8);
-            const hasAccordion = remainingSpecs.length > 0 || (diag && Object.keys(diag).length > 0);
-
-            const $acc = $('#quickViewExtraAccordion');
-            const $accContent = $('#quickViewAccordionContent');
-
-            if (hasAccordion) {
-                $acc.removeClass('d-none');
-                let accHtml = '<div class="table-responsive"><table class="table table-sm table-striped mb-0">';
-                if (remainingSpecs.length > 0) {
-                    accHtml += '<thead><tr><th colspan="2" class="bg-light fw-bold small text-uppercase">Extended Attributes</th></tr></thead><tbody>';
-                    remainingSpecs.forEach(([k, v]) => {
-                        let val = Array.isArray(v) ? v.join(', ') : String(v);
-                        accHtml += `<tr><th class="small text-muted py-1">${k}</th><td class="small text-dark fw-bold py-1">${val}</td></tr>`;
-                    });
-                    accHtml += '</tbody>';
-                }
-                if (diag) {
-                    accHtml += '<thead><tr><th colspan="2" class="bg-light fw-bold small text-uppercase mt-2">Condition Diagnostics (product-specs.pdf)</th></tr></thead><tbody>';
-                    Object.entries(diag).forEach(([comp, state]) => {
-                        const label = comp.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
-                        const isOptimal = String(state).toLowerCase().includes('optimal') || String(state).toLowerCase().includes('intact') || String(state).toLowerCase().includes('present') || String(state).toLowerCase().includes('clean');
-                        accHtml += `<tr><td class="small text-secondary py-1">${label}</td><td class="small fw-bold py-1 ${isOptimal ? 'text-success' : 'text-warning-emphasis'}">${state} <i class="bi ${isOptimal ? 'bi-check-circle' : 'bi-exclamation-circle'} ms-1"></i></td></tr>`;
-                    });
-                    accHtml += '</tbody>';
-                }
-                accHtml += '</table></div>';
-                $accContent.html(accHtml);
+            let priceBlockHtml = '';
+            if (waveInfo) {
+                const wavePriceMinor = waveInfo.wavePrice * 100;
+                const savingsMinor = priceMinor - wavePriceMinor;
+                priceBlockHtml = `
+                    <div class="alert alert-danger border-0 p-3 rounded-3 mb-3 bg-danger-subtle">
+                        <div class="d-flex align-items-center justify-content-between mb-1">
+                            <span class="badge bg-danger rounded-pill px-2 py-1 small animate-pulse">
+                                <i class="bi bi-lightning-charge-fill me-1"></i> ${waveInfo.badge || 'SURPRISE PRICE WAVE'}
+                            </span>
+                            <span class="badge bg-dark rounded-pill px-2 py-1 small"><i class="bi bi-clock-history me-1"></i> ${waveInfo.timerMinutesLeft || 15}m left</span>
+                        </div>
+                        <div class="d-flex align-items-baseline gap-2 mt-2">
+                            <span class="fs-3 fw-800 text-danger">${self.formatNaira(wavePriceMinor, true)}</span>
+                            <span class="text-decoration-line-through text-muted small">${self.formatNaira(priceMinor, true)}</span>
+                            <span class="badge bg-success-subtle text-success border border-success-subtle ms-auto">Save ${self.formatNaira(savingsMinor, true)}!</span>
+                        </div>
+                        <p class="small text-danger-emphasis mb-0 mt-1">${waveInfo.description || 'Special drop price active during live wave. Locks upon checkout!'}</p>
+                    </div>
+                `;
             } else {
-                $acc.addClass('d-none');
+                priceBlockHtml = `
+                    <div class="p-3 bg-light rounded-3 mb-3 border">
+                        <div class="d-flex align-items-baseline gap-2">
+                            <span class="fs-3 fw-800 text-danger">${self.formatNaira(priceMinor, true)}</span>
+                            ${compareMinor ? `<span class="text-decoration-line-through text-muted">${self.formatNaira(compareMinor, true)}</span>` : ''}
+                        </div>
+                        <div class="small text-success fw-semibold mt-1">
+                            <i class="bi bi-check-circle-fill me-1"></i> In Stock (${qtyAvailable} available at Tanke Hub)
+                        </div>
+                    </div>
+                `;
             }
 
-            // Quantity Stepper & Add to Cart
-            $('#quickViewQtyInput').val(moq).attr('min', moq);
+            let specsRows = '';
+            if (v.specifications) {
+                Object.entries(v.specifications).forEach(([k, val]) => {
+                    const label = k.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
+                    specsRows += `<tr><th class="ps-3 py-2 text-muted small" style="width: 40%;">${label}</th><td class="pe-3 py-2 text-dark small fw-bold">${val}</td></tr>`;
+                });
+            }
+
+            return `
+                <div class="d-flex align-items-center gap-2 mb-2">
+                    <span class="badge bg-danger-subtle text-danger text-uppercase fw-bold">${p.categoryName || p.category}</span>
+                    <span class="badge bg-light text-muted border">${p.subCategory || 'Staples'}</span>
+                </div>
+                <h4 class="fw-bold text-dark mb-1">${v.name}</h4>
+                <p class="text-muted small mb-3">${p.description}</p>
+
+                ${priceBlockHtml}
+
+                <div class="table-responsive border rounded-3 mb-3 bg-white">
+                    <table class="table table-sm table-striped mb-0">
+                        <tbody>
+                            ${specsRows || '<tr><td colspan="2" class="p-2 text-center text-muted small">Standard specifications verified.</td></tr>'}
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Quantity & Actions -->
+                <div class="d-flex align-items-center gap-3">
+                    <div class="input-group input-group-sm" style="width: 120px;">
+                        <button class="btn btn-outline-secondary btn-var-qty-minus" type="button" data-moq="${moq}">-</button>
+                        <input type="number" id="modalSelectedVariantQty" class="form-control text-center fw-bold" value="${moq}" min="${moq}">
+                        <button class="btn btn-outline-secondary btn-var-qty-plus" type="button">+</button>
+                    </div>
+                    <button class="btn btn-brand flex-grow-1 py-2 fw-bold shadow-sm btn-modal-add-variant" data-base-id="${p.id}" data-variant-id="${v.id}" data-moq="${moq}">
+                        <i class="bi bi-cart-plus me-1"></i> Add To Cart
+                    </button>
+                </div>
+            `;
+        },
+
+        renderAttributeOptionsModal(p, activeVariant, waveMap) {
             const self = this;
+            const currentWave = waveMap[activeVariant.id];
+            const priceMinor = activeVariant.priceMinor || (activeVariant.price * 100);
+            const compareMinor = activeVariant.compareAtPriceMinor || (activeVariant.compareAtPrice ? activeVariant.compareAtPrice * 100 : 0);
+            const moq = (activeVariant.stock && activeVariant.stock.moq) || 1;
+            const qtyAvailable = (activeVariant.stock && activeVariant.stock.quantity) || 12;
+            const img = self.resolveAssetUrl((p.media && p.media[0] && (p.media[0].url || p.media[0].thumbnailUrl)) || p.image);
 
-            $('#quickViewQtyMinus').off('click').on('click', function () {
-                let cur = parseInt($('#quickViewQtyInput').val(), 10) || moq;
-                if (cur > moq) $('#quickViewQtyInput').val(cur - 1);
+            let attributesHtml = '';
+            if (p.attributes && p.attributes.length > 0) {
+                p.attributes.forEach(attr => {
+                    let pills = '';
+                    attr.values.forEach(val => {
+                        const isValActive = (activeVariant[attr.key] === val);
+                        pills += `
+                            <button type="button" class="btn btn-sm ${isValActive ? 'btn-dark' : 'btn-outline-secondary'} rounded-pill px-3 py-1 me-1 mb-1 btn-attr-pill" data-base-id="${p.id}" data-attr-key="${attr.key}" data-attr-val="${val}">
+                                ${val}
+                            </button>
+                        `;
+                    });
+                    attributesHtml += `
+                        <div class="mb-3">
+                            <label class="small fw-bold text-secondary d-block mb-1">${attr.label}: <strong class="text-dark">${activeVariant[attr.key] || ''}</strong></label>
+                            <div class="d-flex flex-wrap">${pills}</div>
+                        </div>
+                    `;
+                });
+            }
+
+            let priceBlockHtml = '';
+            if (currentWave) {
+                const wavePriceMinor = currentWave.wavePrice * 100;
+                const savingsMinor = priceMinor - wavePriceMinor;
+                priceBlockHtml = `
+                    <div class="alert alert-danger border-0 p-3 rounded-3 mb-3 bg-danger-subtle">
+                        <div class="d-flex align-items-center justify-content-between mb-1">
+                            <span class="badge bg-danger rounded-pill px-2 py-1 small animate-pulse">
+                                <i class="bi bi-lightning-charge-fill me-1"></i> ${currentWave.badge || 'SURPRISE PRICE WAVE'}
+                            </span>
+                            <span class="badge bg-dark rounded-pill px-2 py-1 small"><i class="bi bi-clock-history me-1"></i> ${currentWave.timerMinutesLeft || 15}m left</span>
+                        </div>
+                        <div class="d-flex align-items-baseline gap-2 mt-2">
+                            <span class="fs-3 fw-800 text-danger">${self.formatNaira(wavePriceMinor, true)}</span>
+                            <span class="text-decoration-line-through text-muted small">${self.formatNaira(priceMinor, true)}</span>
+                            <span class="badge bg-success-subtle text-success border border-success-subtle ms-auto">Save ${self.formatNaira(savingsMinor, true)}!</span>
+                        </div>
+                        <p class="small text-danger-emphasis mb-0 mt-1">${currentWave.description || 'Special drop price active during live wave. Locks upon checkout!'}</p>
+                    </div>
+                `;
+            } else {
+                priceBlockHtml = `
+                    <div class="p-3 bg-light rounded-3 mb-3 border">
+                        <div class="d-flex align-items-baseline gap-2">
+                            <span class="fs-3 fw-800 text-danger">${self.formatNaira(priceMinor, true)}</span>
+                            ${compareMinor ? `<span class="text-decoration-line-through text-muted">${self.formatNaira(compareMinor, true)}</span>` : ''}
+                        </div>
+                        <div class="small text-success fw-semibold mt-1">
+                            <i class="bi bi-check-circle-fill me-1"></i> In Stock (${qtyAvailable} available at Tanke Hub)
+                        </div>
+                    </div>
+                `;
+            }
+
+            let specsRows = '';
+            const allSpecs = { ...(p.specifications || {}), ...(activeVariant.specifications || {}) };
+            Object.entries(allSpecs).forEach(([k, val]) => {
+                if (k === 'inspectionDiagnostics') return;
+                const label = k.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
+                specsRows += `<tr><th class="ps-3 py-2 text-muted small" style="width: 40%;">${label}</th><td class="pe-3 py-2 text-dark small fw-bold">${val}</td></tr>`;
             });
 
-            $('#quickViewQtyPlus').off('click').on('click', function () {
-                let cur = parseInt($('#quickViewQtyInput').val(), 10) || moq;
-                $('#quickViewQtyInput').val(cur + 1);
-            });
+            return `
+                <div class="row g-4 align-items-start">
+                    <div class="col-md-5 text-center">
+                        <div class="p-3 bg-light rounded-4 border text-center mb-3">
+                            <img src="${img}" alt="${p.title}" class="img-fluid" style="max-height: 240px; object-fit: contain;">
+                        </div>
+                        <span class="badge bg-light text-muted border text-xs">SKU: ${activeVariant.sku || p.id}</span>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="d-flex align-items-center gap-2 mb-2">
+                            <span class="badge bg-dark">${p.categoryName || p.category}</span>
+                            <span class="badge bg-light text-muted border">${p.subCategory || 'Catalog'}</span>
+                        </div>
+                        <h4 class="fw-bold text-dark mb-1">${p.title || p.name}</h4>
+                        <p class="text-muted small mb-3">${p.description}</p>
 
-            $('#quickViewAddToCartBtn').off('click').on('click', function () {
-                const qty = parseInt($('#quickViewQtyInput').val(), 10) || moq;
-                self.addToCart(p.id, qty);
-                if (window.bootstrap) {
-                    const modal = bootstrap.Modal.getInstance(modalEl);
-                    if (modal) modal.hide();
+                        ${priceBlockHtml}
+
+                        <!-- Attribute Modifiers -->
+                        ${attributesHtml}
+
+                        <!-- Specifications -->
+                        <div class="table-responsive border rounded-3 mb-3 bg-white">
+                            <table class="table table-sm table-striped mb-0">
+                                <tbody>
+                                    ${specsRows || '<tr><td colspan="2" class="p-2 text-center text-muted small">Standard specifications apply.</td></tr>'}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="input-group input-group-sm" style="width: 120px;">
+                                <button class="btn btn-outline-secondary btn-var-qty-minus" type="button" data-moq="${moq}">-</button>
+                                <input type="number" id="modalSelectedVariantQty" class="form-control text-center fw-bold" value="${moq}" min="${moq}">
+                                <button class="btn btn-outline-secondary btn-var-qty-plus" type="button">+</button>
+                            </div>
+                            <button class="btn btn-brand flex-grow-1 py-2 fw-bold shadow-sm btn-modal-add-variant" data-base-id="${p.id}" data-variant-id="${activeVariant.id}" data-moq="${moq}">
+                                <i class="bi bi-cart-plus me-1"></i> Add To Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        },
+
+        renderSingleProductModal(p, waveInfo) {
+            const self = this;
+            const priceMinor = p.priceMinor || (p.price * 100);
+            const compareMinor = p.compareAtPriceMinor || (p.compareAtPrice ? p.compareAtPrice * 100 : 0);
+            const moq = (p.stock && p.stock.moq) || 1;
+            const img = self.resolveAssetUrl((p.media && p.media[0] && (p.media[0].url || p.media[0].thumbnailUrl)) || p.image);
+
+            let priceBlockHtml = '';
+            if (waveInfo) {
+                const wavePriceMinor = waveInfo.wavePrice * 100;
+                const savingsMinor = priceMinor - wavePriceMinor;
+                priceBlockHtml = `
+                    <div class="alert alert-danger border-0 p-3 rounded-3 mb-3 bg-danger-subtle">
+                        <div class="d-flex align-items-center justify-content-between mb-1">
+                            <span class="badge bg-danger rounded-pill px-2 py-1 small animate-pulse">
+                                <i class="bi bi-lightning-charge-fill me-1"></i> ${waveInfo.badge || 'SURPRISE PRICE WAVE'}
+                            </span>
+                            <span class="badge bg-dark rounded-pill px-2 py-1 small"><i class="bi bi-clock-history me-1"></i> ${waveInfo.timerMinutesLeft || 15}m left</span>
+                        </div>
+                        <div class="d-flex align-items-baseline gap-2 mt-2">
+                            <span class="fs-3 fw-800 text-danger">${self.formatNaira(wavePriceMinor, true)}</span>
+                            <span class="text-decoration-line-through text-muted small">${self.formatNaira(priceMinor, true)}</span>
+                            <span class="badge bg-success-subtle text-success border border-success-subtle ms-auto">Save ${self.formatNaira(savingsMinor, true)}!</span>
+                        </div>
+                    </div>
+                `;
+            } else {
+                priceBlockHtml = `
+                    <div class="p-3 bg-light rounded-3 mb-3 border">
+                        <div class="d-flex align-items-baseline gap-2">
+                            <span class="fs-3 fw-800 text-danger">${self.formatNaira(priceMinor, true)}</span>
+                            ${compareMinor ? `<span class="text-decoration-line-through text-muted">${self.formatNaira(compareMinor, true)}</span>` : ''}
+                        </div>
+                    </div>
+                `;
+            }
+
+            let specsRows = '';
+            if (p.specifications) {
+                Object.entries(p.specifications).forEach(([k, val]) => {
+                    const label = k.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
+                    specsRows += `<tr><th class="ps-3 py-2 text-muted small" style="width: 40%;">${label}</th><td class="pe-3 py-2 text-dark small fw-bold">${val}</td></tr>`;
+                });
+            }
+
+            return `
+                <div class="row g-4 align-items-start">
+                    <div class="col-md-5 text-center">
+                        <div class="p-3 bg-light rounded-4 border text-center mb-3">
+                            <img src="${img}" alt="${p.title}" class="img-fluid" style="max-height: 240px; object-fit: contain;">
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="d-flex align-items-center gap-2 mb-2">
+                            <span class="badge bg-dark">${p.categoryName || p.category}</span>
+                            <span class="badge bg-light text-muted border">${p.subCategory || 'Essentials'}</span>
+                        </div>
+                        <h4 class="fw-bold text-dark mb-1">${p.title || p.name}</h4>
+                        <p class="text-muted small mb-3">${p.description}</p>
+
+                        ${priceBlockHtml}
+
+                        <div class="table-responsive border rounded-3 mb-3 bg-white">
+                            <table class="table table-sm table-striped mb-0">
+                                <tbody>
+                                    ${specsRows || '<tr><td colspan="2" class="p-2 text-center text-muted small">Standard specifications apply.</td></tr>'}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="input-group input-group-sm" style="width: 120px;">
+                                <button class="btn btn-outline-secondary btn-var-qty-minus" type="button" data-moq="${moq}">-</button>
+                                <input type="number" id="modalSelectedVariantQty" class="form-control text-center fw-bold" value="${moq}" min="${moq}">
+                                <button class="btn btn-outline-secondary btn-var-qty-plus" type="button">+</button>
+                            </div>
+                            <button class="btn btn-brand flex-grow-1 py-2 fw-bold shadow-sm btn-modal-add-variant" data-base-id="${p.id}" data-variant-id="${p.id}" data-moq="${moq}">
+                                <i class="bi bi-cart-plus me-1"></i> Add To Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        },
+
+        getBazaarVariants() {
+            const waveMap = (window.AreaBazaarStorefront && window.AreaBazaarStorefront.ACTIVE_WAVE_VARIANTS) || {};
+            const products = this.getAllProducts();
+            const bazaarLots = [];
+
+            Object.entries(waveMap).forEach(([varId, wave]) => {
+                let foundVariant = null;
+                let foundBase = null;
+
+                for (const p of products) {
+                    if (p.variants && p.variants.length > 0) {
+                        const v = p.variants.find(item => item.id === varId);
+                        if (v) {
+                            foundVariant = v;
+                            foundBase = p;
+                            break;
+                        }
+                    } else if (p.id === varId) {
+                        foundBase = p;
+                        foundVariant = p;
+                        break;
+                    }
+                }
+
+                if (foundBase && foundVariant) {
+                    bazaarLots.push({
+                        variantId: varId,
+                        baseProductId: foundBase.id,
+                        title: wave.title || `${foundBase.title} (${foundVariant.name})`,
+                        baseTitle: foundBase.title,
+                        variantName: foundVariant.name || foundBase.title,
+                        category: foundBase.category,
+                        categoryName: foundBase.categoryName,
+                        subCategory: foundBase.subCategory,
+                        image: this.resolveAssetUrl(foundVariant.image || foundBase.image),
+                        originalPrice: wave.originalPrice || foundVariant.price,
+                        originalPriceMinor: (wave.originalPrice || foundVariant.price) * 100,
+                        wavePrice: wave.wavePrice,
+                        wavePriceMinor: wave.wavePrice * 100,
+                        auctionType: wave.auctionType || 'Price Wave',
+                        auctionTypeSlug: wave.auctionTypeSlug || 'price-wave',
+                        badge: wave.badge || '⚡ Active Wave',
+                        description: wave.description || '',
+                        timerMinutesLeft: wave.timerMinutesLeft || 15,
+                        moq: wave.moq || (foundVariant.stock && foundVariant.stock.moq) || 1,
+                        specifications: { ...(foundBase.specifications || {}), ...(foundVariant.specifications || {}) }
+                    });
                 }
             });
 
-            if (window.bootstrap) {
-                const modal = new bootstrap.Modal(modalEl);
-                modal.show();
+            return bazaarLots;
+        },
+
+        renderBazaarPage() {
+            const $containers = $('#bazaarVariantGalleryRow, #landingAuctionDealsRow');
+            if (!$containers.length) return;
+
+            const lots = this.getBazaarVariants();
+            if (lots.length === 0) return;
+
+            $containers.each((_, el) => {
+                const $container = $(el);
+                $container.empty();
+
+                lots.forEach(lot => {
+                    const img = this.resolveAssetUrl(lot.image);
+                    const discount = (lot.originalPrice > lot.wavePrice) ? Math.round(((lot.originalPrice - lot.wavePrice) / lot.originalPrice) * 100) : 0;
+
+                    $container.append(`
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="card h-100 border rounded-4 shadow-sm product-card bg-white position-relative overflow-hidden cursor-pointer bazaar-variant-lot-card" data-variant-id="${lot.variantId}" data-base-id="${lot.baseProductId}">
+                                <span class="badge bg-danger position-absolute top-0 start-0 m-2 rounded-pill px-2 py-1 small animate-pulse">
+                                    <i class="bi bi-clock-history me-1"></i> Ends in ${lot.timerMinutesLeft}m
+                                </span>
+                                <div class="p-3 bg-light rounded-top-4 text-center" style="height: 170px; display: flex; align-items: center; justify-content: center;">
+                                    <img src="${img}" alt="${lot.variantName || lot.title}" class="img-fluid" style="max-height: 130px; object-fit: contain;">
+                                </div>
+                                <div class="card-body p-3 d-flex flex-column">
+                                    <small class="text-muted text-xs text-uppercase fw-bold">${lot.categoryName || lot.category}</small>
+                                    <h6 class="fw-bold text-dark mb-1 text-truncate" title="${lot.title}">${lot.title}</h6>
+                                    <div class="d-flex align-items-center justify-content-between small text-muted mb-2">
+                                        <span>MOQ: <strong class="text-dark">${lot.moq} ${lot.moq > 1 ? 'units' : 'unit'}</strong></span>
+                                        ${discount > 0 ? `<span class="badge bg-success-subtle text-success">Save ${discount}%</span>` : ''}
+                                    </div>
+                                    <div class="mt-auto">
+                                        <div class="bg-light p-2 rounded-3 mb-2 d-flex justify-content-between align-items-baseline">
+                                            <span class="text-xs text-muted">Deal Price:</span>
+                                            <div>
+                                                <span class="fw-extrabold text-danger fs-5">${this.formatNaira(lot.wavePriceMinor, true)}</span>
+                                                ${lot.originalPrice > lot.wavePrice ? `<span class="text-decoration-line-through text-muted small ms-1">${this.formatNaira(lot.originalPriceMinor, true)}</span>` : ''}
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-sm btn-dark w-100 fw-bold rounded-3 btn-inspect-auction" data-variant-id="${lot.variantId}" data-base-id="${lot.baseProductId}">
+                                            <i class="bi bi-eye me-1"></i> Inspect Deal
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `);
+                });
+            });
+
+            const self = this;
+            $(document).off('click.bazaarInspect', '.btn-inspect-auction, .bazaar-variant-lot-card').on('click.bazaarInspect', '.btn-inspect-auction, .bazaar-variant-lot-card', function (e) {
+                e.preventDefault();
+                const variantId = $(this).data('variant-id');
+                const baseId = $(this).data('base-id');
+                self.openAuctionInspectModal(variantId, baseId);
+            });
+        },
+
+        openAuctionInspectModal(variantId, baseProductId) {
+            const lots = this.getBazaarVariants();
+            const lot = lots.find(l => l.variantId === variantId) || lots[0];
+            if (!lot) return;
+
+            const self = this;
+            const img = this.resolveAssetUrl(lot.image);
+            const savingsMinor = lot.originalPriceMinor - lot.wavePriceMinor;
+
+            let auctionExplanation = '';
+            if (lot.auctionTypeSlug === 'price-wave' || lot.auctionType === 'Price Wave') {
+                auctionExplanation = 'Live Price Wave Drop! The price drops periodically and locks upon checkout. Complete payment or claim before the wave ends.';
+            } else if (lot.auctionTypeSlug === 'stock-cap' || lot.auctionType === 'Stock Cap') {
+                auctionExplanation = 'Collective Stock Cap! Tiered bulk price allocated for this hub batch. Claim your units before the allocation cap fills.';
+            } else if (lot.auctionTypeSlug === 'time-cap' || lot.auctionType === 'Time Cap') {
+                auctionExplanation = 'Strict Time Cap Flash Deal! Fixed countdown drop with high discount. Locks for immediate payment or cart reserve.';
+            } else if (lot.auctionTypeSlug === 'flat-rate' || lot.auctionType === 'Flat-Rate Pool') {
+                auctionExplanation = 'Uniform Subsidized Flat-Rate Pool! Standardized wholesale rate funded by hyperlocal community distribution.';
+            } else {
+                auctionExplanation = 'Competitive Bidding & Deal Claim! Sourced directly from local verified inventory at special deal pricing.';
+            }
+
+            let specsRows = '';
+            Object.entries(lot.specifications || {}).forEach(([k, val]) => {
+                if (k === 'inspectionDiagnostics') return;
+                const label = k.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
+                specsRows += `<tr><th class="ps-3 py-2 text-muted small" style="width: 40%;">${label}</th><td class="pe-3 py-2 text-dark small fw-bold">${val}</td></tr>`;
+            });
+
+            const modalHtml = `
+                <div class="row g-4 align-items-start">
+                    <div class="col-md-5 text-center">
+                        <div class="p-3 bg-light rounded-4 border text-center mb-3">
+                            <img src="${img}" alt="${lot.title}" class="img-fluid" style="max-height: 220px; object-fit: contain;">
+                        </div>
+                        <span class="badge bg-danger rounded-pill px-3 py-2 mb-2 d-inline-block">
+                            <i class="bi bi-lightning-charge-fill me-1"></i> Revealed Auction: <strong>${lot.auctionType}</strong>
+                        </span>
+                        <div class="text-xs text-muted">Lot Variant SKU: <strong>${lot.variantId}</strong></div>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="d-flex align-items-center gap-2 mb-2">
+                            <span class="badge bg-dark">${lot.categoryName || lot.category}</span>
+                            <span class="badge bg-warning-subtle text-warning-emphasis"><i class="bi bi-clock me-1"></i>Ends in ${lot.timerMinutesLeft} mins</span>
+                        </div>
+                        <h4 class="fw-bold text-dark mb-1">${lot.title}</h4>
+                        <p class="text-muted small mb-2">${lot.description || 'Verified stock drop sourced directly through local fulfillment.'}</p>
+
+                        <div class="alert alert-danger-subtle border border-danger-subtle p-2 rounded-3 mb-3 small text-danger-emphasis">
+                            <i class="bi bi-info-circle-fill me-1"></i> ${auctionExplanation}
+                        </div>
+
+                        <div class="p-3 bg-light rounded-3 mb-3 border">
+                            <div class="d-flex justify-content-between align-items-baseline">
+                                <div>
+                                    <span class="text-muted small d-block">Auction Deal Price:</span>
+                                    <span class="fs-3 fw-800 text-danger">${self.formatNaira(lot.wavePriceMinor, true)}</span>
+                                    ${lot.originalPrice > lot.wavePrice ? `<span class="text-decoration-line-through text-muted small ms-2">${self.formatNaira(lot.originalPriceMinor, true)}</span>` : ''}
+                                </div>
+                                ${savingsMinor > 0 ? `<span class="badge bg-success-subtle text-success border border-success-subtle p-2">Save ${self.formatNaira(savingsMinor, true)}</span>` : ''}
+                            </div>
+                            <div class="small text-danger fw-semibold mt-2">
+                                <i class="bi bi-exclamation-triangle-fill me-1"></i> MOQ: ${lot.moq} ${lot.moq > 1 ? 'units' : 'unit'} required. Auction terms expire in ${lot.timerMinutesLeft} mins without payment!
+                            </div>
+                        </div>
+
+                        <div class="table-responsive border rounded-3 mb-3 bg-white">
+                            <table class="table table-sm table-striped mb-0">
+                                <tbody>
+                                    ${specsRows || '<tr><td colspan="2" class="p-2 text-center text-muted small">Standard specifications apply.</td></tr>'}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="d-flex flex-column flex-sm-row gap-2 mt-3">
+                            <button class="btn btn-brand py-2 px-3 fw-bold flex-fill shadow-sm btn-pay-immediately" data-base-id="${lot.baseProductId}" data-variant-id="${lot.variantId}" data-moq="${lot.moq}">
+                                <i class="bi bi-credit-card-2-front me-1"></i> Pay Immediately
+                            </button>
+                            <button class="btn btn-outline-dark py-2 px-3 fw-bold flex-fill btn-add-auction-to-cart" data-base-id="${lot.baseProductId}" data-variant-id="${lot.variantId}" data-moq="${lot.moq}" data-timer="${lot.timerMinutesLeft}">
+                                <i class="bi bi-cart-plus me-1"></i> Add To Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            if ($('#modal-auction-inspect').length && typeof $('#modal-auction-inspect').iziModal === 'function') {
+                $('#auctionInspectModalBody').html(modalHtml);
+                $('#modal-auction-inspect').iziModal('open');
+            } else if ($('#quickViewModal').length && typeof $('#quickViewModal').iziModal === 'function') {
+                $('#quickViewContent').html(modalHtml);
+                $('#quickViewModal').iziModal('open');
+            } else {
+                let modalBody = document.getElementById('quickViewModalBody') || document.querySelector('#modal-quick-view .modal-body');
+                if (modalBody) modalBody.innerHTML = modalHtml;
+                const modalEl = document.getElementById('modal-quick-view');
+                if (modalEl && window.bootstrap) {
+                    const modal = window.bootstrap.Modal.getOrCreateInstance ? window.bootstrap.Modal.getOrCreateInstance(modalEl) : new bootstrap.Modal(modalEl);
+                    modal.show();
+                }
             }
         },
 
