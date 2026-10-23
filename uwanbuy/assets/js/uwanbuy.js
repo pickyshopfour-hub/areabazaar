@@ -28,6 +28,9 @@
         },
 
         openProductQuickView(id) {
+            if (window.UwanBuyEngine && typeof window.UwanBuyEngine.openQuickViewModal === 'function') {
+                return window.UwanBuyEngine.openQuickViewModal(id);
+            }
             const product = this.getProductById(id);
             if (!product) return;
 
