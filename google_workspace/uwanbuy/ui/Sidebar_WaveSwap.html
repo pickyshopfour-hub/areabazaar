@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta charset="utf-8">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg:#f8fafc; --card:#fff; --primary:#dc2626; --primary-hover:#b91c1c; --border:#e2e8f0; --radius:8px; }
+    * { box-sizing: border-box; margin:0; padding:0; font-family:'Inter',sans-serif; }
+    body { background: var(--bg); padding:16px; font-size:13px; color:#0f172a; }
+    .header { margin-bottom:14px; padding-bottom:12px; border-bottom:1px solid var(--border); }
+    .header h2 { font-size:16px; font-weight:700; color:#dc2626; }
+    .form-group { margin-bottom:12px; }
+    label { display:block; font-weight:600; font-size:12px; margin-bottom:4px; color:#334155; }
+    input, select { width:100%; padding:8px 10px; border:1px solid var(--border); border-radius:var(--radius); font-size:13px; background:#fff; }
+    .btn-submit { width:100%; background:var(--primary); color:#fff; border:none; padding:10px; font-weight:600; border-radius:var(--radius); cursor:pointer; margin-top:8px; }
+    .btn-submit:hover { background:var(--primary-hover); }
+    .info-card { background:#fee2e2; border:1px solid #fecaca; border-radius:var(--radius); padding:10px; font-size:12px; color:#991b1b; margin-bottom:12px; }
+    .feedback { margin-top:10px; padding:10px; border-radius:var(--radius); font-size:12px; display:none; }
+    .feedback.success { background:#dcfce7; color:#166534; display:block; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h2>Swap Wave Slot / Variant</h2>
+    <p style="color:#64748b; font-size:12px;">Dynamic auction wave slot reassignment.</p>
+  </div>
+  <div class="info-card">
+    ⚡ <strong>Active Wave Rule:</strong> Changes take effect immediately in the customer storefront live feed without restarting the session.
+  </div>
+  <form id="swapForm">
+    <input type="hidden" id="rowIndex" value="<?!= context.row || '' ?>">
+    <div class="form-group">
+      <label>Showing Slot</label>
+      <input type="text" id="slotNumber" value="<?!= (context.data && context.data[1]) || 'Slot 1' ?>" readonly style="background:#f1f5f9;">
+    </div>
+    <div class="form-group">
+      <label>Current Variant Title</label>
+      <input type="text" value="<?!= (context.data && context.data[4]) || '' ?>" readonly style="background:#f1f5f9;">
+    </div>
+    <div class="form-group">
+      <label>Replacement Variant ID</label>
+      <input type="text" id="newVariantId" placeholder="e.g. VAR-RICE-50KG" required>
+    </div>
+    <div class="form-group">
+      <label>Showing Wave Price (₦)</label>
+      <input type="number" id="wavePrice" placeholder="e.g. 72000" required>
+    </div>
+    <div class="form-group">
+      <label>Remaining Timer (Minutes)</label>
+      <input type="number" id="timerMinutes" value="15" min="1" max="60" required>
+    </div>
+    <button type="submit" class="btn-submit" id="btnSwap">Execute Live Slot Swap</button>
+  </form>
+  <div id="feedback" class="feedback"></div>
+
+  <script>
+    document.getElementById('swapForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btnSwap');
+      btn.disabled = true;
+      btn.innerText = 'Swapping Slot...';
+      setTimeout(function() {
+        btn.disabled = false;
+        btn.innerText = 'Execute Live Slot Swap';
+        const fb = document.getElementById('feedback');
+        fb.className = 'feedback success';
+        fb.innerText = '✓ Slot successfully swapped! Storefront updated.';
+      }, 500);
+    });
+  </script>
+</body>
+</html>

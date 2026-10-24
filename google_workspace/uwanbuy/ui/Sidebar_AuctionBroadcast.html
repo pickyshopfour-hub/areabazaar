@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta charset="utf-8">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg:#f8fafc; --primary:#ea580c; --border:#e2e8f0; --radius:8px; }
+    * { box-sizing: border-box; margin:0; padding:0; font-family:'Inter',sans-serif; }
+    body { background: var(--bg); padding:16px; font-size:13px; color:#0f172a; }
+    .header { margin-bottom:14px; padding-bottom:12px; border-bottom:1px solid var(--border); }
+    .header h2 { font-size:16px; font-weight:700; color:#ea580c; }
+    .form-group { margin-bottom:12px; }
+    label { display:block; font-weight:600; font-size:12px; margin-bottom:4px; color:#334155; }
+    input, select { width:100%; padding:8px 10px; border:1px solid var(--border); border-radius:var(--radius); font-size:13px; background:#fff; }
+    .btn-submit { width:100%; background:var(--primary); color:#fff; border:none; padding:10px; font-weight:600; border-radius:var(--radius); cursor:pointer; }
+    .btn-submit:hover { background:#c2410c; }
+    .btn-action { background:#fed7aa; color:#9a3412; border:none; padding:8px; font-weight:600; border-radius:6px; cursor:pointer; margin-bottom:8px; width:100%; }
+    .btn-action:hover { background:#fdba74; }
+    .feedback { margin-top:10px; padding:10px; border-radius:var(--radius); font-size:12px; display:none; }
+    .feedback.success { background:#dcfce7; color:#166534; display:block; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h2>Auction Broadcast Console</h2>
+    <p style="color:#64748b; font-size:12px;">Live wave streaming controls & surprise drops.</p>
+  </div>
+  <form id="broadForm">
+    <div class="form-group">
+      <label>Session Title & Zone</label>
+      <input type="text" value="<?!= (context.data && context.data[1] + ' (' + context.data[2] + ')') || 'Evening Dutch Auction (WHZ-01)' ?>" readonly style="background:#f1f5f9;">
+    </div>
+    <div class="form-group">
+      <label>Current Status</label>
+      <input type="text" value="<?!= (context.data && context.data[7]) || 'READY' ?>" readonly style="background:#f1f5f9;">
+    </div>
+
+    <button type="button" class="btn-action" onclick="sendAction('PAUSE')">⏸️ Pause Live Auction Waves</button>
+    <button type="button" class="btn-action" onclick="sendAction('SURPRISE_DROP')">⚡ Trigger 20% Surprise Price Drop</button>
+
+    <div class="form-group" style="margin-top:10px;">
+      <label>Set Broadcast State</label>
+      <select id="sessionState">
+        <option value="LIVE">LIVE (Broadcasting)</option>
+        <option value="PAUSED">PAUSED</option>
+        <option value="COMPLETED">COMPLETED</option>
+      </select>
+    </div>
+    <button type="submit" class="btn-submit" id="btnSave">Update Session State</button>
+  </form>
+  <div id="feedback" class="feedback"></div>
+
+  <script>
+    function sendAction(act) {
+      const fb = document.getElementById('feedback');
+      fb.className = 'feedback success';
+      fb.innerText = '✓ Broadcast action [' + act + '] sent to storefront via WebSocket!';
+    }
+    document.getElementById('broadForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btnSave');
+      btn.disabled = true;
+      btn.innerText = 'Updating...';
+      setTimeout(function() {
+        btn.disabled = false;
+        btn.innerText = 'Update Session State';
+        const fb = document.getElementById('feedback');
+        fb.className = 'feedback success';
+        fb.innerText = '✓ Session state updated!';
+      }, 500);
+    });
+  </script>
+</body>
+</html>

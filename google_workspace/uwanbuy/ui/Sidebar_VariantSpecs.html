@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta charset="utf-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --border: #e2e8f0;
+      --radius: 8px;
+      --danger: #ef4444;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg-color); color: var(--text-main); padding: 16px; font-size: 13px; line-height: 1.5; }
+    .header { margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+    .header h2 { font-size: 16px; font-weight: 700; color: var(--text-main); }
+    .header p { color: var(--text-muted); font-size: 12px; margin-top: 3px; }
+    .preset-bar { background: #e2e8f0; padding: 8px 10px; border-radius: var(--radius); margin-bottom: 14px; }
+    .preset-bar label { font-size: 11px; font-weight: 700; text-transform: uppercase; color: #475569; display: block; margin-bottom: 4px; }
+    .preset-btns { display: flex; flex-wrap: wrap; gap: 6px; }
+    .btn-preset { background: #fff; border: 1px solid #cbd5e1; padding: 4px 8px; font-size: 11px; border-radius: 4px; cursor: pointer; font-weight: 500; }
+    .btn-preset:hover { background: #f1f5f9; border-color: var(--primary); color: var(--primary); }
+    .specs-container { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px; margin-bottom: 14px; }
+    .spec-row { display: grid; grid-template-columns: 1fr 1fr 32px; gap: 8px; align-items: center; margin-bottom: 8px; }
+    input[type="text"] {
+      width: 100%; padding: 7px 9px; border: 1px solid var(--border); border-radius: 6px;
+      font-size: 12px; font-family: inherit; background: #fff;
+    }
+    input:focus { outline: none; border-color: var(--primary); }
+    .btn-del {
+      background: #fee2e2; color: var(--danger); border: none; width: 30px; height: 30px; border-radius: 6px;
+      font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    }
+    .btn-del:hover { background: #fecaca; }
+    .btn-add {
+      background: #f1f5f9; border: 1px dashed #cbd5e1; color: #334155; padding: 7px; border-radius: 6px;
+      width: 100%; font-size: 12px; font-weight: 600; cursor: pointer; text-align: center; margin-top: 4px;
+    }
+    .btn-add:hover { background: #e2e8f0; border-color: #94a3b8; }
+    .json-preview {
+      background: #0f172a; color: #38bdf8; font-family: monospace; font-size: 11px; padding: 10px;
+      border-radius: 6px; max-height: 120px; overflow-y: auto; white-space: pre-wrap; word-break: break-all; margin-bottom: 12px;
+    }
+    .btn-submit {
+      width: 100%; background: var(--primary); color: #fff; border: none; padding: 10px 16px;
+      font-weight: 600; font-size: 13px; border-radius: var(--radius); cursor: pointer; transition: background 0.2s;
+    }
+    .btn-submit:hover { background: var(--primary-hover); }
+    .feedback { margin-top: 10px; padding: 10px; border-radius: var(--radius); font-size: 12px; display: none; }
+    .feedback.success { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; display: block; }
+    .feedback.error { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; display: block; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <h2>Variant Specifications</h2>
+      <span style="font-size:11px; background:#e0e7ff; color:#3730a3; padding:2px 8px; border-radius:999px; font-weight:600;">Col I JSON</span>
+    </div>
+    <p>Configure technical and packaging attributes for this SKU.</p>
+  </div>
+
+  <div class="preset-bar">
+    <label>Load Category Presets</label>
+    <div class="preset-btns">
+      <button type="button" class="btn-preset" onclick="loadPreset('gadgets')">📱 Phones & Gadgets</button>
+      <button type="button" class="btn-preset" onclick="loadPreset('groceries')">🌾 Groceries & Agro</button>
+      <button type="button" class="btn-preset" onclick="loadPreset('fashion')">👕 Fashion & Apparel</button>
+      <button type="button" class="btn-preset" onclick="loadPreset('home')">🏠 Home & Appliances</button>
+    </div>
+  </div>
+
+  <form id="specsForm">
+    <input type="hidden" id="rowIndex" value="<?!= context.row || '' ?>">
+    <input type="hidden" id="rawInitial" value="<?!= (context.data && context.data[8]) || '' ?>">
+
+    <div class="specs-container">
+      <div style="display:grid; grid-template-columns: 1fr 1fr 32px; gap:8px; margin-bottom:6px; font-size:11px; font-weight:700; color:#64748b;">
+        <span>ATTRIBUTE NAME</span>
+        <span>SPECIFICATION VALUE</span>
+        <span></span>
+      </div>
+      <div id="specsList"></div>
+      <button type="button" class="btn-add" onclick="addSpecRow('', '')">+ Add Attribute</button>
+    </div>
+
+    <div style="margin-bottom:6px; font-weight:600; font-size:11px; color:#475569;">STOREFRONT JSON PREVIEW (COL I):</div>
+    <div id="jsonPreview" class="json-preview">{}</div>
+
+    <button type="submit" class="btn-submit" id="btnSave">Save Specifications to Col I</button>
+  </form>
+
+  <div id="feedback" class="feedback"></div>
+
+  <script>
+    const presets = {
+      gadgets: [
+        { k: 'RAM', v: '8GB' }, { k: 'Storage', v: '256GB' }, { k: 'Color', v: 'Midnight Black' },
+        { k: 'Display', v: '6.67-inch AMOLED 120Hz' }, { k: 'Battery', v: '5000mAh 67W Turbo' }, { k: 'OS', v: 'Android 14' }
+      ],
+      groceries: [
+        { k: 'Net Weight', v: '50kg' }, { k: 'Packaging', v: 'Woven Poly Sack' }, { k: 'Origin', v: 'Kebbi State, Nigeria' },
+        { k: 'Grain Type', v: 'Grade A Long Grain' }, { k: 'Shelf Life', v: '24 Months' }
+      ],
+      fashion: [
+        { k: 'Size', v: 'XL' }, { k: 'Color', v: 'Charcoal Black' }, { k: 'Material', v: '100% Cotton Fleece' },
+        { k: 'Care', v: 'Machine Wash Cold' }, { k: 'Gender', v: 'Unisex' }
+      ],
+      home: [
+        { k: 'Capacity', v: '1.5 Horsepower' }, { k: 'Power Rating', v: '1200 Watts' }, { k: 'Refrigerant', v: 'R410A Eco-Friendly' },
+        { k: 'Warranty', v: '2 Years Manufacturer' }
+      ]
+    };
+
+    function parseInitial() {
+      const raw = document.getElementById('rawInitial').value;
+      if (!raw) return {};
+      try {
+        if (raw.startsWith('{')) return JSON.parse(raw);
+      } catch(e) {}
+      const res = {};
+      raw.split(';').forEach(function(pair) {
+        const parts = pair.split(':');
+        if (parts.length >= 2) res[parts[0].trim()] = parts.slice(1).join(':').trim();
+      });
+      return res;
+    }
+
+    function addSpecRow(key, val) {
+      const list = document.getElementById('specsList');
+      const div = document.createElement('div');
+      div.className = 'spec-row';
+      div.innerHTML = `
+        <input type="text" placeholder="e.g. RAM" value="${escapeHtml(key)}" oninput="updatePreview()">
+        <input type="text" placeholder="e.g. 8GB" value="${escapeHtml(val)}" oninput="updatePreview()">
+        <button type="button" class="btn-del" onclick="this.parentElement.remove(); updatePreview();">×</button>
+      `;
+      list.appendChild(div);
+      updatePreview();
+    }
+
+    function loadPreset(category) {
+      const p = presets[category] || [];
+      document.getElementById('specsList').innerHTML = '';
+      p.forEach(function(item) { addSpecRow(item.k, item.v); });
+    }
+
+    function getCurrentSpecs() {
+      const rows = document.querySelectorAll('#specsList .spec-row');
+      const obj = {};
+      rows.forEach(function(r) {
+        const inputs = r.querySelectorAll('input');
+        const k = inputs[0].value.trim();
+        const v = inputs[1].value.trim();
+        if (k && v) obj[k] = v;
+      });
+      return obj;
+    }
+
+    function updatePreview() {
+      const obj = getCurrentSpecs();
+      document.getElementById('jsonPreview').innerText = JSON.stringify(obj, null, 2);
+    }
+
+    function escapeHtml(str) {
+      return String(str || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    // Initialize
+    window.addEventListener('DOMContentLoaded', function() {
+      const initial = parseInitial();
+      const keys = Object.keys(initial);
+      if (keys.length > 0) {
+        keys.forEach(function(k) { addSpecRow(k, initial[k]); });
+      } else {
+        addSpecRow('RAM', '8GB');
+        addSpecRow('Storage', '256GB');
+      }
+    });
+
+    document.getElementById('specsForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btnSave');
+      const feedback = document.getElementById('feedback');
+      btn.disabled = true;
+      btn.innerText = 'Saving Specifications...';
+      feedback.style.display = 'none';
+
+      const specsObj = getCurrentSpecs();
+      const payload = {
+        row: document.getElementById('rowIndex').value,
+        specifications: JSON.stringify(specsObj)
+      };
+
+      if (typeof google !== 'undefined' && google.script && google.script.run) {
+        google.script.run
+          .withSuccessHandler(function(res) {
+            btn.disabled = false;
+            btn.innerText = 'Save Specifications to Col I';
+            feedback.className = 'feedback success';
+            feedback.innerText = '✓ Specifications successfully saved to Col I!';
+          })
+          .withFailureHandler(function(err) {
+            btn.disabled = false;
+            btn.innerText = 'Save Specifications to Col I';
+            feedback.className = 'feedback error';
+            feedback.innerText = '✗ Error: ' + err.message;
+          })
+          .abSaveVariantSpecs(payload);
+      } else {
+        setTimeout(function() {
+          btn.disabled = false;
+          btn.innerText = 'Save Specifications to Col I';
+          feedback.className = 'feedback success';
+          feedback.innerText = '✓ [Simulated] Specifications written to Col I: ' + JSON.stringify(specsObj);
+        }, 500);
+      }
+    });
+  </script>
+</body>
+</html>

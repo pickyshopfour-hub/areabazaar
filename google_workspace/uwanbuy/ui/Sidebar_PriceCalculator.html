@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta charset="utf-8">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg:#f8fafc; --card:#fff; --primary:#059669; --border:#e2e8f0; --radius:8px; }
+    * { box-sizing: border-box; margin:0; padding:0; font-family:'Inter',sans-serif; }
+    body { background: var(--bg); padding:16px; font-size:13px; color:#0f172a; }
+    .header { margin-bottom:14px; padding-bottom:12px; border-bottom:1px solid var(--border); }
+    .header h2 { font-size:16px; font-weight:700; color:#059669; }
+    .form-group { margin-bottom:10px; }
+    label { display:block; font-weight:600; font-size:11px; margin-bottom:3px; color:#334155; }
+    input[type="number"], input[type="text"] { width:100%; padding:6px 9px; border:1px solid var(--border); border-radius:var(--radius); font-size:12px; background:#fff; }
+    .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+    .calc-card { background:#ecfdf5; border:1px solid #a7f3d0; border-radius:var(--radius); padding:12px; margin-bottom:12px; }
+    .calc-row { display:flex; justify-content:space-between; margin-bottom:4px; font-size:12px; }
+    .total-row { font-size:14px; font-weight:700; color:#065f46; border-top:1px dashed #6ee7b7; padding-top:6px; margin-top:6px; }
+    .btn-submit { width:100%; background:var(--primary); color:#fff; border:none; padding:10px; font-weight:600; border-radius:var(--radius); cursor:pointer; }
+    .btn-submit:hover { background:#047857; }
+    .slider-wrap { margin-top:8px; }
+    .slider-wrap input[type="range"] { width:100%; }
+    .feedback { margin-top:10px; padding:10px; border-radius:var(--radius); font-size:12px; display:none; }
+    .feedback.success { background:#dcfce7; color:#166534; display:block; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h2>Price Calculator & Margins</h2>
+    <p style="color:#64748b; font-size:12px;">SBA benchmark + 7 handling costs + margin.</p>
+  </div>
+
+  <div class="calc-card">
+    <div class="calc-row"><span>SBA Benchmark Cost:</span><strong id="dispSba">₦0</strong></div>
+    <div class="calc-row"><span>Total Handling & Logistics:</span><strong id="dispHnd">₦0</strong></div>
+    <div class="calc-row"><span>Unit Cost Floor:</span><strong id="dispFloor" style="color:#b91c1c;">₦0</strong></div>
+    <div class="calc-row total-row"><span>Calculated Selling Price:</span><strong id="dispPrice">₦0</strong></div>
+    <div class="calc-row"><span style="font-size:11px; color:#047857;">Effective Gross Margin:</span><span id="dispMargin" style="font-size:11px; font-weight:600;">0%</span></div>
+  </div>
+
+  <form id="priceForm">
+    <div class="form-group">
+      <label>SBA Benchmark Unit Cost (₦)</label>
+      <input type="number" id="sbaCost" value="50000" oninput="recalc()">
+    </div>
+    <div class="grid-2">
+      <div class="form-group">
+        <label>Transport Benchmark (₦)</label>
+        <input type="number" id="cTransport" value="2500" oninput="recalc()">
+      </div>
+      <div class="form-group">
+        <label>Washing / Prep (₦)</label>
+        <input type="number" id="cWash" value="300" oninput="recalc()">
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="form-group">
+        <label>Splitting / Sorting (₦)</label>
+        <input type="number" id="cSplit" value="400" oninput="recalc()">
+      </div>
+      <div class="form-group">
+        <label>Bagging / Packaging (₦)</label>
+        <input type="number" id="cBag" value="800" oninput="recalc()">
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="form-group">
+        <label>Labelling & QA (₦)</label>
+        <input type="number" id="cLabel" value="200" oninput="recalc()">
+      </div>
+      <div class="form-group">
+        <label>Loading / Facility (₦)</label>
+        <input type="number" id="cLoad" value="500" oninput="recalc()">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Operational Overhead (₦)</label>
+      <input type="number" id="cOverhead" value="1000" oninput="recalc()">
+    </div>
+
+    <div class="form-group slider-wrap">
+      <div style="display:flex; justify-content:space-between;">
+        <label>Target Gross Margin %</label>
+        <strong id="marginLabel" style="color:#059669;">15%</strong>
+      </div>
+      <input type="range" id="marginSlider" min="5" max="50" value="15" oninput="recalc()">
+    </div>
+
+    <button type="submit" class="btn-submit" id="btnSave">Save to Price Schedule</button>
+  </form>
+  <div id="feedback" class="feedback"></div>
+
+  <script>
+    function recalc() {
+      const sba = Number(document.getElementById('sbaCost').value) || 0;
+      const t = Number(document.getElementById('cTransport').value) || 0;
+      const w = Number(document.getElementById('cWash').value) || 0;
+      const sp = Number(document.getElementById('cSplit').value) || 0;
+      const b = Number(document.getElementById('cBag').value) || 0;
+      const l = Number(document.getElementById('cLabel').value) || 0;
+      const ld = Number(document.getElementById('cLoad').value) || 0;
+      const ov = Number(document.getElementById('cOverhead').value) || 0;
+      const marginPct = Number(document.getElementById('marginSlider').value) || 15;
+
+      document.getElementById('marginLabel').innerText = marginPct + '%';
+
+      const hnd = t + w + sp + b + l + ld + ov;
+      const floor = sba + hnd;
+      const rawPrice = floor * (1 + marginPct / 100);
+      // Round up to nearest ₦50
+      const price = Math.ceil(rawPrice / 50) * 50;
+      const effMargin = price > 0 ? (((price - floor) / price) * 100).toFixed(1) : 0;
+
+      document.getElementById('dispSba').innerText = '₦' + sba.toLocaleString();
+      document.getElementById('dispHnd').innerText = '₦' + hnd.toLocaleString();
+      document.getElementById('dispFloor').innerText = '₦' + floor.toLocaleString();
+      document.getElementById('dispPrice').innerText = '₦' + price.toLocaleString();
+      document.getElementById('dispMargin').innerText = effMargin + '% (Floor Protected)';
+    }
+
+    window.addEventListener('DOMContentLoaded', recalc);
+
+    document.getElementById('priceForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btnSave');
+      btn.disabled = true;
+      btn.innerText = 'Saving...';
+      setTimeout(function() {
+        btn.disabled = false;
+        btn.innerText = 'Save to Price Schedule';
+        const fb = document.getElementById('feedback');
+        fb.className = 'feedback success';
+        fb.innerText = '✓ Calculated price saved to SELLING-BASE-PRICE-SCHEDULE!';
+      }, 500);
+    });
+  </script>
+</body>
+</html>

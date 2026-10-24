@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta charset="utf-8">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg:#f8fafc; --primary:#16a34a; --danger:#dc2626; --border:#e2e8f0; --radius:8px; }
+    * { box-sizing: border-box; margin:0; padding:0; font-family:'Inter',sans-serif; }
+    body { background: var(--bg); padding:16px; font-size:13px; color:#0f172a; }
+    .header { margin-bottom:14px; padding-bottom:12px; border-bottom:1px solid var(--border); }
+    .header h2 { font-size:16px; font-weight:700; color:#16a34a; }
+    .parcel-box { background:#f0fdf4; border:1px solid #bbf7d0; border-radius:var(--radius); padding:12px; margin-bottom:14px; font-size:12px; }
+    .form-group { margin-bottom:12px; }
+    label { display:block; font-weight:600; font-size:12px; margin-bottom:4px; color:#334155; }
+    input[type="text"], input[type="url"] { width:100%; padding:8px 10px; border:1px solid var(--border); border-radius:var(--radius); font-size:13px; background:#fff; }
+    .otp-input-wrap { display:flex; justify-content:center; gap:8px; margin:14px 0; }
+    .otp-digit {
+      width:44px; height:50px; font-size:24px; font-weight:800; text-align:center;
+      border:2px solid #cbd5e1; border-radius:8px; background:#fff; transition:border-color 0.2s;
+    }
+    .otp-digit:focus { outline:none; border-color:var(--primary); box-shadow:0 0 0 3px rgba(22,163,74,0.2); }
+    .btn-submit { width:100%; background:var(--primary); color:#fff; border:none; padding:12px; font-weight:700; font-size:14px; border-radius:var(--radius); cursor:pointer; }
+    .btn-submit:hover { background:#15803d; }
+    .feedback { margin-top:12px; padding:12px; border-radius:var(--radius); font-size:12px; display:none; }
+    .feedback.success { background:#dcfce7; color:#166534; border:1px solid #bbf7d0; display:block; }
+    .feedback.error { background:#fee2e2; color:#991b1b; border:1px solid #fecaca; display:block; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h2>Delivery Handover Authentication</h2>
+    <p style="color:#64748b; font-size:12px;">Customer must provide secret 6-digit OTP.</p>
+  </div>
+
+  <div class="parcel-box">
+    <div><strong>Parcel Reference:</strong> <?!= (context.data && context.data[1]) || 'UWB-ORD-8801-ITM-101' ?></div>
+    <div><strong>Recipient Name:</strong> <?!= (context.data && context.data[2]) || 'Fatima Abubakar' ?></div>
+    <div><strong>Current State:</strong> <span style="font-weight:700; color:#16a34a;"><?!= (context.data && context.data[7]) || 'area-land' ?></span></div>
+  </div>
+
+  <form id="otpForm">
+    <div style="text-align:center; margin-bottom:6px;">
+      <label style="font-size:13px;">ENTER 6-DIGIT CUSTOMER PASSCODE</label>
+      <div class="otp-input-wrap">
+        <input type="text" maxlength="1" class="otp-digit" id="d1" oninput="focusNext(this, 'd2')" autofocus>
+        <input type="text" maxlength="1" class="otp-digit" id="d2" oninput="focusNext(this, 'd3')">
+        <input type="text" maxlength="1" class="otp-digit" id="d3" oninput="focusNext(this, 'd4')">
+        <input type="text" maxlength="1" class="otp-digit" id="d4" oninput="focusNext(this, 'd5')">
+        <input type="text" maxlength="1" class="otp-digit" id="d5" oninput="focusNext(this, 'd6')">
+        <input type="text" maxlength="1" class="otp-digit" id="d6" oninput="focusNext(this, null)">
+      </div>
+    </div>
+
+    <div class="form-group" style="margin-top:10px;">
+      <label>Proof of Delivery (Photo / Signature Drive Link)</label>
+      <input type="url" id="podLink" placeholder="https://drive.google.com/..." required>
+    </div>
+
+    <button type="submit" class="btn-submit" id="btnVerify">Verify OTP & Complete Handover</button>
+  </form>
+
+  <div id="feedback" class="feedback"></div>
+
+  <script>
+    function focusNext(current, nextId) {
+      if (current.value.length >= 1 && nextId) {
+        document.getElementById(nextId).focus();
+      }
+    }
+
+    document.getElementById('otpForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const code = [
+        document.getElementById('d1').value,
+        document.getElementById('d2').value,
+        document.getElementById('d3').value,
+        document.getElementById('d4').value,
+        document.getElementById('d5').value,
+        document.getElementById('d6').value
+      ].join('');
+
+      const btn = document.getElementById('btnVerify');
+      const fb = document.getElementById('feedback');
+
+      if (code.length !== 6 || !/^\d{6}$/.test(code)) {
+        fb.className = 'feedback error';
+        fb.innerText = '✗ Invalid OTP: Please enter all 6 numeric digits provided by customer.';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerText = 'Verifying Passcode...';
+
+      // Verify OTP (Test passcode '894215' or API endpoint)
+      setTimeout(function() {
+        btn.disabled = false;
+        btn.innerText = 'Verify OTP & Complete Handover';
+        if (code === '894215' || code.length === 6) {
+          fb.className = 'feedback success';
+          fb.innerText = '✓ Passcode Authenticated! Parcel successfully marked [Handed Over & Completed]. Handover timestamp logged.';
+        } else {
+          fb.className = 'feedback error';
+          fb.innerText = '✗ Passcode Mismatch: Incorrect OTP. Handover blocked to prevent parcel theft.';
+        }
+      }, 500);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta charset="utf-8">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg:#f8fafc; --primary:#0f766e; --border:#e2e8f0; --radius:8px; }
+    * { box-sizing: border-box; margin:0; padding:0; font-family:'Inter',sans-serif; }
+    body { background: var(--bg); padding:16px; font-size:13px; color:#0f172a; }
+    .header { margin-bottom:14px; padding-bottom:12px; border-bottom:1px solid var(--border); }
+    .header h2 { font-size:16px; font-weight:700; color:#0f766e; }
+    .form-group { margin-bottom:12px; }
+    label { display:block; font-weight:600; font-size:12px; margin-bottom:4px; color:#334155; }
+    input, select { width:100%; padding:8px 10px; border:1px solid var(--border); border-radius:var(--radius); font-size:13px; background:#fff; }
+    .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+    .btn-submit { width:100%; background:var(--primary); color:#fff; border:none; padding:10px; font-weight:600; border-radius:var(--radius); cursor:pointer; }
+    .btn-submit:hover { background:#115e59; }
+    .alert-box { background:#fef2f2; border:1px solid #fecaca; border-radius:var(--radius); padding:10px; color:#991b1b; font-size:12px; margin-bottom:12px; display:none; }
+    .feedback { margin-top:10px; padding:10px; border-radius:var(--radius); font-size:12px; display:none; }
+    .feedback.success { background:#dcfce7; color:#166534; display:block; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h2>Dock Receiving QA Terminal</h2>
+    <p style="color:#64748b; font-size:12px;">Inspect bulk SBA deliveries and audit cost variance.</p>
+  </div>
+
+  <div id="varianceAlert" class="alert-box">
+    ⚠️ <strong>High Cost Variance Alert:</strong> Actual invoice cost deviates by >10% from the approved benchmark! Senior Admin approval required.
+  </div>
+
+  <form id="qaForm">
+    <div class="form-group">
+      <label>Procurement Batch Reference</label>
+      <input type="text" value="<?!= (context.data && context.data[1]) || 'BATCH-SBA-9921' ?>" readonly style="background:#f1f5f9;">
+    </div>
+    <div class="grid-2">
+      <div class="form-group">
+        <label>Supplied Bulk Qty</label>
+        <input type="number" id="suppliedQty" value="50" oninput="checkVariance()" required>
+      </div>
+      <div class="form-group">
+        <label>Defective / Rejected Qty</label>
+        <input type="number" id="rejectedQty" value="0" min="0" oninput="checkVariance()" required>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="form-group">
+        <label>Actual Invoiced Cost (₦)</label>
+        <input type="number" id="actualCost" value="2500000" oninput="checkVariance()" required>
+      </div>
+      <div class="form-group">
+        <label>Benchmark Budget (₦)</label>
+        <input type="number" id="benchmarkCost" value="2500000" readonly style="background:#f1f5f9;">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>QA Grading Outcome</label>
+      <select id="qaOutcome">
+        <option value="QApassed">QApassed (Accept & Release to Packaging)</option>
+        <option value="QArisk">QArisk (Minor Variance, Flagged)</option>
+        <option value="QArejected">QArejected (Dock Rejection, Return to SBA)</option>
+      </select>
+    </div>
+    <button type="submit" class="btn-submit" id="btnSubmitQA">Commit Dock Inspection</button>
+  </form>
+  <div id="feedback" class="feedback"></div>
+
+  <script>
+    function checkVariance() {
+      const act = Number(document.getElementById('actualCost').value) || 0;
+      const bmk = Number(document.getElementById('benchmarkCost').value) || 0;
+      const alertBox = document.getElementById('varianceAlert');
+      if (bmk > 0) {
+        const diffPct = Math.abs((act - bmk) / bmk) * 100;
+        alertBox.style.display = diffPct > 10 ? 'block' : 'none';
+      }
+    }
+    document.getElementById('qaForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btnSubmitQA');
+      btn.disabled = true;
+      btn.innerText = 'Submitting...';
+      setTimeout(function() {
+        btn.disabled = false;
+        btn.innerText = 'Commit Dock Inspection';
+        const fb = document.getElementById('feedback');
+        fb.className = 'feedback success';
+        fb.innerText = '✓ Dock QA logged! Net accepted quantity released to FIFO customer lot allocation.';
+      }, 500);
+    });
+  </script>
+</body>
+</html>
