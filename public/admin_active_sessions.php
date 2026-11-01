@@ -248,7 +248,5 @@ $session = [
     <button class="btn btn-dark rounded-circle shadow-lg d-flex align-items-center justify-content-center" style="position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; z-index: 2000; border: 3px solid white;" onclick="openQueryModal(0, 'Global')" title="Global Query">
         <i class="fa fa-question fs-2"></i>
     </button>
-
-
 </body>
 </html>

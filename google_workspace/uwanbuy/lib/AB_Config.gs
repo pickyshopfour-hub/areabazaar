@@ -7,18 +7,25 @@
  *
  * Secrets are NEVER hard-coded. Set them once per project in:
  *   Project Settings > Script Properties
- *     AB_API_BASE   e.g. https://your-domain.com/api
- *     AB_API_KEY    shared ingest key (X-AB-KEY header)
- *     AB_MOCK_MODE  "true" (default) uses AB_Mock fixtures; "false" calls the backend
- *     AB_ROLE_MAP   JSON {"user@domain.com":"SeniorAdmin","whm1@domain.com":"WHM"}
- *     AB_WHZ_ID     (WHM workbooks only) warehouse zone this workbook serves
- *     AB_DEV_ROLE   (mock mode only) role to impersonate while testing
+ *     AB_API_BASE          e.g. https://your-domain.com/api
+ *     AB_API_KEY           shared ingest key (X-AB-KEY header)
+ *     AB_MOCK_MODE         "true" (default) uses AB_Mock fixtures; "false" calls the backend
+ *     AB_ROLE_MAP          JSON {"user@domain.com":"SeniorAdmin","whm1@domain.com":"WHM"}
+ *     AB_WHZ_ID            (WHM workbooks only) warehouse zone this workbook serves
+ *     AB_DEV_ROLE          (mock mode only) role to impersonate while testing
+ *     AB_DB_MASTER_SHEET_ID Google Sheet ID of UwanBuy_DB_Master staging hub
+ *     AB_SYNC_MODE         "INSTANT" or "DEFERRED" (default: "DEFERRED")
  */
 
 const AB = {
   STORE: 'uwanbuy',
-  VERSION: '1.0.0',
+  VERSION: '1.1.0',
   CURRENCY: 'NGN',
+
+  SYNC_MODES: {
+    INSTANT: 'INSTANT',
+    DEFERRED: 'DEFERRED'
+  },
 
   PROPS: {
     API_BASE: 'AB_API_BASE',
@@ -26,7 +33,9 @@ const AB = {
     MOCK: 'AB_MOCK_MODE',
     ROLE_MAP: 'AB_ROLE_MAP',
     WHZ_ID: 'AB_WHZ_ID',
-    DEV_ROLE: 'AB_DEV_ROLE'
+    DEV_ROLE: 'AB_DEV_ROLE',
+    DB_MASTER_ID: 'AB_DB_MASTER_SHEET_ID',
+    SYNC_MODE: 'AB_SYNC_MODE'
   },
 
   // Backend REST routes (relative to AB_API_BASE). Keys are used by abApi().
@@ -49,23 +58,38 @@ const AB = {
     ZBD_ASSIGN_POST:      { method: 'post', path: '/whm/zbd-assignments/assign' },
     BILLS_POST:           { method: 'post', path: '/whm/bills' },
 
+    // FRM Field & Delivery Handover
+    POS_ORDERS_POST:      { method: 'post', path: '/frm/pos/order' },
+    DELIVERY_VERIFY_OTP:  { method: 'post', path: '/frm/delivery/verify-otp' },
+    DELIVERY_COMPLETED:   { method: 'post', path: '/frm/delivery/completed' },
+    REMITTANCE_SUBMIT:    { method: 'post', path: '/frm/remittance/submit' },
+
     // Monitors + generic row actions (ADM)
     MONITOR_PULL:         { method: 'get',  path: '/admin/monitor/order-items' },
     ROW_ACTION:           { method: 'post', path: '/admin/row-action' }
   },
 
   SHEETS: {
+    // Central DB-Sheet (UwanBuy_DB_Master)
+    DB_PRODUCTS: 'DB_PRODUCTS',
+    DB_VARIANTS: 'DB_VARIANTS',
+    DB_SBA_PRICES: 'DB_SBA_PRICES',
+    DB_ORDERS_FEED: 'DB_ORDERS_FEED',
+    DB_DISPATCH_QUEUE: 'DB_DISPATCH_QUEUE',
+    DB_SYNC_LOG: 'DB_SYNC_LOG',
+
     // WHM_Fulfilment workbook
-    ORDER_ITEMS: 'ORDER-ITEMS',
+    ORDER_ITEMS: 'ORDER-ITEMS-INGEST',
     DEMAND: 'SOURCING-DEMAND',
-    SBA_BATCHES: 'SBA-BATCHES',
+    SBA_BATCHES: 'SBA-ACQUISITIONS',
     INTAKE: 'INTAKE-QA',
     PACK: 'PACK-ALLOCATION',
-    LABELS: 'LABELS',
+    LABELS: 'LABELS-GENERATOR',
     STAGING: 'STAGING-AREA-SORT',
-    ZBD: 'ZBD-ASSIGNMENTS',
-    BILLS: 'BILLS',
-    // ADM_Catalog workbook
+    ZBD: 'ZBD-DISPATCH-MANIFEST',
+    BILLS: 'COMPILED-BILLS',
+
+    // ADM_Control_Center workbook
     PRODUCT_REGISTER: 'PRODUCT-REGISTER',
     VARIANT_REGISTER: 'VARIANT-REGISTER',
     SHOW_REGISTER: 'SHOW-PRODUCTS-REGISTER',
@@ -73,15 +97,33 @@ const AB = {
     SBA_PRICE_SCHEDULE: 'SBA-PRICE-SCHEDULE',
     HANDLING_COST: 'HANDLING-COST',
     SELLING_PRICE_SCHEDULE: 'SELLING-BASE-PRICE-SCHEDULE',
-    SOURCING_SCHEDULE: 'PRODUCT-SOURCING-SCHEDULE',
-    // ADM_OpsMonitor workbook
-    MON_WHM: 'MON-WHM',
-    MON_STAGING: 'MON-STAGING',
-    MON_ZBD: 'MON-ZBD',
-    MON_LMD: 'MON-LMD',
-    MON_DELIVERY: 'MON-DELIVERY',
-    // shared
-    SYNC_LOG: 'SYNC-LOG'
+    STAFF_REGISTRY: 'STAFF-REGISTRY',
+    AUCTION_SESSIONS: 'AUCTION-SESSIONS',
+    WAVE_SCHEDULE: 'WAVE-SCHEDULE',
+    BANK_FEED: 'BANK-FEED-SYNC',
+    PAYMENT_RECON: 'PAYMENT-RECON',
+
+    // FRM_Field_Operations workbook
+    SELLING_CATALOG_VIEW: 'SELLING-CATALOG-VIEW',
+    AREA_CUSTOMERS: 'AREA-CUSTOMERS',
+    PROXY_SPOT_ORDERS: 'PROXY-SPOT-ORDERS',
+    FIELD_PAYMENTS: 'FIELD-PAYMENTS-REPORT',
+    BATCH_REMITTANCES: 'BATCH-REMITTANCES',
+    AREA_INBOUND: 'AREA-INBOUND-RECEIVING',
+    DELIVERY_HANDOVER: 'CUSTOMER-DELIVERY-HANDOVER',
+
+    // Companion Loading Sheets
+    PRODUCT_INGEST_LOADING: 'PRODUCT-INGEST-LOADING',
+    VARIANT_INGEST_LOADING: 'VARIANT-INGEST-LOADING',
+    PRICE_UPDATE_LOADING: 'PRICE-UPDATE-LOADING',
+    MANUAL_ORDER_LOADING: 'MANUAL-ORDER-INGEST-LOADING',
+    INTAKE_RECEIVING_LOADING: 'INTAKE-RECEIVING-LOADING',
+    CUSTOMER_ENROLLMENT_LOADING: 'CUSTOMER-ENROLLMENT-LOADING',
+
+    // Common
+    ARCHIVE_VAULT: 'ARCHIVE-LOADING-VAULT',
+    SYNC_QUEUE: 'SYNC-QUEUE',
+    CONFIG: 'CONFIG'
   },
 
   // Business defaults (overridable per schedule row)
@@ -107,4 +149,23 @@ function abGetProp_(key, fallback) {
 /** Mock mode is ON unless AB_MOCK_MODE is explicitly "false". */
 function abIsMock() {
   return String(abGetProp_(AB.PROPS.MOCK, 'true')).toLowerCase() !== 'false';
+}
+
+/** Get the configured sync mode ('INSTANT' | 'DEFERRED'). */
+function abGetSyncMode() {
+  return abGetProp_(AB.PROPS.SYNC_MODE, AB.SYNC_MODES.DEFERRED);
+}
+
+/** Get the Central DB-Sheet ID (UwanBuy_DB_Master). */
+function abGetDbMasterId() {
+  return abGetProp_(AB.PROPS.DB_MASTER_ID, '');
+}
+
+/** Get the API Base URL. */
+function abGetApiBase() {
+  return abGetProp_(AB.PROPS.API_BASE, 'https://api.areabazaar.com/v1');
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { AB, abGetProp_, abIsMock, abGetSyncMode, abGetDbMasterId, abGetApiBase };
 }

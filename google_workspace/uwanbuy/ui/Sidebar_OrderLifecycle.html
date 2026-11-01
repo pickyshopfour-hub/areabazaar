@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta charset="utf-8">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg:#f8fafc; --primary:#0284c7; --border:#e2e8f0; --radius:8px; }
+    * { box-sizing: border-box; margin:0; padding:0; font-family:'Inter',sans-serif; }
+    body { background: var(--bg); padding:16px; font-size:13px; color:#0f172a; }
+    .header { margin-bottom:14px; padding-bottom:12px; border-bottom:1px solid var(--border); }
+    .header h2 { font-size:16px; font-weight:700; color:#0284c7; }
+    .status-badge { display:inline-block; padding:4px 10px; border-radius:999px; font-size:12px; font-weight:700; background:#e0f2fe; color:#0369a1; }
+    .flow-card { background:#fff; border:1px solid var(--border); border-radius:var(--radius); padding:12px; margin-bottom:14px; }
+    .form-group { margin-bottom:12px; }
+    label { display:block; font-weight:600; font-size:12px; margin-bottom:4px; color:#334155; }
+    select, textarea { width:100%; padding:8px 10px; border:1px solid var(--border); border-radius:var(--radius); font-size:13px; background:#fff; }
+    .btn-submit { width:100%; background:var(--primary); color:#fff; border:none; padding:10px; font-weight:600; border-radius:var(--radius); cursor:pointer; }
+    .btn-submit:hover { background:#0369a1; }
+    .feedback { margin-top:10px; padding:10px; border-radius:var(--radius); font-size:12px; display:none; }
+    .feedback.success { background:#dcfce7; color:#166534; display:block; }
+    .feedback.error { background:#fee2e2; color:#991b1b; display:block; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h2>Advance Item Lifecycle</h2>
+    <p style="color:#64748b; font-size:12px;">Enforces strict forward-only stage transitions.</p>
+  </div>
+
+  <div class="flow-card">
+    <div style="font-size:11px; color:#64748b; font-weight:600;">ORDER ITEM REFERENCE</div>
+    <div style="font-size:14px; font-weight:700; margin:2px 0 8px;"><?!= (context.data && context.data[1]) || 'ITM-101' ?></div>
+    <div style="font-size:11px; color:#64748b; font-weight:600;">CURRENT STAGE</div>
+    <div class="status-badge" id="currStatus"><?!= (context.data && context.data[11]) || 'requested' ?></div>
+  </div>
+
+  <form id="lifeForm">
+    <div class="form-group">
+      <label>Next Lifecycle Stage *</label>
+      <select id="nextStage">
+        <option value="supplied">supplied (Goods Arrived at Receiving)</option>
+        <option value="QA-passed">QA-passed (Inspection Approved)</option>
+        <option value="packed">packed (Customer Parcel Bagged)</option>
+        <option value="labelled">labelled (Thermal Barcode Applied)</option>
+        <option value="staging-land">staging-land (Moved to Outlet Sorting Bay)</option>
+        <option value="area-sorted">area-sorted (Sorted into Carrier Lot)</option>
+        <option value="loaded">loaded (Loaded onto Carrier Vehicle)</option>
+        <option value="zbd-transit">zbd-transit (En Route to Regional Hub)</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Inspector / Handler Notes</label>
+      <textarea id="notes" placeholder="Optional audit comments"></textarea>
+    </div>
+    <button type="submit" class="btn-submit" id="btnAdvance">Advance Lifecycle Stage</button>
+  </form>
+  <div id="feedback" class="feedback"></div>
+
+  <script>
+    const flow = [
+      'requested', 'supplied', 'QA-passed', 'packed', 'labelled',
+      'staging-land', 'staging-cleared', 'area-sorted',
+      'loaded', 'zbd-transit',
+      'area-land', 'area-cleared',
+      'dispatched'
+    ];
+
+    document.getElementById('lifeForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const current = document.getElementById('currStatus').innerText.trim();
+      const target = document.getElementById('nextStage').value;
+      const btn = document.getElementById('btnAdvance');
+      const fb = document.getElementById('feedback');
+
+      const i = flow.indexOf(current);
+      const j = flow.indexOf(target);
+
+      // Verify forward-only sequential step
+      if (j !== i + 1 && !(current === 'requested' && target === 'supplied')) {
+        fb.className = 'feedback error';
+        fb.innerText = '✗ Transition Rejected: Cannot skip or reverse stages (' + current + ' -> ' + target + '). Next allowed: ' + (flow[i + 1] || 'None');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerText = 'Advancing...';
+      setTimeout(function() {
+        btn.disabled = false;
+        btn.innerText = 'Advance Lifecycle Stage';
+        document.getElementById('currStatus').innerText = target;
+        fb.className = 'feedback success';
+        fb.innerText = '✓ Success: Status advanced to ' + target + '!';
+      }, 500);
+    });
+  </script>
+</body>
+</html>

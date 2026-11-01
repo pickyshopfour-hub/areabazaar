@@ -29,6 +29,7 @@
         activeCategoryForList: '',
         currentOrderId: null,
         currentPaymentRef: null,
+        orderPaymentRefs: {},
         currentValidationState: {
             fulfillment: 'pickup', // 'pickup' | 'address'
             pickupPointId: 'pku_tanke_01',
@@ -662,6 +663,12 @@
             $(document).on('click', '#btnCreatePaymentRequest, .btn-open-payment-request', function () {
                 const purpose = $(this).data('purpose') || 'order_direct';
                 self.openPaymentRequestModal(purpose);
+            });
+
+            // Toggle Payment Channel cards (Pay with Agent vs Bank Transfer / Direct)
+            $(document).on('change', 'input[name="paymentChannelChoice"]', function () {
+                const channel = $(this).val() || 'agent';
+                self.syncPaymentChannelCards(channel);
             });
 
             // Generate Payment Ref button inside Payment Request Modal
@@ -1311,6 +1318,9 @@
 
             // Assign or generate unique order ID
             this.currentOrderId = customOrderId || ('ORD-UWB-' + new Date().getFullYear() + String(new Date().getMonth() + 1).padStart(2, '0') + '-' + Math.floor(1000 + Math.random() * 9000));
+            if (!this.orderPaymentRefs || !this.orderPaymentRefs[this.currentOrderId]) {
+                this.currentPaymentRef = null;
+            }
             this.currentValidationState.subtotalMinor = effectiveSubtotal;
 
             $('#validateOrderIdDisplay').text(this.currentOrderId);
@@ -1468,6 +1478,16 @@
         /* ==========================================================================
            PAYMENT REQUEST & RECONCILIATION MODALS
            ========================================================================== */
+        syncPaymentChannelCards(channel = 'agent') {
+            if (channel === 'direct') {
+                $('#channelAgentCard').addClass('d-none');
+                $('#channelDirectCard').removeClass('d-none');
+            } else {
+                $('#channelAgentCard').removeClass('d-none');
+                $('#channelDirectCard').addClass('d-none');
+            }
+        },
+
         openPaymentRequestModal(purpose = 'order_direct', customAmountMinor = null) {
             let amountMinor = customAmountMinor;
             if (!amountMinor) {
@@ -1479,6 +1499,7 @@
 
             if (!this.currentOrderId || (purpose === 'wallet_topup' && customAmountMinor)) {
                 this.currentOrderId = 'TOPUP-UWB-' + new Date().getFullYear() + String(new Date().getMonth() + 1).padStart(2, '0') + '-' + Math.floor(1000 + Math.random() * 9000);
+                this.currentPaymentRef = null;
             }
             this.currentPaymentPurpose = purpose;
             this.currentCustomAmountMinor = amountMinor;
@@ -1514,6 +1535,31 @@
             $('#bankAccountDisplay').text(bank.accountNumber);
             $('#bankAccountNameDisplay').text(bank.accountName);
 
+            // Sync payment channel visibility based on selected radio
+            const selectedChannel = $('input[name="paymentChannelChoice"]:checked').val() || 'agent';
+            this.syncPaymentChannelCards(selectedChannel);
+
+            // Check if a payment reference was already generated for this order
+            if (!this.orderPaymentRefs) this.orderPaymentRefs = {};
+            const existingOrder = this.pendingOrders.find(o => o.orderId === this.currentOrderId && o.paymentRef);
+            const existingRef = (existingOrder && existingOrder.paymentRef) || this.orderPaymentRefs[this.currentOrderId] || null;
+            if (existingRef) {
+                this.currentPaymentRef = existingRef;
+                $('#generatedRefText').text(existingRef);
+                $('#generatedRefAlert').removeClass('d-none');
+                $('#btnGeneratePaymentRef')
+                    .prop('disabled', true)
+                    .attr('data-ref-generated', 'true')
+                    .html('<i class="bi bi-check2-circle me-1"></i> Payment Ref Generated');
+            } else {
+                this.currentPaymentRef = null;
+                $('#generatedRefAlert').addClass('d-none');
+                $('#btnGeneratePaymentRef')
+                    .prop('disabled', false)
+                    .removeAttr('data-ref-generated')
+                    .html('<i class="bi bi-qr-code me-1"></i> Generate Payment Ref');
+            }
+
             // Close validation modal and open request modal
             $('#modal-checkout-validate').modal('hide');
             const modalEl = document.getElementById('modal-payment-request');
@@ -1524,11 +1570,45 @@
         },
 
         generatePaymentReference(channel = 'agent') {
+            if (!this.orderPaymentRefs) this.orderPaymentRefs = {};
+            const existingOrderIdx = this.pendingOrders.findIndex(o => o.orderId === this.currentOrderId);
+            const existingOrder = existingOrderIdx >= 0 ? this.pendingOrders[existingOrderIdx] : null;
+            const existingRef = (existingOrder && existingOrder.paymentRef) || (this.currentOrderId && this.orderPaymentRefs[this.currentOrderId]) || this.currentPaymentRef;
+
+            if (existingRef) {
+                // Only generate once per order even if clicked multiple times
+                this.currentPaymentRef = existingRef;
+                if (this.currentOrderId) {
+                    this.orderPaymentRefs[this.currentOrderId] = existingRef;
+                }
+                if (existingOrder) {
+                    existingOrder.channel = channel;
+                    this.saveLocalState();
+                }
+                $('#generatedRefAlert').removeClass('d-none');
+                $('#generatedRefText').text(this.currentPaymentRef);
+                $('#btnGeneratePaymentRef')
+                    .prop('disabled', true)
+                    .attr('data-ref-generated', 'true')
+                    .html('<i class="bi bi-check2-circle me-1"></i> Payment Ref Generated');
+
+                if (window.iziToast) {
+                    window.iziToast.info({
+                        title: 'Payment Ref Already Generated',
+                        message: `Ref: ${this.currentPaymentRef}. Proceed to submit your payment report.`,
+                        position: 'topRight'
+                    });
+                }
+                return this.currentPaymentRef;
+            }
+
             this.currentPaymentRef = 'REF-UWB-' + new Date().getFullYear() + String(new Date().getMonth() + 1).padStart(2, '0') + '-' + Math.floor(10000 + Math.random() * 90000);
+            if (this.currentOrderId) {
+                this.orderPaymentRefs[this.currentOrderId] = this.currentPaymentRef;
+            }
 
             // Persist order in pending orders list
             const amountMinor = this.currentCustomAmountMinor || this.currentValidationState.totalMinor;
-            const existingOrderIdx = this.pendingOrders.findIndex(o => o.orderId === this.currentOrderId);
             const pendingRecord = {
                 orderId: this.currentOrderId,
                 paymentRef: this.currentPaymentRef,
@@ -1548,9 +1628,13 @@
 
             this.saveLocalState();
 
-            // Display ref on UI
+            // Display ref on UI and lock button so it only generates once
             $('#generatedRefAlert').removeClass('d-none');
             $('#generatedRefText').text(this.currentPaymentRef);
+            $('#btnGeneratePaymentRef')
+                .prop('disabled', true)
+                .attr('data-ref-generated', 'true')
+                .html('<i class="bi bi-check2-circle me-1"></i> Payment Ref Generated');
 
             if (window.iziToast) {
                 window.iziToast.info({
@@ -1559,6 +1643,7 @@
                     position: 'topRight'
                 });
             }
+            return this.currentPaymentRef;
         },
 
         openPaymentReportModal(orderId, ref) {
@@ -2388,9 +2473,9 @@
 
             let auctionExplanation = '';
             if (lot.auctionTypeSlug === 'price-wave' || lot.auctionType === 'Price Wave') {
-                auctionExplanation = 'Live Price Wave Drop! The price drops periodically and locks upon checkout. Complete payment or claim before the wave ends.';
+                auctionExplanation = 'Scheduled price drop. Locks upon checkout or cart reserve.';
             } else if (lot.auctionTypeSlug === 'stock-cap' || lot.auctionType === 'Stock Cap') {
-                auctionExplanation = 'Collective Stock Cap! Tiered bulk price allocated for this hub batch. Claim your units before the allocation cap fills.';
+                auctionExplanation = 'Batch volume deal. Claim units before the allocation cap fills.';
             } else if (lot.auctionTypeSlug === 'time-cap' || lot.auctionType === 'Time Cap') {
                 auctionExplanation = 'Strict Time Cap Flash Deal! Fixed countdown drop with high discount. Locks for immediate payment or cart reserve.';
             } else if (lot.auctionTypeSlug === 'flat-rate' || lot.auctionType === 'Flat-Rate Pool') {

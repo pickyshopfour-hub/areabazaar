@@ -435,3 +435,299 @@ function abDwellAlert(group, hours) {
   if (group === 'LMD') return hours > AB.DEFAULTS.LMD_DWELL_ALERT_HOURS;
   return false;
 }
+
+// ---------------------------------------------------------------------------
+// 13. VARIANT SPECIFICATIONS  (JSON / Key-Value Pairs for Col I)
+// ---------------------------------------------------------------------------
+/**
+ * Safely parses a variant specifications string into a key-value object.
+ * Accepts valid JSON strings, or semicolon-delimited key-value pairs (e.g. "RAM: 8GB; Storage: 256GB").
+ * Returns empty object {} on invalid or empty input.
+ */
+function abParseVariantSpecs(specsCell) {
+  if (!specsCell) return {};
+  if (typeof specsCell === 'object' && !Array.isArray(specsCell)) return specsCell;
+  const raw = String(specsCell).trim();
+  if (!raw) return {};
+
+  if ((raw.startsWith('{') && raw.endsWith('}')) || (raw.startsWith('[') && raw.endsWith(']'))) {
+    try {
+      const parsed = JSON.parse(raw);
+      if (typeof parsed === 'object' && parsed !== null && !Array.isArray(parsed)) {
+        return parsed;
+      }
+    } catch (e) {
+      // Fall through to key-value string parsing
+    }
+  }
+
+  // Parse "Key: Value; Key2: Value2"
+  const result = {};
+  const pairs = raw.split(/[;\n]+/);
+  pairs.forEach(p => {
+    const idx = p.indexOf(':');
+    if (idx !== -1) {
+      const k = p.substring(0, idx).trim();
+      const v = p.substring(idx + 1).trim();
+      if (k) result[k] = v;
+    }
+  });
+  return result;
+}
+
+/**
+ * Formats a key-value object into a clean JSON string for storage in Col I.
+ */
+function abFormatVariantSpecs(specsObj) {
+  if (!specsObj || typeof specsObj !== 'object' || Array.isArray(specsObj)) return '{}';
+  const clean = {};
+  Object.keys(specsObj).sort().forEach(k => {
+    const val = specsObj[k];
+    if (val !== undefined && val !== null && String(val).trim() !== '') {
+      clean[String(k).trim()] = String(val).trim();
+    }
+  });
+  return JSON.stringify(clean);
+}
+
+// ---------------------------------------------------------------------------
+// 14. SHOW PRODUCTS EVALUATOR  (Live wave projection)
+// ---------------------------------------------------------------------------
+/**
+ * Projects active wave variants into SHOW-PRODUCTS-REGISTER format.
+ */
+function abEvaluateShowProducts(activeWave, allVariants) {
+  if (!activeWave || activeWave.waveStatus !== 'LIVE_SHOWING') return [];
+  const waveId = activeWave.waveId;
+  const sessionRef = activeWave.sessionId || activeWave.sessionRef || '';
+  const waveVariants = (allVariants || []).filter(v => 
+    String(v.waveId) === String(waveId) || (activeWave.variantIds && activeWave.variantIds.indexOf(v.variantId) !== -1)
+  );
+
+  return waveVariants.map((v, idx) => {
+    const refPrice = Math.round(Number(v.sellingPriceMinor || v.refPriceMinor || 0) / 100);
+    const waveDiscountPct = Number(activeWave.discountPct) || 0;
+    const wavePrice = waveDiscountPct > 0 ? Math.round(refPrice * (1 - waveDiscountPct / 100)) : refPrice;
+    return {
+      slot: idx + 1,
+      sessionRef: sessionRef,
+      waveId: waveId,
+      variantId: v.variantId,
+      title: (v.productTitle || v.productName || '') + (v.variantName ? ' - ' + v.variantName : ''),
+      auctionFormat: activeWave.auctionFormat || 'DUTCH_AUCTION_DROP',
+      refPrice: refPrice,
+      wavePrice: wavePrice,
+      moq: parseInt(v.moq, 10) || 1,
+      timerRemainingMins: Math.max(0, parseInt(activeWave.timerMinutes, 10) || 0),
+      showStatus: 'ACTIVE'
+    };
+  });
+}
+
+// ---------------------------------------------------------------------------
+// 15. LOADING SHEET VALIDATOR & ID PRESERVATION
+// ---------------------------------------------------------------------------
+/**
+ * Validates rows in a companion loading sheet:
+ * - Preserves existing ID or generates a new one.
+ * - Checks required fields and data constraints.
+ */
+function abValidateLoadingSheet(sheetType, rows, existingMasterIds, idGeneratorFn) {
+  existingMasterIds = existingMasterIds || [];
+  const masterIdSet = new Set(existingMasterIds.map(String));
+  const validatedRows = [];
+  const errors = [];
+
+  rows.forEach((row, idx) => {
+    const rowIndex = idx + 2; // Assuming 1 header row
+    const rowCopy = Object.assign({}, row);
+    let isUpdate = false;
+
+    if (rowCopy.id && String(rowCopy.id).trim() !== '') {
+      const idStr = String(rowCopy.id).trim();
+      if (masterIdSet.has(idStr)) {
+        isUpdate = true;
+      }
+      rowCopy.id = idStr;
+    } else {
+      rowCopy.id = idGeneratorFn ? idGeneratorFn(sheetType, idx) : ('GEN-' + sheetType + '-' + Date.now() + '-' + idx);
+    }
+
+    rowCopy._operation = isUpdate ? 'UPDATE' : 'NEW';
+
+    // Specific sheet type validation
+    if (sheetType === 'PRODUCT-INGEST' || sheetType === 'PRODUCT-REGISTER') {
+      if (!rowCopy.productName || String(rowCopy.productName).trim() === '') {
+        errors.push({ row: rowIndex, field: 'productName', message: 'Missing product name' });
+      }
+    } else if (sheetType === 'VARIANT-INGEST' || sheetType === 'VARIANT-REGISTER') {
+      if (!rowCopy.baseProductRef || String(rowCopy.baseProductRef).trim() === '') {
+        errors.push({ row: rowIndex, field: 'baseProductRef', message: 'Missing base product reference' });
+      }
+      if (rowCopy.specifications) {
+        rowCopy.specifications = abFormatVariantSpecs(abParseVariantSpecs(rowCopy.specifications));
+      }
+    } else if (sheetType === 'PRICE-UPDATE') {
+      if (Number(rowCopy.benchmarkCostMinor || rowCopy.priceMinor) < 0) {
+        errors.push({ row: rowIndex, field: 'price', message: 'Price cannot be negative' });
+      }
+    }
+
+    validatedRows.push(rowCopy);
+  });
+
+  return {
+    valid: errors.length === 0,
+    rows: validatedRows,
+    errors: errors,
+    summary: {
+      total: rows.length,
+      newCount: validatedRows.filter(r => r._operation === 'NEW').length,
+      updateCount: validatedRows.filter(r => r._operation === 'UPDATE').length
+    }
+  };
+}
+
+// ---------------------------------------------------------------------------
+// 16. BATCH ARCHIVING & RESTORATION
+// ---------------------------------------------------------------------------
+function abArchiveBatch(sheetType, rows, userEmail) {
+  const batchId = 'BATCH-' + String(sheetType).toUpperCase() + '-' + Date.now();
+  const archivedAt = new Date().toISOString();
+  const archiveRecord = {
+    batchId: batchId,
+    sheetType: sheetType,
+    archivedAt: archivedAt,
+    archivedBy: userEmail || 'system@areabazaar.com',
+    rowCount: rows.length,
+    payloadJson: JSON.stringify(rows)
+  };
+  return archiveRecord;
+}
+
+function abRestoreBatch(archiveVaultRows, targetBatchId) {
+  const match = (archiveVaultRows || []).find(r => String(r.batchId) === String(targetBatchId));
+  if (!match) {
+    return { ok: false, reason: 'Batch ID not found: ' + targetBatchId };
+  }
+  try {
+    const rows = JSON.parse(match.payloadJson);
+    return { ok: true, batchId: match.batchId, sheetType: match.sheetType, rows: rows };
+  } catch (err) {
+    return { ok: false, reason: 'Failed to parse archived JSON: ' + err.message };
+  }
+}
+
+// ---------------------------------------------------------------------------
+// 17. CENTRAL DB-SHEET RELAY & STAGING
+// ---------------------------------------------------------------------------
+/**
+ * Stages a record for intermediate storage in UwanBuy_DB_Master.
+ */
+function abStageDbRecord(domain, entityType, rowData, syncDirection) {
+  const stagingId = 'STG-' + String(entityType).toUpperCase() + '-' + Date.now() + '-' + Math.floor(Math.random() * 1000);
+  return {
+    stagingId: stagingId,
+    domain: domain,
+    entityType: entityType,
+    syncDirection: syncDirection || 'OUTBOUND',
+    status: 'PENDING',
+    payloadJson: JSON.stringify(rowData),
+    stagedAt: new Date().toISOString(),
+    syncedAt: null,
+    error: null
+  };
+}
+
+/**
+ * Prepares pending DB records for backend dispatch.
+ */
+function abPrepareDbBatchDispatch(pendingRecords) {
+  return (pendingRecords || [])
+    .filter(r => r.status === 'PENDING')
+    .map(r => ({
+      stagingId: r.stagingId,
+      entityType: r.entityType,
+      direction: r.syncDirection,
+      payload: typeof r.payloadJson === 'string' ? JSON.parse(r.payloadJson) : r.payloadJson
+    }));
+}
+
+// ---------------------------------------------------------------------------
+// 18. DYNAMIC STAFF PROVISIONING EVALUATOR
+// ---------------------------------------------------------------------------
+/**
+ * Determines whether a staff member receives a Tab (Tier 1) inside their personal workbook
+ * or a full standalone Workbook (Tier 2).
+ */
+function abEvaluateStaffProvisioning(staffRecord) {
+  const role = staffRecord.role || staffRecord.assignedRole || '';
+  const facility = staffRecord.facility || staffRecord.assignedFacility || 'MAIN';
+  const staffId = staffRecord.staffId || 'STF-UNKNOWN';
+  const email = staffRecord.email || '';
+
+  // Multi-dependency roles require a full standalone workbook
+  const multiDependencyRoles = ['SeniorAdmin', 'LeadAdmin', 'LeadWHM', 'LeadFRM', 'WarehouseManager', 'RegionalManager'];
+  const isTier2 = multiDependencyRoles.indexOf(role) !== -1 || staffRecord.provisioningTier === 'TIER_2' || staffRecord.provisioningTier === 2;
+
+  if (isTier2) {
+    return {
+      tier: 'TIER_2',
+      type: 'WORKBOOK',
+      workbookName: role + '_Ops_' + (staffRecord.fullName || staffId).replace(/\s+/g, '_') + '_' + staffId,
+      templateKey: role.toUpperCase() + '_TEMPLATE',
+      targetOwnerEmail: email,
+      description: 'Dedicated standalone Google Sheet workbook with complete multi-dependency register suite.'
+    };
+  } else {
+    return {
+      tier: 'TIER_1',
+      type: 'TAB',
+      tabName: 'TAB-' + role.toUpperCase() + '-' + staffId,
+      targetPersonalWorkbookId: staffRecord.personalWorkbookId || null,
+      targetOwnerEmail: email,
+      description: 'Dedicated, locked Sheet Tab inside that staff member\'s personal isolated workbook.'
+    };
+  }
+}
+
+// ---------------------------------------------------------------------------
+// EXPORTS (For Node test harness)
+// ---------------------------------------------------------------------------
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    AB_WHM_FLOW,
+    AB_STAGE_GROUPS,
+    AB_PERMISSIONS,
+    abCanTransition,
+    abStageGroupOf,
+    abCan,
+    abAssertCan,
+    abToMinor,
+    abToNaira,
+    abRoundUp,
+    abHandlingTotal,
+    abDeriveSellingPrice,
+    abVariantUnitCost,
+    abResolveOrders,
+    abSuggestSbaBatches,
+    abEvaluateIntake,
+    abAllocateToOrderItems,
+    abBuildLabel,
+    abAreaSort,
+    abBuildZbdAssignments,
+    abCompileBills,
+    abDwellHours,
+    abDwellAlert,
+    abParseVariantSpecs,
+    abFormatVariantSpecs,
+    abEvaluateShowProducts,
+    abValidateLoadingSheet,
+    abArchiveBatch,
+    abRestoreBatch,
+    abStageDbRecord,
+    abPrepareDbBatchDispatch,
+    abEvaluateStaffProvisioning
+  };
+}
+

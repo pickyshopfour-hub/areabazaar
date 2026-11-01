@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta charset="utf-8">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg:#f8fafc; --card:#fff; --primary:#dc2626; --border:#e2e8f0; --radius:8px; }
+    * { box-sizing: border-box; margin:0; padding:0; font-family:'Inter',sans-serif; }
+    body { background: var(--bg); padding:16px; font-size:13px; color:#0f172a; }
+    .header { margin-bottom:14px; padding-bottom:12px; border-bottom:1px solid var(--border); }
+    .header h2 { font-size:16px; font-weight:700; color:#dc2626; }
+    .form-group { margin-bottom:12px; }
+    label { display:block; font-weight:600; font-size:12px; margin-bottom:4px; color:#334155; }
+    input { width:100%; padding:8px 10px; border:1px solid var(--border); border-radius:var(--radius); font-size:13px; background:#fff; }
+    .btn-submit { width:100%; background:var(--primary); color:#fff; border:none; padding:10px; font-weight:600; border-radius:var(--radius); cursor:pointer; }
+    .btn-submit:hover { background:#b91c1c; }
+    .warn-card { background:#fff1f2; border:1px solid #fecdd3; border-radius:var(--radius); padding:10px; font-size:12px; color:#9f1239; margin-bottom:12px; }
+    .feedback { margin-top:10px; padding:10px; border-radius:var(--radius); font-size:12px; display:none; }
+    .feedback.success { background:#dcfce7; color:#166534; display:block; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h2>Publish Live Selling Price</h2>
+    <p style="color:#64748b; font-size:12px;">Push approved prices to UwanBuy_DB_Master and Storefront.</p>
+  </div>
+  <div class="warn-card">
+    🚀 <strong>Senior Admin Authorization Required:</strong> Published prices immediately sync to the intermediate DB-Sheet and update customer checkouts in active auction waves.
+  </div>
+  <form id="pubForm">
+    <div class="form-group">
+      <label>Variant ID</label>
+      <input type="text" value="<?!= (context.data && context.data[1]) || 'VAR-001' ?>" readonly style="background:#f1f5f9;">
+    </div>
+    <div class="form-group">
+      <label>Cost Floor (₦)</label>
+      <input type="text" value="<?!= (context.data && context.data[5]) || '55,700' ?>" readonly style="background:#f1f5f9;">
+    </div>
+    <div class="form-group">
+      <label>Calculated Selling Price (₦)</label>
+      <input type="number" id="finalPrice" value="<?!= (context.data && context.data[8]) || '65000' ?>" required>
+    </div>
+    <div class="form-group">
+      <label>Compare-At / Strike-through Price (₦)</label>
+      <input type="number" id="comparePrice" value="<?!= (context.data && context.data[9]) || '75000' ?>" required>
+    </div>
+    <button type="submit" class="btn-submit" id="btnPublish">Authorize & Publish to Storefront</button>
+  </form>
+  <div id="feedback" class="feedback"></div>
+
+  <script>
+    document.getElementById('pubForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btnPublish');
+      btn.disabled = true;
+      btn.innerText = 'Publishing...';
+      setTimeout(function() {
+        btn.disabled = false;
+        btn.innerText = 'Authorize & Publish to Storefront';
+        const fb = document.getElementById('feedback');
+        fb.className = 'feedback success';
+        fb.innerText = '✓ Price published to UwanBuy_DB_Master & storefront API!';
+      }, 500);
+    });
+  </script>
+</body>
+</html>

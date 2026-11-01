@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta charset="utf-8">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg:#f8fafc; --primary:#0284c7; --border:#e2e8f0; --radius:8px; }
+    * { box-sizing: border-box; margin:0; padding:0; font-family:'Inter',sans-serif; }
+    body { background: var(--bg); padding:16px; font-size:13px; color:#0f172a; }
+    .header { margin-bottom:14px; padding-bottom:12px; border-bottom:1px solid var(--border); }
+    .header h2 { font-size:16px; font-weight:700; color:#0284c7; }
+    .form-group { margin-bottom:12px; }
+    label { display:block; font-weight:600; font-size:12px; margin-bottom:4px; color:#334155; }
+    input { width:100%; padding:8px 10px; border:1px solid var(--border); border-radius:var(--radius); font-size:13px; background:#fff; }
+    .btn-submit { width:100%; background:var(--primary); color:#fff; border:none; padding:10px; font-weight:600; border-radius:var(--radius); cursor:pointer; }
+    .btn-submit:hover { background:#0369a1; }
+    .trx-card { background:#f0f9ff; border:1px solid #bae6fd; border-radius:var(--radius); padding:10px; margin-bottom:12px; font-size:12px; }
+    .feedback { margin-top:10px; padding:10px; border-radius:var(--radius); font-size:12px; display:none; }
+    .feedback.success { background:#dcfce7; color:#166534; display:block; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h2>Reconcile & Release Order</h2>
+    <p style="color:#64748b; font-size:12px;">Match bank credit feed to customer invoice.</p>
+  </div>
+  <div class="trx-card">
+    <div><strong>Trx Ref:</strong> <span id="dispTrx"><?!= (context.data && context.data[1]) || 'TRX-98214' ?></span></div>
+    <div><strong>Credit Amount:</strong> <span id="dispAmt">₦<?!= (context.data && context.data[3]) || '72,000' ?></span></div>
+    <div><strong>Narrative:</strong> <span id="dispNar"><?!= (context.data && context.data[4]) || 'FT: Fatima Abubakar / Inv 8801' ?></span></div>
+  </div>
+  <form id="matchForm">
+    <div class="form-group">
+      <label>Matched Master Order / Invoice ID</label>
+      <input type="text" id="orderRef" value="<?!= (context.data && context.data[5]) || 'ORD-8801' ?>" placeholder="e.g. ORD-8801" required>
+    </div>
+    <div class="form-group">
+      <label>Depositor Phone Verification</label>
+      <input type="text" id="phone" value="<?!= (context.data && context.data[6]) || '08031234567' ?>" required>
+    </div>
+    <div class="form-group">
+      <label>Reconciliation Action</label>
+      <input type="text" value="RELEASE_TO_WHM (Admin Approved = TRUE)" readonly style="background:#f1f5f9; color:#0369a1; font-weight:600;">
+    </div>
+    <button type="submit" class="btn-submit" id="btnRelease">Reconcile & Release to Warehouse</button>
+  </form>
+  <div id="feedback" class="feedback"></div>
+
+  <script>
+    document.getElementById('matchForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btnRelease');
+      btn.disabled = true;
+      btn.innerText = 'Reconciling...';
+      setTimeout(function() {
+        btn.disabled = false;
+        btn.innerText = 'Reconcile & Release to Warehouse';
+        const fb = document.getElementById('feedback');
+        fb.className = 'feedback success';
+        fb.innerText = '✓ Payment matched! Order released to WHM (ORDER-ITEMS-INGEST).';
+      }, 500);
+    });
+  </script>
+</body>
+</html>

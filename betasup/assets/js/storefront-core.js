@@ -21,176 +21,1672 @@
             landingUrl: '../public/landing.php',
             endsAtMinutes: 45,
             activeDealsCount: 14
+        },
+        {
+            hubId: 'Taiwo Road Hub, Ilorin',
+            hubName: 'Taiwo Road Hub, Ilorin',
+            title: 'Taiwo Road Live Market Wave',
+            activeWave: 'Wave 1 (Early Bird)',
+            bazaarPageUrl: '../Tanke/ch-frm-bazaar-page-sample.html',
+            productRangeUrl: '../Tanke/product-range.php',
+            landingUrl: '../public/landing.php',
+            endsAtMinutes: 35,
+            activeDealsCount: 11
+        },
+        {
+            hubId: 'Malete Campus Hub, Kwara',
+            hubName: 'Malete Campus Hub, Kwara',
+            title: 'KWASU Campus Student Wave',
+            activeWave: 'Wave 2 (Student Deals)',
+            bazaarPageUrl: '../Tanke/ch-frm-bazaar-page-sample.html',
+            productRangeUrl: '../Tanke/product-range.php',
+            landingUrl: '../public/landing.php',
+            endsAtMinutes: 50,
+            activeDealsCount: 9
+        },
+        {
+            hubId: 'Yaba Tech Hub, Lagos',
+            hubName: 'Yaba Tech Hub, Lagos',
+            title: 'Yaba Hyperlocal Flash Wave',
+            activeWave: 'Wave 2 (High Mid)',
+            bazaarPageUrl: '../Tanke/ch-frm-bazaar-page-sample.html',
+            productRangeUrl: '../Tanke/product-range.php',
+            landingUrl: '../public/landing.php',
+            endsAtMinutes: 28,
+            activeDealsCount: 16
+        },
+        {
+            hubId: 'Wuse 2 Hub, Abuja',
+            hubName: 'Wuse 2 Hub, Abuja',
+            title: 'Wuse 2 Central Live Wave',
+            activeWave: 'Wave 2 (High Mid)',
+            bazaarPageUrl: '../Tanke/ch-frm-bazaar-page-sample.html',
+            productRangeUrl: '../Tanke/product-range.php',
+            landingUrl: '../public/landing.php',
+            endsAtMinutes: 40,
+            activeDealsCount: 12
+        },
+        {
+            hubId: 'GRA Phase 2 Hub, Port Harcourt',
+            hubName: 'GRA Phase 2 Hub, Port Harcourt',
+            title: 'New GRA Hyperlocal Wave',
+            activeWave: 'Wave 1 (Early Bird)',
+            bazaarPageUrl: '../Tanke/ch-frm-bazaar-page-sample.html',
+            productRangeUrl: '../Tanke/product-range.php',
+            landingUrl: '../public/landing.php',
+            endsAtMinutes: 32,
+            activeDealsCount: 10
+        },
+        {
+            hubId: 'Bodija & UI Hub, Ibadan',
+            hubName: 'Bodija & UI Hub, Ibadan',
+            title: 'Bodija & UI Campus Live Wave',
+            activeWave: 'Wave 2 (High Mid)',
+            bazaarPageUrl: '../Tanke/ch-frm-bazaar-page-sample.html',
+            productRangeUrl: '../Tanke/product-range.php',
+            landingUrl: '../public/landing.php',
+            endsAtMinutes: 38,
+            activeDealsCount: 13
         }
     ];
 
-    // Hub locations catalog
+    // Hub locations catalog (Expanded hyperlocal areas across cities & states)
     const AVAILABLE_HUBS = [
-        { id: 'Tanke Hub, Ilorin', name: 'Tanke Hub, Ilorin', city: 'Ilorin', state: 'Kwara State', hasLiveSession: true },
-        { id: 'Ikeja Hub, Lagos', name: 'Ikeja Central Hub, Lagos', city: 'Ikeja', state: 'Lagos State', hasLiveSession: false },
-        { id: 'Gwarinpa Hub, Abuja', name: 'Gwarinpa Hub, Abuja', city: 'Abuja', state: 'FCT', hasLiveSession: false },
-        { id: 'Rumuokwuta Hub, Port Harcourt', name: 'Rumuokwuta Hub, Port Harcourt', city: 'Port Harcourt', state: 'Rivers State', hasLiveSession: false }
+        // Kwara State (Ilorin & Environs)
+        { id: 'Tanke Hub, Ilorin', name: 'Tanke Hub, Ilorin', area: 'Tanke / University Rd', street: 'University Road, Oke-Odo, Tanke', city: 'Ilorin', state: 'Kwara State', regionGroup: 'ilorin', hasLiveSession: true, waveLabel: 'Active Wave', deliveryEta: '45-90 mins' },
+        { id: 'Taiwo Road Hub, Ilorin', name: 'Taiwo Road Hub, Ilorin', area: 'Taiwo Road / Oko Erin', street: 'Upper Taiwo Road, Beside CBN Quarters', city: 'Ilorin', state: 'Kwara State', regionGroup: 'ilorin', hasLiveSession: true, waveLabel: 'Active Wave', deliveryEta: '60-120 mins' },
+        { id: 'Gaa Akanbi Hub, Ilorin', name: 'Gaa Akanbi Hub, Ilorin', area: 'Gaa Akanbi / Pipeline', street: 'Pipeline Road & Gaa Akanbi Roundabout', city: 'Ilorin', state: 'Kwara State', regionGroup: 'ilorin', hasLiveSession: false, waveLabel: '', deliveryEta: '2-3 hours' },
+        { id: 'GRA Fate Hub, Ilorin', name: 'GRA Fate Hub, Ilorin', area: 'Fate / Basin / GRA', street: 'Fate Roundabout, Shoprite Axis, GRA', city: 'Ilorin', state: 'Kwara State', regionGroup: 'ilorin', hasLiveSession: false, waveLabel: '', deliveryEta: '1-2 hours' },
+        { id: 'Challenge & Unity Hub, Ilorin', name: 'Challenge & Unity Hub, Ilorin', area: 'Challenge / Unity Rd', street: 'Unity Road by Challenge Bookshop', city: 'Ilorin', state: 'Kwara State', regionGroup: 'ilorin', hasLiveSession: false, waveLabel: '', deliveryEta: '2-3 hours' },
+        { id: 'Kulende & Sango Hub, Ilorin', name: 'Kulende & Sango Hub, Ilorin', area: 'Sango / Kulende / Maraba', street: 'Old Jebba Road, Kulende Market Junction', city: 'Ilorin', state: 'Kwara State', regionGroup: 'ilorin', hasLiveSession: false, waveLabel: '', deliveryEta: '2-3 hours' },
+        { id: 'Adewole Estate Hub, Ilorin', name: 'Adewole Estate Hub, Ilorin', area: 'Adewole / Oloje / Mandate', street: 'Adewole Roundabout, Near Mandate Market', city: 'Ilorin', state: 'Kwara State', regionGroup: 'ilorin', hasLiveSession: false, waveLabel: '', deliveryEta: '2-4 hours' },
+        { id: 'Malete Campus Hub, Kwara', name: 'Malete Campus Hub, Kwara', area: 'Malete / KWASU Campus', street: 'KWASU Safari Road, Malete', city: 'Malete', state: 'Kwara State', regionGroup: 'ilorin', hasLiveSession: true, waveLabel: 'Campus Wave', deliveryEta: '45-90 mins' },
+        { id: 'Offa Central Hub, Kwara', name: 'Offa Central Hub, Kwara', area: 'Offa / Owode Market', street: 'Olofa Way, Opposite Federal Poly Gate', city: 'Offa', state: 'Kwara State', regionGroup: 'ilorin', hasLiveSession: false, waveLabel: '', deliveryEta: '2-4 hours' },
+
+        // Lagos State
+        { id: 'Ikeja Hub, Lagos', name: 'Ikeja Central Hub, Lagos', area: 'Ikeja / Allen / Alausa', street: 'Allen Avenue, Ikeja', city: 'Ikeja', state: 'Lagos State', regionGroup: 'lagos', hasLiveSession: false, waveLabel: '', deliveryEta: '2-3 hours' },
+        { id: 'Yaba Tech Hub, Lagos', name: 'Yaba Tech Hub, Lagos', area: 'Yaba / Akoka / Sabo', street: 'Herbert Macaulay Way, Sabo Yaba', city: 'Yaba', state: 'Lagos State', regionGroup: 'lagos', hasLiveSession: true, waveLabel: 'Active Wave', deliveryEta: '60-90 mins' },
+        { id: 'Lekki Phase 1 Hub, Lagos', name: 'Lekki Phase 1 Hub, Lagos', area: 'Lekki Phase 1 / Marwa', street: 'Admiralty Way, Lekki Phase 1', city: 'Lekki', state: 'Lagos State', regionGroup: 'lagos', hasLiveSession: false, waveLabel: '', deliveryEta: '2-3 hours' },
+        { id: 'Surulere Hub, Lagos', name: 'Surulere Hub, Lagos', area: 'Surulere / Bode Thomas', street: 'Adeniran Ogunsanya Street, Surulere', city: 'Surulere', state: 'Lagos State', regionGroup: 'lagos', hasLiveSession: false, waveLabel: '', deliveryEta: '2-3 hours' },
+        { id: 'Festac Town Hub, Lagos', name: 'Festac Town Hub, Lagos', area: 'Festac / Amuwo Odofin', street: '23 Road, Festac Town', city: 'Festac', state: 'Lagos State', regionGroup: 'lagos', hasLiveSession: false, waveLabel: '', deliveryEta: '2-4 hours' },
+        { id: 'Ajah & Sangotedo Hub, Lagos', name: 'Ajah & Sangotedo Hub, Lagos', area: 'Ajah / Abraham Adesanya', street: 'Lekki-Epe Expressway, Ajah Jubilee Bridge', city: 'Ajah', state: 'Lagos State', regionGroup: 'lagos', hasLiveSession: false, waveLabel: '', deliveryEta: '2-4 hours' },
+        { id: 'Ikorodu Central Hub, Lagos', name: 'Ikorodu Central Hub, Lagos', area: 'Ikorodu / Benson / Agric', street: 'Lagos Road, Benson Bus Stop, Ikorodu', city: 'Ikorodu', state: 'Lagos State', regionGroup: 'lagos', hasLiveSession: false, waveLabel: '', deliveryEta: '2-4 hours' },
+
+        // Abuja (FCT)
+        { id: 'Gwarinpa Hub, Abuja', name: 'Gwarinpa Hub, Abuja', area: 'Gwarinpa / Life Camp', street: '3rd Avenue, Gwarinpa Estate', city: 'Abuja', state: 'FCT', regionGroup: 'abuja', hasLiveSession: false, waveLabel: '', deliveryEta: '2-3 hours' },
+        { id: 'Wuse 2 Hub, Abuja', name: 'Wuse 2 Hub, Abuja', area: 'Wuse 2 / Maitama / Banex', street: 'Aminu Kano Crescent, Wuse 2', city: 'Abuja', state: 'FCT', regionGroup: 'abuja', hasLiveSession: true, waveLabel: 'Active Wave', deliveryEta: '60-90 mins' },
+        { id: 'Kubwa Hub, Abuja', name: 'Kubwa Hub, Abuja', area: 'Kubwa Phase 4 / Arab Rd', street: 'Gado Nasko Road, Kubwa', city: 'Abuja', state: 'FCT', regionGroup: 'abuja', hasLiveSession: false, waveLabel: '', deliveryEta: '2-4 hours' },
+        { id: 'Lugbe Airport Road Hub, Abuja', name: 'Lugbe Airport Road Hub, Abuja', area: 'Lugbe / FHA Estate', street: 'FHA Estate Junction, Airport Road, Lugbe', city: 'Abuja', state: 'FCT', regionGroup: 'abuja', hasLiveSession: false, waveLabel: '', deliveryEta: '2-4 hours' },
+
+        // Rivers State (Port Harcourt)
+        { id: 'Rumuokwuta Hub, Port Harcourt', name: 'Rumuokwuta Hub, Port Harcourt', area: 'Rumuokwuta / Rumuola', street: 'Ikwerre Road, Rumuokwuta', city: 'Port Harcourt', state: 'Rivers State', regionGroup: 'ph', hasLiveSession: false, waveLabel: '', deliveryEta: '2-3 hours' },
+        { id: 'GRA Phase 2 Hub, Port Harcourt', name: 'GRA Phase 2 Hub, Port Harcourt', area: 'New GRA / Tombia / Peter Odili', street: 'Tombia Street, GRA Phase 2', city: 'Port Harcourt', state: 'Rivers State', regionGroup: 'ph', hasLiveSession: true, waveLabel: 'Active Wave', deliveryEta: '60-120 mins' },
+        { id: 'Choba UniPort Hub, Port Harcourt', name: 'Choba UniPort Hub, Port Harcourt', area: 'Choba / Alakahia / UniPort', street: 'East-West Road, Choba Junction', city: 'Port Harcourt', state: 'Rivers State', regionGroup: 'ph', hasLiveSession: false, waveLabel: '', deliveryEta: '2-3 hours' },
+
+        // Oyo State (Ibadan) & Other Major Cities
+        { id: 'Bodija & UI Hub, Ibadan', name: 'Bodija & UI Hub, Ibadan', area: 'Bodija / Agbowo / UI Gate', street: 'Awolowo Avenue, Old Bodija, Ibadan', city: 'Ibadan', state: 'Oyo State', regionGroup: 'other', hasLiveSession: true, waveLabel: 'Active Wave', deliveryEta: '60-120 mins' },
+        { id: 'Ring Road & Challenge Hub, Ibadan', name: 'Ring Road & Challenge Hub, Ibadan', area: 'Ring Road / Oluyole / Challenge', street: 'MKO Abiola Way, Ring Road, Ibadan', city: 'Ibadan', state: 'Oyo State', regionGroup: 'other', hasLiveSession: false, waveLabel: '', deliveryEta: '2-3 hours' },
+        { id: 'Independence Layout Hub, Enugu', name: 'Independence Layout Hub, Enugu', area: 'Independence Layout / New Haven', street: 'Bisalla Road, Independence Layout, Enugu', city: 'Enugu', state: 'Enugu State', regionGroup: 'other', hasLiveSession: false, waveLabel: '', deliveryEta: '2-4 hours' },
+        { id: 'Nassarawa GRA Hub, Kano', name: 'Nassarawa GRA Hub, Kano', area: 'Nassarawa GRA / Tarauni', street: 'Ahmadu Bello Way, Nassarawa GRA, Kano', city: 'Kano', state: 'Kano State', regionGroup: 'other', hasLiveSession: false, waveLabel: '', deliveryEta: '2-4 hours' }
     ];
 
-    // Canonical UwanBuy Product Catalog with Full Category Specs
-    const UWANBUY_PRODUCTS = [
+    // 3-Level Category Taxonomy Hierarchy (category -> subCategory -> subSubCategory)
+    const UWANBUY_CATEGORIES = [
         {
-            id: 'uw-101',
-            name: 'Premium Parboiled Rice (50kg)',
-            price: 45000,
-            salePrice: 45000,
-            compareAtPrice: 52000,
-            category: 'groceries',
-            categoryName: 'Groceries',
-            subCategory: 'Grains & Foodstuff',
-            image: '../assetsecm/images/soups/egusi-soup-roundbowl.png',
-            brand: 'Mama Gold',
-            sku: 'GRO-RIC-50KG',
-            rating: 4.8,
-            reviewsCount: 94,
-            inStock: true,
-            quantity: 32,
-            unitLabel: 'bag (50kg)',
-            description: 'Stone-free, well-milled long grain parboiled Nigerian rice. Ideal for family consumption and catering.',
-            specifications: {
-                netWeight: '50kg',
-                grainType: 'Long Grain Parboiled',
-                countryOfOrigin: 'Nigeria',
-                packaging: 'Woven Polypropylene Sack',
-                shelfLife: '24 Months'
-            }
+            id: 'groceries',
+            name: 'Groceries & Foodstuff',
+            icon: 'bi-basket2-fill',
+            description: 'Parboiled rice, 1k packages, cooking oils, grains and fresh market staples',
+            subCategories: [
+                {
+                    id: 'grains-staples',
+                    name: 'Grains & Foodstuff',
+                    subSubCategories: [
+                        { id: 'packaged-rice', name: 'Parboiled Rice & Grains' },
+                        { id: 'yam-tubers', name: 'Fresh Yam & Tubers' },
+                        { id: 'beans-flour', name: 'Beans & Flours' }
+                    ]
+                },
+                {
+                    id: 'cooking-oils',
+                    name: 'Cooking Oils & Condiments',
+                    subSubCategories: [
+                        { id: 'vegetable-oil', name: 'Pure Vegetable Oils' },
+                        { id: 'palm-oil', name: 'Special Palm Oils' }
+                    ]
+                }
+            ]
         },
         {
-            id: 'uw-102',
-            name: 'Golden Penny Vegetable Oil (5L)',
-            price: 13500,
-            salePrice: 13500,
-            compareAtPrice: 15000,
-            category: 'groceries',
-            categoryName: 'Groceries',
-            subCategory: 'Cooking Oils',
+            id: 'fashion',
+            name: 'Fashion & Wears',
+            icon: 'bi-person-arms-up',
+            description: 'Streetwear, heavyweight hoodies, denim trousers and casual fashion',
+            subCategories: [
+                {
+                    id: 'mens-wear',
+                    name: "Men's Wears",
+                    subSubCategories: [
+                        { id: 'tops', name: 'Tops & Hoodies' },
+                        { id: 'trousers', name: 'Jeans & Trousers' },
+                        { id: 'footwear', name: 'Sneakers & Shoes' }
+                    ]
+                },
+                {
+                    id: 'womens-wear',
+                    name: "Women's Wears",
+                    subSubCategories: [
+                        { id: 'tops', name: 'Blouses & Knitwear' },
+                        { id: 'trousers', name: 'Pants & Skirts' }
+                    ]
+                },
+                {
+                    id: 'childrens-wear',
+                    name: "Children's Wear",
+                    subSubCategories: [
+                        { id: 'kids-sets', name: 'Casual Sets' }
+                    ]
+                }
+            ]
+        },
+        {
+            id: 'gadgets',
+            name: 'Gadgets & Tech',
+            icon: 'bi-phone-fill',
+            description: 'Smartphones, verified home appliances, cooling & computing devices',
+            subCategories: [
+                {
+                    id: 'smartphones',
+                    name: 'Smartphones & Mobile',
+                    subSubCategories: [
+                        { id: 'android-phones', name: 'Android Smartphones' },
+                        { id: 'ios-phones', name: 'Apple iPhones' }
+                    ]
+                },
+                {
+                    id: 'appliances',
+                    name: 'Home & Kitchen Appliances',
+                    subSubCategories: [
+                        { id: 'cooling', name: 'Inverter Air Conditioners' },
+                        { id: 'cooking-appliances', name: 'Gas Cookers & Boilers' }
+                    ]
+                },
+                {
+                    id: 'audio-accessories',
+                    name: 'Audio & Tech Accessories',
+                    subSubCategories: [
+                        { id: 'headphones', name: 'Wireless Headphones' }
+                    ]
+                }
+            ]
+        },
+        {
+            id: 'home',
+            name: 'Home Essentials',
+            icon: 'bi-house-door-fill',
+            description: 'Cookware sets, utensils, living & kitchen accessories',
+            subCategories: [
+                {
+                    id: 'kitchen-dining',
+                    name: 'Kitchen & Dining',
+                    subSubCategories: [
+                        { id: 'cookware-sets', name: 'Non-Stick Cookware Sets' },
+                        { id: 'induction-cookers', name: 'Induction Units' }
+                    ]
+                }
+            ]
+        }
+    ];
+
+    // Active Wave Variant Registry for Wave-Crossover Surprise & Live Auction Deals
+    const ACTIVE_WAVE_VARIANTS = {
+        'var_rice_50kg': {
+            variantId: 'var_rice_50kg',
+            baseProductId: 'uw_prd_1001',
+            auctionType: 'Flat-Rate Pool',
+            auctionTypeSlug: 'flat-rate',
+            title: 'Mama Gold 50kg Parboiled Rice Bag',
+            originalPrice: 45000,
+            wavePrice: 41500,
+            discountKobo: 350000,
+            timerMinutesLeft: 42,
+            moq: 1,
+            badge: '⚡ Community Drop',
+            description: 'Uniform flat-rate pool price from Tanke Hub.'
+        },
+        'var_oil_5l': {
+            variantId: 'var_oil_5l',
+            baseProductId: 'uw_prd_1002',
+            auctionType: 'Stock Cap',
+            auctionTypeSlug: 'stock-cap',
+            title: 'Devon King\'s 5L Pure Vegetable Oil Jerrycan',
+            originalPrice: 13500,
+            wavePrice: 11800,
+            discountKobo: 170000,
+            timerMinutesLeft: 28,
+            moq: 2,
+            badge: '⚡ Stock Drop',
+            description: 'Volume stock drop. Claim before allocation fills.'
+        },
+        'var_redmi_8_256_blk': {
+            variantId: 'var_redmi_8_256_blk',
+            baseProductId: 'uw_prd_3001',
+            auctionType: 'Price Wave',
+            auctionTypeSlug: 'price-wave',
+            title: 'Redmi 13C (8GB/256GB) Midnight Black',
+            originalPrice: 135000,
+            wavePrice: 122000,
+            discountKobo: 1300000,
+            timerMinutesLeft: 19,
+            moq: 1,
+            badge: '⚡ Price Wave',
+            description: 'Live price wave drop. Locks on checkout.'
+        },
+        'var_hoodie_blk_l': {
+            variantId: 'var_hoodie_blk_l',
+            baseProductId: 'uw_prd_2001',
+            auctionType: 'Time Cap',
+            auctionTypeSlug: 'time-cap',
+            title: 'Heavyweight Streetwear Hoodie - Black / Large',
+            originalPrice: 16500,
+            wavePrice: 13500,
+            discountKobo: 300000,
+            timerMinutesLeft: 14,
+            moq: 1,
+            badge: '⚡ Flash Wave',
+            description: '14-minute flash deal for local hub shoppers.'
+        },
+        'var_pot_7pc': {
+            variantId: 'var_pot_7pc',
+            baseProductId: 'uw_prd_4002',
+            auctionType: 'Stock Cap',
+            auctionTypeSlug: 'stock-cap',
+            title: 'Granite Cookware 7-Piece Family Set',
+            originalPrice: 52000,
+            wavePrice: 44000,
+            discountKobo: 800000,
+            timerMinutesLeft: 31,
+            moq: 1,
+            badge: '⚡ Volume Deal',
+            description: 'Collective stock cap (84% claimed).'
+        },
+        'var_ac_15hp': {
+            variantId: 'var_ac_15hp',
+            baseProductId: 'uw_prd_3002',
+            auctionType: 'Price Wave',
+            auctionTypeSlug: 'price-wave',
+            title: 'Smart Inverter Split AC 1.5HP Copper Core',
+            originalPrice: 285000,
+            wavePrice: 252000,
+            discountKobo: 3300000,
+            timerMinutesLeft: 22,
+            moq: 1,
+            badge: '⚡ Dropping Deal',
+            description: 'Scheduled price drop with 2-year warranty.'
+        },
+        'var_kettle_2l': {
+            variantId: 'var_kettle_2l',
+            baseProductId: 'uw_prd_3003',
+            auctionType: 'Flat-Rate Pool',
+            auctionTypeSlug: 'flat-rate',
+            title: 'Century 2.0L Fast-Boil Electric Kettle (Silver)',
+            originalPrice: 18500,
+            wavePrice: 12500,
+            discountKobo: 600000,
+            timerMinutesLeft: 36,
+            moq: 1,
+            badge: '⚡ Hub Pool',
+            description: 'Subsidized flat-rate pool for local pickup or delivery.'
+        },
+        'var_dress_floral_m': {
+            variantId: 'var_dress_floral_m',
+            baseProductId: 'uw_prd_2003',
+            auctionType: 'Time Cap',
+            auctionTypeSlug: 'time-cap',
+            title: 'Chiffon Floral Wrap Maxi Dress - Navy Floral / M',
+            originalPrice: 19500,
+            wavePrice: 15200,
+            discountKobo: 430000,
+            timerMinutesLeft: 18,
+            moq: 1,
+            badge: '⚡ Flash Deal',
+            description: 'Limited boutique flash drop.'
+        }
+    };
+
+
+    // Curated Wave Lots for Betasup
+    const BETASUP_WAVE_LOTS = [
+        {
+            variantId: 'lot_beta_banga_2l',
+            baseProductId: 101,
+            title: '2L Delta Banga Soup Pot',
+            category: 'Classic Soups',
             image: '../assetsecm/images/soups/banga-soup-roundbowl.png',
-            brand: 'Golden Penny',
-            sku: 'GRO-OIL-5L',
+            auctionType: 'Fastest Finger',
+            auctionTypeSlug: 'fastest-finger',
+            originalPrice: 6800,
+            originalPriceMinor: 680000,
+            wavePrice: 4800,
+            wavePriceMinor: 480000,
+            timerMinutesLeft: 12,
+            moq: 1,
+            badge: '⚡ Fastest Finger',
+            description: 'Flash pot drop. Slow-simmered palm fruit nectar & freshwater catfish.',
+            specifications: { size: '2L Family Pot', leadTime: '35 mins cooking time', proteins: 'Catfish, Smoked Fish & Assorted Meat' }
+        },
+        {
+            variantId: 'lot_beta_party_10l',
+            baseProductId: 104,
+            title: '10L Mega Party Cooler Package',
+            category: 'Party Packages',
+            image: '../assetsecm/images/alvero/restaur-banner-main-02.png',
+            auctionType: 'While Offer Lasts',
+            auctionTypeSlug: 'while-offer-lasts',
+            originalPrice: 45000,
+            originalPriceMinor: 4500000,
+            wavePrice: 35000,
+            wavePriceMinor: 3500000,
+            timerMinutesLeft: 25,
+            moq: 1,
+            badge: '⏳ While Offer Lasts',
+            description: 'Feeds 15-20 guests. Insulated stainless cooler with 20 assorted meat cuts.',
+            specifications: { capacity: '10 Litres', serves: '15 - 20 Guests', includes: 'Utensils & 20 Swallow portions' }
+        },
+        {
+            variantId: 'lot_beta_egusi_4l',
+            baseProductId: 102,
+            title: '4L Ijebu Egusi-Elefo Feast Pot',
+            category: 'Classic Soups',
+            image: '../assetsecm/images/soups/egusi-soup-roundbowl.png',
+            auctionType: 'Real Bidding',
+            auctionTypeSlug: 'real-bidding',
+            originalPrice: 12000,
+            originalPriceMinor: 1200000,
+            wavePrice: 9500,
+            wavePriceMinor: 950000,
+            timerMinutesLeft: 18,
+            moq: 1,
+            badge: '🔨 Real Bidding',
+            description: 'Pan-fried melon seed lumps with Ugwu, smoked fish, and cow tripe.',
+            specifications: { size: '4L Feast Pot', leadTime: '40 mins cooking time', proteins: 'Cow Tripe (Shaki), Beef & Titus' }
+        },
+        {
+            variantId: 'lot_beta_fisherman_4l',
+            baseProductId: 106,
+            title: '4L Delta Fisherman Soup Pot',
+            category: 'Regional Delicacies',
+            image: '../assetsecm/images/soups/banga-soup-roundbowl.png',
+            auctionType: 'Price Waves',
+            auctionTypeSlug: 'price-wave',
+            originalPrice: 24000,
+            originalPriceMinor: 2400000,
+            wavePrice: 18500,
+            wavePriceMinor: 1850000,
+            timerMinutesLeft: 22,
+            moq: 1,
+            badge: '🌊 Price Waves',
+            description: 'Riverine delicacy with fresh sweet catfish steaks, prawns & periwinkles.',
+            specifications: { size: '4L Feast Pot', seafood: 'Catfish, River Prawns & Crabs', spices: 'Native Uziza & Pepper Soup Herbs' }
+        }
+    ];
+
+    // Curated Wave Lots for Thrift-Z
+    const THRIFTZ_WAVE_LOTS = [
+        {
+            variantId: 'lot_tz_apple_watch',
+            baseProductId: 'tz-105',
+            title: 'Apple Watch Series 6 (44mm GPS)',
+            category: 'Gadgets & Tech',
+            image: 'https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=600&q=80',
+            auctionType: 'Fastest Finger',
+            auctionTypeSlug: 'fastest-finger',
+            originalPrice: 95000,
+            originalPriceMinor: 9500000,
+            wavePrice: 65000,
+            wavePriceMinor: 6500000,
+            timerMinutesLeft: 15,
+            moq: 1,
+            badge: '⚡ Fastest Finger',
+            description: 'Refurbished OLED, SpO2 & ECG sensors. Tested battery.',
+            specifications: { caseSize: '44mm Aluminum', health: 'Blood Oxygen, ECG, Heart Rate', batteryHealth: '89%' }
+        },
+        {
+            variantId: 'lot_tz_nike_windbreaker',
+            baseProductId: 'tz-106',
+            title: 'Vintage Nike Windbreaker Retro 90s',
+            category: 'Fashion & Wears',
+            image: 'https://images.unsplash.com/photo-1578587018452-892bacefd3f2?auto=format&fit=crop&w=600&q=80',
+            auctionType: 'While Offer Lasts',
+            auctionTypeSlug: 'while-offer-lasts',
+            originalPrice: 12500,
+            originalPriceMinor: 1250000,
+            wavePrice: 9500,
+            wavePriceMinor: 950000,
+            timerMinutesLeft: 20,
+            moq: 1,
+            badge: '⏳ While Offer Lasts',
+            description: 'Grade-A vintage color-blocked track jacket with mesh lining.',
+            specifications: { size: 'Medium / Large Unisex', material: 'Ripstop Nylon', condition: 'Grade A+ (No stains/tears)' }
+        },
+        {
+            variantId: 'lot_tz_sony_headphones',
+            baseProductId: 'tz-103',
+            title: 'Sony WH-1000XM4 Wireless Headphones',
+            category: 'Gadgets & Tech',
+            image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80',
+            auctionType: 'Real Bidding',
+            auctionTypeSlug: 'real-bidding',
+            originalPrice: 125000,
+            originalPriceMinor: 12500000,
+            wavePrice: 98000,
+            wavePriceMinor: 9800000,
+            timerMinutesLeft: 16,
+            moq: 1,
+            badge: '🔨 Real Bidding',
+            description: 'Industry-leading ANC, 28h battery, new sanitary ear-cushions.',
+            specifications: { batteryLife: '28+ Hours Active ANC', connection: 'Bluetooth 5.0 + 3.5mm', condition: 'Refurbished Grade A' }
+        },
+        {
+            variantId: 'lot_tz_dell_xps',
+            baseProductId: 'tz-107',
+            title: 'Dell XPS 13 Core i7 4K Touch',
+            category: 'Gadgets & Tech',
+            image: 'https://images.unsplash.com/photo-1593642632823-8f785ba67e45?auto=format&fit=crop&w=600&q=80',
+            auctionType: 'Price Waves',
+            auctionTypeSlug: 'price-wave',
+            originalPrice: 260000,
+            originalPriceMinor: 26000000,
+            wavePrice: 225000,
+            wavePriceMinor: 22500000,
+            timerMinutesLeft: 30,
+            moq: 1,
+            badge: '🌊 Price Waves',
+            description: '4K UHD InfinityEdge touchscreen, aluminum chassis, 16GB RAM.',
+            specifications: { cpu: 'Core i7-1065G7', ram: '16GB LPDDR4x', storage: '512GB NVMe SSD', display: '13.3" 4K UHD Touch' }
+        }
+    ];
+
+    // Canonical UwanBuy Product Catalog: BASE PRODUCTS with Derived PRODUCT VARIANTS
+    const UWANBUY_PRODUCTS = [
+        // 1. Foodstuff / Groceries (Mode A: scrollable variant list on modal left)
+        {
+            id: 'uw_prd_1001',
+            isBaseProduct: true,
+            hasVariants: true,
+            name: 'Mama Gold Pure Parboiled Rice',
+            title: 'Mama Gold Pure Parboiled Rice',
+            brand: 'Mama Gold',
+            category: 'groceries',
+            categoryId: 'groceries',
+            categoryName: 'Groceries & Foodstuff',
+            subCategory: 'grains-staples',
+            subSubCategory: 'packaged-rice',
+            image: '../assetsecm/images/soups/egusi-soup-roundbowl.png',
+            media: [
+                { url: '../assetsecm/images/soups/egusi-soup-roundbowl.png', thumbnailUrl: '../assetsecm/images/soups/egusi-soup-roundbowl.png' }
+            ],
+            description: 'Stone-free, well-milled long grain parboiled Nigerian rice. Sourced locally according to orders in multiple standard packs.',
+            rating: 4.9,
+            reviewsCount: 184,
+            unitLabel: 'pack / bag',
+            modalType: 'groceries_scroll_variants',
+            variants: [
+                {
+                    id: 'var_rice_1kg',
+                    name: '1kg Handy Kitchen Pack',
+                    sku: 'RIC-1KG-MAMA',
+                    price: 1200,
+                    priceMinor: 120000,
+                    compareAtPrice: 1500,
+                    compareAtPriceMinor: 150000,
+                    image: '../assetsecm/images/soups/egusi-soup-roundbowl.png',
+                    quantityValue: 1,
+                    quantityUnit: 'kg',
+                    stock: { quantity: 120, status: 'in_stock', moq: 1 },
+                    specifications: {
+                        packSize: '1kg Sealed Pouch',
+                        grainType: 'Long Grain Parboiled',
+                        origin: 'Nigeria (Milled in Kwara)',
+                        shelfLife: '12 Months'
+                    }
+                },
+                {
+                    id: 'var_rice_2kg',
+                    name: '2kg Family Meal Pack',
+                    sku: 'RIC-2KG-MAMA',
+                    price: 2350,
+                    priceMinor: 235000,
+                    compareAtPrice: 2800,
+                    compareAtPriceMinor: 280000,
+                    image: '../assetsecm/images/soups/egusi-soup-roundbowl.png',
+                    quantityValue: 2,
+                    quantityUnit: 'kg',
+                    stock: { quantity: 80, status: 'in_stock', moq: 1 },
+                    specifications: {
+                        packSize: '2kg Seal Bag',
+                        grainType: 'Long Grain Parboiled',
+                        origin: 'Nigeria',
+                        shelfLife: '12 Months'
+                    }
+                },
+                {
+                    id: 'var_rice_5kg',
+                    name: '5kg Kitchen Bag',
+                    sku: 'RIC-5KG-MAMA',
+                    price: 5500,
+                    priceMinor: 550000,
+                    compareAtPrice: 6200,
+                    compareAtPriceMinor: 620000,
+                    image: '../assetsecm/images/soups/egusi-soup-roundbowl.png',
+                    quantityValue: 5,
+                    quantityUnit: 'kg',
+                    stock: { quantity: 60, status: 'in_stock', moq: 1 },
+                    specifications: {
+                        packSize: '5kg Handled Bag',
+                        grainType: 'Long Grain Parboiled',
+                        shelfLife: '18 Months'
+                    }
+                },
+                {
+                    id: 'var_rice_10kg',
+                    name: '10kg Caterer Bag',
+                    sku: 'RIC-10KG-MAMA',
+                    price: 10500,
+                    priceMinor: 1050000,
+                    compareAtPrice: 12000,
+                    compareAtPriceMinor: 1200000,
+                    image: '../assetsecm/images/soups/egusi-soup-roundbowl.png',
+                    quantityValue: 10,
+                    quantityUnit: 'kg',
+                    stock: { quantity: 35, status: 'in_stock', moq: 1 },
+                    specifications: {
+                        packSize: '10kg Polypropylene Bag',
+                        grainType: 'Long Grain Parboiled',
+                        shelfLife: '18 Months'
+                    }
+                },
+                {
+                    id: 'var_rice_50kg',
+                    name: '50kg Full Wholesale Sack',
+                    sku: 'RIC-50KG-MAMA',
+                    price: 45000,
+                    priceMinor: 4500000,
+                    compareAtPrice: 52000,
+                    compareAtPriceMinor: 5200000,
+                    image: '../assetsecm/images/soups/egusi-soup-roundbowl.png',
+                    quantityValue: 50,
+                    quantityUnit: 'kg',
+                    stock: { quantity: 18, status: 'in_stock', moq: 1 },
+                    specifications: {
+                        packSize: '50kg Woven Sack',
+                        grainType: 'Long Grain Parboiled',
+                        shelfLife: '24 Months'
+                    }
+                }
+            ]
+        },
+
+        // 2. Groceries: Devon King's Vegetable Oil
+        {
+            id: 'uw_prd_1002',
+            isBaseProduct: true,
+            hasVariants: true,
+            name: 'Devon King\'s Pure Vegetable Oil',
+            title: 'Devon King\'s Pure Vegetable Oil',
+            brand: 'Devon King\'s',
+            category: 'groceries',
+            categoryId: 'groceries',
+            categoryName: 'Groceries & Foodstuff',
+            subCategory: 'cooking-oils',
+            subSubCategory: 'vegetable-oil',
+            image: '../assetsecm/images/soups/banga-soup-roundbowl.png',
+            media: [
+                { url: '../assetsecm/images/soups/banga-soup-roundbowl.png', thumbnailUrl: '../assetsecm/images/soups/banga-soup-roundbowl.png' }
+            ],
+            description: 'Triple-refined, cholesterol-free cooking vegetable oil enriched with Vitamin A. Available from 500ml pouch up to 5L family jerrycan.',
             rating: 4.9,
             reviewsCount: 142,
-            inStock: true,
-            quantity: 18,
-            unitLabel: 'jerrycan',
-            description: 'Triple-refined clear vegetable cooking oil, cholesterol-free and enriched with Vitamin A.',
-            specifications: {
-                volume: '5 Litres',
-                cholesterol: '0mg',
-                vitaminAEnriched: 'Yes',
-                packageType: 'Tamper-proof Jerrycan',
-                shelfLife: '18 Months'
-            }
+            unitLabel: 'pack / bottle',
+            modalType: 'groceries_scroll_variants',
+            variants: [
+                {
+                    id: 'var_oil_500ml',
+                    name: '500ml Pillow Pouch',
+                    sku: 'OIL-500ML-DK',
+                    price: 1500,
+                    priceMinor: 150000,
+                    compareAtPrice: 1800,
+                    compareAtPriceMinor: 180000,
+                    image: '../assetsecm/images/soups/banga-soup-roundbowl.png',
+                    quantityValue: 0.5,
+                    quantityUnit: 'L',
+                    stock: { quantity: 150, status: 'in_stock', moq: 1 },
+                    specifications: {
+                        volume: '500 Millilitres',
+                        packaging: 'Tamper-evident Pillow Pouch',
+                        vitaminA: 'Fortified'
+                    }
+                },
+                {
+                    id: 'var_oil_1l',
+                    name: '1 Litre PET Bottle',
+                    sku: 'OIL-1L-DK',
+                    price: 2900,
+                    priceMinor: 290000,
+                    compareAtPrice: 3400,
+                    compareAtPriceMinor: 340000,
+                    image: '../assetsecm/images/soups/banga-soup-roundbowl.png',
+                    quantityValue: 1,
+                    quantityUnit: 'L',
+                    stock: { quantity: 90, status: 'in_stock', moq: 1 },
+                    specifications: {
+                        volume: '1.0 Litre',
+                        packaging: 'Ribbed PET Bottle',
+                        vitaminA: 'Fortified'
+                    }
+                },
+                {
+                    id: 'var_oil_2l',
+                    name: '2 Litres Jerrycan with Handle',
+                    sku: 'OIL-2L-DK',
+                    price: 5600,
+                    priceMinor: 560000,
+                    compareAtPrice: 6300,
+                    compareAtPriceMinor: 630000,
+                    image: '../assetsecm/images/soups/banga-soup-roundbowl.png',
+                    quantityValue: 2,
+                    quantityUnit: 'L',
+                    stock: { quantity: 45, status: 'in_stock', moq: 1 },
+                    specifications: {
+                        volume: '2.0 Litres',
+                        packaging: 'Heavy HDPE Jerrycan',
+                        vitaminA: 'Fortified'
+                    }
+                },
+                {
+                    id: 'var_oil_5l',
+                    name: '5 Litres Master Jerrycan',
+                    sku: 'OIL-5L-DK',
+                    price: 13500,
+                    priceMinor: 1350000,
+                    compareAtPrice: 15000,
+                    compareAtPriceMinor: 1500000,
+                    image: '../assetsecm/images/soups/banga-soup-roundbowl.png',
+                    quantityValue: 5,
+                    quantityUnit: 'L',
+                    stock: { quantity: 24, status: 'in_stock', moq: 1 },
+                    specifications: {
+                        volume: '5.0 Litres',
+                        packaging: 'Reinforced 5L Jerrycan with Security Cap',
+                        vitaminA: 'Fortified'
+                    }
+                }
+            ]
         },
+
+        // 3. Groceries: Selected Fresh Yam Tubers
         {
-            id: 'uw-103',
-            name: 'Smartphone Pro Max 256GB',
-            price: 850000,
-            salePrice: 850000,
-            compareAtPrice: 920000,
-            category: 'gadgets',
-            categoryName: 'Gadgets & Tech',
-            subCategory: 'Smartphones',
-            image: '../assetsecm/images/soups/afang-soup-roundbowl.png',
-            brand: 'Apex Mobile',
-            sku: 'GDT-PHN-256',
-            rating: 4.9,
-            reviewsCount: 57,
-            inStock: true,
-            quantity: 9,
-            unitLabel: 'unit',
-            description: 'Flagship powerhouse with 6.7-inch OLED display, 256GB high-speed NVMe storage, and 5000mAh battery.',
-            specifications: {
-                model: 'Apex Pro Max',
-                screenInches: '6.7" OLED (120Hz)',
-                storageGb: '256GB',
-                memoryGb: '12GB RAM',
-                battery: '5000mAh Fast Charging',
-                connectivity: ['5G', 'Wi-Fi 6E', 'Bluetooth 5.3'],
-                simType: 'Dual Nano-SIM + eSIM',
-                warrantyMonths: '12 Months Official'
-            }
-        },
-        {
-            id: 'uw-104',
-            name: 'Wireless Noise-Cancelling Headphones',
-            price: 35000,
-            salePrice: 35000,
-            compareAtPrice: 42000,
-            category: 'gadgets',
-            categoryName: 'Gadgets & Tech',
-            subCategory: 'Audio & Accessories',
-            image: '../assetsecm/images/soups/edikang-soup-roundbowl.png',
-            brand: 'SonicWave',
-            sku: 'GDT-AUD-ANC',
-            rating: 4.7,
-            reviewsCount: 38,
-            inStock: true,
-            quantity: 15,
-            unitLabel: 'unit',
-            description: 'Deep acoustic bass with hybrid active noise cancellation (ANC) and 40-hour wireless playtime.',
-            specifications: {
-                playbackHours: '40 Hours (ANC On)',
-                driverSize: '40mm Neodymium',
-                chargingPort: 'Type-C Quick Charge',
-                microphone: 'Quad-mic Beamforming',
-                weightGrams: '240g'
-            }
-        },
-        {
-            id: 'uw-105',
-            name: 'Unisex Urban Oversized Cotton Hoodie',
-            price: 14500,
-            salePrice: 14500,
-            compareAtPrice: 18000,
-            category: 'fashion',
-            categoryName: 'Wears & Fashion',
-            subCategory: 'Streetwear',
-            image: '../assetsecm/images/soups/efo-riro-roundbowl.png',
-            brand: 'Bazaar Stitch',
-            sku: 'FAS-HOD-BLK',
+            id: 'uw_prd_1004',
+            isBaseProduct: true,
+            hasVariants: true,
+            name: 'Selected Fresh White Yam Tubers',
+            title: 'Selected Fresh White Yam Tubers',
+            brand: 'Ipata Farmers Hub',
+            category: 'groceries',
+            categoryId: 'groceries',
+            categoryName: 'Groceries & Foodstuff',
+            subCategory: 'grains-staples',
+            subSubCategory: 'yam-tubers',
+            image: '../assetsecm/images/soups/ogbono-soup-roundbowl.png',
+            media: [
+                { url: '../assetsecm/images/soups/ogbono-soup-roundbowl.png', thumbnailUrl: '../assetsecm/images/soups/ogbono-soup-roundbowl.png' }
+            ],
+            description: 'Dry, sweet pounded-yam quality white yam tubers straight from local farm supply associates.',
             rating: 4.8,
-            reviewsCount: 63,
-            inStock: true,
-            quantity: 24,
-            unitLabel: 'piece',
-            description: 'Heavyweight 380gsm brushed fleece hoodie. Drop-shoulder streetwear cut with kangaroo pocket.',
-            specifications: {
-                material: '100% Combed Cotton Fleece',
-                gsm: '380 GSM',
-                availableSizes: ['S', 'M', 'L', 'XL', 'XXL'],
-                care: 'Machine Wash Cold, Hang Dry',
-                fit: 'Oversized Boxy Fit'
-            }
+            reviewsCount: 76,
+            unitLabel: 'tuber / bundle',
+            modalType: 'groceries_scroll_variants',
+            variants: [
+                {
+                    id: 'var_yam_single',
+                    name: '1 Medium Yam Tuber (~3kg)',
+                    sku: 'YAM-1TB-IPATA',
+                    price: 1800,
+                    priceMinor: 180000,
+                    compareAtPrice: 2200,
+                    compareAtPriceMinor: 220000,
+                    image: '../assetsecm/images/soups/ogbono-soup-roundbowl.png',
+                    quantityValue: 1,
+                    quantityUnit: 'tuber',
+                    stock: { quantity: 40, status: 'in_stock', moq: 1 },
+                    specifications: {
+                        averageWeight: '2.8kg - 3.2kg',
+                        variety: 'White Abuja Yam',
+                        condition: 'Dry & Firm'
+                    }
+                },
+                {
+                    id: 'var_yam_pack3',
+                    name: '3 Tubers Family Bundle',
+                    sku: 'YAM-3TB-IPATA',
+                    price: 5200,
+                    priceMinor: 520000,
+                    compareAtPrice: 6200,
+                    compareAtPriceMinor: 620000,
+                    image: '../assetsecm/images/soups/ogbono-soup-roundbowl.png',
+                    quantityValue: 3,
+                    quantityUnit: 'tubers',
+                    stock: { quantity: 20, status: 'in_stock', moq: 1 },
+                    specifications: {
+                        bundleCount: '3 Tubers',
+                        averageWeight: '9.0kg Total',
+                        variety: 'White Yam'
+                    }
+                },
+                {
+                    id: 'var_yam_pack5',
+                    name: '5 Tubers Wholesale Bundle',
+                    sku: 'YAM-5TB-IPATA',
+                    price: 8500,
+                    priceMinor: 850000,
+                    compareAtPrice: 10000,
+                    compareAtPriceMinor: 1000000,
+                    image: '../assetsecm/images/soups/ogbono-soup-roundbowl.png',
+                    quantityValue: 5,
+                    quantityUnit: 'tubers',
+                    stock: { quantity: 15, status: 'in_stock', moq: 1 },
+                    specifications: {
+                        bundleCount: '5 Tubers',
+                        averageWeight: '15.5kg Total',
+                        variety: 'White Yam'
+                    }
+                }
+            ]
         },
+
+        // 4. Fashion & Wears: Men's Tops -> Heavyweight Hoodie (Mode B: Option buttons on right)
         {
-            id: 'uw-106',
-            name: 'Non-Stick Granite Cookware Set (7 Pieces)',
-            price: 48000,
-            salePrice: 48000,
-            compareAtPrice: 58000,
-            category: 'home',
-            categoryName: 'Home Essentials',
-            subCategory: 'Kitchen & Dining',
-            image: '../assetsecm/images/soups/bitterleaf-soup-roundbowl.png',
-            brand: 'ChefElite',
-            sku: 'HOM-POT-7PC',
+            id: 'uw_prd_2001',
+            isBaseProduct: true,
+            hasVariants: true,
+            name: 'Classic Heavyweight Cotton Streetwear Hoodie',
+            title: 'Classic Heavyweight Cotton Streetwear Hoodie',
+            brand: 'Urban Stitch NG',
+            category: 'fashion',
+            categoryId: 'fashion',
+            categoryName: 'Fashion & Wears',
+            subCategory: 'mens-wear',
+            subSubCategory: 'tops',
+            image: '../assetsecm/images/soups/efo-riro-roundbowl.png',
+            media: [
+                { url: '../assetsecm/images/soups/efo-riro-roundbowl.png', thumbnailUrl: '../assetsecm/images/soups/efo-riro-roundbowl.png' }
+            ],
+            description: 'Premium 380 GSM combed cotton fleece hoodie. Pre-shrunk drop-shoulder fit with double-layered hood and kangaroo front pocket.',
+            rating: 4.8,
+            reviewsCount: 93,
+            unitLabel: 'piece',
+            modalType: 'attribute_options',
+            attributes: [
+                { key: 'color', label: 'Color', values: ['Midnight Black', 'Heather Grey', 'Burgundy'] },
+                { key: 'size', label: 'Size', values: ['S', 'M', 'L', 'XL'] }
+            ],
+            variants: [
+                {
+                    id: 'var_hoodie_blk_s',
+                    name: 'Midnight Black - Small (S)',
+                    sku: 'HOD-BLK-S',
+                    color: 'Midnight Black',
+                    size: 'S',
+                    price: 15000,
+                    priceMinor: 1500000,
+                    compareAtPrice: 18000,
+                    compareAtPriceMinor: 1800000,
+                    stock: { quantity: 12, status: 'in_stock', moq: 1 },
+                    specifications: { material: '100% Combed Cotton', gsm: '380 GSM', fit: 'Relaxed Streetwear Fit' }
+                },
+                {
+                    id: 'var_hoodie_blk_m',
+                    name: 'Midnight Black - Medium (M)',
+                    sku: 'HOD-BLK-M',
+                    color: 'Midnight Black',
+                    size: 'M',
+                    price: 15500,
+                    priceMinor: 1550000,
+                    compareAtPrice: 18500,
+                    compareAtPriceMinor: 1850000,
+                    stock: { quantity: 15, status: 'in_stock', moq: 1 },
+                    specifications: { material: '100% Combed Cotton', gsm: '380 GSM', fit: 'Relaxed Streetwear Fit' }
+                },
+                {
+                    id: 'var_hoodie_blk_l',
+                    name: 'Midnight Black - Large (L)',
+                    sku: 'HOD-BLK-L',
+                    color: 'Midnight Black',
+                    size: 'L',
+                    price: 16500,
+                    priceMinor: 1650000,
+                    compareAtPrice: 19500,
+                    compareAtPriceMinor: 1950000,
+                    stock: { quantity: 18, status: 'in_stock', moq: 1 },
+                    specifications: { material: '100% Combed Cotton', gsm: '380 GSM', fit: 'Relaxed Streetwear Fit' }
+                },
+                {
+                    id: 'var_hoodie_blk_xl',
+                    name: 'Midnight Black - Extra Large (XL)',
+                    sku: 'HOD-BLK-XL',
+                    color: 'Midnight Black',
+                    size: 'XL',
+                    price: 17500,
+                    priceMinor: 1750000,
+                    compareAtPrice: 21000,
+                    compareAtPriceMinor: 2100000,
+                    stock: { quantity: 8, status: 'in_stock', moq: 1 },
+                    specifications: { material: '100% Combed Cotton', gsm: '380 GSM', fit: 'Relaxed Streetwear Fit' }
+                },
+                {
+                    id: 'var_hoodie_gry_m',
+                    name: 'Heather Grey - Medium (M)',
+                    sku: 'HOD-GRY-M',
+                    color: 'Heather Grey',
+                    size: 'M',
+                    price: 15500,
+                    priceMinor: 1550000,
+                    compareAtPrice: 18500,
+                    compareAtPriceMinor: 1850000,
+                    stock: { quantity: 14, status: 'in_stock', moq: 1 },
+                    specifications: { material: '100% Combed Cotton', gsm: '380 GSM', fit: 'Relaxed Streetwear Fit' }
+                },
+                {
+                    id: 'var_hoodie_gry_l',
+                    name: 'Heather Grey - Large (L)',
+                    sku: 'HOD-GRY-L',
+                    color: 'Heather Grey',
+                    size: 'L',
+                    price: 16500,
+                    priceMinor: 1650000,
+                    compareAtPrice: 19500,
+                    compareAtPriceMinor: 1950000,
+                    stock: { quantity: 10, status: 'in_stock', moq: 1 },
+                    specifications: { material: '100% Combed Cotton', gsm: '380 GSM', fit: 'Relaxed Streetwear Fit' }
+                },
+                {
+                    id: 'var_hoodie_bur_l',
+                    name: 'Burgundy - Large (L)',
+                    sku: 'HOD-BUR-L',
+                    color: 'Burgundy',
+                    size: 'L',
+                    price: 16500,
+                    priceMinor: 1650000,
+                    compareAtPrice: 19500,
+                    compareAtPriceMinor: 1950000,
+                    stock: { quantity: 6, status: 'in_stock', moq: 1 },
+                    specifications: { material: '100% Combed Cotton', gsm: '380 GSM', fit: 'Relaxed Streetwear Fit' }
+                }
+            ]
+        },
+
+        // 5. Fashion & Wears: Men's Trousers -> Slim Denim Jeans
+        {
+            id: 'uw_prd_2002',
+            isBaseProduct: true,
+            hasVariants: true,
+            name: 'Slim-Fit Comfort Stretch Denim Jeans',
+            title: 'Slim-Fit Comfort Stretch Denim Jeans',
+            brand: 'Indigo Crafter',
+            category: 'fashion',
+            categoryId: 'fashion',
+            categoryName: 'Fashion & Wears',
+            subCategory: 'mens-wear',
+            subSubCategory: 'trousers',
+            image: '../assetsecm/images/soups/edikang-soup-roundbowl.png',
+            media: [
+                { url: '../assetsecm/images/soups/edikang-soup-roundbowl.png', thumbnailUrl: '../assetsecm/images/soups/edikang-soup-roundbowl.png' }
+            ],
+            description: '12.5oz cotton denim engineered with 2% elastane for unrestricted stretch and shape retention.',
+            rating: 4.7,
+            reviewsCount: 52,
+            unitLabel: 'piece',
+            modalType: 'attribute_options',
+            attributes: [
+                { key: 'color', label: 'Wash', values: ['Deep Indigo', 'Washed Black'] },
+                { key: 'size', label: 'Waist Size', values: ['30', '32', '34', '36'] }
+            ],
+            variants: [
+                {
+                    id: 'var_jeans_ind_30',
+                    name: 'Deep Indigo - Waist 30',
+                    sku: 'JNS-IND-30',
+                    color: 'Deep Indigo',
+                    size: '30',
+                    price: 16500,
+                    priceMinor: 1650000,
+                    compareAtPrice: 19000,
+                    compareAtPriceMinor: 1900000,
+                    stock: { quantity: 10, status: 'in_stock', moq: 1 },
+                    specifications: { fabric: '98% Cotton 2% Elastane', fit: 'Slim Tapered', wash: 'Deep Indigo Raw Wash' }
+                },
+                {
+                    id: 'var_jeans_ind_32',
+                    name: 'Deep Indigo - Waist 32',
+                    sku: 'JNS-IND-32',
+                    color: 'Deep Indigo',
+                    size: '32',
+                    price: 17000,
+                    priceMinor: 1700000,
+                    compareAtPrice: 19500,
+                    compareAtPriceMinor: 1950000,
+                    stock: { quantity: 15, status: 'in_stock', moq: 1 },
+                    specifications: { fabric: '98% Cotton 2% Elastane', fit: 'Slim Tapered', wash: 'Deep Indigo Raw Wash' }
+                },
+                {
+                    id: 'var_jeans_ind_34',
+                    name: 'Deep Indigo - Waist 34',
+                    sku: 'JNS-IND-34',
+                    color: 'Deep Indigo',
+                    size: '34',
+                    price: 17500,
+                    priceMinor: 1750000,
+                    compareAtPrice: 20000,
+                    compareAtPriceMinor: 2000000,
+                    stock: { quantity: 14, status: 'in_stock', moq: 1 },
+                    specifications: { fabric: '98% Cotton 2% Elastane', fit: 'Slim Tapered', wash: 'Deep Indigo Raw Wash' }
+                },
+                {
+                    id: 'var_jeans_blk_32',
+                    name: 'Washed Black - Waist 32',
+                    sku: 'JNS-BLK-32',
+                    color: 'Washed Black',
+                    size: '32',
+                    price: 17000,
+                    priceMinor: 1700000,
+                    compareAtPrice: 19500,
+                    compareAtPriceMinor: 1950000,
+                    stock: { quantity: 12, status: 'in_stock', moq: 1 },
+                    specifications: { fabric: '98% Cotton 2% Elastane', fit: 'Slim Tapered', wash: 'Vintage Washed Black' }
+                }
+            ]
+        },
+
+        // 6. Gadgets & Tech: Redmi 13C Mobile Phone (Mode B)
+        {
+            id: 'uw_prd_3001',
+            isBaseProduct: true,
+            hasVariants: true,
+            name: 'Redmi 13C 4G Dual SIM Smartphone',
+            title: 'Redmi 13C 4G Dual SIM Smartphone',
+            brand: 'Xiaomi Redmi',
+            category: 'gadgets',
+            categoryId: 'gadgets',
+            categoryName: 'Gadgets & Tech',
+            subCategory: 'smartphones',
+            subSubCategory: 'android-phones',
+            image: '../assetsecm/images/soups/afang-soup-roundbowl.png',
+            media: [
+                { url: '../assetsecm/images/soups/afang-soup-roundbowl.png', thumbnailUrl: '../assetsecm/images/soups/afang-soup-roundbowl.png' }
+            ],
+            description: 'Massive 6.74" 90Hz Dot Drop display with 50MP AI triple camera and 5000mAh battery supporting 18W fast charge.',
+            rating: 4.8,
+            reviewsCount: 128,
+            unitLabel: 'unit',
+            modalType: 'attribute_options',
+            attributes: [
+                { key: 'memoryStorage', label: 'Memory / Storage', values: ['4GB RAM + 128GB', '8GB RAM + 256GB'] },
+                { key: 'color', label: 'Color', values: ['Clover Green', 'Midnight Black', 'Glacier White'] }
+            ],
+            variants: [
+                {
+                    id: 'var_redmi_4_128_grn',
+                    name: '4GB RAM + 128GB Storage - Clover Green',
+                    sku: 'RDM-13C-4-128-GRN',
+                    memoryStorage: '4GB RAM + 128GB',
+                    color: 'Clover Green',
+                    price: 115000,
+                    priceMinor: 11500000,
+                    compareAtPrice: 125000,
+                    compareAtPriceMinor: 12500000,
+                    stock: { quantity: 18, status: 'in_stock', moq: 1 },
+                    specifications: {
+                        screenInches: '6.74" 90Hz IPS Display',
+                        camera: '50MP AI Main + 2MP Macro',
+                        processor: 'MediaTek Helio G85',
+                        battery: '5000mAh (18W)',
+                        warrantyMonths: 12
+                    }
+                },
+                {
+                    id: 'var_redmi_4_128_blk',
+                    name: '4GB RAM + 128GB Storage - Midnight Black',
+                    sku: 'RDM-13C-4-128-BLK',
+                    memoryStorage: '4GB RAM + 128GB',
+                    color: 'Midnight Black',
+                    price: 115000,
+                    priceMinor: 11500000,
+                    compareAtPrice: 125000,
+                    compareAtPriceMinor: 12500000,
+                    stock: { quantity: 22, status: 'in_stock', moq: 1 },
+                    specifications: {
+                        screenInches: '6.74" 90Hz IPS Display',
+                        camera: '50MP AI Main',
+                        processor: 'MediaTek Helio G85',
+                        battery: '5000mAh',
+                        warrantyMonths: 12
+                    }
+                },
+                {
+                    id: 'var_redmi_8_256_blk',
+                    name: '8GB RAM + 256GB Storage - Midnight Black',
+                    sku: 'RDM-13C-8-256-BLK',
+                    memoryStorage: '8GB RAM + 256GB',
+                    color: 'Midnight Black',
+                    price: 135000,
+                    priceMinor: 13500000,
+                    compareAtPrice: 145000,
+                    compareAtPriceMinor: 14500000,
+                    stock: { quantity: 14, status: 'in_stock', moq: 1 },
+                    specifications: {
+                        screenInches: '6.74" 90Hz IPS Display',
+                        camera: '50MP AI Main + 2MP Macro',
+                        processor: 'MediaTek Helio G85 Turbo',
+                        battery: '5000mAh',
+                        warrantyMonths: 12
+                    }
+                },
+                {
+                    id: 'var_redmi_8_256_blu',
+                    name: '8GB RAM + 256GB Storage - Glacier White',
+                    sku: 'RDM-13C-8-256-WHT',
+                    memoryStorage: '8GB RAM + 256GB',
+                    color: 'Glacier White',
+                    price: 135000,
+                    priceMinor: 13500000,
+                    compareAtPrice: 145000,
+                    compareAtPriceMinor: 14500000,
+                    stock: { quantity: 9, status: 'in_stock', moq: 1 },
+                    specifications: {
+                        screenInches: '6.74" 90Hz IPS Display',
+                        camera: '50MP AI Main',
+                        battery: '5000mAh',
+                        warrantyMonths: 12
+                    }
+                }
+            ]
+        },
+
+        // 7. Gadgets & Appliances: Smart Inverter Air Conditioner (Mode B)
+        {
+            id: 'uw_prd_3002',
+            isBaseProduct: true,
+            hasVariants: true,
+            name: 'Smart Dual-Inverter Split Air Conditioner',
+            title: 'Smart Dual-Inverter Split Air Conditioner',
+            brand: 'LG Electronics',
+            category: 'gadgets',
+            categoryId: 'gadgets',
+            categoryName: 'Gadgets & Tech',
+            subCategory: 'appliances',
+            subSubCategory: 'cooling',
+            image: '../assetsecm/images/soups/afang-soup-roundbowl.png',
+            media: [
+                { url: '../assetsecm/images/soups/afang-soup-roundbowl.png', thumbnailUrl: '../assetsecm/images/soups/afang-soup-roundbowl.png' }
+            ],
+            description: 'Energy-saving 70% dual inverter cooling compressor with 100% pure copper installation pipe kit and turbo cooling.',
             rating: 4.9,
-            reviewsCount: 81,
-            inStock: true,
-            quantity: 7,
-            unitLabel: 'set',
-            description: 'Multi-layer durable granite non-stick coating. Induction-ready stainless base with heat-resistant silicone grips.',
+            reviewsCount: 47,
+            unitLabel: 'unit',
+            modalType: 'attribute_options',
+            attributes: [
+                { key: 'horsepower', label: 'Capacity (Horsepower)', values: ['1.0 HP Inverter', '1.5 HP Inverter', '2.0 HP Turbo'] }
+            ],
+            variants: [
+                {
+                    id: 'var_ac_1hp',
+                    name: '1.0 HP Dual Inverter Pure Copper',
+                    sku: 'AC-LG-10HP',
+                    horsepower: '1.0 HP Inverter',
+                    price: 195000,
+                    priceMinor: 19500000,
+                    compareAtPrice: 220000,
+                    compareAtPriceMinor: 22000000,
+                    stock: { quantity: 8, status: 'in_stock', moq: 1 },
+                    specifications: { capacity: '1.0 Horsepower', compressor: 'Dual Inverter (10yr warranty)', refrigerant: 'Eco R410A' }
+                },
+                {
+                    id: 'var_ac_15hp',
+                    name: '1.5 HP Dual Inverter Pure Copper',
+                    sku: 'AC-LG-15HP',
+                    horsepower: '1.5 HP Inverter',
+                    price: 245000,
+                    priceMinor: 24500000,
+                    compareAtPrice: 275000,
+                    compareAtPriceMinor: 27500000,
+                    stock: { quantity: 12, status: 'in_stock', moq: 1 },
+                    specifications: { capacity: '1.5 Horsepower', compressor: 'Dual Inverter (10yr warranty)', refrigerant: 'Eco R410A' }
+                },
+                {
+                    id: 'var_ac_2hp',
+                    name: '2.0 HP Turbo Inverter Pure Copper',
+                    sku: 'AC-LG-20HP',
+                    horsepower: '2.0 HP Turbo',
+                    price: 315000,
+                    priceMinor: 31500000,
+                    compareAtPrice: 350000,
+                    compareAtPriceMinor: 35000000,
+                    stock: { quantity: 6, status: 'in_stock', moq: 1 },
+                    specifications: { capacity: '2.0 Horsepower', compressor: 'Dual Inverter Turbo', refrigerant: 'Eco R410A' }
+                }
+            ]
+        },
+
+        // 8. Home Essentials: Stainless Induction Cooker (Single Base Product - No variants)
+        {
+            id: 'uw_prd_4001',
+            isBaseProduct: true,
+            hasVariants: false,
+            name: 'Double Induction Glass Cooker 2200W',
+            title: 'Double Induction Glass Cooker 2200W',
+            brand: 'MasterChef Prime',
+            category: 'home',
+            categoryId: 'home',
+            categoryName: 'Home Essentials',
+            subCategory: 'kitchen-dining',
+            subSubCategory: 'induction-cookers',
+            image: 'assets/images/placeholders/gas-cooker.svg',
+            media: [
+                { url: 'assets/images/placeholders/gas-cooker.svg', thumbnailUrl: 'assets/images/placeholders/gas-cooker.svg' }
+            ],
+            price: 48000,
+            priceMinor: 4800000,
+            compareAtPrice: 55000,
+            compareAtPriceMinor: 5500000,
+            description: 'Ultra-slim dual surface induction cooker with electromagnetic touch sensors, 8 cooking presets, and auto-shutoff security.',
+            rating: 4.9,
+            reviewsCount: 39,
+            unitLabel: 'unit',
+            stock: { quantity: 15, status: 'in_stock', moq: 1 },
             specifications: {
-                piecesCount: '7 Pieces (3 Pots, 1 Pan, 3 Tempered Lids)',
-                coating: 'Swiss Granite PTFE/PFOA Free',
-                stoveCompatibility: 'Gas, Electric, Induction',
-                dishwasherSafe: 'Yes'
-            }
+                power: '2200 Watts Dual Burner',
+                surface: 'Black Microcrystalline Ceramic Glass',
+                voltage: '220V - 240V (50Hz)',
+                safety: 'Overheat & Auto-Pan Detection Protection'
+            },
+            variants: []
+        },
+
+        // 9. Home Essentials: Non-Stick Granite Cookware Set (Mode B)
+        {
+            id: 'uw_prd_4002',
+            isBaseProduct: true,
+            hasVariants: true,
+            name: 'Non-Stick Granite Cookware Pots & Pans Set',
+            title: 'Non-Stick Granite Cookware Pots & Pans Set',
+            brand: 'ChefElite Heritage',
+            category: 'home',
+            categoryId: 'home',
+            categoryName: 'Home Essentials',
+            subCategory: 'kitchen-dining',
+            subSubCategory: 'cookware-sets',
+            image: '../assetsecm/images/soups/bitterleaf-soup-roundbowl.png',
+            media: [
+                { url: '../assetsecm/images/soups/bitterleaf-soup-roundbowl.png', thumbnailUrl: '../assetsecm/images/soups/bitterleaf-soup-roundbowl.png' }
+            ],
+            description: 'Heavy gauge forged aluminum cookware coated with natural granite non-stick layer. Compatible with gas, electric, and induction stoves.',
+            rating: 4.9,
+            reviewsCount: 88,
+            unitLabel: 'set',
+            modalType: 'attribute_options',
+            attributes: [
+                { key: 'setTier', label: 'Cookware Set Size', values: ['5-Piece Starter Set', '7-Piece Family Set', '10-Piece Chef Collection'] }
+            ],
+            variants: [
+                {
+                    id: 'var_pot_5pc',
+                    name: '5-Piece Starter Set (2 Pots + 1 Pan + 2 Lids)',
+                    sku: 'POT-SET-5PC',
+                    setTier: '5-Piece Starter Set',
+                    price: 32000,
+                    priceMinor: 3200000,
+                    compareAtPrice: 38000,
+                    compareAtPriceMinor: 3800000,
+                    stock: { quantity: 15, status: 'in_stock', moq: 1 },
+                    specifications: { pieces: '5 Pieces', coating: 'Granite Non-Stick', lids: 'Tempered Glass' }
+                },
+                {
+                    id: 'var_pot_7pc',
+                    name: '7-Piece Family Set (3 Pots + 1 Pan + 3 Lids)',
+                    sku: 'POT-SET-7PC',
+                    setTier: '7-Piece Family Set',
+                    price: 48000,
+                    priceMinor: 4800000,
+                    compareAtPrice: 56000,
+                    compareAtPriceMinor: 5600000,
+                    stock: { quantity: 18, status: 'in_stock', moq: 1 },
+                    specifications: { pieces: '7 Pieces', coating: 'Granite Non-Stick', lids: 'Tempered Glass with Steam Vent' }
+                },
+                {
+                    id: 'var_pot_10pc',
+                    name: '10-Piece Luxury Chef Collection',
+                    sku: 'POT-SET-10PC',
+                    setTier: '10-Piece Chef Collection',
+                    price: 68000,
+                    priceMinor: 6800000,
+                    compareAtPrice: 80000,
+                    compareAtPriceMinor: 8000000,
+                    stock: { quantity: 7, status: 'in_stock', moq: 1 },
+                    specifications: { pieces: '10 Pieces Complete', coating: 'Swiss Granite PTFE/PFOA Free', handles: 'Stay-Cool Ergonomic Wood Grain' }
+                }
+            ]
+        },
+
+        // 10. Groceries: Granulated Sugar (Mode A: scrollable variants)
+        {
+            id: 'uw_prd_1003',
+            isBaseProduct: true,
+            hasVariants: true,
+            name: 'Golden Penny Pure White Granulated Sugar',
+            title: 'Golden Penny Pure White Granulated Sugar',
+            brand: 'Golden Penny',
+            category: 'groceries',
+            categoryId: 'groceries',
+            categoryName: 'Groceries & Foodstuff',
+            subCategory: 'baking-sugar',
+            subSubCategory: 'refined-sugar',
+            image: '../assetsecm/images/soups/egusi-soup-roundbowl.png',
+            media: [
+                { url: '../assetsecm/images/soups/egusi-soup-roundbowl.png', thumbnailUrl: '../assetsecm/images/soups/egusi-soup-roundbowl.png' }
+            ],
+            description: 'Pure, quick-dissolving white granulated sugar. Refined to pharmaceutical grade for household baking, tea, and catering.',
+            rating: 4.8,
+            reviewsCount: 94,
+            unitLabel: 'pack / bag',
+            modalType: 'groceries_scroll_variants',
+            variants: [
+                {
+                    id: 'var_sugar_1kg',
+                    name: '1kg Sachet Pack',
+                    sku: 'SUG-1KG-GP',
+                    price: 1800,
+                    priceMinor: 180000,
+                    compareAtPrice: 2100,
+                    compareAtPriceMinor: 210000,
+                    image: '../assetsecm/images/soups/egusi-soup-roundbowl.png',
+                    quantityValue: 1,
+                    quantityUnit: 'kg',
+                    stock: { quantity: 150, status: 'in_stock', moq: 1 },
+                    specifications: { packSize: '1kg Moisture-Proof Sachet', purity: '99.8% Cane Sugar' }
+                },
+                {
+                    id: 'var_sugar_5kg',
+                    name: '5kg Handy Family Pack',
+                    sku: 'SUG-5KG-GP',
+                    price: 8500,
+                    priceMinor: 850000,
+                    compareAtPrice: 9500,
+                    compareAtPriceMinor: 950000,
+                    image: '../assetsecm/images/soups/egusi-soup-roundbowl.png',
+                    quantityValue: 5,
+                    quantityUnit: 'kg',
+                    stock: { quantity: 45, status: 'in_stock', moq: 1 },
+                    specifications: { packSize: '5kg Woven Bag with Handle', purity: '99.8% Cane Sugar' }
+                },
+                {
+                    id: 'var_sugar_50kg',
+                    name: '50kg Commercial Wholesale Bag',
+                    sku: 'SUG-50KG-GP',
+                    price: 82000,
+                    priceMinor: 8200000,
+                    compareAtPrice: 88000,
+                    compareAtPriceMinor: 8800000,
+                    image: '../assetsecm/images/soups/egusi-soup-roundbowl.png',
+                    quantityValue: 50,
+                    quantityUnit: 'kg',
+                    stock: { quantity: 20, status: 'in_stock', moq: 1 },
+                    specifications: { packSize: '50kg Commercial Polypropylene Bag', purity: 'Catering Wholesale Grade' }
+                }
+            ]
+        },
+
+        // 11. Fashion: Women's Wear - Floral Chiffon Maxi Dress (Mode B)
+        {
+            id: 'uw_prd_2003',
+            isBaseProduct: true,
+            hasVariants: true,
+            name: 'Chiffon Floral Tiered Wrap Maxi Dress',
+            title: 'Chiffon Floral Tiered Wrap Maxi Dress',
+            brand: 'ZaraBella Studio',
+            category: 'fashion',
+            categoryId: 'fashion',
+            categoryName: 'Fashion & Wears',
+            subCategory: 'womens-wear',
+            subSubCategory: 'dresses',
+            image: 'assets/images/placeholders/streetwear-sneakers.svg',
+            media: [
+                { url: 'assets/images/placeholders/streetwear-sneakers.svg', thumbnailUrl: 'assets/images/placeholders/streetwear-sneakers.svg' }
+            ],
+            description: 'Breezy lightweight chiffon wrap maxi dress with flowing tiered ruffled hem and adjustable waist tie. Perfect for casual outings and semi-formal events.',
+            rating: 4.9,
+            reviewsCount: 76,
+            unitLabel: 'piece',
+            modalType: 'attribute_options',
+            attributes: [
+                { key: 'size', label: 'Dress Size', values: ['Small (UK 8)', 'Medium (UK 10-12)', 'Large (UK 14)', 'XL (UK 16)'] }
+            ],
+            variants: [
+                {
+                    id: 'var_dress_floral_s',
+                    name: 'Small (UK 8)',
+                    sku: 'DRS-FLR-S',
+                    size: 'Small (UK 8)',
+                    price: 18500,
+                    priceMinor: 1850000,
+                    compareAtPrice: 22000,
+                    compareAtPriceMinor: 2200000,
+                    image: 'assets/images/placeholders/streetwear-sneakers.svg',
+                    stock: { quantity: 8, status: 'in_stock', moq: 1 },
+                    specifications: { material: 'Chiffon Polyester Blend', length: 'Maxi 54 inches', fit: 'True to Size' }
+                },
+                {
+                    id: 'var_dress_floral_m',
+                    name: 'Medium (UK 10-12)',
+                    sku: 'DRS-FLR-M',
+                    size: 'Medium (UK 10-12)',
+                    price: 19500,
+                    priceMinor: 1950000,
+                    compareAtPrice: 23000,
+                    compareAtPriceMinor: 2300000,
+                    image: 'assets/images/placeholders/streetwear-sneakers.svg',
+                    stock: { quantity: 14, status: 'in_stock', moq: 1 },
+                    specifications: { material: 'Chiffon Polyester Blend', length: 'Maxi 55 inches', fit: 'True to Size' }
+                },
+                {
+                    id: 'var_dress_floral_l',
+                    name: 'Large (UK 14)',
+                    sku: 'DRS-FLR-L',
+                    size: 'Large (UK 14)',
+                    price: 19500,
+                    priceMinor: 1950000,
+                    compareAtPrice: 23000,
+                    compareAtPriceMinor: 2300000,
+                    image: 'assets/images/placeholders/streetwear-sneakers.svg',
+                    stock: { quantity: 9, status: 'in_stock', moq: 1 },
+                    specifications: { material: 'Chiffon Polyester Blend', length: 'Maxi 56 inches', fit: 'True to Size' }
+                }
+            ]
+        },
+
+        // 12. Fashion: Women's Wear - Oversized Knit Cardigan (Mode B)
+        {
+            id: 'uw_prd_2004',
+            isBaseProduct: true,
+            hasVariants: true,
+            name: 'Oversized Cashmere-Blend Knit Cardigan',
+            title: 'Oversized Cashmere-Blend Knit Cardigan',
+            brand: 'UrbanElegance',
+            category: 'fashion',
+            categoryId: 'fashion',
+            categoryName: 'Fashion & Wears',
+            subCategory: 'womens-wear',
+            subSubCategory: 'knitwear',
+            image: 'assets/images/placeholders/streetwear-sneakers.svg',
+            media: [
+                { url: 'assets/images/placeholders/streetwear-sneakers.svg', thumbnailUrl: 'assets/images/placeholders/streetwear-sneakers.svg' }
+            ],
+            description: 'Ultra-soft chunky knit cardigan with ribbed cuffs and tortoiseshell buttons. Cosy layering for daily wear.',
+            rating: 4.8,
+            reviewsCount: 52,
+            unitLabel: 'piece',
+            modalType: 'attribute_options',
+            attributes: [
+                { key: 'color', label: 'Color Shade', values: ['Warm Cream', 'Charcoal Grey', 'Olive Moss'] }
+            ],
+            variants: [
+                {
+                    id: 'var_cardigan_crm',
+                    name: 'Warm Cream',
+                    sku: 'CRD-KNT-CRM',
+                    color: 'Warm Cream',
+                    price: 15500,
+                    priceMinor: 1550000,
+                    compareAtPrice: 19000,
+                    compareAtPriceMinor: 1900000,
+                    image: 'assets/images/placeholders/streetwear-sneakers.svg',
+                    stock: { quantity: 11, status: 'in_stock', moq: 1 },
+                    specifications: { knitGauge: 'Chunky 7-Gauge', material: 'Cashmere-Cotton Blend', care: 'Machine Wash Delicate' }
+                },
+                {
+                    id: 'var_cardigan_gry',
+                    name: 'Charcoal Grey',
+                    sku: 'CRD-KNT-GRY',
+                    color: 'Charcoal Grey',
+                    price: 15500,
+                    priceMinor: 1550000,
+                    compareAtPrice: 19000,
+                    compareAtPriceMinor: 1900000,
+                    image: 'assets/images/placeholders/streetwear-sneakers.svg',
+                    stock: { quantity: 8, status: 'in_stock', moq: 1 },
+                    specifications: { knitGauge: 'Chunky 7-Gauge', material: 'Cashmere-Cotton Blend', care: 'Machine Wash Delicate' }
+                }
+            ]
+        },
+
+        // 13. Gadgets: Electric Kettle (Mode B)
+        {
+            id: 'uw_prd_3003',
+            isBaseProduct: true,
+            hasVariants: true,
+            name: 'Century 2.0L Fast-Boil Stainless Electric Kettle',
+            title: 'Century 2.0L Fast-Boil Stainless Electric Kettle',
+            brand: 'Century Home',
+            category: 'gadgets',
+            categoryId: 'gadgets',
+            categoryName: 'Gadgets & Tech',
+            subCategory: 'appliances',
+            subSubCategory: 'cooking-appliances',
+            image: 'assets/images/placeholders/water-boiler.svg',
+            media: [
+                { url: 'assets/images/placeholders/water-boiler.svg', thumbnailUrl: 'assets/images/placeholders/water-boiler.svg' }
+            ],
+            description: 'Food grade SUS304 stainless steel electric kettle with 1800W rapid boiling technology, 360-degree cordless swivel base, and auto shut-off.',
+            rating: 4.8,
+            reviewsCount: 112,
+            unitLabel: 'unit',
+            modalType: 'attribute_options',
+            attributes: [
+                { key: 'capacity', label: 'Kettle Capacity', values: ['2.0 Liters (Standard)', '2.5 Liters (Large Family)'] }
+            ],
+            variants: [
+                {
+                    id: 'var_kettle_2l',
+                    name: '2.0 Liters (Standard)',
+                    sku: 'KET-2L-SS',
+                    capacity: '2.0 Liters (Standard)',
+                    price: 14500,
+                    priceMinor: 1450000,
+                    compareAtPrice: 18500,
+                    compareAtPriceMinor: 1850000,
+                    image: 'assets/images/placeholders/water-boiler.svg',
+                    stock: { quantity: 24, status: 'in_stock', moq: 1 },
+                    specifications: { power: '1800W', body: 'SUS304 Stainless Steel', safety: 'Boil-Dry Protection & Auto-Off' }
+                },
+                {
+                    id: 'var_kettle_2_5l',
+                    name: '2.5 Liters (Large Family)',
+                    sku: 'KET-25L-SS',
+                    capacity: '2.5 Liters (Large Family)',
+                    price: 17500,
+                    priceMinor: 1750000,
+                    compareAtPrice: 22000,
+                    compareAtPriceMinor: 2200000,
+                    image: 'assets/images/placeholders/water-boiler.svg',
+                    stock: { quantity: 15, status: 'in_stock', moq: 1 },
+                    specifications: { power: '2000W', body: 'SUS304 Stainless Steel', safety: 'Boil-Dry Protection & Auto-Off' }
+                }
+            ]
+        },
+
+        // 14. Gadgets: Blender with Grinder (Mode B)
+        {
+            id: 'uw_prd_3004',
+            isBaseProduct: true,
+            hasVariants: true,
+            name: 'Binatone 1.5L Blender with Dry Mill Grinder',
+            title: 'Binatone 1.5L Blender with Dry Mill Grinder',
+            brand: 'Binatone Electronics',
+            category: 'gadgets',
+            categoryId: 'gadgets',
+            categoryName: 'Gadgets & Tech',
+            subCategory: 'appliances',
+            subSubCategory: 'cooking-appliances',
+            image: 'assets/images/placeholders/blender.svg',
+            media: [
+                { url: 'assets/images/placeholders/blender.svg', thumbnailUrl: 'assets/images/placeholders/blender.svg' }
+            ],
+            description: '450W pure copper motor blender with stainless steel ice-crushing blades and dedicated dry spice/coffee grinder cup.',
+            rating: 4.9,
+            reviewsCount: 84,
+            unitLabel: 'unit',
+            modalType: 'attribute_options',
+            attributes: [
+                { key: 'jarMaterial', label: 'Blending Jar Material', values: ['Unbreakable Polycarbonate', 'Heavy Duty Glass'] }
+            ],
+            variants: [
+                {
+                    id: 'var_blender_poly',
+                    name: 'Unbreakable Polycarbonate',
+                    sku: 'BLN-POLY-15',
+                    jarMaterial: 'Unbreakable Polycarbonate',
+                    price: 24500,
+                    priceMinor: 2450000,
+                    compareAtPrice: 28500,
+                    compareAtPriceMinor: 2850000,
+                    image: 'assets/images/placeholders/blender.svg',
+                    stock: { quantity: 18, status: 'in_stock', moq: 1 },
+                    specifications: { motor: '450W Pure Copper', speeds: '2 Speeds + Pulse', jar: '1.5L BPA-Free Polycarbonate' }
+                },
+                {
+                    id: 'var_blender_glass',
+                    name: 'Heavy Duty Glass',
+                    sku: 'BLN-GLS-15',
+                    jarMaterial: 'Heavy Duty Glass',
+                    price: 29500,
+                    priceMinor: 2950000,
+                    compareAtPrice: 34000,
+                    compareAtPriceMinor: 3400000,
+                    image: 'assets/images/placeholders/blender.svg',
+                    stock: { quantity: 10, status: 'in_stock', moq: 1 },
+                    specifications: { motor: '500W Pure Copper', speeds: '2 Speeds + Pulse', jar: '1.5L Thermal Shock Proof Glass' }
+                }
+            ]
+        },
+
+        // 15. Home: Heavy-Duty Voltage Stabilizer (Mode B)
+        {
+            id: 'uw_prd_4003',
+            isBaseProduct: true,
+            hasVariants: true,
+            name: 'Heavy-Duty 3.5kVA Pure Copper Voltage Stabilizer',
+            title: 'Heavy-Duty 3.5kVA Pure Copper Voltage Stabilizer',
+            brand: 'Century Power Systems',
+            category: 'home',
+            categoryId: 'home',
+            categoryName: 'Home Essentials',
+            subCategory: 'appliances',
+            subSubCategory: 'electrical-power',
+            image: 'assets/images/placeholders/voltage-stabilizer.svg',
+            media: [
+                { url: 'assets/images/placeholders/voltage-stabilizer.svg', thumbnailUrl: 'assets/images/placeholders/voltage-stabilizer.svg' }
+            ],
+            description: 'Rugged automatic servo voltage regulator for refrigerators, deep freezers, and sensitive AC units with input range 100V - 260V.',
+            rating: 4.9,
+            reviewsCount: 65,
+            unitLabel: 'unit',
+            modalType: 'attribute_options',
+            attributes: [
+                { key: 'powerRating', label: 'Power Rating Capacity', values: ['3.5kVA Relay Type', '5.0kVA Servo Motor'] }
+            ],
+            variants: [
+                {
+                    id: 'var_stab_35kva',
+                    name: '3.5kVA Relay Type',
+                    sku: 'STB-35KVA-RLY',
+                    powerRating: '3.5kVA Relay Type',
+                    price: 42000,
+                    priceMinor: 4200000,
+                    compareAtPrice: 48000,
+                    compareAtPriceMinor: 4800000,
+                    image: 'assets/images/placeholders/voltage-stabilizer.svg',
+                    stock: { quantity: 14, status: 'in_stock', moq: 1 },
+                    specifications: { capacity: '3500 Watts Max', inputVoltage: '100V - 260V AC', outputVoltage: '220V +/- 8%' }
+                },
+                {
+                    id: 'var_stab_5kva',
+                    name: '5.0kVA Servo Motor',
+                    sku: 'STB-50KVA-SRV',
+                    powerRating: '5.0kVA Servo Motor',
+                    price: 68000,
+                    priceMinor: 6800000,
+                    compareAtPrice: 76000,
+                    compareAtPriceMinor: 7600000,
+                    image: 'assets/images/placeholders/voltage-stabilizer.svg',
+                    stock: { quantity: 8, status: 'in_stock', moq: 1 },
+                    specifications: { capacity: '5000 Watts Max', inputVoltage: '95V - 270V AC', outputVoltage: '220V +/- 3% High Precision' }
+                }
+            ]
+        },
+
+        // Home Essentials: Cookers & Living -> Scanfrost 4-Burner Cooker
+        {
+            id: 'uw_prd_4004',
+            isBaseProduct: true,
+            hasVariants: true,
+            name: 'Scanfrost 4-Burner Stainless Steel Tabletop Gas Cooker',
+            title: 'Scanfrost 4-Burner Stainless Steel Tabletop Gas Cooker',
+            brand: 'Scanfrost',
+            category: 'home',
+            categoryId: 'home',
+            categoryName: 'Home Essentials',
+            subCategory: 'appliances',
+            subSubCategory: 'cookers',
+            image: 'assets/images/placeholders/gas-cooker.svg',
+            media: [
+                { url: 'assets/images/placeholders/gas-cooker.svg', thumbnailUrl: 'assets/images/placeholders/gas-cooker.svg' }
+            ],
+            description: 'Heavy-gauge stainless steel tabletop cooker with high-efficiency blue flame brass burners and auto-ignition push knob.',
+            rating: 4.8,
+            reviewsCount: 47,
+            unitLabel: 'unit',
+            modalType: 'attribute_options',
+            attributes: [
+                { key: 'finish', label: 'Exterior Finish', values: ['Polished Stainless Steel', 'Matte Black Coated'] }
+            ],
+            variants: [
+                {
+                    id: 'var_cooker_ss',
+                    name: 'Polished Stainless Steel (Silver)',
+                    sku: 'SCN-4B-SS',
+                    finish: 'Polished Stainless Steel',
+                    price: 48500,
+                    priceMinor: 4850000,
+                    compareAtPrice: 58000,
+                    compareAtPriceMinor: 5800000,
+                    image: 'assets/images/placeholders/gas-cooker.svg',
+                    stock: { quantity: 12, status: 'in_stock', moq: 1 },
+                    specifications: { burners: '4 Heavy Duty Brass Burners', material: 'Anti-Rust Mirror Stainless Steel', ignition: 'Piezo Auto Push Spark' }
+                },
+                {
+                    id: 'var_cooker_blk',
+                    name: 'Matte Black Coated Edition',
+                    sku: 'SCN-4B-BLK',
+                    finish: 'Matte Black Coated',
+                    price: 52000,
+                    priceMinor: 5200000,
+                    compareAtPrice: 62000,
+                    compareAtPriceMinor: 6200000,
+                    image: 'assets/images/placeholders/gas-cooker.svg',
+                    stock: { quantity: 9, status: 'in_stock', moq: 1 },
+                    specifications: { burners: '4 Heavy Duty Brass Burners', material: 'Heat-Resistant Powder Matte Black', ignition: 'Piezo Auto Push Spark' }
+                }
+            ]
         }
     ];
 
@@ -635,9 +2131,15 @@
         return 'uwanbuy';
     }
 
-    function getUser() {
+    function getUserStorageKey(storeName) {
+        const s = storeName || detectStoreName();
+        return 'ab_user_' + s;
+    }
+
+    function getUser(storeName) {
+        const s = storeName || detectStoreName();
         try {
-            const raw = localStorage.getItem(USER_STORAGE_KEY);
+            const raw = localStorage.getItem(getUserStorageKey(s));
             if (!raw) return null;
             return JSON.parse(raw);
         } catch (e) {
@@ -645,13 +2147,15 @@
         }
     }
 
-    function setUser(userData) {
+    function setUser(userData, storeName) {
+        const s = storeName || detectStoreName();
+        const key = getUserStorageKey(s);
         if (!userData) {
-            localStorage.removeItem(USER_STORAGE_KEY);
+            localStorage.removeItem(key);
         } else {
-            localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(userData));
+            localStorage.setItem(key, JSON.stringify(userData));
         }
-        syncUI();
+        if (typeof syncUI === "function") syncUI();
     }
 
     function getLocation() {
@@ -685,40 +2189,48 @@
         }
     }
 
-    function getCartCount() {
-        const sources = ['ab_cart', 'thriftz_cart', 'uwanbuy_cart'];
+    function getCartCount(storeName) {
+        const s = storeName || detectStoreName();
         let total = 0;
+        let cartKey = 'uwanbuy_cart_state';
+        if (s === 'betasup') cartKey = 'betasup_cart_state';
+        else if (s === 'thriftz') cartKey = 'thriftz_cart_state';
 
-        sources.forEach((key) => {
-            const cart = getCartItemsFromStorage(key);
-            cart.forEach((item) => {
-                total += safeNumber(item.quantity, safeNumber(item.qty, 1));
-            });
+        const cart = getCartItemsFromStorage(cartKey);
+        cart.forEach((item) => {
+            total += safeNumber(item.quantity, safeNumber(item.qty, 1));
         });
 
         return total;
     }
 
     function getWalletValue(storeName) {
-        const currentUser = getUser();
+        const s = storeName || detectStoreName();
+        const currentUser = getUser(s);
         if (currentUser && safeNumber(currentUser.wallet, null) !== null) {
             return safeNumber(currentUser.wallet, 0);
         }
 
-        if (typeof window.walletBalance === 'number') {
+        const storeWalletKey = s + '_wallet_balance';
+        const storeWalletVal = parseFloat(localStorage.getItem(storeWalletKey));
+        if (!isNaN(storeWalletVal)) {
+            return storeWalletVal;
+        }
+
+        if (typeof window.walletBalance === 'number' && s === detectStoreName()) {
             return window.walletBalance;
         }
 
         const state = readState();
-        const persisted = state[storeName] && typeof state[storeName].wallet === 'number'
-            ? state[storeName].wallet
+        const persisted = state[s] && typeof state[s].wallet === 'number'
+            ? state[s].wallet
             : null;
 
         if (persisted !== null) {
             return persisted;
         }
 
-        return STORE_DEFAULTS[storeName]?.wallet || 0;
+        return STORE_DEFAULTS[s]?.wallet || 0;
     }
 
     function formatNaira(amount) {
@@ -732,16 +2244,999 @@
 
     function syncLocationDisplays() {
         const currentLoc = getLocation();
-        document.querySelectorAll('.storefront-current-location, #navLocationText, #nav-location-label, #currentLocationLabel').forEach(el => {
+        document.querySelectorAll('.storefront-current-location, #navLocationText, #nav-location-label, #currentLocationLabel, #abCornerHubLabel, #modalCurrentHubBadge').forEach(el => {
             el.textContent = currentLoc;
         });
+        const activeHubObj = AVAILABLE_HUBS.find(h => h.id.toLowerCase() === currentLoc.toLowerCase());
+        document.querySelectorAll('#abCornerWaveDot').forEach(el => {
+            if (activeHubObj && activeHubObj.hasLiveSession) {
+                el.classList.add('is-live');
+            } else {
+                el.classList.remove('is-live');
+            }
+        });
+    }
+
+    function filterHubs(query = '', regionFilter = 'all') {
+        const q = String(query || '').trim().toLowerCase();
+        const rf = String(regionFilter || 'all').trim().toLowerCase();
+
+        return AVAILABLE_HUBS.filter(hub => {
+            if (rf === 'live' && !hub.hasLiveSession) return false;
+            if (rf !== 'all' && rf !== 'live') {
+                const groupMatch = (hub.regionGroup || '').toLowerCase() === rf ||
+                    (hub.city || '').toLowerCase().includes(rf) ||
+                    (hub.state || '').toLowerCase().includes(rf);
+                if (!groupMatch) return false;
+            }
+            if (!q) return true;
+            const haystack = [
+                hub.id,
+                hub.name,
+                hub.area || '',
+                hub.street || '',
+                hub.city || '',
+                hub.state || ''
+            ].join(' ').toLowerCase();
+            return haystack.includes(q);
+        });
+    }
+
+    let currentHubSearchQuery = '';
+    let currentHubRegionFilter = 'all';
+
+    function buildHubItemHtml(hub, currentLoc) {
+        const isSelected = hub.id.toLowerCase() === String(currentLoc || '').toLowerCase();
+        const statusHtml = hub.hasLiveSession
+            ? `<span class="text-success fw-bold"><i class="bi bi-broadcast-pin me-1"></i>Live Session Running</span>`
+            : `<span>Normal Fulfillment (${hub.deliveryEta || '2-4 hrs'})</span>`;
+        const rightBadgeHtml = hub.hasLiveSession
+            ? `<span class="badge bg-danger rounded-pill text-nowrap">${hub.waveLabel || 'Active Wave'}</span>`
+            : `<span class="badge bg-light text-secondary border rounded-pill text-nowrap">${hub.city}</span>`;
+
+        return `
+            <button type="button" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center p-3 hub-select-item ${isSelected ? 'active-hub-selected' : ''}" data-hub="${hub.id}">
+                <div class="pe-2 text-start">
+                    <div class="d-flex align-items-center flex-wrap gap-2">
+                        <span class="fw-bold text-dark">${hub.name}</span>
+                        ${isSelected ? '<span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill text-xs"><i class="bi bi-check-circle-fill me-1"></i>Selected</span>' : ''}
+                    </div>
+                    <small class="text-muted d-block mt-1">
+                        <i class="bi bi-signpost-split me-1"></i>${hub.street || hub.area || hub.city} • ${statusHtml}
+                    </small>
+                </div>
+                <div class="d-flex align-items-center gap-2 flex-shrink-0">
+                    ${rightBadgeHtml}
+                    <i class="bi ${isSelected ? 'bi-check2-circle text-success fs-5' : 'bi-chevron-right text-muted'}"></i>
+                </div>
+            </button>
+        `;
+    }
+
+    function renderHubListItems() {
+        if (typeof document === 'undefined' || !document.getElementById) return;
+        const listEl = document.getElementById('hubsListGroup');
+        if (!listEl) return;
+
+        const currentLoc = getLocation();
+        const matches = filterHubs(currentHubSearchQuery, currentHubRegionFilter);
+        const countBadge = document.getElementById('hubSearchCountBadge');
+        if (countBadge) {
+            countBadge.textContent = `Showing ${matches.length} of ${AVAILABLE_HUBS.length} hubs`;
+        }
+
+        if (matches.length === 0) {
+            const escapedQuery = String(currentHubSearchQuery || '').replace(/[<>"'&]/g, '');
+            listEl.innerHTML = `
+                <div class="text-center p-4 bg-light rounded-3 border">
+                    <i class="bi bi-geo-alt text-muted fs-2 d-block mb-2"></i>
+                    <h6 class="fw-bold text-dark mb-1">No matching hub found for "${escapedQuery}"</h6>
+                    <p class="text-muted small mb-0">Try searching another neighborhood, street, city, or state filter above.</p>
+                </div>
+            `;
+            return;
+        }
+
+        listEl.innerHTML = matches.map(h => buildHubItemHtml(h, currentLoc)).join('');
+    }
+
+    function enhanceLocationSwitcherModal() {
+        if (typeof document === 'undefined' || !document.getElementById) return;
+        const modalEl = document.getElementById('modal-location-switcher');
+        if (!modalEl) return;
+
+        // Look for the content wrapper inside #modal-location-switcher (Wait until iziModal or DOM is ready)
+        const contentWrap = modalEl.querySelector('.iziModal-content > .p-4') || modalEl.querySelector('.p-4') || modalEl;
+        if (!contentWrap) return;
+
+        // If not yet upgraded with #hubSearchInput, inject the full searchable area switcher UI
+        if (!modalEl.querySelector('#hubSearchInput')) {
+            const currentLoc = getLocation();
+            contentWrap.innerHTML = `
+                <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-2">
+                    <h5 class="fw-bold mb-0 text-dark"><i class="bi bi-geo-alt-fill text-danger me-2"></i>Select Your Shopping Hub</h5>
+                    <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-3 py-1 small">
+                        <i class="bi bi-pin-map-fill me-1"></i>Current: <strong id="modalCurrentHubBadge">${currentLoc}</strong>
+                    </span>
+                </div>
+                <p class="text-muted small mb-3">Search by neighborhood, street, city, or state to see real-time inventory and live wave sessions in your area.</p>
+
+                <!-- Search Input Bar -->
+                <div class="input-group mb-2 shadow-xs">
+                    <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-search"></i></span>
+                    <input type="text" id="hubSearchInput" class="form-control border-start-0 ps-0" placeholder="Search area, street, city or state (e.g. Tanke, Lekki, Wuse, Bodija)..." autocomplete="off">
+                    <button class="btn btn-outline-secondary d-none" type="button" id="btnClearHubSearch" title="Clear search"><i class="bi bi-x-lg"></i></button>
+                </div>
+
+                <!-- Region / Live Wave Filter Pills -->
+                <div class="d-flex flex-wrap align-items-center gap-1 mb-2" id="hubRegionFilterBar">
+                    <button type="button" class="btn btn-xs hub-filter-pill active" data-region="all">All Areas (${AVAILABLE_HUBS.length})</button>
+                    <button type="button" class="btn btn-xs hub-filter-pill" data-region="live"><i class="bi bi-lightning-charge-fill text-danger me-1"></i>Active Wave</button>
+                    <button type="button" class="btn btn-xs hub-filter-pill" data-region="ilorin">Ilorin / Kwara</button>
+                    <button type="button" class="btn btn-xs hub-filter-pill" data-region="lagos">Lagos</button>
+                    <button type="button" class="btn btn-xs hub-filter-pill" data-region="abuja">Abuja</button>
+                    <button type="button" class="btn btn-xs hub-filter-pill" data-region="ph">Port Harcourt</button>
+                    <button type="button" class="btn btn-xs hub-filter-pill" data-region="other">Ibadan / Enugu / Kano</button>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <small class="text-muted fw-semibold" id="hubSearchCountBadge">Showing ${AVAILABLE_HUBS.length} of ${AVAILABLE_HUBS.length} hubs</small>
+                </div>
+
+                <!-- Scrollable Hubs List -->
+                <div class="list-group mb-0 hub-scrollable-list" id="hubsListGroup"></div>
+            `;
+        }
+
+        renderHubListItems();
+    }
+
+    function populateRegistrationHubSelects() {
+        if (typeof document === 'undefined' || !document.querySelectorAll) return;
+        const currentLoc = getLocation();
+        document.querySelectorAll('#reg-hub').forEach(selectEl => {
+            if (!selectEl || selectEl.dataset.hubsPopulated === 'true') return;
+            selectEl.innerHTML = AVAILABLE_HUBS.map(h => {
+                const sel = h.id === currentLoc ? 'selected' : '';
+                const liveTag = h.hasLiveSession ? ' (⚡ Active Wave)' : '';
+                return `<option value="${h.id}" ${sel}>${h.name} — ${h.state}${liveTag}</option>`;
+            }).join('');
+            selectEl.dataset.hubsPopulated = 'true';
+        });
+    }
+
+    function injectStorefrontStyles() {
+        if (typeof document === 'undefined' || !document.head || typeof document.createElement !== 'function') return;
+        if (document.getElementById('ab-storefront-core-styles')) return;
+
+        const styleEl = document.createElement('style');
+        styleEl.id = 'ab-storefront-core-styles';
+        styleEl.textContent = `
+            /* ==========================================================================
+               1. DESKTOP & TABLET NAVIGATION FIXES (NO MULTI-LINE WRAPPING)
+               ========================================================================== */
+            .navbar .navbar-brand {
+                flex-shrink: 0 !important;
+                white-space: nowrap !important;
+            }
+            .navbar-nav .nav-link,
+            .navbar .dropdown-toggle,
+            .navbar .btn,
+            .navbar .nav-pill-btn,
+            .navbar .btn-wallet-badge,
+            #btnNavWallet,
+            #nav-wallet,
+            #nav-cart,
+            #openWalletBtn {
+                white-space: nowrap !important;
+                flex-shrink: 0 !important;
+            }
+            .navbar button[data-bs-target="#cartOffcanvas"],
+            .navbar #btn-login-trigger,
+            .navbar #btn-register-trigger,
+            .navbar .auth-logged-only .dropdown-toggle {
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                white-space: nowrap !important;
+                flex-shrink: 0 !important;
+                min-height: 42px !important;
+                padding: 0.55rem 1.25rem !important;
+                font-size: 0.9rem !important;
+                font-weight: 600 !important;
+                line-height: 1.35 !important;
+            }
+            #btnNavWallet,
+            .navbar .btn-wallet-badge,
+            .navbar .nav-pill-btn {
+                min-height: 42px !important;
+                padding: 0.5rem 1.15rem !important;
+                font-size: 0.9rem !important;
+                display: inline-flex !important;
+                align-items: center !important;
+            }
+            /* Desktop lg+ (>= 992px): single-row layout with comfortable button height */
+            @media (min-width: 992px) {
+                .navbar > .container {
+                    flex-wrap: nowrap !important;
+                }
+                .navbar .navbar-collapse {
+                    flex-wrap: nowrap !important;
+                }
+                .navbar .navbar-nav {
+                    flex-wrap: nowrap !important;
+                }
+            }
+            /* Tablet & Mobile (< 992px): structured card drawer & clean 2-column tablet nav */
+            @media (max-width: 991.98px) {
+                .navbar .navbar-collapse {
+                    background: #ffffff;
+                    border: 1px solid #e2e8f0;
+                    border-radius: 14px;
+                    padding: 0.9rem 1rem;
+                    margin-top: 0.65rem;
+                    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+                }
+                @media (min-width: 576px) and (max-width: 991.98px) {
+                    .navbar .navbar-nav {
+                        display: grid !important;
+                        grid-template-columns: repeat(2, minmax(0, 1fr));
+                        gap: 0.25rem 0.75rem;
+                        margin-bottom: 0.75rem !important;
+                    }
+                }
+                .navbar .navbar-collapse > .d-flex {
+                    flex-wrap: wrap !important;
+                    justify-content: flex-start !important;
+                    padding-top: 0.65rem;
+                    border-top: 1px solid #f1f5f9;
+                    gap: 0.5rem !important;
+                }
+            }
+
+            /* ==========================================================================
+               2. SEARCHABLE LOCATION SWITCHER MODAL STYLES
+               ========================================================================== */
+            .hub-scrollable-list {
+                max-height: 310px;
+                overflow-y: auto;
+                border: 1px solid #e2e8f0;
+                border-radius: 12px;
+            }
+            .hub-scrollable-list .hub-select-item {
+                border-left: none;
+                border-right: none;
+                transition: background-color 0.15s ease;
+            }
+            .hub-scrollable-list .hub-select-item:first-child {
+                border-top: none;
+            }
+            .hub-scrollable-list .hub-select-item:last-child {
+                border-bottom: none;
+            }
+            .hub-scrollable-list .hub-select-item.active-hub-selected {
+                background-color: #f0fdf4;
+                border-left: 4px solid #16a34a !important;
+            }
+            .hub-filter-pill {
+                font-size: 0.75rem;
+                font-weight: 600;
+                padding: 4px 10px;
+                border-radius: 50px;
+                border: 1px solid #cbd5e1;
+                background: #f8fafc;
+                color: #475569;
+                transition: all 0.18s ease;
+            }
+            .hub-filter-pill:hover {
+                border-color: #0f172a;
+                color: #0f172a;
+            }
+            .hub-filter-pill.active {
+                background: #0f172a;
+                color: #ffffff;
+                border-color: #0f172a;
+            }
+
+            /* Hide legacy top sub-nav bar completely */
+            .top-hyperlocal-bar {
+                display: none !important;
+            }
+
+            /* ==========================================================================
+               3. BOTTOM-CORNER FLOATING WIDGETS (LEFT & RIGHT DOCKS)
+               ========================================================================== */
+            .ab-corner-dock-left {
+                position: fixed;
+                bottom: 18px;
+                left: 18px;
+                z-index: 1035;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+                font-family: 'Plus Jakarta Sans', sans-serif;
+            }
+            .ab-corner-dock-right {
+                position: fixed;
+                bottom: 18px;
+                right: 18px;
+                z-index: 1035;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                gap: 8px;
+                font-family: 'Plus Jakarta Sans', sans-serif;
+            }
+            .ab-corner-drawer {
+                background: #ffffff;
+                border: 1px solid #e2e8f0;
+                border-radius: 16px;
+                box-shadow: 0 18px 38px rgba(15, 23, 42, 0.18);
+                padding: 12px;
+                width: 265px;
+                display: none;
+                animation: abSlideUpFade 0.2s ease-out;
+            }
+            .ab-corner-drawer.open {
+                display: block;
+            }
+            @keyframes abSlideUpFade {
+                from { opacity: 0; transform: translateY(8px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            .ab-corner-action-btn {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                width: 100%;
+                text-align: left;
+                background: #f8fafc;
+                border: 1px solid #e2e8f0;
+                border-radius: 10px;
+                padding: 8px 10px;
+                margin-bottom: 6px;
+                font-size: 0.8rem;
+                font-weight: 600;
+                color: #1e293b;
+                text-decoration: none;
+                transition: all 0.18s ease;
+                cursor: pointer;
+            }
+            .ab-corner-action-btn:last-child {
+                margin-bottom: 0;
+            }
+            .ab-corner-action-btn:hover {
+                background: #fff1f2;
+                border-color: #fecdd3;
+                color: #be123c;
+                transform: translateX(2px);
+            }
+            .ab-corner-action-icon {
+                width: 30px;
+                height: 30px;
+                border-radius: 8px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+                font-size: 0.95rem;
+            }
+            .ab-corner-pill-btn {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                background: #0f172a;
+                color: #ffffff;
+                border: 1px solid rgba(255, 255, 255, 0.15);
+                border-radius: 50px;
+                padding: 9px 15px;
+                font-size: 0.82rem;
+                font-weight: 700;
+                box-shadow: 0 10px 24px rgba(15, 23, 42, 0.22);
+                cursor: pointer;
+                transition: all 0.2s ease;
+                white-space: nowrap;
+            }
+            .ab-corner-pill-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 14px 28px rgba(15, 23, 42, 0.3);
+            }
+            .ab-live-dot {
+                width: 9px;
+                height: 9px;
+                border-radius: 50%;
+                background: #94a3b8;
+                display: inline-block;
+            }
+            .ab-live-dot.is-live {
+                background: #22c55e;
+                box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.25);
+            }
+            /* Right Corner Storefronts & Auctions Floating Widget */
+            .ab-storefronts-widget-card {
+                background: rgba(15, 23, 42, 0.96);
+                backdrop-filter: blur(12px);
+                border: 1px solid rgba(255, 255, 255, 0.14);
+                border-radius: 16px;
+                padding: 8px;
+                box-shadow: 0 14px 32px rgba(15, 23, 42, 0.28);
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+                min-width: 195px;
+            }
+            .ab-storefronts-widget-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 2px 6px 4px 6px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                font-size: 0.68rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                color: #94a3b8;
+            }
+            .ab-storefront-chip-link {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 8px;
+                padding: 7px 11px;
+                border-radius: 10px;
+                font-size: 0.8rem;
+                font-weight: 700;
+                text-decoration: none !important;
+                transition: all 0.18s ease;
+                white-space: nowrap;
+            }
+            .ab-storefront-chip-link.chip-auctions {
+                background: linear-gradient(135deg, #dc2626 0%, #ea580c 100%);
+                color: #ffffff !important;
+                box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+            }
+            .ab-storefront-chip-link.chip-thriftz {
+                background: rgba(255, 255, 255, 0.09);
+                color: #f8fafc !important;
+                border: 1px solid rgba(78, 248, 150, 0.25);
+            }
+            .ab-storefront-chip-link.chip-thriftz:hover {
+                background: #0a6810;
+                color: #ffffff !important;
+                border-color: #4ef896;
+            }
+            .ab-storefront-chip-link.chip-betasup {
+                background: rgba(255, 255, 255, 0.09);
+                color: #f8fafc !important;
+                border: 1px solid rgba(255, 140, 0, 0.3);
+            }
+            .ab-storefront-chip-link.chip-betasup:hover {
+                background: #ea580c;
+                color: #ffffff !important;
+                border-color: #fdba74;
+            }
+            .ab-storefront-chip-link.chip-uwanbuy {
+                background: rgba(255, 255, 255, 0.09);
+                color: #f8fafc !important;
+                border: 1px solid rgba(239, 68, 68, 0.3);
+            }
+            .ab-storefront-chip-link.chip-uwanbuy:hover {
+                background: #dc2626;
+                color: #ffffff !important;
+            }
+            .ab-storefront-chip-link:hover {
+                transform: translateX(-2px);
+            }
+            .ab-scroll-top-fab {
+                width: 38px;
+                height: 38px;
+                border-radius: 50%;
+                background: #ffffff;
+                color: #0f172a;
+                border: 1px solid #cbd5e1;
+                box-shadow: 0 6px 16px rgba(15, 23, 42, 0.12);
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: all 0.2s ease;
+            }
+            .ab-scroll-top-fab:hover {
+                background: #0f172a;
+                color: #ffffff;
+                transform: translateY(-2px);
+            }
+            @media (max-width: 575.98px) {
+                .ab-corner-dock-left {
+                    bottom: 12px;
+                    left: 12px;
+                }
+                .ab-corner-dock-right {
+                    bottom: 12px;
+                    right: 12px;
+                }
+                .ab-corner-pill-btn {
+                    padding: 8px 12px;
+                    font-size: 0.76rem;
+                }
+                .ab-storefronts-widget-card {
+                    min-width: 170px;
+                    padding: 6px;
+                }
+                .ab-storefront-chip-link {
+                    padding: 6px 9px;
+                    font-size: 0.74rem;
+                }
+            }
+        `;
+        document.head.appendChild(styleEl);
+    }
+
+    function resolveStorefrontWidgetLinks() {
+        const pathname = (typeof window !== 'undefined' && window.location && window.location.pathname)
+            ? window.location.pathname.replace(/\\/g, '/').toLowerCase()
+            : '';
+        const isInAuctionsSubdir = pathname.includes('/auctions/');
+        const storeName = detectStoreName();
+
+        if (isInAuctionsSubdir) {
+            return {
+                storeName,
+                uwanbuyHref: '../index.html',
+                thriftzHref: '../../thriftz/index.html',
+                betasupHref: '../../betasup/index.html',
+                auctionsHref: 'index.html'
+            };
+        }
+        if (storeName === 'thriftz' || storeName === 'betasup') {
+            return {
+                storeName,
+                uwanbuyHref: '../uwanbuy/index.html',
+                thriftzHref: '../thriftz/index.html',
+                betasupHref: '../betasup/index.html',
+                auctionsHref: '#auctionArenaSection'
+            };
+        }
+        return {
+            storeName,
+            uwanbuyHref: 'index.html',
+            thriftzHref: '../thriftz/index.html',
+            betasupHref: '../betasup/index.html',
+            auctionsHref: 'auctions/index.html'
+        };
+    }
+
+    function injectBottomCornerWidgets() {
+        if (typeof document === 'undefined' || !document.body || typeof document.createElement !== 'function') return;
+        if (document.getElementById('ab-corner-widget-left')) return;
+
+        const currentLoc = getLocation();
+        const activeHubObj = AVAILABLE_HUBS.find(h => h.id.toLowerCase() === currentLoc.toLowerCase());
+        const isLive = activeHubObj && activeHubObj.hasLiveSession;
+        const links = resolveStorefrontWidgetLinks();
+
+        // Bottom-Left Widget: Hyperlocal Hub Location Selector & Support Concierge (NO Include My Area)
+        const leftDock = document.createElement('div');
+        leftDock.id = 'ab-corner-widget-left';
+        leftDock.className = 'ab-corner-dock-left';
+        leftDock.innerHTML = `
+            <div class="ab-corner-drawer" id="abCornerLeftDrawer">
+                <div class="d-flex justify-content-between align-items-center mb-2 pb-2 border-bottom">
+                    <div>
+                        <span class="text-xs fw-bold text-uppercase text-danger d-block">Hyperlocal Hub & Help</span>
+                        <strong class="small text-dark storefront-current-location">${currentLoc}</strong>
+                    </div>
+                    <button type="button" class="btn-close small" id="btnCloseCornerDrawer" style="font-size: 0.65rem;"></button>
+                </div>
+                <button type="button" class="ab-corner-action-btn" id="btnCornerSwitchHub">
+                    <span class="ab-corner-action-icon bg-danger-subtle text-danger"><i class="bi bi-geo-alt-fill"></i></span>
+                    <div>
+                        <div>Switch Shopping Hub</div>
+                        <small class="text-muted fw-normal d-block" style="font-size: 0.7rem;">Search ${AVAILABLE_HUBS.length} available areas</small>
+                    </div>
+                </button>
+                <button type="button" class="ab-corner-action-btn trigger-addMine">
+                    <span class="ab-corner-action-icon bg-warning-subtle text-warning-emphasis"><i class="bi bi-heart-fill"></i></span>
+                    <div>
+                        <div>Add My Favorite</div>
+                        <small class="text-muted fw-normal d-block" style="font-size: 0.7rem;">Suggest an item or soup pot</small>
+                    </div>
+                </button>
+                <button type="button" class="ab-corner-action-btn trigger-askQ">
+                    <span class="ab-corner-action-icon bg-success-subtle text-success"><i class="bi bi-chat-dots-fill"></i></span>
+                    <div>
+                        <div>I Have A Question</div>
+                        <small class="text-muted fw-normal d-block" style="font-size: 0.7rem;">Ask hub support or local agent</small>
+                    </div>
+                </button>
+            </div>
+            <div class="d-flex align-items-center gap-1">
+                <button type="button" class="ab-corner-pill-btn" id="btnChangeLocation" title="Click to search and switch your Hyperlocal Hub">
+                    <span class="ab-live-dot ${isLive ? 'is-live' : ''}" id="abCornerWaveDot"></span>
+                    <i class="bi bi-geo-alt-fill text-danger"></i>
+                    <span id="currentLocationLabel" class="storefront-current-location">${currentLoc}</span>
+                    <i class="bi bi-chevron-up ms-1 text-white-50"></i>
+                </button>
+                <button type="button" class="ab-scroll-top-fab bg-dark text-white border-secondary" id="btnToggleCornerLeft" title="Quick Hub Help">
+                    <i class="bi bi-chat-dots-fill"></i>
+                </button>
+            </div>
+        `;
+
+        // Build cross-store links for Bottom-Right Storefronts & Auctions Widget (replaces floating cart widget)
+        const crossStoreLinksHtml = [];
+        crossStoreLinksHtml.push(`
+            <a href="${links.auctionsHref}" class="ab-storefront-chip-link chip-auctions" id="abWidgetLinkAuctions">
+                <span><i class="bi bi-lightning-charge-fill me-1"></i>Auctions & Deals</span>
+                <i class="bi bi-arrow-up-right small"></i>
+            </a>
+        `);
+        if (links.storeName !== 'uwanbuy') {
+            crossStoreLinksHtml.push(`
+                <a href="${links.uwanbuyHref}" class="ab-storefront-chip-link chip-uwanbuy" id="abWidgetLinkUwanbuy">
+                    <span><i class="bi bi-bag-check-fill text-danger me-1"></i>UwanBuy Market</span>
+                    <i class="bi bi-chevron-right small opacity-75"></i>
+                </a>
+            `);
+        }
+        if (links.storeName !== 'thriftz') {
+            crossStoreLinksHtml.push(`
+                <a href="${links.thriftzHref}" class="ab-storefront-chip-link chip-thriftz" id="abWidgetLinkThriftz">
+                    <span><i class="bi bi-recycle text-success me-1"></i>Thrift-Z Market</span>
+                    <i class="bi bi-chevron-right small opacity-75"></i>
+                </a>
+            `);
+        }
+        if (links.storeName !== 'betasup') {
+            crossStoreLinksHtml.push(`
+                <a href="${links.betasupHref}" class="ab-storefront-chip-link chip-betasup" id="abWidgetLinkBetasup">
+                    <span><i class="bi bi-fire text-warning me-1"></i>Betasup Soups</span>
+                    <i class="bi bi-chevron-right small opacity-75"></i>
+                </a>
+            `);
+        }
+
+        // Bottom-Right Widget: Storefronts & Auctions Switcher (Thrift-Z, Betasup, Auctions & Deals) + Scroll-to-Top
+        const rightDock = document.createElement('div');
+        rightDock.id = 'ab-corner-widget-right';
+        rightDock.className = 'ab-corner-dock-right';
+        rightDock.innerHTML = `
+            <div class="ab-storefronts-widget-card" id="abStorefrontsWidgetCard">
+                <div class="ab-storefronts-widget-header">
+                    <span><i class="bi bi-grid-fill text-danger me-1"></i>Storefronts & Deals</span>
+                    <button type="button" class="btn btn-link p-0 text-white-50 text-decoration-none" id="btnMinimizeStorefrontsWidget" title="Minimize" style="font-size: 0.72rem; line-height: 1;">
+                        <i class="bi bi-dash-lg"></i>
+                    </button>
+                </div>
+                ${crossStoreLinksHtml.join('')}
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <button type="button" class="ab-corner-pill-btn d-none" id="btnExpandStorefrontsWidget" title="Open Storefronts & Auctions">
+                    <i class="bi bi-lightning-charge-fill text-danger"></i>
+                    <span>Storefronts & Deals</span>
+                </button>
+                <button type="button" class="ab-scroll-top-fab scroll-to-top" id="abScrollToTopBtn" title="Scroll to top">
+                    <i class="bi bi-chevron-up fw-bold"></i>
+                </button>
+            </div>
+        `;
+
+        document.body.appendChild(leftDock);
+        document.body.appendChild(rightDock);
+    }
+
+    function openLocationSwitcherModal() {
+        enhanceLocationSwitcherModal();
+        const modalEl = document.getElementById('modal-location-switcher');
+        if (!modalEl) return;
+        if (window.jQuery && $(modalEl).data && $(modalEl).data().iziModal) {
+            $(modalEl).iziModal('open');
+        } else if (window.jQuery && $.fn && $.fn.iziModal) {
+            $(modalEl).iziModal({
+                title: 'Hyperlocal Hub Location',
+                subtitle: 'Search and select your local AreaBazaar fulfillment center',
+                headerColor: '#0f172a',
+                width: 560,
+                radius: 14,
+                padding: 0
+            });
+            $(modalEl).iziModal('open');
+        }
+        setTimeout(() => {
+            enhanceLocationSwitcherModal();
+            const searchInput = document.getElementById('hubSearchInput');
+            if (searchInput) searchInput.focus();
+        }, 120);
+    }
+
+    function triggerQuickFeedbackPrompt(type, prefillValue = '') {
+        if (!window.iziToast) return;
+        const configs = {
+            addMine: {
+                title: "Add Your Favorite Item",
+                message: "What staple product, gadget, or soup pot would you like stocked in your hub?",
+                placeholder1: "Favorite Item / Dish Name",
+                placeholder2: "Your Phone or Email Address",
+                btnText: "Submit Favorite",
+                successMsg: (v1, v2) => `"${v1 || 'Your favorite item'}" has been sent to your local hub inventory team!`
+            },
+            askQ: {
+                title: "Ask Hub Support",
+                message: "Have a question about bulk orders, live waves, or delivery?",
+                placeholder1: "Type your question...",
+                placeholder2: "Your Phone or WhatsApp Number",
+                btnText: "Send Question",
+                successMsg: (v1, v2) => `Thanks! A local AreaBazaar agent will reply to ${v2 || 'you'} shortly.`
+            }
+        };
+        const cfg = configs[type] || configs.askQ;
+        let val1 = prefillValue || '';
+        let val2 = '';
+
+        iziToast.info({
+            timeout: 20000,
+            overlay: true,
+            displayMode: 1,
+            id: 'ab-concierge-' + type,
+            zindex: 99999,
+            title: cfg.title,
+            message: cfg.message,
+            position: 'center',
+            drag: false,
+            inputs: [
+                [`<input type="text" placeholder="${cfg.placeholder1}" value="${val1.replace(/"/g, '&quot;')}">`, 'keyup', function (instance, toast, input) {
+                    val1 = input.value;
+                }, true],
+                [`<input type="text" placeholder="${cfg.placeholder2}">`, 'keyup', function (instance, toast, input) {
+                    val2 = input.value;
+                }, false]
+            ],
+            buttons: [
+                [`<button><b>${cfg.btnText}</b></button>`, function (instance, toast, button, e, inputs) {
+                    const v1 = (inputs && inputs[0] && inputs[0].value) || val1;
+                    const v2 = (inputs && inputs[1] && inputs[1].value) || val2;
+                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                    iziToast.success({
+                        title: 'Received!',
+                        message: cfg.successMsg(v1, v2),
+                        position: 'topRight',
+                        timeout: 4500
+                    });
+                }, false]
+            ]
+        });
+    }
+
+    let globalEventsBound = false;
+    function bindGlobalStorefrontEvents() {
+        if (globalEventsBound || typeof document === 'undefined' || !document.addEventListener) return;
+        globalEventsBound = true;
+
+        // Delegated input handler for #hubSearchInput
+        document.addEventListener('input', function (e) {
+            const target = e.target;
+            if (target && target.id === 'hubSearchInput') {
+                currentHubSearchQuery = target.value || '';
+                const clearBtn = document.getElementById('btnClearHubSearch');
+                if (clearBtn) {
+                    if (currentHubSearchQuery.trim().length > 0) clearBtn.classList.remove('d-none');
+                    else clearBtn.classList.add('d-none');
+                }
+                renderHubListItems();
+            }
+        });
+
+        // Delegated click handler for location switcher, filter pills, and bottom corner widgets
+        document.addEventListener('click', function (e) {
+            const target = e.target;
+            if (!target || typeof target.closest !== 'function') return;
+
+            // 1. Clear hub search button
+            const clearBtn = target.closest('#btnClearHubSearch');
+            if (clearBtn) {
+                e.preventDefault();
+                currentHubSearchQuery = '';
+                const searchInput = document.getElementById('hubSearchInput');
+                if (searchInput) {
+                    searchInput.value = '';
+                    searchInput.focus();
+                }
+                clearBtn.classList.add('d-none');
+                renderHubListItems();
+                return;
+            }
+
+            // 2. Hub region filter pill
+            const filterPill = target.closest('.hub-filter-pill');
+            if (filterPill) {
+                e.preventDefault();
+                currentHubRegionFilter = filterPill.getAttribute('data-region') || 'all';
+                document.querySelectorAll('.hub-filter-pill').forEach(btn => btn.classList.remove('active'));
+                filterPill.classList.add('active');
+                renderHubListItems();
+                return;
+            }
+
+            // 3. Hub selection item (.hub-select-item)
+            const hubItem = target.closest('.hub-select-item');
+            if (hubItem) {
+                e.preventDefault();
+                const hubId = hubItem.getAttribute('data-hub');
+                if (hubId) {
+                    setLocation(hubId);
+                    renderHubListItems();
+                    const modalEl = document.getElementById('modal-location-switcher');
+                    if (modalEl && window.jQuery && $(modalEl).data && $(modalEl).data().iziModal) {
+                        $(modalEl).iziModal('close');
+                    }
+                    if (window.iziToast) {
+                        iziToast.success({
+                            title: 'Shopping Hub Updated',
+                            message: `Fulfillment hub switched to ${hubId}`,
+                            position: 'topRight',
+                            timeout: 3000
+                        });
+                    }
+                    const hubObj = AVAILABLE_HUBS.find(h => h.id.toLowerCase() === hubId.toLowerCase());
+                    const liveBadge = document.getElementById('liveBazaarBannerBadge');
+                    if (liveBadge) {
+                        liveBadge.style.display = (hubObj && hubObj.hasLiveSession) ? 'inline-block' : 'none';
+                    }
+                }
+                return;
+            }
+
+            // 4. Open Location Switcher triggers
+            const changeLocTrigger = target.closest('#btnChangeLocation, #btnFooterChangeLoc, #btnCornerSwitchHub');
+            if (changeLocTrigger) {
+                e.preventDefault();
+                const leftDrawer = document.getElementById('abCornerLeftDrawer');
+                if (leftDrawer) leftDrawer.classList.remove('open');
+                openLocationSwitcherModal();
+                return;
+            }
+
+            // 5. Toggle Bottom-Left Concierge Drawer
+            const toggleLeftBtn = target.closest('#btnToggleCornerLeft');
+            if (toggleLeftBtn) {
+                e.preventDefault();
+                const leftDrawer = document.getElementById('abCornerLeftDrawer');
+                if (leftDrawer) leftDrawer.classList.toggle('open');
+                return;
+            }
+
+            const closeLeftBtn = target.closest('#btnCloseCornerDrawer');
+            if (closeLeftBtn) {
+                e.preventDefault();
+                const leftDrawer = document.getElementById('abCornerLeftDrawer');
+                if (leftDrawer) leftDrawer.classList.remove('open');
+                return;
+            }
+
+            // 6. Concierge triggers (.trigger-addMine, .trigger-askQ)
+            const addMineBtn = target.closest('.trigger-addMine');
+            if (addMineBtn) {
+                e.preventDefault();
+                const leftDrawer = document.getElementById('abCornerLeftDrawer');
+                if (leftDrawer) leftDrawer.classList.remove('open');
+                triggerQuickFeedbackPrompt('addMine');
+                return;
+            }
+
+            const askQBtn = target.closest('.trigger-askQ');
+            if (askQBtn) {
+                e.preventDefault();
+                const leftDrawer = document.getElementById('abCornerLeftDrawer');
+                if (leftDrawer) leftDrawer.classList.remove('open');
+                triggerQuickFeedbackPrompt('askQ');
+                return;
+            }
+
+            // 7. Bottom-Right Storefronts & Auctions Widget minimize / expand
+            const minStorefrontsBtn = target.closest('#btnMinimizeStorefrontsWidget');
+            if (minStorefrontsBtn) {
+                e.preventDefault();
+                const card = document.getElementById('abStorefrontsWidgetCard');
+                const expandBtn = document.getElementById('btnExpandStorefrontsWidget');
+                if (card) card.classList.add('d-none');
+                if (expandBtn) expandBtn.classList.remove('d-none');
+                return;
+            }
+
+            const expandStorefrontsBtn = target.closest('#btnExpandStorefrontsWidget');
+            if (expandStorefrontsBtn) {
+                e.preventDefault();
+                const card = document.getElementById('abStorefrontsWidgetCard');
+                if (card) card.classList.remove('d-none');
+                expandStorefrontsBtn.classList.add('d-none');
+                return;
+            }
+
+            // 8. Scroll to Top Button
+            const scrollTopBtn = target.closest('#abScrollToTopBtn, .scroll-to-top');
+            if (scrollTopBtn) {
+                e.preventDefault();
+                if (typeof window.scrollTo === 'function') {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+                return;
+            }
+
+            // Close corner drawer when clicking outside
+            const leftDrawer = document.getElementById('abCornerLeftDrawer');
+            if (leftDrawer && leftDrawer.classList.contains('open') && !target.closest('#ab-corner-widget-left')) {
+                leftDrawer.classList.remove('open');
+            }
+        });
+    }
+
+    function registerUser(profileData = {}, storeName) {
+        const s = storeName || detectStoreName();
+        const bonusWallet = STORE_DEFAULTS[s]?.wallet || 15000;
+        const newUser = {
+            name: profileData.fullName || profileData.name || 'Valued Shopper',
+            phone: profileData.phone || '',
+            email: profileData.email || '',
+            pin: profileData.pin || '1234',
+            hub: profileData.hub || getLocation(),
+            address: {
+                addressLine1: profileData.addressLine1 || '',
+                addressLine2: profileData.addressLine2 || '',
+                landmark: profileData.landmark || '',
+                city: profileData.city || '',
+                state: profileData.state || '',
+                instructions: profileData.instructions || ''
+            },
+            agentCode: profileData.agentCode || '',
+            wallet: bonusWallet
+        };
+        setUser(newUser, s);
+        if (newUser.hub) setLocation(newUser.hub);
+        return newUser;
+    }
+
+    function loginUser(identifier = '', password = '', storeName = '') {
+        let s = '';
+        if (['betasup', 'thriftz', 'uwanbuy'].includes(password)) {
+            s = password;
+        } else if (storeName && ['betasup', 'thriftz', 'uwanbuy'].includes(storeName)) {
+            s = storeName;
+        } else {
+            s = detectStoreName();
+        }
+
+        let existing = getUser(s);
+        if (!existing) {
+            existing = {
+                name: identifier.includes('@') ? identifier.split('@')[0] : (identifier || 'Valued Customer'),
+                phone: identifier,
+                email: identifier.includes('@') ? identifier : (identifier + '@areabazaar.ng'),
+                hub: getLocation(),
+                wallet: STORE_DEFAULTS[s]?.wallet || 15000
+            };
+        } else {
+            if (identifier) {
+                if (identifier.includes('@')) existing.email = identifier;
+                else existing.phone = identifier;
+            }
+        }
+        setUser(existing, s);
+        if (typeof syncUI === "function") syncUI();
+        return existing;
+    }
+
+    function logoutUser(storeName) {
+        const s = storeName || detectStoreName();
+        setUser(null, s);
+        if (typeof syncUI === "function") syncUI();
     }
 
     function syncUI() {
         const storeName = detectStoreName();
-        const user = getUser();
+        const user = getUser(storeName);
         const wallet = getWalletValue(storeName);
-        const cartCount = getCartCount();
+        const cartCount = getCartCount(storeName);
 
         syncLocationDisplays();
 
@@ -760,12 +3255,11 @@
         });
 
         // Update Cart Counts
-        const cartSelectors = ['#cart-count-badge', '#cartBadge', '#cartCountBadge', '#boughtBadge'];
+        const cartSelectors = ['#cart-count-badge', '#cartBadge', '#cartCountBadge', '#boughtBadge', '#abFloatingCartBadge'];
         cartSelectors.forEach(sel => {
             document.querySelectorAll(sel).forEach(el => {
                 el.textContent = String(cartCount);
-                if (cartCount > 0) el.classList.remove('d-none');
-                else el.classList.add('d-none');
+                el.classList.remove('d-none');
             });
         });
 
@@ -776,11 +3270,44 @@
         });
 
         if (user) {
-            document.querySelectorAll('.auth-guest-only').forEach(el => el.classList.add('d-none'));
-            document.querySelectorAll('.auth-logged-only').forEach(el => el.classList.remove('d-none'));
+            document.querySelectorAll('.auth-guest-only').forEach(el => {
+                el.classList.add('d-none');
+                el.style.setProperty('display', 'none', 'important');
+            });
+            document.querySelectorAll('.auth-logged-only').forEach(el => {
+                el.classList.remove('d-none');
+                el.style.removeProperty('display');
+            });
+
+            // Betasup auth button wrapper
+            document.querySelectorAll('#auth-btn-wrapper').forEach(wrapper => {
+                const firstName = (user.name && user.name.split(' ')[0]) || 'User';
+                wrapper.innerHTML = `
+                    <button class="btn btn-dark btn-sm rounded-pill px-3 py-2 fw-600 text-nowrap me-1" id="nav-profile-btn">
+                        <i class="fa fa-user-circle me-1"></i> ${firstName}
+                    </button>
+                    <button class="btn btn-outline-danger btn-sm rounded-pill px-3 py-2 fw-600 text-nowrap" onclick="AreaBazaarStorefront.logout('${storeName}')">Logout</button>
+                `;
+            });
         } else {
-            document.querySelectorAll('.auth-guest-only').forEach(el => el.classList.remove('d-none'));
-            document.querySelectorAll('.auth-logged-only').forEach(el => el.classList.add('d-none'));
+            document.querySelectorAll('.auth-guest-only').forEach(el => {
+                el.classList.remove('d-none');
+                el.style.removeProperty('display');
+            });
+            document.querySelectorAll('.auth-logged-only').forEach(el => {
+                el.classList.add('d-none');
+                el.style.setProperty('display', 'none', 'important');
+            });
+
+            // Betasup auth button wrapper
+            document.querySelectorAll('#auth-btn-wrapper').forEach(wrapper => {
+                wrapper.innerHTML = `
+                    <button id="btn-login-trigger"
+                        class="btn btn-dark rounded-pill px-4 py-2 fw-600 text-nowrap" onclick="$('#modal-login').iziModal('open')">Login</button>
+                    <button id="btn-register-trigger"
+                        class="btn btn-amber rounded-pill px-4 py-2 fw-600 text-nowrap" onclick="$('#modal-register').iziModal('open')">Register</button>
+                `;
+            });
         }
     }
 
@@ -818,31 +3345,1068 @@
         }
     }
 
+
+    /* ==========================================================================
+       MULTI-STOREFRONT CHECKOUT, AUCTION & PAYMENT PARITY ENGINE
+       Provides identical Checkout, Wallet PIN, Agent/Bank Payment Request & Report
+       ========================================================================== */
+    const StorefrontCheckout = {
+        store: 'uwanbuy',
+        cartKey: 'uwanbuy_cart_state',
+        pendingKey: 'uwanbuy_pending_orders',
+        reconcileKey: 'uwanbuy_reconciliations',
+        cart: [],
+        pendingOrders: [],
+        reconciliations: [],
+        selectedLines: new Set(),
+        currentOrderId: null,
+        currentPaymentRef: null,
+        orderPaymentRefs: {},
+        currentValidationState: {
+            fulfillment: 'pickup',
+            pickupPointId: 'pku_tanke_01',
+            isExpress: false,
+            address: '',
+            subtotalMinor: 0,
+            deliveryFeeMinor: 0,
+            expressSurchargeMinor: 0,
+            vatPercent: 7.5,
+            vatAmountMinor: 0,
+            totalMinor: 0
+        },
+
+        init(storeName) {
+            this.store = storeName || detectStoreName();
+            this.cartKey = this.store + '_cart_state';
+            this.pendingKey = this.store + '_pending_orders';
+            this.reconcileKey = this.store + '_reconciliations';
+
+            this.loadState();
+            this.bindEvents();
+            this.syncCartUI();
+            this.renderAuctions();
+            this.startAuctionPruner();
+        },
+
+        loadState() {
+            try {
+                this.cart = JSON.parse(localStorage.getItem(this.cartKey) || '[]');
+                this.pendingOrders = JSON.parse(localStorage.getItem(this.pendingKey) || '[]');
+                this.reconciliations = JSON.parse(localStorage.getItem(this.reconcileKey) || '[]');
+                this.selectedLines = new Set(this.cart.map(c => c.lineId));
+            } catch (e) {
+                this.cart = [];
+                this.pendingOrders = [];
+                this.reconciliations = [];
+                this.selectedLines = new Set();
+            }
+        },
+
+        saveState() {
+            localStorage.setItem(this.cartKey, JSON.stringify(this.cart));
+            localStorage.setItem(this.pendingKey, JSON.stringify(this.pendingOrders));
+            localStorage.setItem(this.reconcileKey, JSON.stringify(this.reconciliations));
+            this.syncCartUI();
+        },
+
+        formatNaira(amountMinor, isMinor = true) {
+            const naira = isMinor ? (amountMinor / 100) : amountMinor;
+            return '₦' + Number(naira || 0).toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        },
+
+        getCartTotals() {
+            let subtotalMinor = 0;
+            let totalItems = 0;
+            let selectedSubtotalMinor = 0;
+            let selectedItemsCount = 0;
+
+            this.cart.forEach(c => {
+                const lineTotal = (c.priceMinor || (c.price * 100)) * (c.quantity || 1);
+                subtotalMinor += lineTotal;
+                totalItems += (c.quantity || 1);
+
+                if (this.selectedLines && this.selectedLines.has(c.lineId)) {
+                    selectedSubtotalMinor += lineTotal;
+                    selectedItemsCount += (c.quantity || 1);
+                }
+            });
+
+            return {
+                subtotalMinor,
+                totalItems,
+                selectedSubtotalMinor,
+                selectedItemsCount,
+                selectedLinesCount: this.cart.filter(c => this.selectedLines && this.selectedLines.has(c.lineId)).length
+            };
+        },
+
+        addToCart(item, showToast = true, openDrawer = true) {
+            const lineId = 'line_' + this.store + '_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
+            const priceMinor = item.priceMinor || Math.round(Number(item.price || 0) * 100);
+            const moq = Number(item.moq || 1);
+            const quantity = Math.max(Number(item.quantity || 1), moq);
+
+            const existing = this.cart.find(c => 
+                (item.variantId && c.variantId === item.variantId) || 
+                (item.productId && c.productId === item.productId && !c.variantId && c.title === item.title)
+            );
+
+            if (existing) {
+                existing.quantity += quantity;
+                if (item.isAuction) {
+                    existing.isAuction = true;
+                    existing.auctionExpiresAt = item.auctionExpiresAt;
+                    existing.priceMinor = priceMinor;
+                }
+            } else {
+                this.selectedLines.add(lineId);
+                this.cart.push({
+                    lineId: lineId,
+                    productId: item.productId || ('prod_' + Date.now()),
+                    variantId: item.variantId || null,
+                    title: item.title || item.name || 'Store Item',
+                    priceMinor: priceMinor,
+                    unitPriceMinor: priceMinor,
+                    price: priceMinor / 100,
+                    quantity: quantity,
+                    moq: moq,
+                    unitLabel: item.unitLabel || 'unit',
+                    image: item.image || '',
+                    category: item.category || 'general',
+                    store: this.store,
+                    isAuction: !!item.isAuction,
+                    auctionExpiresAt: item.auctionExpiresAt || null,
+                    addedAt: new Date().toISOString()
+                });
+            }
+
+            this.saveState();
+            this.syncCartUI();
+
+            if (window.AreaBazaarStorefront) {
+                window.AreaBazaarStorefront.refresh();
+            }
+
+            if (showToast && window.iziToast) {
+                window.iziToast.success({
+                    title: item.isAuction ? '⚡ Auction Deal Added!' : 'Added to Cart',
+                    message: `${item.title || item.name} (x${quantity})`,
+                    position: 'topRight',
+                    timeout: 3000
+                });
+            }
+
+            if (openDrawer) {
+                const offcanvasEl = document.getElementById('cartOffcanvas');
+                if (offcanvasEl && window.bootstrap && window.bootstrap.Offcanvas) {
+                    const offcanvas = window.bootstrap.Offcanvas.getOrCreateInstance(offcanvasEl);
+                    offcanvas.show();
+                }
+            }
+        },
+
+        removeCartLine(lineId) {
+            this.cart = this.cart.filter(c => c.lineId !== lineId);
+            this.selectedLines.delete(lineId);
+            this.saveState();
+        },
+
+        updateCartQty(lineId, delta) {
+            const item = this.cart.find(c => c.lineId === lineId);
+            if (!item) return;
+            const moq = item.moq || 1;
+            item.quantity += delta;
+            if (item.quantity < moq) {
+                if (delta < 0 && item.quantity <= 0) {
+                    this.removeCartLine(lineId);
+                    return;
+                }
+                item.quantity = moq;
+                if (window.iziToast) {
+                    window.iziToast.warning({ title: 'Minimum Order', message: `Minimum order quantity is ${moq}` });
+                }
+            }
+            this.saveState();
+        },
+
+        checkAndEvictExpiredAuctions() {
+            const now = Date.now();
+            let evictedAny = false;
+            const kept = [];
+            (this.cart || []).forEach(item => {
+                if (item.isAuction && item.auctionExpiresAt && now > item.auctionExpiresAt) {
+                    evictedAny = true;
+                    if (window.iziToast) {
+                        window.iziToast.warning({
+                            title: 'Auction Time Expired',
+                            message: `Deal ended for "${item.title}". Evicted from cart.`,
+                            timeout: 6000
+                        });
+                    }
+                } else {
+                    kept.push(item);
+                }
+            });
+            if (evictedAny) {
+                this.cart = kept;
+                this.saveState();
+            }
+        },
+
+        startAuctionPruner() {
+            setInterval(() => {
+                this.checkAndEvictExpiredAuctions();
+                this.updateCountdowns();
+            }, 1000);
+        },
+
+        updateCountdowns() {
+            const self = this;
+            document.querySelectorAll('.cart-auction-countdown').forEach(el => {
+                const expiresAt = parseInt(el.getAttribute ? el.getAttribute('data-expires') : (el.dataset && el.dataset.expires), 10);
+                if (!expiresAt) return;
+                const textEl = el.querySelector('.countdown-text');
+                if (textEl) {
+                    textEl.textContent = self.formatRemaining(expiresAt);
+                }
+            });
+        },
+
+        formatRemaining(expiresAt) {
+            const diffMs = Math.max(0, expiresAt - Date.now());
+            const totalSec = Math.floor(diffMs / 1000);
+            const mins = Math.floor(totalSec / 60);
+            const secs = totalSec % 60;
+            return `${mins}m ${secs < 10 ? '0' : ''}${secs}s`;
+        },
+
+        syncCartUI() {
+            this.checkAndEvictExpiredAuctions();
+            if (!this.selectedLines) this.selectedLines = new Set();
+            if (this.selectedLines.size === 0 && this.cart.length > 0) {
+                this.cart.forEach(c => this.selectedLines.add(c.lineId));
+            }
+
+            const { subtotalMinor, totalItems, selectedSubtotalMinor, selectedLinesCount } = this.getCartTotals();
+
+            // Update badge in navigation and widgets
+            document.querySelectorAll('#cart-count-badge, #cartBadge, #cartCountBadge, .cart-count').forEach(el => {
+                el.textContent = String(totalItems);
+                if (totalItems > 0) el.classList.remove('d-none');
+                else el.classList.add('d-none');
+            });
+
+            // Cart Drawer Rendering
+            let $drawerList = $('#cartDrawerItemsList');
+            if (!$drawerList.length && $('#cartItemsContainer').length) {
+                $('#cartItemsContainer').html('<div id="cartDrawerItemsList"></div>');
+                $drawerList = $('#cartDrawerItemsList');
+            }
+            if ($drawerList && $drawerList.length) {
+                $drawerList.empty();
+                if (this.cart.length === 0) {
+                    $drawerList.html(`
+                        <div class="text-center py-5 text-muted">
+                            <i class="bi bi-cart-x display-4 text-secondary mb-2 d-block"></i>
+                            <h6 class="fw-bold">Your Cart is Empty</h6>
+                            <p class="small">Add items to get started.</p>
+                        </div>
+                    `);
+                    $('#btnCheckoutSelected, #btnCheckoutAll').prop('disabled', true);
+                    $('#selectAllCartCheck').prop('checked', false);
+                    $('#selectedCartSummary').text('0 selected');
+                    $('#countSelectedBadge').text('0');
+                    $('#countAllBadge').text('0');
+                } else {
+                    this.cart.forEach(c => {
+                        const isSelected = this.selectedLines.has(c.lineId);
+                        const priceMinor = c.priceMinor || ((c.price || 0) * 100);
+                        let auctionBadgeHtml = '';
+                        if (c.isAuction && c.auctionExpiresAt) {
+                            auctionBadgeHtml = `
+                                <div class="cart-auction-countdown mt-1" data-expires="${c.auctionExpiresAt}">
+                                    <span class="badge bg-warning-subtle text-danger border border-warning-subtle text-xs py-1 px-2">
+                                        <i class="bi bi-clock-history me-1"></i> Ends in: <span class="countdown-text">${this.formatRemaining(c.auctionExpiresAt)}</span>
+                                    </span>
+                                </div>
+                            `;
+                        }
+
+                        $drawerList.append(`
+                            <div class="card border rounded-3 p-2 mb-2 shadow-sm cart-drawer-item-card ${isSelected ? 'border-danger-subtle bg-white' : 'bg-light opacity-75'}">
+                                <div class="d-flex align-items-center gap-2 mb-2">
+                                    <input type="checkbox" class="form-check-input cart-item-check" data-line-id="${c.lineId}" ${isSelected ? 'checked' : ''} style="cursor: pointer; transform: scale(1.15);">
+                                    <img src="${c.image || '../assetsecm/images/placeholders/gas-cooker.svg'}" alt="${c.title}" class="rounded-2 border flex-shrink-0" style="width: 44px; height: 44px; object-fit: contain; background: #fff;">
+                                    <div class="flex-grow-1 min-w-0" style="overflow: hidden;">
+                                        <h6 class="cart-item-title mb-0 text-truncate" title="${c.title}">${c.title}</h6>
+                                        <small class="text-muted text-xs">${this.formatNaira(priceMinor)}</small>
+                                        ${auctionBadgeHtml}
+                                    </div>
+                                    <button class="btn btn-sm btn-link text-muted cart-remove-btn p-0 flex-shrink-0" data-line-id="${c.lineId}" title="Remove item">
+                                        <i class="bi bi-x-circle fs-6"></i>
+                                    </button>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center pt-1 border-top">
+                                    <div class="input-group input-group-sm" style="width: 86px;">
+                                        <button class="btn btn-outline-secondary cart-qty-btn px-2 py-0" data-line-id="${c.lineId}" data-delta="-1">-</button>
+                                        <span class="input-group-text bg-white px-2 py-0 fw-semibold text-center flex-grow-1">${c.quantity}</span>
+                                        <button class="btn btn-outline-secondary cart-qty-btn px-2 py-0" data-line-id="${c.lineId}" data-delta="1">+</button>
+                                    </div>
+                                    <span class="fw-bold text-danger small">${this.formatNaira(priceMinor * c.quantity)}</span>
+                                </div>
+                            </div>
+                        `);
+                    });
+
+                    const allSelected = (selectedLinesCount === this.cart.length && this.cart.length > 0);
+                    $('#selectAllCartCheck').prop('checked', allSelected);
+                    $('#selectedCartSummary').text(`${selectedLinesCount} of ${this.cart.length} selected`);
+                    $('#countSelectedBadge').text(String(selectedLinesCount));
+                    $('#countAllBadge').text(String(this.cart.length));
+
+                    $('#btnCheckoutSelected').prop('disabled', selectedLinesCount === 0);
+                    $('#btnCheckoutAll').prop('disabled', this.cart.length === 0);
+                }
+            }
+
+            // Subtotal Displays
+            $('#cartSelectedSubtotalDisplay').text(this.formatNaira(selectedSubtotalMinor));
+            document.querySelectorAll('#cartSubtotalDisplay, #modalCartSubtotal').forEach(el => {
+                el.textContent = this.formatNaira(subtotalMinor);
+            });
+
+            // Render Pinned Top Cart Pending Orders
+            this.renderTopCartPendingOrders();
+            if (typeof syncUI === "function") syncUI();
+        },
+
+        renderTopCartPendingOrders() {
+            const $container = $('#cart-pending-orders-container');
+            if (!$container.length) return;
+            $container.empty();
+
+            const unpaid = this.pendingOrders.filter(o => o.status === 'awaiting_payment' || o.status === 'payment_reported');
+            if (unpaid.length > 0) {
+                let html = '<div class="alert alert-warning border-warning rounded-3 p-3 mb-3 shadow-sm">';
+                html += '<div class="d-flex align-items-center gap-2 mb-2"><i class="bi bi-clock-history fs-5 text-warning-emphasis"></i><strong class="text-dark small">Orders Awaiting Payment</strong></div>';
+
+                unpaid.forEach(order => {
+                    html += `
+                        <div class="bg-white rounded-3 p-2 border mb-2 d-flex justify-content-between align-items-center">
+                            <div>
+                                <div class="fw-bold text-dark small">${order.orderId}</div>
+                                <small class="text-muted">${this.formatNaira(order.totalMinor)} &bull; ${order.status === 'payment_reported' ? '<span class="text-info fw-bold">Reported (Reconciling)</span>' : '<span class="text-danger fw-bold">Unpaid</span>'}</small>
+                            </div>
+                            <button class="btn btn-sm btn-brand btn-complete-pending-purchase py-1 px-2 small fw-bold" data-order-id="${order.orderId}">
+                                ${order.status === 'payment_reported' ? 'View Report' : 'Pay Order'} <i class="bi bi-arrow-right"></i>
+                            </button>
+                        </div>
+                    `;
+                });
+
+                html += '</div>';
+                $container.html(html);
+            }
+        },
+
+        openCheckoutValidateModal(onlySelected = false) {
+            const { subtotalMinor, selectedSubtotalMinor, selectedLinesCount } = this.getCartTotals();
+            if (onlySelected && selectedLinesCount === 0) {
+                if (window.iziToast) window.iziToast.warning({ title: 'No Items Selected', message: 'Check at least one item to checkout.' });
+                return;
+            }
+
+            const effectiveSubtotal = onlySelected ? selectedSubtotalMinor : subtotalMinor;
+            if (effectiveSubtotal <= 0 && this.cart.length === 0) {
+                if (window.iziToast) window.iziToast.info({ title: 'Cart Empty', message: 'Add items before proceeding.' });
+                return;
+            }
+
+            this.currentValidationState.onlySelected = onlySelected;
+            const prefix = this.store === 'betasup' ? 'ORD-BET-' : (this.store === 'thriftz' ? 'ORD-TZ-' : 'ORD-UWB-');
+            this.currentOrderId = prefix + new Date().getFullYear() + String(new Date().getMonth() + 1).padStart(2, '0') + '-' + Math.floor(1000 + Math.random() * 9000);
+            this.currentPaymentRef = null;
+            this.currentValidationState.subtotalMinor = effectiveSubtotal;
+
+            $('#validateOrderIdDisplay').text(this.currentOrderId);
+
+            // Populate pickup points
+            const points = AVAILABLE_HUBS.slice(0, 4);
+            const $acc = $('#pickupPointsAccordionList');
+            if ($acc.length) {
+                $acc.empty();
+                points.forEach((pt, i) => {
+                    $acc.append(`
+                        <div class="form-check p-2 border rounded-3 mb-2 bg-white">
+                            <input class="form-check-input ms-1" type="radio" name="pickupPointChoice" id="pickup_${pt.id}" value="${pt.id}" ${i === 0 ? 'checked' : ''}>
+                            <label class="form-check-label ms-2 d-block" for="pickup_${pt.id}">
+                                <strong class="text-dark small d-block">${pt.name} <span class="badge bg-success-subtle text-success">FREE PICKUP</span></strong>
+                                <span class="text-muted text-xs d-block">${pt.street || pt.name}, ${pt.city}</span>
+                            </label>
+                        </div>
+                    `);
+                });
+            }
+
+            this.recalculateValidationCosts();
+
+            const modalEl = document.getElementById('modal-checkout-validate');
+            if (modalEl && window.bootstrap) {
+                const modal = window.bootstrap.Modal.getOrCreateInstance ? window.bootstrap.Modal.getOrCreateInstance(modalEl) : new window.bootstrap.Modal(modalEl);
+                modal.show();
+            }
+        },
+
+        recalculateValidationCosts() {
+            const state = this.currentValidationState;
+            state.deliveryFeeMinor = (state.fulfillment === 'pickup') ? 0 : 120000;
+            state.expressSurchargeMinor = state.isExpress ? 150000 : 0;
+
+            const taxableMinor = state.subtotalMinor + state.deliveryFeeMinor + state.expressSurchargeMinor;
+            state.vatAmountMinor = Math.round(taxableMinor * (state.vatPercent / 100));
+            state.totalMinor = taxableMinor + state.vatAmountMinor;
+
+            $('#summarySubtotal').text(this.formatNaira(state.subtotalMinor));
+            $('#summaryDeliveryFee').text(state.deliveryFeeMinor === 0 ? 'FREE' : this.formatNaira(state.deliveryFeeMinor));
+            $('#summaryExpressFee').text(this.formatNaira(state.expressSurchargeMinor));
+            $('#summaryExpressRow').toggleClass('d-none', !state.isExpress);
+            $('#summaryVat').text(this.formatNaira(state.vatAmountMinor));
+            $('#summaryTotalAmount').text(this.formatNaira(state.totalMinor));
+
+            const walletNaira = getWalletValue(this.store);
+            const walletMinor = walletNaira * 100;
+            const deficitMinor = state.totalMinor - walletMinor;
+
+            $('#validateWalletBalanceText').text(this.formatNaira(walletMinor));
+
+            if (walletMinor >= state.totalMinor) {
+                $('#walletInsufficientAlert').addClass('d-none');
+                $('#btnPayWithWallet').removeClass('d-none').prop('disabled', false);
+            } else {
+                $('#walletInsufficientAlert').removeClass('d-none');
+                $('#walletDeficitAmount').text(this.formatNaira(deficitMinor));
+                $('#btnPayWithWallet').addClass('d-none');
+            }
+        },
+
+        handleWalletCheckout() {
+            const modalEl = document.getElementById('modal-wallet-pin');
+            if (modalEl && window.bootstrap) {
+                $('#pinOrderIdDisplay').text(this.currentOrderId);
+                $('#pinAmountDisplay').text(this.formatNaira(this.currentValidationState.totalMinor));
+                const pinModal = window.bootstrap.Modal.getOrCreateInstance ? window.bootstrap.Modal.getOrCreateInstance(modalEl) : new window.bootstrap.Modal(modalEl);
+                pinModal.show();
+            }
+        },
+
+        executeWalletPayment() {
+            const pin = ($('#walletPinInput').val() || '').trim();
+            if (pin.length < 4) {
+                if (window.iziToast) window.iziToast.error({ title: 'Invalid PIN', message: 'Enter 4-digit security PIN.' });
+                return;
+            }
+
+            const totalMinor = this.currentValidationState.totalMinor;
+            const currentWallet = getWalletValue(this.store);
+            const newWallet = currentWallet - (totalMinor / 100);
+
+            // Update user wallet balance
+            const user = getUser(this.store);
+            if (user) {
+                user.wallet = newWallet;
+                setUser(user, this.store);
+            }
+            localStorage.setItem(this.store + '_wallet_balance', String(newWallet));
+
+            const confirmedOrder = {
+                orderId: this.currentOrderId,
+                totalMinor: totalMinor,
+                items: [...this.cart],
+                status: 'paid_and_confirmed',
+                paymentMethod: 'wallet',
+                deliveryPasscode: Math.floor(1000 + Math.random() * 9000),
+                createdAt: new Date().toISOString()
+            };
+
+            this.pendingOrders = this.pendingOrders.filter(o => o.orderId !== this.currentOrderId);
+            this.pendingOrders.unshift(confirmedOrder);
+
+            if (this.currentValidationState && this.currentValidationState.onlySelected) {
+                this.cart = this.cart.filter(c => !this.selectedLines.has(c.lineId));
+                this.selectedLines.clear();
+                this.cart.forEach(c => this.selectedLines.add(c.lineId));
+            } else {
+                this.cart = [];
+                this.selectedLines.clear();
+            }
+
+            this.saveState();
+            $('.modal').modal('hide');
+
+            if (window.iziToast) {
+                window.iziToast.success({
+                    title: 'Order Paid & Confirmed!',
+                    message: `Order ${confirmedOrder.orderId}. Delivery Passcode: ${confirmedOrder.deliveryPasscode}`,
+                    timeout: 8000
+                });
+            }
+        },
+
+        syncPaymentChannelCards(channel = 'agent') {
+            if (channel === 'direct') {
+                $('#channelAgentCard').addClass('d-none');
+                $('#channelDirectCard').removeClass('d-none');
+            } else {
+                $('#channelAgentCard').removeClass('d-none');
+                $('#channelDirectCard').addClass('d-none');
+            }
+        },
+
+        openPaymentRequestModal(purpose = 'order_direct', customAmountMinor = null) {
+            let amountMinor = customAmountMinor || this.currentValidationState.totalMinor;
+            if (!this.currentOrderId || purpose === 'wallet_topup') {
+                const prefix = this.store === 'betasup' ? 'TOPUP-BET-' : (this.store === 'thriftz' ? 'TOPUP-TZ-' : 'TOPUP-UWB-');
+                this.currentOrderId = prefix + new Date().getFullYear() + String(new Date().getMonth() + 1).padStart(2, '0') + '-' + Math.floor(1000 + Math.random() * 9000);
+            }
+
+            $('#reqOrderIdDisplay').text(this.currentOrderId);
+            $('#reqAmountDisplay').text(this.formatNaira(amountMinor));
+            $('#reqPurposeInput').val(purpose);
+
+            // Populate agent & bank details
+            const agent = {
+                agentName: 'Chukwuma Adebayo',
+                phone: '0801-234-5678',
+                whatsapp: '+2348012345678',
+                hubCode: 'FRM-ILN-042',
+                badge: 'Accredited Senior Agent'
+            };
+            $('#agentNameDisplay').text(agent.agentName);
+            $('#agentPhoneDisplay').text(agent.phone);
+            $('#agentHubCodeDisplay').text(agent.hubCode);
+            $('#agentBadgeDisplay').text(agent.badge);
+            $('#agentWhatsappBtn').attr('href', `https://wa.me/${agent.whatsapp.replace(/[^0-9]/g, '')}?text=Payment%20for%20order%20${this.currentOrderId}`);
+
+            const bank = {
+                bankName: 'First Bank of Nigeria',
+                accountNumber: '3109845210',
+                accountName: 'AreaBazaar Direct Settlement'
+            };
+            $('#bankNameDisplay').text(bank.bankName);
+            $('#bankAccountDisplay').text(bank.accountNumber);
+            $('#bankAccountNameDisplay').text(bank.accountName);
+
+            // Channel toggle
+            const selChannel = $('input[name="paymentChannelChoice"]:checked').val() || 'agent';
+            this.syncPaymentChannelCards(selChannel);
+
+            // Single ref check
+            if (!this.orderPaymentRefs) this.orderPaymentRefs = {};
+            const existingOrder = this.pendingOrders.find(o => o.orderId === this.currentOrderId && o.paymentRef);
+            const existingRef = (existingOrder && existingOrder.paymentRef) || this.orderPaymentRefs[this.currentOrderId] || null;
+
+            if (existingRef) {
+                this.currentPaymentRef = existingRef;
+                $('#generatedRefText').text(existingRef);
+                $('#generatedRefAlert').removeClass('d-none');
+                $('#btnGeneratePaymentRef').prop('disabled', true).html('<i class="bi bi-check2-circle me-1"></i> Payment Ref Generated');
+            } else {
+                this.currentPaymentRef = null;
+                $('#generatedRefAlert').addClass('d-none');
+                $('#btnGeneratePaymentRef').prop('disabled', false).html('<i class="bi bi-qr-code me-1"></i> Generate Payment Ref');
+            }
+
+            $('#modal-checkout-validate').modal('hide');
+            const modalEl = document.getElementById('modal-payment-request');
+            if (modalEl && window.bootstrap) {
+                const modal = window.bootstrap.Modal.getOrCreateInstance ? window.bootstrap.Modal.getOrCreateInstance(modalEl) : new window.bootstrap.Modal(modalEl);
+                modal.show();
+            }
+        },
+
+        generatePaymentReference(channel = 'agent') {
+            if (!this.orderPaymentRefs) this.orderPaymentRefs = {};
+            const existingOrder = this.pendingOrders.find(o => o.orderId === this.currentOrderId);
+            const existingRef = (existingOrder && existingOrder.paymentRef) || this.orderPaymentRefs[this.currentOrderId] || this.currentPaymentRef;
+
+            if (existingRef) {
+                this.currentPaymentRef = existingRef;
+                $('#generatedRefAlert').removeClass('d-none');
+                $('#generatedRefText').text(this.currentPaymentRef);
+                $('#btnGeneratePaymentRef').prop('disabled', true).html('<i class="bi bi-check2-circle me-1"></i> Payment Ref Generated');
+                return this.currentPaymentRef;
+            }
+
+            const prefix = this.store === 'betasup' ? 'REF-BET-' : (this.store === 'thriftz' ? 'REF-TZ-' : 'REF-UWB-');
+            this.currentPaymentRef = prefix + new Date().getFullYear() + String(new Date().getMonth() + 1).padStart(2, '0') + '-' + Math.floor(10000 + Math.random() * 90000);
+            this.orderPaymentRefs[this.currentOrderId] = this.currentPaymentRef;
+
+            const pendingRecord = {
+                orderId: this.currentOrderId,
+                paymentRef: this.currentPaymentRef,
+                channel: channel,
+                totalMinor: this.currentValidationState.totalMinor,
+                status: 'awaiting_payment',
+                items: [...this.cart],
+                createdAt: new Date().toISOString()
+            };
+
+            if (existingOrder) {
+                existingOrder.paymentRef = this.currentPaymentRef;
+                existingOrder.channel = channel;
+            } else {
+                this.pendingOrders.push(pendingRecord);
+            }
+
+            this.saveState();
+
+            $('#generatedRefAlert').removeClass('d-none');
+            $('#generatedRefText').text(this.currentPaymentRef);
+            $('#btnGeneratePaymentRef').prop('disabled', true).html('<i class="bi bi-check2-circle me-1"></i> Payment Ref Generated');
+
+            if (window.iziToast) {
+                window.iziToast.info({
+                    title: 'Payment Ref Generated',
+                    message: `Ref: ${this.currentPaymentRef}. Proceed to report after transfer.`
+                });
+            }
+            return this.currentPaymentRef;
+        },
+
+        openPaymentReportModal(orderId, ref) {
+            this.currentOrderId = orderId || this.currentOrderId;
+            this.currentPaymentRef = ref || this.currentPaymentRef;
+
+            const order = this.pendingOrders.find(o => o.orderId === this.currentOrderId);
+            const amountKobo = order ? order.totalMinor : this.currentValidationState.totalMinor;
+
+            $('#reportOrderIdInput').val(this.currentOrderId);
+            $('#reportPaymentRefInput').val(this.currentPaymentRef || '');
+            $('#reportAmountPaidInput').val(amountKobo / 100);
+
+            $('#modal-payment-request').modal('hide');
+            const modalEl = document.getElementById('modal-payment-report');
+            if (modalEl && window.bootstrap) {
+                const modal = window.bootstrap.Modal.getOrCreateInstance ? window.bootstrap.Modal.getOrCreateInstance(modalEl) : new window.bootstrap.Modal(modalEl);
+                modal.show();
+            }
+        },
+
+        submitPaymentReport() {
+            const orderId = $('#reportOrderIdInput').val();
+            const ref = $('#reportPaymentRefInput').val();
+            const amountNaira = parseFloat($('#reportAmountPaidInput').val()) || 0;
+            const bankPaidFrom = $('#reportBankSelect').val();
+            const payerName = ($('#reportPayerNameInput').val() || '').trim();
+            const remarks = ($('#reportRemarksInput').val() || '').trim();
+
+            const report = {
+                reportId: 'REP-' + Date.now(),
+                orderId: orderId,
+                paymentRef: ref,
+                amountPaidMinor: Math.round(amountNaira * 100),
+                bankPaidFrom: bankPaidFrom,
+                payerName: payerName,
+                remarks: remarks,
+                status: 'submitted_pending_reconciliation',
+                createdAt: new Date().toISOString()
+            };
+
+            this.reconciliations.push(report);
+            const order = this.pendingOrders.find(o => o.orderId === orderId);
+            if (order) {
+                order.status = 'payment_reported';
+                order.report = report;
+            }
+
+            this.saveState();
+            $('#modal-payment-report').modal('hide');
+
+            if (window.iziToast) {
+                window.iziToast.success({
+                    title: 'Payment Reported!',
+                    message: 'Hub administrators are reconciling your payment.',
+                    timeout: 6000
+                });
+            }
+        },
+
+        renderAuctions() {
+            const $grid = (this.store === 'betasup') ? $('#betasup-auction-grid') : (this.store === 'thriftz' ? $('#thriftz-auction-grid') : $('#bazaarVariantGalleryRow, #landingAuctionDealsRow'));
+            if (!$grid.length) return;
+
+            const lots = (this.store === 'betasup') ? BETASUP_WAVE_LOTS : (this.store === 'thriftz' ? THRIFTZ_WAVE_LOTS : []);
+            if (!lots.length) return;
+
+            $grid.empty();
+            lots.forEach(lot => {
+                const discount = Math.round(((lot.originalPrice - lot.wavePrice) / lot.originalPrice) * 100);
+                $grid.append(`
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="card h-100 border rounded-4 shadow-sm product-card bg-white position-relative overflow-hidden cursor-pointer bazaar-variant-lot-card" data-variant-id="${lot.variantId}">
+                            <span class="badge bg-danger position-absolute top-0 start-0 m-2 rounded-pill px-2 py-1 small animate-pulse">
+                                <i class="bi bi-clock-history me-1"></i> Ends in ${lot.timerMinutesLeft}m
+                            </span>
+                            <div class="p-3 bg-light rounded-top-4 text-center" style="height: 170px; display: flex; align-items: center; justify-content: center;">
+                                <img src="${lot.image}" alt="${lot.title}" class="img-fluid" style="max-height: 130px; object-fit: contain;">
+                            </div>
+                            <div class="card-body p-3 d-flex flex-column">
+                                <small class="text-muted text-xs text-uppercase fw-bold">${lot.category}</small>
+                                <h6 class="fw-bold text-dark mb-1 text-truncate" title="${lot.title}">${lot.title}</h6>
+                                <div class="d-flex align-items-center justify-content-between small text-muted mb-2">
+                                    <span>MOQ: <strong class="text-dark">${lot.moq} unit</strong></span>
+                                    ${discount > 0 ? `<span class="badge bg-success-subtle text-success">Save ${discount}%</span>` : ''}
+                                </div>
+                                <div class="mt-auto">
+                                    <div class="bg-light p-2 rounded-3 mb-2 d-flex justify-content-between align-items-baseline">
+                                        <span class="text-xs text-muted">Deal Price:</span>
+                                        <div>
+                                            <span class="fw-extrabold text-danger fs-5">${this.formatNaira(lot.wavePriceMinor)}</span>
+                                            <span class="text-decoration-line-through text-muted small ms-1">${this.formatNaira(lot.originalPriceMinor)}</span>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-sm btn-dark w-100 fw-bold rounded-3 btn-inspect-auction" data-variant-id="${lot.variantId}">
+                                        <i class="bi bi-eye me-1"></i> Inspect Deal
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `);
+            });
+        },
+
+        openAuctionInspectModal(variantId) {
+            const lots = (this.store === 'betasup') ? BETASUP_WAVE_LOTS : (this.store === 'thriftz' ? THRIFTZ_WAVE_LOTS : []);
+            const lot = lots.find(l => l.variantId === variantId) || lots[0];
+            if (!lot) return;
+
+            const savingsMinor = lot.originalPriceMinor - lot.wavePriceMinor;
+            let explanation = 'Direct price drop active during live hub session. Locks upon checkout.';
+            if (lot.auctionType === 'Fastest Finger') explanation = 'Fastest Finger flash drop. Instant claim while local stock lasts.';
+            else if (lot.auctionType === 'While Offer Lasts') explanation = 'Timebound batch drop. Reserved at deal price while offer lasts.';
+            else if (lot.auctionType === 'Real Bidding') explanation = 'Competitive bidding drop. Lead bid locks upon checkout.';
+            else if (lot.auctionType === 'Price Waves') explanation = 'Scheduled price drop wave. Locks for immediate payment or cart reserve.';
+
+            let specsRows = '';
+            Object.entries(lot.specifications || {}).forEach(([k, val]) => {
+                const label = k.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
+                specsRows += `<tr><th class="ps-3 py-2 text-muted small" style="width: 40%;">${label}</th><td class="pe-3 py-2 text-dark small fw-bold">${val}</td></tr>`;
+            });
+
+            const modalHtml = `
+                <div class="row g-4 align-items-start">
+                    <div class="col-md-5 text-center">
+                        <div class="p-3 bg-light rounded-4 border text-center mb-3">
+                            <img src="${lot.image}" alt="${lot.title}" class="img-fluid" style="max-height: 220px; object-fit: contain;">
+                        </div>
+                        <span class="badge bg-danger rounded-pill px-3 py-2 mb-2 d-inline-block">
+                            <i class="bi bi-lightning-charge-fill me-1"></i> Revealed: <strong>${lot.auctionType}</strong>
+                        </span>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="d-flex align-items-center gap-2 mb-2">
+                            <span class="badge bg-dark">${lot.category}</span>
+                            <span class="badge bg-warning-subtle text-warning-emphasis"><i class="bi bi-clock me-1"></i>Ends in ${lot.timerMinutesLeft} mins</span>
+                        </div>
+                        <h4 class="fw-bold text-dark mb-1">${lot.title}</h4>
+                        <p class="text-muted small mb-2">${lot.description}</p>
+
+                        <div class="alert alert-danger-subtle border border-danger-subtle p-2 rounded-3 mb-3 small text-danger-emphasis">
+                            <i class="bi bi-info-circle-fill me-1"></i> ${explanation}
+                        </div>
+
+                        <div class="p-3 bg-light rounded-3 mb-3 border">
+                            <div class="d-flex justify-content-between align-items-baseline">
+                                <div>
+                                    <span class="text-muted small d-block">Auction Deal Price:</span>
+                                    <span class="fs-3 fw-extrabold text-danger">${this.formatNaira(lot.wavePriceMinor)}</span>
+                                    <span class="text-decoration-line-through text-muted small ms-2">${this.formatNaira(lot.originalPriceMinor)}</span>
+                                </div>
+                                <span class="badge bg-success-subtle text-success border border-success-subtle p-2">Save ${this.formatNaira(savingsMinor)}</span>
+                            </div>
+                            <div class="small text-danger fw-semibold mt-2">
+                                <i class="bi bi-exclamation-triangle-fill me-1"></i> MOQ: ${lot.moq} unit required.
+                            </div>
+                        </div>
+
+                        <div class="table-responsive border rounded-3 mb-3 bg-white">
+                            <table class="table table-sm table-striped mb-0">
+                                <tbody>
+                                    ${specsRows || '<tr><td colspan="2" class="p-2 text-center text-muted small">Standard specifications apply.</td></tr>'}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="d-flex flex-column flex-sm-row gap-2 mt-3">
+                            <button class="btn btn-brand py-2 px-3 fw-bold flex-fill shadow-sm btn-pay-immediately" data-lot-id="${lot.variantId}">
+                                <i class="bi bi-credit-card-2-front me-1"></i> Pay Immediately
+                            </button>
+                            <button class="btn btn-outline-dark py-2 px-3 fw-bold flex-fill btn-add-auction-to-cart" data-lot-id="${lot.variantId}" data-timer="${lot.timerMinutesLeft}">
+                                <i class="bi bi-cart-plus me-1"></i> Add To Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            const $inspectModal = $('#modal-auction-inspect');
+            if ($inspectModal.length) {
+                if (typeof $inspectModal.iziModal === 'function') {
+                    if (!$inspectModal.data('iziModal')) {
+                        $inspectModal.iziModal({
+                            title: 'Auction Lot Inspection',
+                            subtitle: 'Revealed Auction Format & Live Drop Terms',
+                            headerColor: (this.store === 'betasup') ? '#b91c1c' : '#0a6810',
+                            width: 720,
+                            radius: 16,
+                            padding: 0,
+                            zindex: 1060
+                        });
+                    }
+                    $('#auctionInspectModalBody').html(modalHtml);
+                    $inspectModal.iziModal('open');
+                }
+            } else {
+                let modalBody = document.querySelector('#modal-auction-inspect .modal-body') || document.querySelector('#quickViewModalBody');
+                if (modalBody) modalBody.innerHTML = modalHtml;
+                const modalEl = document.getElementById('modal-auction-inspect') || document.getElementById('modal-quick-view');
+                if (modalEl && window.bootstrap) {
+                    const modal = window.bootstrap.Modal.getOrCreateInstance ? window.bootstrap.Modal.getOrCreateInstance(modalEl) : new window.bootstrap.Modal(modalEl);
+                    modal.show();
+                }
+            }
+        },
+
+        bindEvents() {
+            const self = this;
+            if (this._eventsBound) return;
+            this._eventsBound = true;
+
+            // Global trigger to open cart offcanvas
+            $(document).on('click', '#openCartBtn, #nav-cart, .btn-open-cart-offcanvas', function (e) {
+                e.preventDefault();
+                self.syncCartUI();
+                const offcanvasEl = document.getElementById('cartOffcanvas');
+                if (offcanvasEl && window.bootstrap && window.bootstrap.Offcanvas) {
+                    bootstrap.Offcanvas.getOrCreateInstance(offcanvasEl).show();
+                }
+            });
+
+            // Cart item checkbox
+            $(document).on('change', '.cart-item-check', function () {
+                const lineId = $(this).data('line-id');
+                if (this.checked) self.selectedLines.add(lineId);
+                else self.selectedLines.delete(lineId);
+                self.syncCartUI();
+            });
+
+            // Select all checkbox
+            $(document).on('change', '#selectAllCartCheck', function () {
+                if (this.checked) self.cart.forEach(c => self.selectedLines.add(c.lineId));
+                else self.selectedLines.clear();
+                self.syncCartUI();
+            });
+
+            // Cart line steppers
+            $(document).on('click', '.cart-qty-btn', function () {
+                const lineId = $(this).data('line-id');
+                const delta = parseInt($(this).data('delta'), 10);
+                self.updateCartQty(lineId, delta);
+            });
+
+            $(document).on('click', '.cart-remove-btn', function () {
+                const lineId = $(this).data('line-id');
+                self.removeCartLine(lineId);
+            });
+
+            // Checkout triggers
+            $(document).on('click', '#btnCheckoutSelected', function () {
+                self.openCheckoutValidateModal(true);
+            });
+
+            $(document).on('click', '#btnCheckoutAll, #btnProceedToCheckout', function () {
+                self.openCheckoutValidateModal(false);
+            });
+
+            // Fulfillment choice
+            $(document).on('change', 'input[name="fulfillmentChoice"]', function () {
+                self.currentValidationState.fulfillment = $(this).val();
+                if (self.currentValidationState.fulfillment === 'pickup') {
+                    $('#pickupAccordionWrapper').removeClass('d-none');
+                    $('#addressInputWrapper').addClass('d-none');
+                } else {
+                    $('#pickupAccordionWrapper').addClass('d-none');
+                    $('#addressInputWrapper').removeClass('d-none');
+                }
+                self.recalculateValidationCosts();
+            });
+
+            $(document).on('change', '#expressDeliveryToggle', function () {
+                self.currentValidationState.isExpress = $(this).is(':checked');
+                self.recalculateValidationCosts();
+            });
+
+            $(document).on('input', '#deliveryAddressInput', function () {
+                self.currentValidationState.address = $(this).val().trim();
+            });
+
+            // Pay with Wallet inside Validate Modal
+            $(document).on('click', '#btnPayWithWallet', function () {
+                self.handleWalletCheckout();
+            });
+
+            $(document).on('click', '#btnConfirmWalletPin', function () {
+                self.executeWalletPayment();
+            });
+
+            // Payment Request triggers
+            $(document).on('click', '#btnCreatePaymentRequest, .btn-open-payment-request', function () {
+                const purpose = $(this).data('purpose') || 'order_direct';
+                self.openPaymentRequestModal(purpose);
+            });
+
+            $(document).on('change', 'input[name="paymentChannelChoice"]', function () {
+                self.syncPaymentChannelCards($(this).val());
+            });
+
+            $(document).on('click', '#btnGeneratePaymentRef', function () {
+                const channel = $('input[name="paymentChannelChoice"]:checked').val() || 'agent';
+                self.generatePaymentReference(channel);
+            });
+
+            $(document).on('click', '#btnOpenPaymentReport, .btn-report-payment-trigger', function () {
+                const orderId = $(this).data('order-id') || self.currentOrderId;
+                const ref = $(this).data('ref') || self.currentPaymentRef;
+                self.openPaymentReportModal(orderId, ref);
+            });
+
+            $(document).on('submit', '#formPaymentReport', function (e) {
+                e.preventDefault();
+                self.submitPaymentReport();
+            });
+
+            $(document).on('click', '.btn-complete-pending-purchase', function () {
+                const orderId = $(this).data('order-id');
+                const order = self.pendingOrders.find(o => o.orderId === orderId);
+                if (order) {
+                    if (order.status === 'payment_reported') {
+                        self.openPaymentReportModal(order.orderId, order.paymentRef);
+                    } else {
+                        self.currentOrderId = order.orderId;
+                        self.currentPaymentRef = order.paymentRef;
+                        self.openPaymentRequestModal('order_direct', order.totalMinor);
+                    }
+                }
+            });
+
+            // Auction Arena inspect triggers
+            $(document).on('click', '.btn-inspect-auction, .bazaar-variant-lot-card', function (e) {
+                e.preventDefault();
+                const lotId = $(this).data('variant-id');
+                self.openAuctionInspectModal(lotId);
+            });
+
+            $(document).on('click', '.btn-pay-immediately', function (e) {
+                e.preventDefault();
+                const lotId = $(this).data('lot-id');
+                const lots = (self.store === 'betasup') ? BETASUP_WAVE_LOTS : (self.store === 'thriftz' ? THRIFTZ_WAVE_LOTS : []);
+                const lot = lots.find(l => l.variantId === lotId);
+                if (lot) {
+                    self.addToCart({
+                        productId: lot.baseProductId,
+                        variantId: lot.variantId,
+                        title: lot.title,
+                        priceMinor: lot.wavePriceMinor,
+                        price: lot.wavePrice,
+                        moq: lot.moq,
+                        image: lot.image,
+                        isAuction: true,
+                        auctionExpiresAt: Date.now() + (lot.timerMinutesLeft * 60 * 1000)
+                    }, false);
+                }
+                if ($('#modal-auction-inspect').length && typeof $('#modal-auction-inspect').iziModal === 'function') {
+                    $('#modal-auction-inspect').iziModal('close');
+                }
+                $('.modal').modal('hide');
+                self.openCheckoutValidateModal();
+            });
+
+            $(document).on('click', '.btn-add-auction-to-cart', function (e) {
+                e.preventDefault();
+                const lotId = $(this).data('lot-id');
+                const lots = (self.store === 'betasup') ? BETASUP_WAVE_LOTS : (self.store === 'thriftz' ? THRIFTZ_WAVE_LOTS : []);
+                const lot = lots.find(l => l.variantId === lotId);
+                if (lot) {
+                    self.addToCart({
+                        productId: lot.baseProductId,
+                        variantId: lot.variantId,
+                        title: lot.title,
+                        priceMinor: lot.wavePriceMinor,
+                        price: lot.wavePrice,
+                        moq: lot.moq,
+                        image: lot.image,
+                        isAuction: true,
+                        auctionExpiresAt: Date.now() + (lot.timerMinutesLeft * 60 * 1000)
+                    }, true);
+                }
+                if ($('#modal-auction-inspect').length && typeof $('#modal-auction-inspect').iziModal === 'function') {
+                    $('#modal-auction-inspect').iziModal('close');
+                }
+                $('.modal').modal('hide');
+            });
+        }
+    };
+
     function init() {
         const storeName = detectStoreName();
         if (document.body) {
             document.body.dataset.store = storeName;
         }
-        syncUI();
+        injectStorefrontStyles();
+        injectBottomCornerWidgets();
+        enhanceLocationSwitcherModal();
+        populateRegistrationHubSelects();
+        bindGlobalStorefrontEvents();
+        if (typeof syncUI === "function") syncUI();
         checkActiveBazaarSession();
+        if (storeName === 'betasup' || storeName === 'thriftz') {
+            StorefrontCheckout.init(storeName);
+        }
+        // Re-enhance after page scripts initialize iziModal
+        setTimeout(() => {
+            enhanceLocationSwitcherModal();
+            populateRegistrationHubSelects();
+            if (typeof syncUI === "function") syncUI();
+        }, 250);
     }
 
     // Export Storefront Core API
+    window.StorefrontCheckout = StorefrontCheckout;
     window.AreaBazaarStorefront = {
         init,
         refresh: syncUI,
         detectStoreName,
         getUser,
         setUser,
+        register: registerUser,
+        login: loginUser,
+        logout: logoutUser,
         getLocation,
         setLocation,
+        filterHubs,
+        openLocationSwitcherModal,
+        enhanceLocationSwitcherModal,
         getWalletValue,
         getCartCount,
         formatNaira,
         checkActiveBazaarSession,
+        StorefrontCheckout,
         AVAILABLE_HUBS,
         ACTIVE_BAZAAR_SESSIONS,
         UWANBUY_PRODUCTS,
+        UWANBUY_CATEGORIES,
+        ACTIVE_WAVE_VARIANTS,
         THRIFTZ_PRODUCTS,
         BETASUP_PRODUCTS
     };

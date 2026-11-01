@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta charset="utf-8">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg:#f8fafc; --primary:#d97706; --border:#e2e8f0; --radius:8px; }
+    * { box-sizing: border-box; margin:0; padding:0; font-family:'Inter',sans-serif; }
+    body { background: var(--bg); padding:16px; font-size:13px; color:#0f172a; }
+    .header { margin-bottom:14px; padding-bottom:12px; border-bottom:1px solid var(--border); }
+    .header h2 { font-size:16px; font-weight:700; color:#d97706; }
+    .form-group { margin-bottom:12px; }
+    label { display:block; font-weight:600; font-size:12px; margin-bottom:4px; color:#334155; }
+    input, select { width:100%; padding:8px 10px; border:1px solid var(--border); border-radius:var(--radius); font-size:13px; background:#fff; }
+    .summary-card { background:#fffbeb; border:1px solid #fde68a; border-radius:var(--radius); padding:12px; margin-bottom:12px; }
+    .btn-submit { width:100%; background:var(--primary); color:#fff; border:none; padding:10px; font-weight:600; border-radius:var(--radius); cursor:pointer; }
+    .btn-submit:hover { background:#b45309; }
+    .feedback { margin-top:10px; padding:10px; border-radius:var(--radius); font-size:12px; display:none; }
+    .feedback.success { background:#dcfce7; color:#166534; display:block; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h2>Bank Remittance Package</h2>
+    <p style="color:#64748b; font-size:12px;">Bundle daily cash collections for bank teller deposit.</p>
+  </div>
+  <div class="summary-card">
+    <div style="font-size:11px; color:#92400e; font-weight:600;">UNREMITTED CASH ON HAND</div>
+    <div style="font-size:18px; font-weight:800; color:#78350f;">₦350,000</div>
+    <div style="font-size:11px; color:#92400e; margin-top:2px;">7 Walk-In Receipts Pending Bank Reconciliation</div>
+  </div>
+  <form id="remitForm">
+    <div class="form-group">
+      <label>Target Depository Bank</label>
+      <select id="bankName">
+        <option value="GTBANK">Guaranty Trust Bank (0124982141)</option>
+        <option value="ZENITH">Zenith Bank (1014582910)</option>
+        <option value="ACCESS">Access Bank (0092147812)</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Deposit Amount (₦)</label>
+      <input type="number" id="remitAmt" value="350000" required>
+    </div>
+    <div class="form-group">
+      <label>Bank Teller / Deposit Slip Reference</label>
+      <input type="text" id="tellerRef" placeholder="e.g. GTB-DEP-88492" required>
+    </div>
+    <div class="form-group">
+      <label>Bank Deposit Slip Photo URL / Drive Link</label>
+      <input type="url" id="photoUrl" placeholder="https://drive.google.com/..." required>
+    </div>
+    <button type="submit" class="btn-submit" id="btnRemit">Submit Remittance Voucher</button>
+  </form>
+  <div id="feedback" class="feedback"></div>
+
+  <script>
+    document.getElementById('remitForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btnRemit');
+      btn.disabled = true;
+      btn.innerText = 'Submitting Package...';
+      setTimeout(function() {
+        btn.disabled = false;
+        btn.innerText = 'Submit Remittance Voucher';
+        const fb = document.getElementById('feedback');
+        fb.className = 'feedback success';
+        fb.innerText = '✓ Remittance package bundled and registered in BATCH-REMITTANCES!';
+      }, 500);
+    });
+  </script>
+</body>
+</html>

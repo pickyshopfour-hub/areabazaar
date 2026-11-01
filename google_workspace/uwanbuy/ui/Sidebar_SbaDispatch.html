@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta charset="utf-8">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg:#f8fafc; --primary:#7e22ce; --border:#e2e8f0; --radius:8px; }
+    * { box-sizing: border-box; margin:0; padding:0; font-family:'Inter',sans-serif; }
+    body { background: var(--bg); padding:16px; font-size:13px; color:#0f172a; }
+    .header { margin-bottom:14px; padding-bottom:12px; border-bottom:1px solid var(--border); }
+    .header h2 { font-size:16px; font-weight:700; color:#7e22ce; }
+    .form-group { margin-bottom:12px; }
+    label { display:block; font-weight:600; font-size:12px; margin-bottom:4px; color:#334155; }
+    input, select { width:100%; padding:8px 10px; border:1px solid var(--border); border-radius:var(--radius); font-size:13px; background:#fff; }
+    .btn-submit { width:100%; background:var(--primary); color:#fff; border:none; padding:10px; font-weight:600; border-radius:var(--radius); cursor:pointer; }
+    .btn-submit:hover { background:#6b21a8; }
+    .demand-box { background:#faf5ff; border:1px solid #e9d5ff; border-radius:var(--radius); padding:10px; margin-bottom:12px; font-size:12px; }
+    .feedback { margin-top:10px; padding:10px; border-radius:var(--radius); font-size:12px; display:none; }
+    .feedback.success { background:#dcfce7; color:#166534; display:block; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h2>Assign SBA Procurement Batch</h2>
+    <p style="color:#64748b; font-size:12px;">Order-driven sourcing from registered SBAs.</p>
+  </div>
+  <div class="demand-box">
+    <div><strong>Demand Code:</strong> <?!= (context.data && context.data[1]) || 'DMD-YAM-001' ?></div>
+    <div><strong>Product:</strong> <?!= (context.data && context.data[3]) || 'Yam Tubers (500 Base Units)' ?></div>
+    <div><strong>Bulk Packs Needed:</strong> <span style="font-weight:700; color:#7e22ce;"><?!= (context.data && context.data[6]) || '50 Bulk Bags' ?></span></div>
+  </div>
+  <form id="sbaForm">
+    <div class="form-group">
+      <label>Select Registered SBA Partner</label>
+      <select id="sbaSelect">
+        <option value="SBA-KURA">SBA-KURA (Kura Agro Farms - Capacity: 100 Bags/day)</option>
+        <option value="SBA-DANGOTE">SBA-DANGOTE (Dangote Farms - Capacity: 200 Bags/day)</option>
+        <option value="SBA-LOCAL1">SBA-LOCAL1 (Tanke Farmers Coop - Capacity: 40 Bags/day)</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Bulk Units to Procure</label>
+      <input type="number" id="bulkQty" value="50" min="1" required>
+    </div>
+    <div class="form-group">
+      <label>Benchmark Unit Price (₦)</label>
+      <input type="number" id="benchmarkPrice" value="50000" readonly style="background:#f1f5f9;">
+    </div>
+    <div class="form-group">
+      <label>Delivery Target Dock</label>
+      <input type="text" value="WHZ-01 Dock Bay A" readonly style="background:#f1f5f9;">
+    </div>
+    <button type="submit" class="btn-submit" id="btnDispatch">Issue Procurement Batch Order</button>
+  </form>
+  <div id="feedback" class="feedback"></div>
+
+  <script>
+    document.getElementById('sbaForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btnDispatch');
+      btn.disabled = true;
+      btn.innerText = 'Dispatching Batch...';
+      setTimeout(function() {
+        btn.disabled = false;
+        btn.innerText = 'Issue Procurement Batch Order';
+        const fb = document.getElementById('feedback');
+        fb.className = 'feedback success';
+        fb.innerText = '✓ Sourcing batch assigned! Registered in SBA-ACQUISITIONS.';
+      }, 500);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta charset="utf-8">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg:#f8fafc; --primary:#dc2626; --border:#e2e8f0; --radius:8px; }
+    * { box-sizing: border-box; margin:0; padding:0; font-family:'Inter',sans-serif; }
+    body { background: var(--bg); padding:16px; font-size:13px; color:#0f172a; }
+    .header { margin-bottom:14px; padding-bottom:12px; border-bottom:1px solid var(--border); }
+    .header h2 { font-size:16px; font-weight:700; color:#dc2626; }
+    .label-preview {
+      background:#fff; border:2px dashed #0f172a; border-radius:6px; padding:14px; margin-bottom:14px;
+      font-family:monospace; box-shadow:0 2px 8px rgba(0,0,0,0.05);
+    }
+    .label-top { display:flex; justify-content:space-between; border-bottom:1px solid #000; padding-bottom:6px; margin-bottom:8px; }
+    .label-hub { font-size:16px; font-weight:900; color:#000; text-transform:uppercase; }
+    .label-barcode { text-align:center; margin:10px 0; background:#f1f5f9; padding:8px; border-radius:4px; font-weight:700; letter-spacing:2px; }
+    .security-notice { background:#fef2f2; border:1px solid #fecaca; border-radius:6px; padding:8px; font-size:11px; color:#991b1b; margin-bottom:12px; font-weight:600; }
+    .btn-submit { width:100%; background:var(--primary); color:#fff; border:none; padding:10px; font-weight:600; border-radius:var(--radius); cursor:pointer; }
+    .btn-submit:hover { background:#b91c1c; }
+    .feedback { margin-top:10px; padding:10px; border-radius:var(--radius); font-size:12px; display:none; }
+    .feedback.success { background:#dcfce7; color:#166534; display:block; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h2>Print Thermal Package Label</h2>
+    <p style="color:#64748b; font-size:12px;">4x6 tamper-evident thermal shipping label.</p>
+  </div>
+
+  <div class="security-notice">
+    🔒 <strong>SECURITY MANDATE:</strong> The customer delivery secret OTP/passcode is strictly withheld and never printed on shipping labels!
+  </div>
+
+  <div class="label-preview">
+    <div class="label-top">
+      <div>
+        <strong style="font-size:12px;">UWANBUY PRIORITY</strong>
+        <div style="font-size:10px; color:#666;">SESSION ORDER ITEM</div>
+      </div>
+      <div class="label-hub"><?!= (context.data && context.data[4]) || 'TANKE HUB' ?></div>
+    </div>
+    <div style="font-size:12px; margin-bottom:4px;">
+      <strong>PARCEL:</strong> <?!= (context.data && context.data[1]) || 'UWB-ORD-8801-ITM-101' ?>
+    </div>
+    <div style="font-size:11px; margin-bottom:4px;">
+      <strong>CUSTOMER:</strong> <?!= (context.data && context.data[2]) || 'Fatima Abubakar' ?>
+    </div>
+    <div style="font-size:11px; margin-bottom:4px;">
+      <strong>PHONE:</strong> <span style="background:#e2e8f0; padding:1px 4px; border-radius:3px;">0803****567</span>
+    </div>
+    <div style="font-size:11px; margin-bottom:6px;">
+      <strong>CONTENTS:</strong> <?!= (context.data && context.data[5]) || '50kg Rice x2' ?>
+    </div>
+    <div class="label-barcode">
+      ||| | |||| || | |||| ||| ||<br>
+      *UWB-8801-101*
+    </div>
+    <div style="display:flex; justify-content:space-between; font-size:9px; color:#555; border-top:1px solid #ccc; padding-top:4px;">
+      <span>TAMPER-EVIDENT QR ACTIVE</span>
+      <span>OTP AUTH REQUIRED AT HANDOVER</span>
+    </div>
+  </div>
+
+  <button type="button" class="btn-submit" id="btnPrint" onclick="printLabel()">Send to 4x6 Thermal Printer</button>
+  <div id="feedback" class="feedback"></div>
+
+  <script>
+    function printLabel() {
+      const btn = document.getElementById('btnPrint');
+      btn.disabled = true;
+      btn.innerText = 'Printing...';
+      setTimeout(function() {
+        btn.disabled = false;
+        btn.innerText = 'Send to 4x6 Thermal Printer';
+        const fb = document.getElementById('feedback');
+        fb.className = 'feedback success';
+        fb.innerText = '✓ Label printed! Parcel status advanced to [labelled]. Ready for staging sorting.';
+      }, 500);
+    }
+  </script>
+</body>
+</html>

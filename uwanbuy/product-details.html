@@ -152,25 +152,6 @@
 
 <body data-store="uwanbuy">
 
-    <!-- Top Hyperlocal Strip -->
-    <div class="top-hyperlocal-bar">
-        <div class="container d-flex flex-wrap justify-content-between align-items-center gap-2">
-            <div class="d-flex align-items-center gap-2">
-                <span class="text-white-50"><i class="bi bi-geo-alt-fill text-danger"></i> Hyperlocal Hub:</span>
-                <span class="location-pill" id="btnChangeLocation">
-                    <span id="currentLocationLabel">Tanke Hub, Ilorin</span>
-                    <i class="bi bi-chevron-down small"></i>
-                </span>
-            </div>
-            <div class="d-flex align-items-center gap-3">
-                <span id="liveBazaarBannerBadge" class="badge bg-danger rounded-pill px-3 py-2" style="display: none; cursor: pointer;">
-                    <i class="fa fa-bolt me-1"></i> LIVE BAZAAR ACTIVE
-                </span>
-                <span class="text-white-50 d-none d-md-inline">Hyperlocal Fulfillment Within 2-4 Hours</span>
-            </div>
-        </div>
-    </div>
-
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
         <div class="container">
@@ -181,9 +162,6 @@
             <div class="d-flex ms-auto align-items-center gap-2">
                 <a href="category.html?category=all" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
                     <i class="bi bi-arrow-left me-1"></i> Browse Categories
-                </a>
-                <a href="auctions/index.html" class="btn btn-sm btn-outline-danger rounded-pill px-3">
-                    <i class="bi bi-hammer me-1"></i> Auctions (MOQ)
                 </a>
                 <div class="d-flex align-items-center gap-2 px-3 py-2 rounded-pill bg-light border cursor-pointer" id="btnNavWallet">
                     <i class="bi bi-wallet2 text-danger"></i>
@@ -562,7 +540,7 @@
                         </div>
                     </div>
 
-                    <div id="channelDirectCard" class="card border rounded-3 p-3 bg-light mb-3">
+                    <div id="channelDirectCard" class="card border rounded-3 p-3 bg-light mb-3 d-none">
                         <div class="d-flex align-items-center gap-2 mb-2">
                             <i class="bi bi-bank fs-4 text-primary"></i>
                             <div>
@@ -663,11 +641,38 @@
         </div>
     </div>
 
-    <!-- Location Switcher Modal -->
+    <!-- Location Switcher Modal (Searchable & Filterable) -->
     <div id="modal-location-switcher">
         <div class="p-4">
-            <h5 class="fw-bold mb-3"><i class="bi bi-geo-alt-fill text-danger me-2"></i> Select Shopping Hub</h5>
-            <div class="list-group">
+            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-2">
+                <h5 class="fw-bold mb-0 text-dark"><i class="bi bi-geo-alt-fill text-danger me-2"></i> Select Your Shopping Hub</h5>
+                <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-3 py-1 small">
+                    <i class="bi bi-pin-map-fill me-1"></i>Current: <strong id="modalCurrentHubBadge" class="storefront-current-location">Tanke Hub, Ilorin</strong>
+                </span>
+            </div>
+            <p class="text-muted small mb-3">Search by neighborhood, street, city, or state to see real-time inventory and live sessions in your area.</p>
+
+            <div class="input-group mb-2 shadow-xs">
+                <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-search"></i></span>
+                <input type="text" id="hubSearchInput" class="form-control border-start-0 ps-0" placeholder="Search area, street, city or state (e.g. Tanke, Lekki, Wuse, Bodija)..." autocomplete="off">
+                <button class="btn btn-outline-secondary d-none" type="button" id="btnClearHubSearch" title="Clear search"><i class="bi bi-x-lg"></i></button>
+            </div>
+
+            <div class="d-flex flex-wrap align-items-center gap-1 mb-2" id="hubRegionFilterBar">
+                <button type="button" class="btn btn-xs hub-filter-pill active" data-region="all">All Areas</button>
+                <button type="button" class="btn btn-xs hub-filter-pill" data-region="live"><i class="bi bi-lightning-charge-fill text-danger me-1"></i>Active Wave</button>
+                <button type="button" class="btn btn-xs hub-filter-pill" data-region="ilorin">Ilorin / Kwara</button>
+                <button type="button" class="btn btn-xs hub-filter-pill" data-region="lagos">Lagos</button>
+                <button type="button" class="btn btn-xs hub-filter-pill" data-region="abuja">Abuja</button>
+                <button type="button" class="btn btn-xs hub-filter-pill" data-region="ph">Port Harcourt</button>
+                <button type="button" class="btn btn-xs hub-filter-pill" data-region="other">Ibadan / Enugu / Kano</button>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <small class="text-muted fw-semibold" id="hubSearchCountBadge">Showing available hubs</small>
+            </div>
+
+            <div class="list-group mb-0 hub-scrollable-list" id="hubsListGroup">
                 <button type="button" class="list-group-item list-group-item-action p-3 hub-select-item" data-hub="Tanke Hub, Ilorin">
                     <div class="fw-bold text-dark">Tanke Hub, Ilorin</div>
                     <small class="text-success fw-bold">Live Session Running</small>
