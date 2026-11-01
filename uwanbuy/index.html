@@ -264,6 +264,47 @@
             margin-right: 6px;
             margin-bottom: 6px;
         }
+    
+        /* Enhanced solid nav buttons */
+        .nav-action-btn-pill {
+            padding: 9px 22px !important;
+            font-weight: 700 !important;
+            font-size: 0.92rem !important;
+            min-height: 42px !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            border-radius: 50px !important;
+            transition: all 0.2s ease !important;
+        }
+        .nav-signin-btn {
+            border: 2px solid #0f172a !important;
+            color: #0f172a !important;
+            background-color: #ffffff !important;
+        }
+        .nav-signin-btn:hover {
+            background-color: #0f172a !important;
+            color: #ffffff !important;
+        }
+        .nav-register-btn {
+            background-color: var(--uw-brand) !important;
+            color: #ffffff !important;
+            border: 2px solid var(--uw-brand) !important;
+            box-shadow: 0 4px 14px rgba(220, 38, 38, 0.25) !important;
+        }
+        .nav-register-btn:hover {
+            background-color: var(--uw-brand-hover) !important;
+            border-color: var(--uw-brand-hover) !important;
+            color: #ffffff !important;
+            transform: translateY(-1px) !important;
+        }
+        .nav-cart-btn {
+            padding: 9px 20px !important;
+            font-weight: 700 !important;
+            min-height: 42px !important;
+            border-radius: 50px !important;
+        }
+  
     </style>
 </head>
 
@@ -308,7 +349,7 @@
                     </div>
 
                     <!-- Cart Trigger -->
-                    <button class="btn btn-brand position-relative shadow-sm px-3 d-inline-flex align-items-center gap-1 text-nowrap flex-shrink-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+                    <button class="btn btn-brand nav-action-btn-pill nav-cart-btn position-relative shadow-sm d-inline-flex align-items-center gap-2 text-nowrap flex-shrink-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
                         <i class="bi bi-cart3"></i>
                         <span class="d-none d-sm-inline">Cart</span>
                         <span id="cartBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark d-none">
@@ -319,11 +360,11 @@
                     <!-- Auth Dropdown / Buttons -->
                     <div class="ms-1 flex-shrink-0">
                         <div class="auth-guest-only d-flex align-items-center gap-2">
-                            <button class="btn btn-sm btn-outline-secondary rounded-pill px-3 text-nowrap" id="btn-login-trigger">Sign In</button>
-                            <button class="btn btn-sm btn-brand rounded-pill px-3 text-nowrap" id="btn-register-trigger">Register</button>
+                            <button class="btn nav-action-btn-pill nav-signin-btn text-nowrap" id="btn-login-trigger">Sign In</button>
+                            <button class="btn nav-action-btn-pill nav-register-btn text-nowrap" id="btn-register-trigger">Register</button>
                         </div>
                         <div class="auth-logged-only d-none dropdown">
-                            <button class="btn btn-sm btn-light border rounded-pill px-3 dropdown-toggle d-flex align-items-center gap-1 text-nowrap" data-bs-toggle="dropdown">
+                            <button class="btn btn-light border rounded-pill px-3 py-2 fw-semibold dropdown-toggle d-flex align-items-center gap-1 text-nowrap" data-bs-toggle="dropdown">
                                 <i class="bi bi-person-circle text-danger"></i>
                                 <span class="auth-user-name">Account</span>
                             </button>

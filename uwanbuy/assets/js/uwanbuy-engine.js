@@ -2473,9 +2473,9 @@
 
             let auctionExplanation = '';
             if (lot.auctionTypeSlug === 'price-wave' || lot.auctionType === 'Price Wave') {
-                auctionExplanation = 'Live Price Wave Drop! The price drops periodically and locks upon checkout. Complete payment or claim before the wave ends.';
+                auctionExplanation = 'Scheduled price drop. Locks upon checkout or cart reserve.';
             } else if (lot.auctionTypeSlug === 'stock-cap' || lot.auctionType === 'Stock Cap') {
-                auctionExplanation = 'Collective Stock Cap! Tiered bulk price allocated for this hub batch. Claim your units before the allocation cap fills.';
+                auctionExplanation = 'Batch volume deal. Claim units before the allocation cap fills.';
             } else if (lot.auctionTypeSlug === 'time-cap' || lot.auctionType === 'Time Cap') {
                 auctionExplanation = 'Strict Time Cap Flash Deal! Fixed countdown drop with high discount. Locks for immediate payment or cart reserve.';
             } else if (lot.auctionTypeSlug === 'flat-rate' || lot.auctionType === 'Flat-Rate Pool') {

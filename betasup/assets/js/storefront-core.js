@@ -252,7 +252,7 @@
             timerMinutesLeft: 42,
             moq: 1,
             badge: '⚡ Community Drop',
-            description: 'Uniform flat-rate pool allocation. Subsidized direct fulfillment from Tanke Hub.'
+            description: 'Uniform flat-rate pool price from Tanke Hub.'
         },
         'var_oil_5l': {
             variantId: 'var_oil_5l',
@@ -266,7 +266,7 @@
             timerMinutesLeft: 28,
             moq: 2,
             badge: '⚡ Stock Drop',
-            description: 'Collective volume discount drop. Claim before stock allocation sells out.'
+            description: 'Volume stock drop. Claim before allocation fills.'
         },
         'var_redmi_8_256_blk': {
             variantId: 'var_redmi_8_256_blk',
@@ -280,7 +280,7 @@
             timerMinutesLeft: 19,
             moq: 1,
             badge: '⚡ Price Wave',
-            description: 'Dropping price wave. Current price locked for immediate payment or 19-minute cart reserve.'
+            description: 'Live price wave drop. Locks on checkout.'
         },
         'var_hoodie_blk_l': {
             variantId: 'var_hoodie_blk_l',
@@ -294,7 +294,7 @@
             timerMinutesLeft: 14,
             moq: 1,
             badge: '⚡ Flash Wave',
-            description: 'Strict 14-minute flash deal reserved for Tanke hub shoppers.'
+            description: '14-minute flash deal for local hub shoppers.'
         },
         'var_pot_7pc': {
             variantId: 'var_pot_7pc',
@@ -308,7 +308,7 @@
             timerMinutesLeft: 31,
             moq: 1,
             badge: '⚡ Volume Deal',
-            description: 'Wholesale collective stock cap. 84% filled in Tanke Central Zone.'
+            description: 'Collective stock cap (84% claimed).'
         },
         'var_ac_15hp': {
             variantId: 'var_ac_15hp',
@@ -322,7 +322,7 @@
             timerMinutesLeft: 22,
             moq: 1,
             badge: '⚡ Dropping Deal',
-            description: 'Verified hardware direct drop. Price scheduled drop with full 2-year warranty.'
+            description: 'Scheduled price drop with 2-year warranty.'
         },
         'var_kettle_2l': {
             variantId: 'var_kettle_2l',
@@ -336,7 +336,7 @@
             timerMinutesLeft: 36,
             moq: 1,
             badge: '⚡ Hub Pool',
-            description: 'Uniform flat-rate subsidy. Direct delivery or instant hub pickup.'
+            description: 'Subsidized flat-rate pool for local pickup or delivery.'
         },
         'var_dress_floral_m': {
             variantId: 'var_dress_floral_m',
@@ -350,9 +350,162 @@
             timerMinutesLeft: 18,
             moq: 1,
             badge: '⚡ Flash Deal',
-            description: 'Boutique wardrobe flash deal. Limited stock batch from Tanke showroom.'
+            description: 'Limited boutique flash drop.'
         }
     };
+
+
+    // Curated Wave Lots for Betasup
+    const BETASUP_WAVE_LOTS = [
+        {
+            variantId: 'lot_beta_banga_2l',
+            baseProductId: 101,
+            title: '2L Delta Banga Soup Pot',
+            category: 'Classic Soups',
+            image: '../assetsecm/images/soups/banga-soup-roundbowl.png',
+            auctionType: 'Fastest Finger',
+            auctionTypeSlug: 'fastest-finger',
+            originalPrice: 6800,
+            originalPriceMinor: 680000,
+            wavePrice: 4800,
+            wavePriceMinor: 480000,
+            timerMinutesLeft: 12,
+            moq: 1,
+            badge: '⚡ Fastest Finger',
+            description: 'Flash pot drop. Slow-simmered palm fruit nectar & freshwater catfish.',
+            specifications: { size: '2L Family Pot', leadTime: '35 mins cooking time', proteins: 'Catfish, Smoked Fish & Assorted Meat' }
+        },
+        {
+            variantId: 'lot_beta_party_10l',
+            baseProductId: 104,
+            title: '10L Mega Party Cooler Package',
+            category: 'Party Packages',
+            image: '../assetsecm/images/alvero/restaur-banner-main-02.png',
+            auctionType: 'While Offer Lasts',
+            auctionTypeSlug: 'while-offer-lasts',
+            originalPrice: 45000,
+            originalPriceMinor: 4500000,
+            wavePrice: 35000,
+            wavePriceMinor: 3500000,
+            timerMinutesLeft: 25,
+            moq: 1,
+            badge: '⏳ While Offer Lasts',
+            description: 'Feeds 15-20 guests. Insulated stainless cooler with 20 assorted meat cuts.',
+            specifications: { capacity: '10 Litres', serves: '15 - 20 Guests', includes: 'Utensils & 20 Swallow portions' }
+        },
+        {
+            variantId: 'lot_beta_egusi_4l',
+            baseProductId: 102,
+            title: '4L Ijebu Egusi-Elefo Feast Pot',
+            category: 'Classic Soups',
+            image: '../assetsecm/images/soups/egusi-soup-roundbowl.png',
+            auctionType: 'Real Bidding',
+            auctionTypeSlug: 'real-bidding',
+            originalPrice: 12000,
+            originalPriceMinor: 1200000,
+            wavePrice: 9500,
+            wavePriceMinor: 950000,
+            timerMinutesLeft: 18,
+            moq: 1,
+            badge: '🔨 Real Bidding',
+            description: 'Pan-fried melon seed lumps with Ugwu, smoked fish, and cow tripe.',
+            specifications: { size: '4L Feast Pot', leadTime: '40 mins cooking time', proteins: 'Cow Tripe (Shaki), Beef & Titus' }
+        },
+        {
+            variantId: 'lot_beta_fisherman_4l',
+            baseProductId: 106,
+            title: '4L Delta Fisherman Soup Pot',
+            category: 'Regional Delicacies',
+            image: '../assetsecm/images/soups/banga-soup-roundbowl.png',
+            auctionType: 'Price Waves',
+            auctionTypeSlug: 'price-wave',
+            originalPrice: 24000,
+            originalPriceMinor: 2400000,
+            wavePrice: 18500,
+            wavePriceMinor: 1850000,
+            timerMinutesLeft: 22,
+            moq: 1,
+            badge: '🌊 Price Waves',
+            description: 'Riverine delicacy with fresh sweet catfish steaks, prawns & periwinkles.',
+            specifications: { size: '4L Feast Pot', seafood: 'Catfish, River Prawns & Crabs', spices: 'Native Uziza & Pepper Soup Herbs' }
+        }
+    ];
+
+    // Curated Wave Lots for Thrift-Z
+    const THRIFTZ_WAVE_LOTS = [
+        {
+            variantId: 'lot_tz_apple_watch',
+            baseProductId: 'tz-105',
+            title: 'Apple Watch Series 6 (44mm GPS)',
+            category: 'Gadgets & Tech',
+            image: 'https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=600&q=80',
+            auctionType: 'Fastest Finger',
+            auctionTypeSlug: 'fastest-finger',
+            originalPrice: 95000,
+            originalPriceMinor: 9500000,
+            wavePrice: 65000,
+            wavePriceMinor: 6500000,
+            timerMinutesLeft: 15,
+            moq: 1,
+            badge: '⚡ Fastest Finger',
+            description: 'Refurbished OLED, SpO2 & ECG sensors. Tested battery.',
+            specifications: { caseSize: '44mm Aluminum', health: 'Blood Oxygen, ECG, Heart Rate', batteryHealth: '89%' }
+        },
+        {
+            variantId: 'lot_tz_nike_windbreaker',
+            baseProductId: 'tz-106',
+            title: 'Vintage Nike Windbreaker Retro 90s',
+            category: 'Fashion & Wears',
+            image: 'https://images.unsplash.com/photo-1578587018452-892bacefd3f2?auto=format&fit=crop&w=600&q=80',
+            auctionType: 'While Offer Lasts',
+            auctionTypeSlug: 'while-offer-lasts',
+            originalPrice: 12500,
+            originalPriceMinor: 1250000,
+            wavePrice: 9500,
+            wavePriceMinor: 950000,
+            timerMinutesLeft: 20,
+            moq: 1,
+            badge: '⏳ While Offer Lasts',
+            description: 'Grade-A vintage color-blocked track jacket with mesh lining.',
+            specifications: { size: 'Medium / Large Unisex', material: 'Ripstop Nylon', condition: 'Grade A+ (No stains/tears)' }
+        },
+        {
+            variantId: 'lot_tz_sony_headphones',
+            baseProductId: 'tz-103',
+            title: 'Sony WH-1000XM4 Wireless Headphones',
+            category: 'Gadgets & Tech',
+            image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80',
+            auctionType: 'Real Bidding',
+            auctionTypeSlug: 'real-bidding',
+            originalPrice: 125000,
+            originalPriceMinor: 12500000,
+            wavePrice: 98000,
+            wavePriceMinor: 9800000,
+            timerMinutesLeft: 16,
+            moq: 1,
+            badge: '🔨 Real Bidding',
+            description: 'Industry-leading ANC, 28h battery, new sanitary ear-cushions.',
+            specifications: { batteryLife: '28+ Hours Active ANC', connection: 'Bluetooth 5.0 + 3.5mm', condition: 'Refurbished Grade A' }
+        },
+        {
+            variantId: 'lot_tz_dell_xps',
+            baseProductId: 'tz-107',
+            title: 'Dell XPS 13 Core i7 4K Touch',
+            category: 'Gadgets & Tech',
+            image: 'https://images.unsplash.com/photo-1593642632823-8f785ba67e45?auto=format&fit=crop&w=600&q=80',
+            auctionType: 'Price Waves',
+            auctionTypeSlug: 'price-wave',
+            originalPrice: 260000,
+            originalPriceMinor: 26000000,
+            wavePrice: 225000,
+            wavePriceMinor: 22500000,
+            timerMinutesLeft: 30,
+            moq: 1,
+            badge: '🌊 Price Waves',
+            description: '4K UHD InfinityEdge touchscreen, aluminum chassis, 16GB RAM.',
+            specifications: { cpu: 'Core i7-1065G7', ram: '16GB LPDDR4x', storage: '512GB NVMe SSD', display: '13.3" 4K UHD Touch' }
+        }
+    ];
 
     // Canonical UwanBuy Product Catalog: BASE PRODUCTS with Derived PRODUCT VARIANTS
     const UWANBUY_PRODUCTS = [
@@ -1978,9 +2131,15 @@
         return 'uwanbuy';
     }
 
-    function getUser() {
+    function getUserStorageKey(storeName) {
+        const s = storeName || detectStoreName();
+        return 'ab_user_' + s;
+    }
+
+    function getUser(storeName) {
+        const s = storeName || detectStoreName();
         try {
-            const raw = localStorage.getItem(USER_STORAGE_KEY);
+            const raw = localStorage.getItem(getUserStorageKey(s));
             if (!raw) return null;
             return JSON.parse(raw);
         } catch (e) {
@@ -1988,13 +2147,15 @@
         }
     }
 
-    function setUser(userData) {
+    function setUser(userData, storeName) {
+        const s = storeName || detectStoreName();
+        const key = getUserStorageKey(s);
         if (!userData) {
-            localStorage.removeItem(USER_STORAGE_KEY);
+            localStorage.removeItem(key);
         } else {
-            localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(userData));
+            localStorage.setItem(key, JSON.stringify(userData));
         }
-        syncUI();
+        if (typeof syncUI === "function") syncUI();
     }
 
     function getLocation() {
@@ -2028,40 +2189,48 @@
         }
     }
 
-    function getCartCount() {
-        const sources = ['ab_cart', 'thriftz_cart', 'uwanbuy_cart'];
+    function getCartCount(storeName) {
+        const s = storeName || detectStoreName();
         let total = 0;
+        let cartKey = 'uwanbuy_cart_state';
+        if (s === 'betasup') cartKey = 'betasup_cart_state';
+        else if (s === 'thriftz') cartKey = 'thriftz_cart_state';
 
-        sources.forEach((key) => {
-            const cart = getCartItemsFromStorage(key);
-            cart.forEach((item) => {
-                total += safeNumber(item.quantity, safeNumber(item.qty, 1));
-            });
+        const cart = getCartItemsFromStorage(cartKey);
+        cart.forEach((item) => {
+            total += safeNumber(item.quantity, safeNumber(item.qty, 1));
         });
 
         return total;
     }
 
     function getWalletValue(storeName) {
-        const currentUser = getUser();
+        const s = storeName || detectStoreName();
+        const currentUser = getUser(s);
         if (currentUser && safeNumber(currentUser.wallet, null) !== null) {
             return safeNumber(currentUser.wallet, 0);
         }
 
-        if (typeof window.walletBalance === 'number') {
+        const storeWalletKey = s + '_wallet_balance';
+        const storeWalletVal = parseFloat(localStorage.getItem(storeWalletKey));
+        if (!isNaN(storeWalletVal)) {
+            return storeWalletVal;
+        }
+
+        if (typeof window.walletBalance === 'number' && s === detectStoreName()) {
             return window.walletBalance;
         }
 
         const state = readState();
-        const persisted = state[storeName] && typeof state[storeName].wallet === 'number'
-            ? state[storeName].wallet
+        const persisted = state[s] && typeof state[s].wallet === 'number'
+            ? state[s].wallet
             : null;
 
         if (persisted !== null) {
             return persisted;
         }
 
-        return STORE_DEFAULTS[storeName]?.wallet || 0;
+        return STORE_DEFAULTS[s]?.wallet || 0;
     }
 
     function formatNaira(amount) {
@@ -2264,70 +2433,38 @@
             }
             .navbar button[data-bs-target="#cartOffcanvas"],
             .navbar #btn-login-trigger,
-            .navbar #btn-register-trigger {
+            .navbar #btn-register-trigger,
+            .navbar .auth-logged-only .dropdown-toggle {
                 display: inline-flex !important;
                 align-items: center !important;
                 justify-content: center !important;
                 white-space: nowrap !important;
                 flex-shrink: 0 !important;
-                line-height: 1.2 !important;
+                min-height: 42px !important;
+                padding: 0.55rem 1.25rem !important;
+                font-size: 0.9rem !important;
+                font-weight: 600 !important;
+                line-height: 1.35 !important;
             }
-            /* Desktop lg (992px - 1199px): compact spacing so all nav items & utilities fit on 1 row */
-            @media (min-width: 992px) and (max-width: 1199.98px) {
+            #btnNavWallet,
+            .navbar .btn-wallet-badge,
+            .navbar .nav-pill-btn {
+                min-height: 42px !important;
+                padding: 0.5rem 1.15rem !important;
+                font-size: 0.9rem !important;
+                display: inline-flex !important;
+                align-items: center !important;
+            }
+            /* Desktop lg+ (>= 992px): single-row layout with comfortable button height */
+            @media (min-width: 992px) {
                 .navbar > .container {
-                    max-width: 100% !important;
-                    padding-left: 1rem !important;
-                    padding-right: 1rem !important;
                     flex-wrap: nowrap !important;
-                }
-                .navbar .navbar-brand {
-                    margin-right: 0.5rem !important;
-                }
-                .navbar .navbar-brand img {
-                    height: 30px !important;
-                    width: auto !important;
                 }
                 .navbar .navbar-collapse {
                     flex-wrap: nowrap !important;
                 }
                 .navbar .navbar-nav {
-                    margin-left: 0.4rem !important;
-                    margin-right: auto !important;
                     flex-wrap: nowrap !important;
-                    gap: 0.1rem !important;
-                }
-                .navbar .navbar-nav .nav-link {
-                    padding-left: 0.45rem !important;
-                    padding-right: 0.45rem !important;
-                    font-size: 0.82rem !important;
-                }
-                #btnNavWallet,
-                .navbar .btn-wallet-badge,
-                .navbar .nav-pill-btn {
-                    padding: 0.35rem 0.65rem !important;
-                    font-size: 0.8rem !important;
-                }
-                .navbar .btn {
-                    padding: 0.35rem 0.65rem !important;
-                    font-size: 0.8rem !important;
-                }
-            }
-            /* Desktop xl (1200px - 1399px): balanced single-row spacing */
-            @media (min-width: 1200px) and (max-width: 1399.98px) {
-                .navbar .navbar-nav {
-                    margin-left: 0.75rem !important;
-                    flex-wrap: nowrap !important;
-                }
-                .navbar .navbar-nav .nav-link {
-                    padding-left: 0.6rem !important;
-                    padding-right: 0.6rem !important;
-                    font-size: 0.88rem !important;
-                }
-                #btnNavWallet,
-                .navbar .btn-wallet-badge,
-                .navbar .nav-pill-btn {
-                    padding: 0.4rem 0.8rem !important;
-                    font-size: 0.85rem !important;
                 }
             }
             /* Tablet & Mobile (< 992px): structured card drawer & clean 2-column tablet nav */
@@ -3034,9 +3171,9 @@
         });
     }
 
-    function registerUser(profileData = {}) {
-        const storeName = detectStoreName();
-        const bonusWallet = STORE_DEFAULTS[storeName]?.wallet || 15000;
+    function registerUser(profileData = {}, storeName) {
+        const s = storeName || detectStoreName();
+        const bonusWallet = STORE_DEFAULTS[s]?.wallet || 15000;
         const newUser = {
             name: profileData.fullName || profileData.name || 'Valued Shopper',
             phone: profileData.phone || '',
@@ -3054,36 +3191,52 @@
             agentCode: profileData.agentCode || '',
             wallet: bonusWallet
         };
-        setUser(newUser);
+        setUser(newUser, s);
         if (newUser.hub) setLocation(newUser.hub);
         return newUser;
     }
 
-    function loginUser(identifier = '') {
-        let existing = getUser();
-        if (!existing) {
-            const storeName = detectStoreName();
-            existing = {
-                name: identifier.includes('@') ? identifier.split('@')[0] : 'Valued Customer',
-                phone: identifier,
-                email: identifier.includes('@') ? identifier : '',
-                hub: getLocation(),
-                wallet: STORE_DEFAULTS[storeName]?.wallet || 15000
-            };
+    function loginUser(identifier = '', password = '', storeName = '') {
+        let s = '';
+        if (['betasup', 'thriftz', 'uwanbuy'].includes(password)) {
+            s = password;
+        } else if (storeName && ['betasup', 'thriftz', 'uwanbuy'].includes(storeName)) {
+            s = storeName;
+        } else {
+            s = detectStoreName();
         }
-        setUser(existing);
+
+        let existing = getUser(s);
+        if (!existing) {
+            existing = {
+                name: identifier.includes('@') ? identifier.split('@')[0] : (identifier || 'Valued Customer'),
+                phone: identifier,
+                email: identifier.includes('@') ? identifier : (identifier + '@areabazaar.ng'),
+                hub: getLocation(),
+                wallet: STORE_DEFAULTS[s]?.wallet || 15000
+            };
+        } else {
+            if (identifier) {
+                if (identifier.includes('@')) existing.email = identifier;
+                else existing.phone = identifier;
+            }
+        }
+        setUser(existing, s);
+        if (typeof syncUI === "function") syncUI();
         return existing;
     }
 
-    function logoutUser() {
-        setUser(null);
+    function logoutUser(storeName) {
+        const s = storeName || detectStoreName();
+        setUser(null, s);
+        if (typeof syncUI === "function") syncUI();
     }
 
     function syncUI() {
         const storeName = detectStoreName();
-        const user = getUser();
+        const user = getUser(storeName);
         const wallet = getWalletValue(storeName);
-        const cartCount = getCartCount();
+        const cartCount = getCartCount(storeName);
 
         syncLocationDisplays();
 
@@ -3106,13 +3259,7 @@
         cartSelectors.forEach(sel => {
             document.querySelectorAll(sel).forEach(el => {
                 el.textContent = String(cartCount);
-                if (sel === '#abFloatingCartBadge') {
-                    el.classList.remove('d-none');
-                } else if (cartCount > 0) {
-                    el.classList.remove('d-none');
-                } else {
-                    el.classList.add('d-none');
-                }
+                el.classList.remove('d-none');
             });
         });
 
@@ -3123,11 +3270,44 @@
         });
 
         if (user) {
-            document.querySelectorAll('.auth-guest-only').forEach(el => el.classList.add('d-none'));
-            document.querySelectorAll('.auth-logged-only').forEach(el => el.classList.remove('d-none'));
+            document.querySelectorAll('.auth-guest-only').forEach(el => {
+                el.classList.add('d-none');
+                el.style.setProperty('display', 'none', 'important');
+            });
+            document.querySelectorAll('.auth-logged-only').forEach(el => {
+                el.classList.remove('d-none');
+                el.style.removeProperty('display');
+            });
+
+            // Betasup auth button wrapper
+            document.querySelectorAll('#auth-btn-wrapper').forEach(wrapper => {
+                const firstName = (user.name && user.name.split(' ')[0]) || 'User';
+                wrapper.innerHTML = `
+                    <button class="btn btn-dark btn-sm rounded-pill px-3 py-2 fw-600 text-nowrap me-1" id="nav-profile-btn">
+                        <i class="fa fa-user-circle me-1"></i> ${firstName}
+                    </button>
+                    <button class="btn btn-outline-danger btn-sm rounded-pill px-3 py-2 fw-600 text-nowrap" onclick="AreaBazaarStorefront.logout('${storeName}')">Logout</button>
+                `;
+            });
         } else {
-            document.querySelectorAll('.auth-guest-only').forEach(el => el.classList.remove('d-none'));
-            document.querySelectorAll('.auth-logged-only').forEach(el => el.classList.add('d-none'));
+            document.querySelectorAll('.auth-guest-only').forEach(el => {
+                el.classList.remove('d-none');
+                el.style.removeProperty('display');
+            });
+            document.querySelectorAll('.auth-logged-only').forEach(el => {
+                el.classList.add('d-none');
+                el.style.setProperty('display', 'none', 'important');
+            });
+
+            // Betasup auth button wrapper
+            document.querySelectorAll('#auth-btn-wrapper').forEach(wrapper => {
+                wrapper.innerHTML = `
+                    <button id="btn-login-trigger"
+                        class="btn btn-dark rounded-pill px-4 py-2 fw-600 text-nowrap" onclick="$('#modal-login').iziModal('open')">Login</button>
+                    <button id="btn-register-trigger"
+                        class="btn btn-amber rounded-pill px-4 py-2 fw-600 text-nowrap" onclick="$('#modal-register').iziModal('open')">Register</button>
+                `;
+            });
         }
     }
 
@@ -3165,6 +3345,1019 @@
         }
     }
 
+
+    /* ==========================================================================
+       MULTI-STOREFRONT CHECKOUT, AUCTION & PAYMENT PARITY ENGINE
+       Provides identical Checkout, Wallet PIN, Agent/Bank Payment Request & Report
+       ========================================================================== */
+    const StorefrontCheckout = {
+        store: 'uwanbuy',
+        cartKey: 'uwanbuy_cart_state',
+        pendingKey: 'uwanbuy_pending_orders',
+        reconcileKey: 'uwanbuy_reconciliations',
+        cart: [],
+        pendingOrders: [],
+        reconciliations: [],
+        selectedLines: new Set(),
+        currentOrderId: null,
+        currentPaymentRef: null,
+        orderPaymentRefs: {},
+        currentValidationState: {
+            fulfillment: 'pickup',
+            pickupPointId: 'pku_tanke_01',
+            isExpress: false,
+            address: '',
+            subtotalMinor: 0,
+            deliveryFeeMinor: 0,
+            expressSurchargeMinor: 0,
+            vatPercent: 7.5,
+            vatAmountMinor: 0,
+            totalMinor: 0
+        },
+
+        init(storeName) {
+            this.store = storeName || detectStoreName();
+            this.cartKey = this.store + '_cart_state';
+            this.pendingKey = this.store + '_pending_orders';
+            this.reconcileKey = this.store + '_reconciliations';
+
+            this.loadState();
+            this.bindEvents();
+            this.syncCartUI();
+            this.renderAuctions();
+            this.startAuctionPruner();
+        },
+
+        loadState() {
+            try {
+                this.cart = JSON.parse(localStorage.getItem(this.cartKey) || '[]');
+                this.pendingOrders = JSON.parse(localStorage.getItem(this.pendingKey) || '[]');
+                this.reconciliations = JSON.parse(localStorage.getItem(this.reconcileKey) || '[]');
+                this.selectedLines = new Set(this.cart.map(c => c.lineId));
+            } catch (e) {
+                this.cart = [];
+                this.pendingOrders = [];
+                this.reconciliations = [];
+                this.selectedLines = new Set();
+            }
+        },
+
+        saveState() {
+            localStorage.setItem(this.cartKey, JSON.stringify(this.cart));
+            localStorage.setItem(this.pendingKey, JSON.stringify(this.pendingOrders));
+            localStorage.setItem(this.reconcileKey, JSON.stringify(this.reconciliations));
+            this.syncCartUI();
+        },
+
+        formatNaira(amountMinor, isMinor = true) {
+            const naira = isMinor ? (amountMinor / 100) : amountMinor;
+            return '₦' + Number(naira || 0).toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        },
+
+        getCartTotals() {
+            let subtotalMinor = 0;
+            let totalItems = 0;
+            let selectedSubtotalMinor = 0;
+            let selectedItemsCount = 0;
+
+            this.cart.forEach(c => {
+                const lineTotal = (c.priceMinor || (c.price * 100)) * (c.quantity || 1);
+                subtotalMinor += lineTotal;
+                totalItems += (c.quantity || 1);
+
+                if (this.selectedLines && this.selectedLines.has(c.lineId)) {
+                    selectedSubtotalMinor += lineTotal;
+                    selectedItemsCount += (c.quantity || 1);
+                }
+            });
+
+            return {
+                subtotalMinor,
+                totalItems,
+                selectedSubtotalMinor,
+                selectedItemsCount,
+                selectedLinesCount: this.cart.filter(c => this.selectedLines && this.selectedLines.has(c.lineId)).length
+            };
+        },
+
+        addToCart(item, showToast = true, openDrawer = true) {
+            const lineId = 'line_' + this.store + '_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
+            const priceMinor = item.priceMinor || Math.round(Number(item.price || 0) * 100);
+            const moq = Number(item.moq || 1);
+            const quantity = Math.max(Number(item.quantity || 1), moq);
+
+            const existing = this.cart.find(c => 
+                (item.variantId && c.variantId === item.variantId) || 
+                (item.productId && c.productId === item.productId && !c.variantId && c.title === item.title)
+            );
+
+            if (existing) {
+                existing.quantity += quantity;
+                if (item.isAuction) {
+                    existing.isAuction = true;
+                    existing.auctionExpiresAt = item.auctionExpiresAt;
+                    existing.priceMinor = priceMinor;
+                }
+            } else {
+                this.selectedLines.add(lineId);
+                this.cart.push({
+                    lineId: lineId,
+                    productId: item.productId || ('prod_' + Date.now()),
+                    variantId: item.variantId || null,
+                    title: item.title || item.name || 'Store Item',
+                    priceMinor: priceMinor,
+                    unitPriceMinor: priceMinor,
+                    price: priceMinor / 100,
+                    quantity: quantity,
+                    moq: moq,
+                    unitLabel: item.unitLabel || 'unit',
+                    image: item.image || '',
+                    category: item.category || 'general',
+                    store: this.store,
+                    isAuction: !!item.isAuction,
+                    auctionExpiresAt: item.auctionExpiresAt || null,
+                    addedAt: new Date().toISOString()
+                });
+            }
+
+            this.saveState();
+            this.syncCartUI();
+
+            if (window.AreaBazaarStorefront) {
+                window.AreaBazaarStorefront.refresh();
+            }
+
+            if (showToast && window.iziToast) {
+                window.iziToast.success({
+                    title: item.isAuction ? '⚡ Auction Deal Added!' : 'Added to Cart',
+                    message: `${item.title || item.name} (x${quantity})`,
+                    position: 'topRight',
+                    timeout: 3000
+                });
+            }
+
+            if (openDrawer) {
+                const offcanvasEl = document.getElementById('cartOffcanvas');
+                if (offcanvasEl && window.bootstrap && window.bootstrap.Offcanvas) {
+                    const offcanvas = window.bootstrap.Offcanvas.getOrCreateInstance(offcanvasEl);
+                    offcanvas.show();
+                }
+            }
+        },
+
+        removeCartLine(lineId) {
+            this.cart = this.cart.filter(c => c.lineId !== lineId);
+            this.selectedLines.delete(lineId);
+            this.saveState();
+        },
+
+        updateCartQty(lineId, delta) {
+            const item = this.cart.find(c => c.lineId === lineId);
+            if (!item) return;
+            const moq = item.moq || 1;
+            item.quantity += delta;
+            if (item.quantity < moq) {
+                if (delta < 0 && item.quantity <= 0) {
+                    this.removeCartLine(lineId);
+                    return;
+                }
+                item.quantity = moq;
+                if (window.iziToast) {
+                    window.iziToast.warning({ title: 'Minimum Order', message: `Minimum order quantity is ${moq}` });
+                }
+            }
+            this.saveState();
+        },
+
+        checkAndEvictExpiredAuctions() {
+            const now = Date.now();
+            let evictedAny = false;
+            const kept = [];
+            (this.cart || []).forEach(item => {
+                if (item.isAuction && item.auctionExpiresAt && now > item.auctionExpiresAt) {
+                    evictedAny = true;
+                    if (window.iziToast) {
+                        window.iziToast.warning({
+                            title: 'Auction Time Expired',
+                            message: `Deal ended for "${item.title}". Evicted from cart.`,
+                            timeout: 6000
+                        });
+                    }
+                } else {
+                    kept.push(item);
+                }
+            });
+            if (evictedAny) {
+                this.cart = kept;
+                this.saveState();
+            }
+        },
+
+        startAuctionPruner() {
+            setInterval(() => {
+                this.checkAndEvictExpiredAuctions();
+                this.updateCountdowns();
+            }, 1000);
+        },
+
+        updateCountdowns() {
+            const self = this;
+            document.querySelectorAll('.cart-auction-countdown').forEach(el => {
+                const expiresAt = parseInt(el.getAttribute ? el.getAttribute('data-expires') : (el.dataset && el.dataset.expires), 10);
+                if (!expiresAt) return;
+                const textEl = el.querySelector('.countdown-text');
+                if (textEl) {
+                    textEl.textContent = self.formatRemaining(expiresAt);
+                }
+            });
+        },
+
+        formatRemaining(expiresAt) {
+            const diffMs = Math.max(0, expiresAt - Date.now());
+            const totalSec = Math.floor(diffMs / 1000);
+            const mins = Math.floor(totalSec / 60);
+            const secs = totalSec % 60;
+            return `${mins}m ${secs < 10 ? '0' : ''}${secs}s`;
+        },
+
+        syncCartUI() {
+            this.checkAndEvictExpiredAuctions();
+            if (!this.selectedLines) this.selectedLines = new Set();
+            if (this.selectedLines.size === 0 && this.cart.length > 0) {
+                this.cart.forEach(c => this.selectedLines.add(c.lineId));
+            }
+
+            const { subtotalMinor, totalItems, selectedSubtotalMinor, selectedLinesCount } = this.getCartTotals();
+
+            // Update badge in navigation and widgets
+            document.querySelectorAll('#cart-count-badge, #cartBadge, #cartCountBadge, .cart-count').forEach(el => {
+                el.textContent = String(totalItems);
+                if (totalItems > 0) el.classList.remove('d-none');
+                else el.classList.add('d-none');
+            });
+
+            // Cart Drawer Rendering
+            let $drawerList = $('#cartDrawerItemsList');
+            if (!$drawerList.length && $('#cartItemsContainer').length) {
+                $('#cartItemsContainer').html('<div id="cartDrawerItemsList"></div>');
+                $drawerList = $('#cartDrawerItemsList');
+            }
+            if ($drawerList && $drawerList.length) {
+                $drawerList.empty();
+                if (this.cart.length === 0) {
+                    $drawerList.html(`
+                        <div class="text-center py-5 text-muted">
+                            <i class="bi bi-cart-x display-4 text-secondary mb-2 d-block"></i>
+                            <h6 class="fw-bold">Your Cart is Empty</h6>
+                            <p class="small">Add items to get started.</p>
+                        </div>
+                    `);
+                    $('#btnCheckoutSelected, #btnCheckoutAll').prop('disabled', true);
+                    $('#selectAllCartCheck').prop('checked', false);
+                    $('#selectedCartSummary').text('0 selected');
+                    $('#countSelectedBadge').text('0');
+                    $('#countAllBadge').text('0');
+                } else {
+                    this.cart.forEach(c => {
+                        const isSelected = this.selectedLines.has(c.lineId);
+                        const priceMinor = c.priceMinor || ((c.price || 0) * 100);
+                        let auctionBadgeHtml = '';
+                        if (c.isAuction && c.auctionExpiresAt) {
+                            auctionBadgeHtml = `
+                                <div class="cart-auction-countdown mt-1" data-expires="${c.auctionExpiresAt}">
+                                    <span class="badge bg-warning-subtle text-danger border border-warning-subtle text-xs py-1 px-2">
+                                        <i class="bi bi-clock-history me-1"></i> Ends in: <span class="countdown-text">${this.formatRemaining(c.auctionExpiresAt)}</span>
+                                    </span>
+                                </div>
+                            `;
+                        }
+
+                        $drawerList.append(`
+                            <div class="card border rounded-3 p-2 mb-2 shadow-sm cart-drawer-item-card ${isSelected ? 'border-danger-subtle bg-white' : 'bg-light opacity-75'}">
+                                <div class="d-flex align-items-center gap-2 mb-2">
+                                    <input type="checkbox" class="form-check-input cart-item-check" data-line-id="${c.lineId}" ${isSelected ? 'checked' : ''} style="cursor: pointer; transform: scale(1.15);">
+                                    <img src="${c.image || '../assetsecm/images/placeholders/gas-cooker.svg'}" alt="${c.title}" class="rounded-2 border flex-shrink-0" style="width: 44px; height: 44px; object-fit: contain; background: #fff;">
+                                    <div class="flex-grow-1 min-w-0" style="overflow: hidden;">
+                                        <h6 class="cart-item-title mb-0 text-truncate" title="${c.title}">${c.title}</h6>
+                                        <small class="text-muted text-xs">${this.formatNaira(priceMinor)}</small>
+                                        ${auctionBadgeHtml}
+                                    </div>
+                                    <button class="btn btn-sm btn-link text-muted cart-remove-btn p-0 flex-shrink-0" data-line-id="${c.lineId}" title="Remove item">
+                                        <i class="bi bi-x-circle fs-6"></i>
+                                    </button>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center pt-1 border-top">
+                                    <div class="input-group input-group-sm" style="width: 86px;">
+                                        <button class="btn btn-outline-secondary cart-qty-btn px-2 py-0" data-line-id="${c.lineId}" data-delta="-1">-</button>
+                                        <span class="input-group-text bg-white px-2 py-0 fw-semibold text-center flex-grow-1">${c.quantity}</span>
+                                        <button class="btn btn-outline-secondary cart-qty-btn px-2 py-0" data-line-id="${c.lineId}" data-delta="1">+</button>
+                                    </div>
+                                    <span class="fw-bold text-danger small">${this.formatNaira(priceMinor * c.quantity)}</span>
+                                </div>
+                            </div>
+                        `);
+                    });
+
+                    const allSelected = (selectedLinesCount === this.cart.length && this.cart.length > 0);
+                    $('#selectAllCartCheck').prop('checked', allSelected);
+                    $('#selectedCartSummary').text(`${selectedLinesCount} of ${this.cart.length} selected`);
+                    $('#countSelectedBadge').text(String(selectedLinesCount));
+                    $('#countAllBadge').text(String(this.cart.length));
+
+                    $('#btnCheckoutSelected').prop('disabled', selectedLinesCount === 0);
+                    $('#btnCheckoutAll').prop('disabled', this.cart.length === 0);
+                }
+            }
+
+            // Subtotal Displays
+            $('#cartSelectedSubtotalDisplay').text(this.formatNaira(selectedSubtotalMinor));
+            document.querySelectorAll('#cartSubtotalDisplay, #modalCartSubtotal').forEach(el => {
+                el.textContent = this.formatNaira(subtotalMinor);
+            });
+
+            // Render Pinned Top Cart Pending Orders
+            this.renderTopCartPendingOrders();
+            if (typeof syncUI === "function") syncUI();
+        },
+
+        renderTopCartPendingOrders() {
+            const $container = $('#cart-pending-orders-container');
+            if (!$container.length) return;
+            $container.empty();
+
+            const unpaid = this.pendingOrders.filter(o => o.status === 'awaiting_payment' || o.status === 'payment_reported');
+            if (unpaid.length > 0) {
+                let html = '<div class="alert alert-warning border-warning rounded-3 p-3 mb-3 shadow-sm">';
+                html += '<div class="d-flex align-items-center gap-2 mb-2"><i class="bi bi-clock-history fs-5 text-warning-emphasis"></i><strong class="text-dark small">Orders Awaiting Payment</strong></div>';
+
+                unpaid.forEach(order => {
+                    html += `
+                        <div class="bg-white rounded-3 p-2 border mb-2 d-flex justify-content-between align-items-center">
+                            <div>
+                                <div class="fw-bold text-dark small">${order.orderId}</div>
+                                <small class="text-muted">${this.formatNaira(order.totalMinor)} &bull; ${order.status === 'payment_reported' ? '<span class="text-info fw-bold">Reported (Reconciling)</span>' : '<span class="text-danger fw-bold">Unpaid</span>'}</small>
+                            </div>
+                            <button class="btn btn-sm btn-brand btn-complete-pending-purchase py-1 px-2 small fw-bold" data-order-id="${order.orderId}">
+                                ${order.status === 'payment_reported' ? 'View Report' : 'Pay Order'} <i class="bi bi-arrow-right"></i>
+                            </button>
+                        </div>
+                    `;
+                });
+
+                html += '</div>';
+                $container.html(html);
+            }
+        },
+
+        openCheckoutValidateModal(onlySelected = false) {
+            const { subtotalMinor, selectedSubtotalMinor, selectedLinesCount } = this.getCartTotals();
+            if (onlySelected && selectedLinesCount === 0) {
+                if (window.iziToast) window.iziToast.warning({ title: 'No Items Selected', message: 'Check at least one item to checkout.' });
+                return;
+            }
+
+            const effectiveSubtotal = onlySelected ? selectedSubtotalMinor : subtotalMinor;
+            if (effectiveSubtotal <= 0 && this.cart.length === 0) {
+                if (window.iziToast) window.iziToast.info({ title: 'Cart Empty', message: 'Add items before proceeding.' });
+                return;
+            }
+
+            this.currentValidationState.onlySelected = onlySelected;
+            const prefix = this.store === 'betasup' ? 'ORD-BET-' : (this.store === 'thriftz' ? 'ORD-TZ-' : 'ORD-UWB-');
+            this.currentOrderId = prefix + new Date().getFullYear() + String(new Date().getMonth() + 1).padStart(2, '0') + '-' + Math.floor(1000 + Math.random() * 9000);
+            this.currentPaymentRef = null;
+            this.currentValidationState.subtotalMinor = effectiveSubtotal;
+
+            $('#validateOrderIdDisplay').text(this.currentOrderId);
+
+            // Populate pickup points
+            const points = AVAILABLE_HUBS.slice(0, 4);
+            const $acc = $('#pickupPointsAccordionList');
+            if ($acc.length) {
+                $acc.empty();
+                points.forEach((pt, i) => {
+                    $acc.append(`
+                        <div class="form-check p-2 border rounded-3 mb-2 bg-white">
+                            <input class="form-check-input ms-1" type="radio" name="pickupPointChoice" id="pickup_${pt.id}" value="${pt.id}" ${i === 0 ? 'checked' : ''}>
+                            <label class="form-check-label ms-2 d-block" for="pickup_${pt.id}">
+                                <strong class="text-dark small d-block">${pt.name} <span class="badge bg-success-subtle text-success">FREE PICKUP</span></strong>
+                                <span class="text-muted text-xs d-block">${pt.street || pt.name}, ${pt.city}</span>
+                            </label>
+                        </div>
+                    `);
+                });
+            }
+
+            this.recalculateValidationCosts();
+
+            const modalEl = document.getElementById('modal-checkout-validate');
+            if (modalEl && window.bootstrap) {
+                const modal = window.bootstrap.Modal.getOrCreateInstance ? window.bootstrap.Modal.getOrCreateInstance(modalEl) : new window.bootstrap.Modal(modalEl);
+                modal.show();
+            }
+        },
+
+        recalculateValidationCosts() {
+            const state = this.currentValidationState;
+            state.deliveryFeeMinor = (state.fulfillment === 'pickup') ? 0 : 120000;
+            state.expressSurchargeMinor = state.isExpress ? 150000 : 0;
+
+            const taxableMinor = state.subtotalMinor + state.deliveryFeeMinor + state.expressSurchargeMinor;
+            state.vatAmountMinor = Math.round(taxableMinor * (state.vatPercent / 100));
+            state.totalMinor = taxableMinor + state.vatAmountMinor;
+
+            $('#summarySubtotal').text(this.formatNaira(state.subtotalMinor));
+            $('#summaryDeliveryFee').text(state.deliveryFeeMinor === 0 ? 'FREE' : this.formatNaira(state.deliveryFeeMinor));
+            $('#summaryExpressFee').text(this.formatNaira(state.expressSurchargeMinor));
+            $('#summaryExpressRow').toggleClass('d-none', !state.isExpress);
+            $('#summaryVat').text(this.formatNaira(state.vatAmountMinor));
+            $('#summaryTotalAmount').text(this.formatNaira(state.totalMinor));
+
+            const walletNaira = getWalletValue(this.store);
+            const walletMinor = walletNaira * 100;
+            const deficitMinor = state.totalMinor - walletMinor;
+
+            $('#validateWalletBalanceText').text(this.formatNaira(walletMinor));
+
+            if (walletMinor >= state.totalMinor) {
+                $('#walletInsufficientAlert').addClass('d-none');
+                $('#btnPayWithWallet').removeClass('d-none').prop('disabled', false);
+            } else {
+                $('#walletInsufficientAlert').removeClass('d-none');
+                $('#walletDeficitAmount').text(this.formatNaira(deficitMinor));
+                $('#btnPayWithWallet').addClass('d-none');
+            }
+        },
+
+        handleWalletCheckout() {
+            const modalEl = document.getElementById('modal-wallet-pin');
+            if (modalEl && window.bootstrap) {
+                $('#pinOrderIdDisplay').text(this.currentOrderId);
+                $('#pinAmountDisplay').text(this.formatNaira(this.currentValidationState.totalMinor));
+                const pinModal = window.bootstrap.Modal.getOrCreateInstance ? window.bootstrap.Modal.getOrCreateInstance(modalEl) : new window.bootstrap.Modal(modalEl);
+                pinModal.show();
+            }
+        },
+
+        executeWalletPayment() {
+            const pin = ($('#walletPinInput').val() || '').trim();
+            if (pin.length < 4) {
+                if (window.iziToast) window.iziToast.error({ title: 'Invalid PIN', message: 'Enter 4-digit security PIN.' });
+                return;
+            }
+
+            const totalMinor = this.currentValidationState.totalMinor;
+            const currentWallet = getWalletValue(this.store);
+            const newWallet = currentWallet - (totalMinor / 100);
+
+            // Update user wallet balance
+            const user = getUser(this.store);
+            if (user) {
+                user.wallet = newWallet;
+                setUser(user, this.store);
+            }
+            localStorage.setItem(this.store + '_wallet_balance', String(newWallet));
+
+            const confirmedOrder = {
+                orderId: this.currentOrderId,
+                totalMinor: totalMinor,
+                items: [...this.cart],
+                status: 'paid_and_confirmed',
+                paymentMethod: 'wallet',
+                deliveryPasscode: Math.floor(1000 + Math.random() * 9000),
+                createdAt: new Date().toISOString()
+            };
+
+            this.pendingOrders = this.pendingOrders.filter(o => o.orderId !== this.currentOrderId);
+            this.pendingOrders.unshift(confirmedOrder);
+
+            if (this.currentValidationState && this.currentValidationState.onlySelected) {
+                this.cart = this.cart.filter(c => !this.selectedLines.has(c.lineId));
+                this.selectedLines.clear();
+                this.cart.forEach(c => this.selectedLines.add(c.lineId));
+            } else {
+                this.cart = [];
+                this.selectedLines.clear();
+            }
+
+            this.saveState();
+            $('.modal').modal('hide');
+
+            if (window.iziToast) {
+                window.iziToast.success({
+                    title: 'Order Paid & Confirmed!',
+                    message: `Order ${confirmedOrder.orderId}. Delivery Passcode: ${confirmedOrder.deliveryPasscode}`,
+                    timeout: 8000
+                });
+            }
+        },
+
+        syncPaymentChannelCards(channel = 'agent') {
+            if (channel === 'direct') {
+                $('#channelAgentCard').addClass('d-none');
+                $('#channelDirectCard').removeClass('d-none');
+            } else {
+                $('#channelAgentCard').removeClass('d-none');
+                $('#channelDirectCard').addClass('d-none');
+            }
+        },
+
+        openPaymentRequestModal(purpose = 'order_direct', customAmountMinor = null) {
+            let amountMinor = customAmountMinor || this.currentValidationState.totalMinor;
+            if (!this.currentOrderId || purpose === 'wallet_topup') {
+                const prefix = this.store === 'betasup' ? 'TOPUP-BET-' : (this.store === 'thriftz' ? 'TOPUP-TZ-' : 'TOPUP-UWB-');
+                this.currentOrderId = prefix + new Date().getFullYear() + String(new Date().getMonth() + 1).padStart(2, '0') + '-' + Math.floor(1000 + Math.random() * 9000);
+            }
+
+            $('#reqOrderIdDisplay').text(this.currentOrderId);
+            $('#reqAmountDisplay').text(this.formatNaira(amountMinor));
+            $('#reqPurposeInput').val(purpose);
+
+            // Populate agent & bank details
+            const agent = {
+                agentName: 'Chukwuma Adebayo',
+                phone: '0801-234-5678',
+                whatsapp: '+2348012345678',
+                hubCode: 'FRM-ILN-042',
+                badge: 'Accredited Senior Agent'
+            };
+            $('#agentNameDisplay').text(agent.agentName);
+            $('#agentPhoneDisplay').text(agent.phone);
+            $('#agentHubCodeDisplay').text(agent.hubCode);
+            $('#agentBadgeDisplay').text(agent.badge);
+            $('#agentWhatsappBtn').attr('href', `https://wa.me/${agent.whatsapp.replace(/[^0-9]/g, '')}?text=Payment%20for%20order%20${this.currentOrderId}`);
+
+            const bank = {
+                bankName: 'First Bank of Nigeria',
+                accountNumber: '3109845210',
+                accountName: 'AreaBazaar Direct Settlement'
+            };
+            $('#bankNameDisplay').text(bank.bankName);
+            $('#bankAccountDisplay').text(bank.accountNumber);
+            $('#bankAccountNameDisplay').text(bank.accountName);
+
+            // Channel toggle
+            const selChannel = $('input[name="paymentChannelChoice"]:checked').val() || 'agent';
+            this.syncPaymentChannelCards(selChannel);
+
+            // Single ref check
+            if (!this.orderPaymentRefs) this.orderPaymentRefs = {};
+            const existingOrder = this.pendingOrders.find(o => o.orderId === this.currentOrderId && o.paymentRef);
+            const existingRef = (existingOrder && existingOrder.paymentRef) || this.orderPaymentRefs[this.currentOrderId] || null;
+
+            if (existingRef) {
+                this.currentPaymentRef = existingRef;
+                $('#generatedRefText').text(existingRef);
+                $('#generatedRefAlert').removeClass('d-none');
+                $('#btnGeneratePaymentRef').prop('disabled', true).html('<i class="bi bi-check2-circle me-1"></i> Payment Ref Generated');
+            } else {
+                this.currentPaymentRef = null;
+                $('#generatedRefAlert').addClass('d-none');
+                $('#btnGeneratePaymentRef').prop('disabled', false).html('<i class="bi bi-qr-code me-1"></i> Generate Payment Ref');
+            }
+
+            $('#modal-checkout-validate').modal('hide');
+            const modalEl = document.getElementById('modal-payment-request');
+            if (modalEl && window.bootstrap) {
+                const modal = window.bootstrap.Modal.getOrCreateInstance ? window.bootstrap.Modal.getOrCreateInstance(modalEl) : new window.bootstrap.Modal(modalEl);
+                modal.show();
+            }
+        },
+
+        generatePaymentReference(channel = 'agent') {
+            if (!this.orderPaymentRefs) this.orderPaymentRefs = {};
+            const existingOrder = this.pendingOrders.find(o => o.orderId === this.currentOrderId);
+            const existingRef = (existingOrder && existingOrder.paymentRef) || this.orderPaymentRefs[this.currentOrderId] || this.currentPaymentRef;
+
+            if (existingRef) {
+                this.currentPaymentRef = existingRef;
+                $('#generatedRefAlert').removeClass('d-none');
+                $('#generatedRefText').text(this.currentPaymentRef);
+                $('#btnGeneratePaymentRef').prop('disabled', true).html('<i class="bi bi-check2-circle me-1"></i> Payment Ref Generated');
+                return this.currentPaymentRef;
+            }
+
+            const prefix = this.store === 'betasup' ? 'REF-BET-' : (this.store === 'thriftz' ? 'REF-TZ-' : 'REF-UWB-');
+            this.currentPaymentRef = prefix + new Date().getFullYear() + String(new Date().getMonth() + 1).padStart(2, '0') + '-' + Math.floor(10000 + Math.random() * 90000);
+            this.orderPaymentRefs[this.currentOrderId] = this.currentPaymentRef;
+
+            const pendingRecord = {
+                orderId: this.currentOrderId,
+                paymentRef: this.currentPaymentRef,
+                channel: channel,
+                totalMinor: this.currentValidationState.totalMinor,
+                status: 'awaiting_payment',
+                items: [...this.cart],
+                createdAt: new Date().toISOString()
+            };
+
+            if (existingOrder) {
+                existingOrder.paymentRef = this.currentPaymentRef;
+                existingOrder.channel = channel;
+            } else {
+                this.pendingOrders.push(pendingRecord);
+            }
+
+            this.saveState();
+
+            $('#generatedRefAlert').removeClass('d-none');
+            $('#generatedRefText').text(this.currentPaymentRef);
+            $('#btnGeneratePaymentRef').prop('disabled', true).html('<i class="bi bi-check2-circle me-1"></i> Payment Ref Generated');
+
+            if (window.iziToast) {
+                window.iziToast.info({
+                    title: 'Payment Ref Generated',
+                    message: `Ref: ${this.currentPaymentRef}. Proceed to report after transfer.`
+                });
+            }
+            return this.currentPaymentRef;
+        },
+
+        openPaymentReportModal(orderId, ref) {
+            this.currentOrderId = orderId || this.currentOrderId;
+            this.currentPaymentRef = ref || this.currentPaymentRef;
+
+            const order = this.pendingOrders.find(o => o.orderId === this.currentOrderId);
+            const amountKobo = order ? order.totalMinor : this.currentValidationState.totalMinor;
+
+            $('#reportOrderIdInput').val(this.currentOrderId);
+            $('#reportPaymentRefInput').val(this.currentPaymentRef || '');
+            $('#reportAmountPaidInput').val(amountKobo / 100);
+
+            $('#modal-payment-request').modal('hide');
+            const modalEl = document.getElementById('modal-payment-report');
+            if (modalEl && window.bootstrap) {
+                const modal = window.bootstrap.Modal.getOrCreateInstance ? window.bootstrap.Modal.getOrCreateInstance(modalEl) : new window.bootstrap.Modal(modalEl);
+                modal.show();
+            }
+        },
+
+        submitPaymentReport() {
+            const orderId = $('#reportOrderIdInput').val();
+            const ref = $('#reportPaymentRefInput').val();
+            const amountNaira = parseFloat($('#reportAmountPaidInput').val()) || 0;
+            const bankPaidFrom = $('#reportBankSelect').val();
+            const payerName = ($('#reportPayerNameInput').val() || '').trim();
+            const remarks = ($('#reportRemarksInput').val() || '').trim();
+
+            const report = {
+                reportId: 'REP-' + Date.now(),
+                orderId: orderId,
+                paymentRef: ref,
+                amountPaidMinor: Math.round(amountNaira * 100),
+                bankPaidFrom: bankPaidFrom,
+                payerName: payerName,
+                remarks: remarks,
+                status: 'submitted_pending_reconciliation',
+                createdAt: new Date().toISOString()
+            };
+
+            this.reconciliations.push(report);
+            const order = this.pendingOrders.find(o => o.orderId === orderId);
+            if (order) {
+                order.status = 'payment_reported';
+                order.report = report;
+            }
+
+            this.saveState();
+            $('#modal-payment-report').modal('hide');
+
+            if (window.iziToast) {
+                window.iziToast.success({
+                    title: 'Payment Reported!',
+                    message: 'Hub administrators are reconciling your payment.',
+                    timeout: 6000
+                });
+            }
+        },
+
+        renderAuctions() {
+            const $grid = (this.store === 'betasup') ? $('#betasup-auction-grid') : (this.store === 'thriftz' ? $('#thriftz-auction-grid') : $('#bazaarVariantGalleryRow, #landingAuctionDealsRow'));
+            if (!$grid.length) return;
+
+            const lots = (this.store === 'betasup') ? BETASUP_WAVE_LOTS : (this.store === 'thriftz' ? THRIFTZ_WAVE_LOTS : []);
+            if (!lots.length) return;
+
+            $grid.empty();
+            lots.forEach(lot => {
+                const discount = Math.round(((lot.originalPrice - lot.wavePrice) / lot.originalPrice) * 100);
+                $grid.append(`
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="card h-100 border rounded-4 shadow-sm product-card bg-white position-relative overflow-hidden cursor-pointer bazaar-variant-lot-card" data-variant-id="${lot.variantId}">
+                            <span class="badge bg-danger position-absolute top-0 start-0 m-2 rounded-pill px-2 py-1 small animate-pulse">
+                                <i class="bi bi-clock-history me-1"></i> Ends in ${lot.timerMinutesLeft}m
+                            </span>
+                            <div class="p-3 bg-light rounded-top-4 text-center" style="height: 170px; display: flex; align-items: center; justify-content: center;">
+                                <img src="${lot.image}" alt="${lot.title}" class="img-fluid" style="max-height: 130px; object-fit: contain;">
+                            </div>
+                            <div class="card-body p-3 d-flex flex-column">
+                                <small class="text-muted text-xs text-uppercase fw-bold">${lot.category}</small>
+                                <h6 class="fw-bold text-dark mb-1 text-truncate" title="${lot.title}">${lot.title}</h6>
+                                <div class="d-flex align-items-center justify-content-between small text-muted mb-2">
+                                    <span>MOQ: <strong class="text-dark">${lot.moq} unit</strong></span>
+                                    ${discount > 0 ? `<span class="badge bg-success-subtle text-success">Save ${discount}%</span>` : ''}
+                                </div>
+                                <div class="mt-auto">
+                                    <div class="bg-light p-2 rounded-3 mb-2 d-flex justify-content-between align-items-baseline">
+                                        <span class="text-xs text-muted">Deal Price:</span>
+                                        <div>
+                                            <span class="fw-extrabold text-danger fs-5">${this.formatNaira(lot.wavePriceMinor)}</span>
+                                            <span class="text-decoration-line-through text-muted small ms-1">${this.formatNaira(lot.originalPriceMinor)}</span>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-sm btn-dark w-100 fw-bold rounded-3 btn-inspect-auction" data-variant-id="${lot.variantId}">
+                                        <i class="bi bi-eye me-1"></i> Inspect Deal
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `);
+            });
+        },
+
+        openAuctionInspectModal(variantId) {
+            const lots = (this.store === 'betasup') ? BETASUP_WAVE_LOTS : (this.store === 'thriftz' ? THRIFTZ_WAVE_LOTS : []);
+            const lot = lots.find(l => l.variantId === variantId) || lots[0];
+            if (!lot) return;
+
+            const savingsMinor = lot.originalPriceMinor - lot.wavePriceMinor;
+            let explanation = 'Direct price drop active during live hub session. Locks upon checkout.';
+            if (lot.auctionType === 'Fastest Finger') explanation = 'Fastest Finger flash drop. Instant claim while local stock lasts.';
+            else if (lot.auctionType === 'While Offer Lasts') explanation = 'Timebound batch drop. Reserved at deal price while offer lasts.';
+            else if (lot.auctionType === 'Real Bidding') explanation = 'Competitive bidding drop. Lead bid locks upon checkout.';
+            else if (lot.auctionType === 'Price Waves') explanation = 'Scheduled price drop wave. Locks for immediate payment or cart reserve.';
+
+            let specsRows = '';
+            Object.entries(lot.specifications || {}).forEach(([k, val]) => {
+                const label = k.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
+                specsRows += `<tr><th class="ps-3 py-2 text-muted small" style="width: 40%;">${label}</th><td class="pe-3 py-2 text-dark small fw-bold">${val}</td></tr>`;
+            });
+
+            const modalHtml = `
+                <div class="row g-4 align-items-start">
+                    <div class="col-md-5 text-center">
+                        <div class="p-3 bg-light rounded-4 border text-center mb-3">
+                            <img src="${lot.image}" alt="${lot.title}" class="img-fluid" style="max-height: 220px; object-fit: contain;">
+                        </div>
+                        <span class="badge bg-danger rounded-pill px-3 py-2 mb-2 d-inline-block">
+                            <i class="bi bi-lightning-charge-fill me-1"></i> Revealed: <strong>${lot.auctionType}</strong>
+                        </span>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="d-flex align-items-center gap-2 mb-2">
+                            <span class="badge bg-dark">${lot.category}</span>
+                            <span class="badge bg-warning-subtle text-warning-emphasis"><i class="bi bi-clock me-1"></i>Ends in ${lot.timerMinutesLeft} mins</span>
+                        </div>
+                        <h4 class="fw-bold text-dark mb-1">${lot.title}</h4>
+                        <p class="text-muted small mb-2">${lot.description}</p>
+
+                        <div class="alert alert-danger-subtle border border-danger-subtle p-2 rounded-3 mb-3 small text-danger-emphasis">
+                            <i class="bi bi-info-circle-fill me-1"></i> ${explanation}
+                        </div>
+
+                        <div class="p-3 bg-light rounded-3 mb-3 border">
+                            <div class="d-flex justify-content-between align-items-baseline">
+                                <div>
+                                    <span class="text-muted small d-block">Auction Deal Price:</span>
+                                    <span class="fs-3 fw-extrabold text-danger">${this.formatNaira(lot.wavePriceMinor)}</span>
+                                    <span class="text-decoration-line-through text-muted small ms-2">${this.formatNaira(lot.originalPriceMinor)}</span>
+                                </div>
+                                <span class="badge bg-success-subtle text-success border border-success-subtle p-2">Save ${this.formatNaira(savingsMinor)}</span>
+                            </div>
+                            <div class="small text-danger fw-semibold mt-2">
+                                <i class="bi bi-exclamation-triangle-fill me-1"></i> MOQ: ${lot.moq} unit required.
+                            </div>
+                        </div>
+
+                        <div class="table-responsive border rounded-3 mb-3 bg-white">
+                            <table class="table table-sm table-striped mb-0">
+                                <tbody>
+                                    ${specsRows || '<tr><td colspan="2" class="p-2 text-center text-muted small">Standard specifications apply.</td></tr>'}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="d-flex flex-column flex-sm-row gap-2 mt-3">
+                            <button class="btn btn-brand py-2 px-3 fw-bold flex-fill shadow-sm btn-pay-immediately" data-lot-id="${lot.variantId}">
+                                <i class="bi bi-credit-card-2-front me-1"></i> Pay Immediately
+                            </button>
+                            <button class="btn btn-outline-dark py-2 px-3 fw-bold flex-fill btn-add-auction-to-cart" data-lot-id="${lot.variantId}" data-timer="${lot.timerMinutesLeft}">
+                                <i class="bi bi-cart-plus me-1"></i> Add To Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            const $inspectModal = $('#modal-auction-inspect');
+            if ($inspectModal.length) {
+                if (typeof $inspectModal.iziModal === 'function') {
+                    if (!$inspectModal.data('iziModal')) {
+                        $inspectModal.iziModal({
+                            title: 'Auction Lot Inspection',
+                            subtitle: 'Revealed Auction Format & Live Drop Terms',
+                            headerColor: (this.store === 'betasup') ? '#b91c1c' : '#0a6810',
+                            width: 720,
+                            radius: 16,
+                            padding: 0,
+                            zindex: 1060
+                        });
+                    }
+                    $('#auctionInspectModalBody').html(modalHtml);
+                    $inspectModal.iziModal('open');
+                }
+            } else {
+                let modalBody = document.querySelector('#modal-auction-inspect .modal-body') || document.querySelector('#quickViewModalBody');
+                if (modalBody) modalBody.innerHTML = modalHtml;
+                const modalEl = document.getElementById('modal-auction-inspect') || document.getElementById('modal-quick-view');
+                if (modalEl && window.bootstrap) {
+                    const modal = window.bootstrap.Modal.getOrCreateInstance ? window.bootstrap.Modal.getOrCreateInstance(modalEl) : new window.bootstrap.Modal(modalEl);
+                    modal.show();
+                }
+            }
+        },
+
+        bindEvents() {
+            const self = this;
+            if (this._eventsBound) return;
+            this._eventsBound = true;
+
+            // Global trigger to open cart offcanvas
+            $(document).on('click', '#openCartBtn, #nav-cart, .btn-open-cart-offcanvas', function (e) {
+                e.preventDefault();
+                self.syncCartUI();
+                const offcanvasEl = document.getElementById('cartOffcanvas');
+                if (offcanvasEl && window.bootstrap && window.bootstrap.Offcanvas) {
+                    bootstrap.Offcanvas.getOrCreateInstance(offcanvasEl).show();
+                }
+            });
+
+            // Cart item checkbox
+            $(document).on('change', '.cart-item-check', function () {
+                const lineId = $(this).data('line-id');
+                if (this.checked) self.selectedLines.add(lineId);
+                else self.selectedLines.delete(lineId);
+                self.syncCartUI();
+            });
+
+            // Select all checkbox
+            $(document).on('change', '#selectAllCartCheck', function () {
+                if (this.checked) self.cart.forEach(c => self.selectedLines.add(c.lineId));
+                else self.selectedLines.clear();
+                self.syncCartUI();
+            });
+
+            // Cart line steppers
+            $(document).on('click', '.cart-qty-btn', function () {
+                const lineId = $(this).data('line-id');
+                const delta = parseInt($(this).data('delta'), 10);
+                self.updateCartQty(lineId, delta);
+            });
+
+            $(document).on('click', '.cart-remove-btn', function () {
+                const lineId = $(this).data('line-id');
+                self.removeCartLine(lineId);
+            });
+
+            // Checkout triggers
+            $(document).on('click', '#btnCheckoutSelected', function () {
+                self.openCheckoutValidateModal(true);
+            });
+
+            $(document).on('click', '#btnCheckoutAll, #btnProceedToCheckout', function () {
+                self.openCheckoutValidateModal(false);
+            });
+
+            // Fulfillment choice
+            $(document).on('change', 'input[name="fulfillmentChoice"]', function () {
+                self.currentValidationState.fulfillment = $(this).val();
+                if (self.currentValidationState.fulfillment === 'pickup') {
+                    $('#pickupAccordionWrapper').removeClass('d-none');
+                    $('#addressInputWrapper').addClass('d-none');
+                } else {
+                    $('#pickupAccordionWrapper').addClass('d-none');
+                    $('#addressInputWrapper').removeClass('d-none');
+                }
+                self.recalculateValidationCosts();
+            });
+
+            $(document).on('change', '#expressDeliveryToggle', function () {
+                self.currentValidationState.isExpress = $(this).is(':checked');
+                self.recalculateValidationCosts();
+            });
+
+            $(document).on('input', '#deliveryAddressInput', function () {
+                self.currentValidationState.address = $(this).val().trim();
+            });
+
+            // Pay with Wallet inside Validate Modal
+            $(document).on('click', '#btnPayWithWallet', function () {
+                self.handleWalletCheckout();
+            });
+
+            $(document).on('click', '#btnConfirmWalletPin', function () {
+                self.executeWalletPayment();
+            });
+
+            // Payment Request triggers
+            $(document).on('click', '#btnCreatePaymentRequest, .btn-open-payment-request', function () {
+                const purpose = $(this).data('purpose') || 'order_direct';
+                self.openPaymentRequestModal(purpose);
+            });
+
+            $(document).on('change', 'input[name="paymentChannelChoice"]', function () {
+                self.syncPaymentChannelCards($(this).val());
+            });
+
+            $(document).on('click', '#btnGeneratePaymentRef', function () {
+                const channel = $('input[name="paymentChannelChoice"]:checked').val() || 'agent';
+                self.generatePaymentReference(channel);
+            });
+
+            $(document).on('click', '#btnOpenPaymentReport, .btn-report-payment-trigger', function () {
+                const orderId = $(this).data('order-id') || self.currentOrderId;
+                const ref = $(this).data('ref') || self.currentPaymentRef;
+                self.openPaymentReportModal(orderId, ref);
+            });
+
+            $(document).on('submit', '#formPaymentReport', function (e) {
+                e.preventDefault();
+                self.submitPaymentReport();
+            });
+
+            $(document).on('click', '.btn-complete-pending-purchase', function () {
+                const orderId = $(this).data('order-id');
+                const order = self.pendingOrders.find(o => o.orderId === orderId);
+                if (order) {
+                    if (order.status === 'payment_reported') {
+                        self.openPaymentReportModal(order.orderId, order.paymentRef);
+                    } else {
+                        self.currentOrderId = order.orderId;
+                        self.currentPaymentRef = order.paymentRef;
+                        self.openPaymentRequestModal('order_direct', order.totalMinor);
+                    }
+                }
+            });
+
+            // Auction Arena inspect triggers
+            $(document).on('click', '.btn-inspect-auction, .bazaar-variant-lot-card', function (e) {
+                e.preventDefault();
+                const lotId = $(this).data('variant-id');
+                self.openAuctionInspectModal(lotId);
+            });
+
+            $(document).on('click', '.btn-pay-immediately', function (e) {
+                e.preventDefault();
+                const lotId = $(this).data('lot-id');
+                const lots = (self.store === 'betasup') ? BETASUP_WAVE_LOTS : (self.store === 'thriftz' ? THRIFTZ_WAVE_LOTS : []);
+                const lot = lots.find(l => l.variantId === lotId);
+                if (lot) {
+                    self.addToCart({
+                        productId: lot.baseProductId,
+                        variantId: lot.variantId,
+                        title: lot.title,
+                        priceMinor: lot.wavePriceMinor,
+                        price: lot.wavePrice,
+                        moq: lot.moq,
+                        image: lot.image,
+                        isAuction: true,
+                        auctionExpiresAt: Date.now() + (lot.timerMinutesLeft * 60 * 1000)
+                    }, false);
+                }
+                if ($('#modal-auction-inspect').length && typeof $('#modal-auction-inspect').iziModal === 'function') {
+                    $('#modal-auction-inspect').iziModal('close');
+                }
+                $('.modal').modal('hide');
+                self.openCheckoutValidateModal();
+            });
+
+            $(document).on('click', '.btn-add-auction-to-cart', function (e) {
+                e.preventDefault();
+                const lotId = $(this).data('lot-id');
+                const lots = (self.store === 'betasup') ? BETASUP_WAVE_LOTS : (self.store === 'thriftz' ? THRIFTZ_WAVE_LOTS : []);
+                const lot = lots.find(l => l.variantId === lotId);
+                if (lot) {
+                    self.addToCart({
+                        productId: lot.baseProductId,
+                        variantId: lot.variantId,
+                        title: lot.title,
+                        priceMinor: lot.wavePriceMinor,
+                        price: lot.wavePrice,
+                        moq: lot.moq,
+                        image: lot.image,
+                        isAuction: true,
+                        auctionExpiresAt: Date.now() + (lot.timerMinutesLeft * 60 * 1000)
+                    }, true);
+                }
+                if ($('#modal-auction-inspect').length && typeof $('#modal-auction-inspect').iziModal === 'function') {
+                    $('#modal-auction-inspect').iziModal('close');
+                }
+                $('.modal').modal('hide');
+            });
+        }
+    };
+
     function init() {
         const storeName = detectStoreName();
         if (document.body) {
@@ -3175,17 +4368,21 @@
         enhanceLocationSwitcherModal();
         populateRegistrationHubSelects();
         bindGlobalStorefrontEvents();
-        syncUI();
+        if (typeof syncUI === "function") syncUI();
         checkActiveBazaarSession();
+        if (storeName === 'betasup' || storeName === 'thriftz') {
+            StorefrontCheckout.init(storeName);
+        }
         // Re-enhance after page scripts initialize iziModal
         setTimeout(() => {
             enhanceLocationSwitcherModal();
             populateRegistrationHubSelects();
-            syncUI();
+            if (typeof syncUI === "function") syncUI();
         }, 250);
     }
 
     // Export Storefront Core API
+    window.StorefrontCheckout = StorefrontCheckout;
     window.AreaBazaarStorefront = {
         init,
         refresh: syncUI,
@@ -3204,6 +4401,7 @@
         getCartCount,
         formatNaira,
         checkActiveBazaarSession,
+        StorefrontCheckout,
         AVAILABLE_HUBS,
         ACTIVE_BAZAAR_SESSIONS,
         UWANBUY_PRODUCTS,
