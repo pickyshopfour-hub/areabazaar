@@ -543,29 +543,10 @@
 
 <body data-store="thriftz">
 
-    <!-- TOP HYPERLOCAL BAR -->
-    <div class="top-hyperlocal-bar">
-        <div class="container d-flex flex-wrap justify-content-between align-items-center gap-2">
-            <div class="d-flex align-items-center gap-2">
-                <span class="text-white-50"><i class="bi bi-geo-alt-fill text-success"></i> Hyperlocal Hub:</span>
-                <span class="location-pill" id="btnChangeLocation">
-                    <span id="currentLocationLabel">Tanke Hub, Ilorin</span>
-                    <i class="bi bi-chevron-down small"></i>
-                </span>
-            </div>
-            <div class="d-flex align-items-center gap-3">
-                <span id="liveBazaarBannerBadge" class="live-bazaar-chip" style="display: none;">
-                    <i class="fa fa-bolt me-1"></i> LIVE BAZAAR ACTIVE IN TANKE
-                </span>
-                <span class="text-white-50 d-none d-md-inline">Verified Hyperlocal Second-Hand Delivery</span>
-            </div>
-        </div>
-    </div>
-
     <!-- NAVIGATION BAR -->
     <nav class="navbar navbar-expand-lg navbar-thriftz sticky-top">
         <div class="container">
-            <a class="navbar-brand me-4" href="index.html" id="brandLogoBtn">
+            <a class="navbar-brand me-3 flex-shrink-0" href="index.html" id="brandLogoBtn">
                 <img src="../assetsecm/images/thriftz-logo-long-full-color-02.png" alt="Thrift-Z Logo"
                     style="height: 34px; width: auto;">
             </a>
@@ -576,59 +557,51 @@
             </button>
 
             <div class="collapse navbar-collapse" id="thriftzNavbar">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 fw-semibold">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 fw-semibold align-items-lg-center">
                     <li class="nav-item">
-                        <a class="nav-link text-dark active" href="index.html">Marketplace</a>
+                        <a class="nav-link text-dark active text-nowrap" href="index.html">Marketplace</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" href="#auctionArenaSection"><span
-                                class="badge bg-danger rounded-pill me-1">LIVE</span> 4 Auction Types</a>
+                        <a class="nav-link text-dark text-nowrap" href="category.html?category=fashion">Fashion & Accessories</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" href="category.html?category=fashion">Fashion & Accessories</a>
+                        <a class="nav-link text-dark text-nowrap" href="category.html?category=gadgets">Gadgets & Tech</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" href="category.html?category=gadgets">Gadgets & Tech</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" href="category.html?category=home">Home & Kitchen</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" href="../uwanbuy/index.html">UwanBuy Supermarket</a>
+                        <a class="nav-link text-dark text-nowrap" href="category.html?category=home">Home & Kitchen</a>
                     </li>
                 </ul>
 
                 <!-- Right Action Utilities -->
-                <div class="d-flex align-items-center gap-2 mt-3 mt-lg-0">
+                <div class="d-flex align-items-center gap-2 mt-3 mt-lg-0 flex-shrink-0">
                     <!-- Wallet Balance Trigger -->
-                    <button class="btn btn-wallet-badge" id="openWalletBtn">
+                    <button class="btn btn-wallet-badge text-nowrap flex-shrink-0" id="openWalletBtn">
                         <i class="bi bi-wallet2 text-success fs-6"></i>
                         <span>Wallet: ₦<span id="navWalletBalance">1,000.00</span></span>
                     </button>
 
                     <!-- Bought Items Icon -->
-                    <button class="nav-icon-btn" id="openOrdersBtn" title="My Bought Items">
+                    <button class="nav-icon-btn flex-shrink-0" id="openOrdersBtn" title="My Bought Items">
                         <i class="bi bi-bag-check fs-5"></i>
                         <span class="nav-icon-badge" id="boughtCountBadge">0</span>
                     </button>
 
                     <!-- Cart Icon -->
-                    <button class="nav-icon-btn" id="openCartBtn" title="Shopping Cart">
+                    <button class="nav-icon-btn flex-shrink-0" id="openCartBtn" title="Shopping Cart">
                         <i class="bi bi-cart3 fs-5"></i>
                         <span class="nav-icon-badge" id="cartCountBadge">0</span>
                     </button>
 
                     <!-- Auth Actions -->
-                    <div class="ms-1">
-                        <div class="auth-guest-only d-flex gap-2">
-                            <button class="btn btn-sm btn-outline-dark rounded-pill px-3" id="btn-login-trigger">Sign
-                                In</button>
-                            <button class="btn btn-sm btn-success rounded-pill px-3"
+                    <div class="ms-1 flex-shrink-0">
+                        <div class="auth-guest-only d-flex align-items-center gap-2">
+                            <button class="btn btn-sm btn-outline-dark rounded-pill px-3 text-nowrap" id="btn-login-trigger">Sign In</button>
+                            <button class="btn btn-sm btn-success rounded-pill px-3 text-nowrap"
                                 id="btn-register-trigger">Register</button>
                         </div>
                         <div class="auth-logged-only d-none dropdown">
                             <button
-                                class="btn btn-sm btn-light border rounded-pill px-3 dropdown-toggle d-flex align-items-center gap-1"
+                                class="btn btn-sm btn-light border rounded-pill px-3 dropdown-toggle d-flex align-items-center gap-1 text-nowrap"
                                 data-bs-toggle="dropdown">
                                 <i class="bi bi-person-circle text-success"></i>
                                 <span class="auth-user-name">Account</span>

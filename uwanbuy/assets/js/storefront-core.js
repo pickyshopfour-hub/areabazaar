@@ -21,15 +21,113 @@
             landingUrl: '../public/landing.php',
             endsAtMinutes: 45,
             activeDealsCount: 14
+        },
+        {
+            hubId: 'Taiwo Road Hub, Ilorin',
+            hubName: 'Taiwo Road Hub, Ilorin',
+            title: 'Taiwo Road Live Market Wave',
+            activeWave: 'Wave 1 (Early Bird)',
+            bazaarPageUrl: '../Tanke/ch-frm-bazaar-page-sample.html',
+            productRangeUrl: '../Tanke/product-range.php',
+            landingUrl: '../public/landing.php',
+            endsAtMinutes: 35,
+            activeDealsCount: 11
+        },
+        {
+            hubId: 'Malete Campus Hub, Kwara',
+            hubName: 'Malete Campus Hub, Kwara',
+            title: 'KWASU Campus Student Wave',
+            activeWave: 'Wave 2 (Student Deals)',
+            bazaarPageUrl: '../Tanke/ch-frm-bazaar-page-sample.html',
+            productRangeUrl: '../Tanke/product-range.php',
+            landingUrl: '../public/landing.php',
+            endsAtMinutes: 50,
+            activeDealsCount: 9
+        },
+        {
+            hubId: 'Yaba Tech Hub, Lagos',
+            hubName: 'Yaba Tech Hub, Lagos',
+            title: 'Yaba Hyperlocal Flash Wave',
+            activeWave: 'Wave 2 (High Mid)',
+            bazaarPageUrl: '../Tanke/ch-frm-bazaar-page-sample.html',
+            productRangeUrl: '../Tanke/product-range.php',
+            landingUrl: '../public/landing.php',
+            endsAtMinutes: 28,
+            activeDealsCount: 16
+        },
+        {
+            hubId: 'Wuse 2 Hub, Abuja',
+            hubName: 'Wuse 2 Hub, Abuja',
+            title: 'Wuse 2 Central Live Wave',
+            activeWave: 'Wave 2 (High Mid)',
+            bazaarPageUrl: '../Tanke/ch-frm-bazaar-page-sample.html',
+            productRangeUrl: '../Tanke/product-range.php',
+            landingUrl: '../public/landing.php',
+            endsAtMinutes: 40,
+            activeDealsCount: 12
+        },
+        {
+            hubId: 'GRA Phase 2 Hub, Port Harcourt',
+            hubName: 'GRA Phase 2 Hub, Port Harcourt',
+            title: 'New GRA Hyperlocal Wave',
+            activeWave: 'Wave 1 (Early Bird)',
+            bazaarPageUrl: '../Tanke/ch-frm-bazaar-page-sample.html',
+            productRangeUrl: '../Tanke/product-range.php',
+            landingUrl: '../public/landing.php',
+            endsAtMinutes: 32,
+            activeDealsCount: 10
+        },
+        {
+            hubId: 'Bodija & UI Hub, Ibadan',
+            hubName: 'Bodija & UI Hub, Ibadan',
+            title: 'Bodija & UI Campus Live Wave',
+            activeWave: 'Wave 2 (High Mid)',
+            bazaarPageUrl: '../Tanke/ch-frm-bazaar-page-sample.html',
+            productRangeUrl: '../Tanke/product-range.php',
+            landingUrl: '../public/landing.php',
+            endsAtMinutes: 38,
+            activeDealsCount: 13
         }
     ];
 
-    // Hub locations catalog
+    // Hub locations catalog (Expanded hyperlocal areas across cities & states)
     const AVAILABLE_HUBS = [
-        { id: 'Tanke Hub, Ilorin', name: 'Tanke Hub, Ilorin', city: 'Ilorin', state: 'Kwara State', hasLiveSession: true },
-        { id: 'Ikeja Hub, Lagos', name: 'Ikeja Central Hub, Lagos', city: 'Ikeja', state: 'Lagos State', hasLiveSession: false },
-        { id: 'Gwarinpa Hub, Abuja', name: 'Gwarinpa Hub, Abuja', city: 'Abuja', state: 'FCT', hasLiveSession: false },
-        { id: 'Rumuokwuta Hub, Port Harcourt', name: 'Rumuokwuta Hub, Port Harcourt', city: 'Port Harcourt', state: 'Rivers State', hasLiveSession: false }
+        // Kwara State (Ilorin & Environs)
+        { id: 'Tanke Hub, Ilorin', name: 'Tanke Hub, Ilorin', area: 'Tanke / University Rd', street: 'University Road, Oke-Odo, Tanke', city: 'Ilorin', state: 'Kwara State', regionGroup: 'ilorin', hasLiveSession: true, waveLabel: 'Active Wave', deliveryEta: '45-90 mins' },
+        { id: 'Taiwo Road Hub, Ilorin', name: 'Taiwo Road Hub, Ilorin', area: 'Taiwo Road / Oko Erin', street: 'Upper Taiwo Road, Beside CBN Quarters', city: 'Ilorin', state: 'Kwara State', regionGroup: 'ilorin', hasLiveSession: true, waveLabel: 'Active Wave', deliveryEta: '60-120 mins' },
+        { id: 'Gaa Akanbi Hub, Ilorin', name: 'Gaa Akanbi Hub, Ilorin', area: 'Gaa Akanbi / Pipeline', street: 'Pipeline Road & Gaa Akanbi Roundabout', city: 'Ilorin', state: 'Kwara State', regionGroup: 'ilorin', hasLiveSession: false, waveLabel: '', deliveryEta: '2-3 hours' },
+        { id: 'GRA Fate Hub, Ilorin', name: 'GRA Fate Hub, Ilorin', area: 'Fate / Basin / GRA', street: 'Fate Roundabout, Shoprite Axis, GRA', city: 'Ilorin', state: 'Kwara State', regionGroup: 'ilorin', hasLiveSession: false, waveLabel: '', deliveryEta: '1-2 hours' },
+        { id: 'Challenge & Unity Hub, Ilorin', name: 'Challenge & Unity Hub, Ilorin', area: 'Challenge / Unity Rd', street: 'Unity Road by Challenge Bookshop', city: 'Ilorin', state: 'Kwara State', regionGroup: 'ilorin', hasLiveSession: false, waveLabel: '', deliveryEta: '2-3 hours' },
+        { id: 'Kulende & Sango Hub, Ilorin', name: 'Kulende & Sango Hub, Ilorin', area: 'Sango / Kulende / Maraba', street: 'Old Jebba Road, Kulende Market Junction', city: 'Ilorin', state: 'Kwara State', regionGroup: 'ilorin', hasLiveSession: false, waveLabel: '', deliveryEta: '2-3 hours' },
+        { id: 'Adewole Estate Hub, Ilorin', name: 'Adewole Estate Hub, Ilorin', area: 'Adewole / Oloje / Mandate', street: 'Adewole Roundabout, Near Mandate Market', city: 'Ilorin', state: 'Kwara State', regionGroup: 'ilorin', hasLiveSession: false, waveLabel: '', deliveryEta: '2-4 hours' },
+        { id: 'Malete Campus Hub, Kwara', name: 'Malete Campus Hub, Kwara', area: 'Malete / KWASU Campus', street: 'KWASU Safari Road, Malete', city: 'Malete', state: 'Kwara State', regionGroup: 'ilorin', hasLiveSession: true, waveLabel: 'Campus Wave', deliveryEta: '45-90 mins' },
+        { id: 'Offa Central Hub, Kwara', name: 'Offa Central Hub, Kwara', area: 'Offa / Owode Market', street: 'Olofa Way, Opposite Federal Poly Gate', city: 'Offa', state: 'Kwara State', regionGroup: 'ilorin', hasLiveSession: false, waveLabel: '', deliveryEta: '2-4 hours' },
+
+        // Lagos State
+        { id: 'Ikeja Hub, Lagos', name: 'Ikeja Central Hub, Lagos', area: 'Ikeja / Allen / Alausa', street: 'Allen Avenue, Ikeja', city: 'Ikeja', state: 'Lagos State', regionGroup: 'lagos', hasLiveSession: false, waveLabel: '', deliveryEta: '2-3 hours' },
+        { id: 'Yaba Tech Hub, Lagos', name: 'Yaba Tech Hub, Lagos', area: 'Yaba / Akoka / Sabo', street: 'Herbert Macaulay Way, Sabo Yaba', city: 'Yaba', state: 'Lagos State', regionGroup: 'lagos', hasLiveSession: true, waveLabel: 'Active Wave', deliveryEta: '60-90 mins' },
+        { id: 'Lekki Phase 1 Hub, Lagos', name: 'Lekki Phase 1 Hub, Lagos', area: 'Lekki Phase 1 / Marwa', street: 'Admiralty Way, Lekki Phase 1', city: 'Lekki', state: 'Lagos State', regionGroup: 'lagos', hasLiveSession: false, waveLabel: '', deliveryEta: '2-3 hours' },
+        { id: 'Surulere Hub, Lagos', name: 'Surulere Hub, Lagos', area: 'Surulere / Bode Thomas', street: 'Adeniran Ogunsanya Street, Surulere', city: 'Surulere', state: 'Lagos State', regionGroup: 'lagos', hasLiveSession: false, waveLabel: '', deliveryEta: '2-3 hours' },
+        { id: 'Festac Town Hub, Lagos', name: 'Festac Town Hub, Lagos', area: 'Festac / Amuwo Odofin', street: '23 Road, Festac Town', city: 'Festac', state: 'Lagos State', regionGroup: 'lagos', hasLiveSession: false, waveLabel: '', deliveryEta: '2-4 hours' },
+        { id: 'Ajah & Sangotedo Hub, Lagos', name: 'Ajah & Sangotedo Hub, Lagos', area: 'Ajah / Abraham Adesanya', street: 'Lekki-Epe Expressway, Ajah Jubilee Bridge', city: 'Ajah', state: 'Lagos State', regionGroup: 'lagos', hasLiveSession: false, waveLabel: '', deliveryEta: '2-4 hours' },
+        { id: 'Ikorodu Central Hub, Lagos', name: 'Ikorodu Central Hub, Lagos', area: 'Ikorodu / Benson / Agric', street: 'Lagos Road, Benson Bus Stop, Ikorodu', city: 'Ikorodu', state: 'Lagos State', regionGroup: 'lagos', hasLiveSession: false, waveLabel: '', deliveryEta: '2-4 hours' },
+
+        // Abuja (FCT)
+        { id: 'Gwarinpa Hub, Abuja', name: 'Gwarinpa Hub, Abuja', area: 'Gwarinpa / Life Camp', street: '3rd Avenue, Gwarinpa Estate', city: 'Abuja', state: 'FCT', regionGroup: 'abuja', hasLiveSession: false, waveLabel: '', deliveryEta: '2-3 hours' },
+        { id: 'Wuse 2 Hub, Abuja', name: 'Wuse 2 Hub, Abuja', area: 'Wuse 2 / Maitama / Banex', street: 'Aminu Kano Crescent, Wuse 2', city: 'Abuja', state: 'FCT', regionGroup: 'abuja', hasLiveSession: true, waveLabel: 'Active Wave', deliveryEta: '60-90 mins' },
+        { id: 'Kubwa Hub, Abuja', name: 'Kubwa Hub, Abuja', area: 'Kubwa Phase 4 / Arab Rd', street: 'Gado Nasko Road, Kubwa', city: 'Abuja', state: 'FCT', regionGroup: 'abuja', hasLiveSession: false, waveLabel: '', deliveryEta: '2-4 hours' },
+        { id: 'Lugbe Airport Road Hub, Abuja', name: 'Lugbe Airport Road Hub, Abuja', area: 'Lugbe / FHA Estate', street: 'FHA Estate Junction, Airport Road, Lugbe', city: 'Abuja', state: 'FCT', regionGroup: 'abuja', hasLiveSession: false, waveLabel: '', deliveryEta: '2-4 hours' },
+
+        // Rivers State (Port Harcourt)
+        { id: 'Rumuokwuta Hub, Port Harcourt', name: 'Rumuokwuta Hub, Port Harcourt', area: 'Rumuokwuta / Rumuola', street: 'Ikwerre Road, Rumuokwuta', city: 'Port Harcourt', state: 'Rivers State', regionGroup: 'ph', hasLiveSession: false, waveLabel: '', deliveryEta: '2-3 hours' },
+        { id: 'GRA Phase 2 Hub, Port Harcourt', name: 'GRA Phase 2 Hub, Port Harcourt', area: 'New GRA / Tombia / Peter Odili', street: 'Tombia Street, GRA Phase 2', city: 'Port Harcourt', state: 'Rivers State', regionGroup: 'ph', hasLiveSession: true, waveLabel: 'Active Wave', deliveryEta: '60-120 mins' },
+        { id: 'Choba UniPort Hub, Port Harcourt', name: 'Choba UniPort Hub, Port Harcourt', area: 'Choba / Alakahia / UniPort', street: 'East-West Road, Choba Junction', city: 'Port Harcourt', state: 'Rivers State', regionGroup: 'ph', hasLiveSession: false, waveLabel: '', deliveryEta: '2-3 hours' },
+
+        // Oyo State (Ibadan) & Other Major Cities
+        { id: 'Bodija & UI Hub, Ibadan', name: 'Bodija & UI Hub, Ibadan', area: 'Bodija / Agbowo / UI Gate', street: 'Awolowo Avenue, Old Bodija, Ibadan', city: 'Ibadan', state: 'Oyo State', regionGroup: 'other', hasLiveSession: true, waveLabel: 'Active Wave', deliveryEta: '60-120 mins' },
+        { id: 'Ring Road & Challenge Hub, Ibadan', name: 'Ring Road & Challenge Hub, Ibadan', area: 'Ring Road / Oluyole / Challenge', street: 'MKO Abiola Way, Ring Road, Ibadan', city: 'Ibadan', state: 'Oyo State', regionGroup: 'other', hasLiveSession: false, waveLabel: '', deliveryEta: '2-3 hours' },
+        { id: 'Independence Layout Hub, Enugu', name: 'Independence Layout Hub, Enugu', area: 'Independence Layout / New Haven', street: 'Bisalla Road, Independence Layout, Enugu', city: 'Enugu', state: 'Enugu State', regionGroup: 'other', hasLiveSession: false, waveLabel: '', deliveryEta: '2-4 hours' },
+        { id: 'Nassarawa GRA Hub, Kano', name: 'Nassarawa GRA Hub, Kano', area: 'Nassarawa GRA / Tarauni', street: 'Ahmadu Bello Way, Nassarawa GRA, Kano', city: 'Kano', state: 'Kano State', regionGroup: 'other', hasLiveSession: false, waveLabel: '', deliveryEta: '2-4 hours' }
     ];
 
     // 3-Level Category Taxonomy Hierarchy (category -> subCategory -> subSubCategory)
@@ -1977,9 +2075,1008 @@
 
     function syncLocationDisplays() {
         const currentLoc = getLocation();
-        document.querySelectorAll('.storefront-current-location, #navLocationText, #nav-location-label, #currentLocationLabel').forEach(el => {
+        document.querySelectorAll('.storefront-current-location, #navLocationText, #nav-location-label, #currentLocationLabel, #abCornerHubLabel, #modalCurrentHubBadge').forEach(el => {
             el.textContent = currentLoc;
         });
+        const activeHubObj = AVAILABLE_HUBS.find(h => h.id.toLowerCase() === currentLoc.toLowerCase());
+        document.querySelectorAll('#abCornerWaveDot').forEach(el => {
+            if (activeHubObj && activeHubObj.hasLiveSession) {
+                el.classList.add('is-live');
+            } else {
+                el.classList.remove('is-live');
+            }
+        });
+    }
+
+    function filterHubs(query = '', regionFilter = 'all') {
+        const q = String(query || '').trim().toLowerCase();
+        const rf = String(regionFilter || 'all').trim().toLowerCase();
+
+        return AVAILABLE_HUBS.filter(hub => {
+            if (rf === 'live' && !hub.hasLiveSession) return false;
+            if (rf !== 'all' && rf !== 'live') {
+                const groupMatch = (hub.regionGroup || '').toLowerCase() === rf ||
+                    (hub.city || '').toLowerCase().includes(rf) ||
+                    (hub.state || '').toLowerCase().includes(rf);
+                if (!groupMatch) return false;
+            }
+            if (!q) return true;
+            const haystack = [
+                hub.id,
+                hub.name,
+                hub.area || '',
+                hub.street || '',
+                hub.city || '',
+                hub.state || ''
+            ].join(' ').toLowerCase();
+            return haystack.includes(q);
+        });
+    }
+
+    let currentHubSearchQuery = '';
+    let currentHubRegionFilter = 'all';
+
+    function buildHubItemHtml(hub, currentLoc) {
+        const isSelected = hub.id.toLowerCase() === String(currentLoc || '').toLowerCase();
+        const statusHtml = hub.hasLiveSession
+            ? `<span class="text-success fw-bold"><i class="bi bi-broadcast-pin me-1"></i>Live Session Running</span>`
+            : `<span>Normal Fulfillment (${hub.deliveryEta || '2-4 hrs'})</span>`;
+        const rightBadgeHtml = hub.hasLiveSession
+            ? `<span class="badge bg-danger rounded-pill text-nowrap">${hub.waveLabel || 'Active Wave'}</span>`
+            : `<span class="badge bg-light text-secondary border rounded-pill text-nowrap">${hub.city}</span>`;
+
+        return `
+            <button type="button" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center p-3 hub-select-item ${isSelected ? 'active-hub-selected' : ''}" data-hub="${hub.id}">
+                <div class="pe-2 text-start">
+                    <div class="d-flex align-items-center flex-wrap gap-2">
+                        <span class="fw-bold text-dark">${hub.name}</span>
+                        ${isSelected ? '<span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill text-xs"><i class="bi bi-check-circle-fill me-1"></i>Selected</span>' : ''}
+                    </div>
+                    <small class="text-muted d-block mt-1">
+                        <i class="bi bi-signpost-split me-1"></i>${hub.street || hub.area || hub.city} • ${statusHtml}
+                    </small>
+                </div>
+                <div class="d-flex align-items-center gap-2 flex-shrink-0">
+                    ${rightBadgeHtml}
+                    <i class="bi ${isSelected ? 'bi-check2-circle text-success fs-5' : 'bi-chevron-right text-muted'}"></i>
+                </div>
+            </button>
+        `;
+    }
+
+    function renderHubListItems() {
+        if (typeof document === 'undefined' || !document.getElementById) return;
+        const listEl = document.getElementById('hubsListGroup');
+        if (!listEl) return;
+
+        const currentLoc = getLocation();
+        const matches = filterHubs(currentHubSearchQuery, currentHubRegionFilter);
+        const countBadge = document.getElementById('hubSearchCountBadge');
+        if (countBadge) {
+            countBadge.textContent = `Showing ${matches.length} of ${AVAILABLE_HUBS.length} hubs`;
+        }
+
+        if (matches.length === 0) {
+            const escapedQuery = String(currentHubSearchQuery || '').replace(/[<>"'&]/g, '');
+            listEl.innerHTML = `
+                <div class="text-center p-4 bg-light rounded-3 border">
+                    <i class="bi bi-geo-alt text-muted fs-2 d-block mb-2"></i>
+                    <h6 class="fw-bold text-dark mb-1">No matching hub found for "${escapedQuery}"</h6>
+                    <p class="text-muted small mb-0">Try searching another neighborhood, street, city, or state filter above.</p>
+                </div>
+            `;
+            return;
+        }
+
+        listEl.innerHTML = matches.map(h => buildHubItemHtml(h, currentLoc)).join('');
+    }
+
+    function enhanceLocationSwitcherModal() {
+        if (typeof document === 'undefined' || !document.getElementById) return;
+        const modalEl = document.getElementById('modal-location-switcher');
+        if (!modalEl) return;
+
+        // Look for the content wrapper inside #modal-location-switcher (Wait until iziModal or DOM is ready)
+        const contentWrap = modalEl.querySelector('.iziModal-content > .p-4') || modalEl.querySelector('.p-4') || modalEl;
+        if (!contentWrap) return;
+
+        // If not yet upgraded with #hubSearchInput, inject the full searchable area switcher UI
+        if (!modalEl.querySelector('#hubSearchInput')) {
+            const currentLoc = getLocation();
+            contentWrap.innerHTML = `
+                <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-2">
+                    <h5 class="fw-bold mb-0 text-dark"><i class="bi bi-geo-alt-fill text-danger me-2"></i>Select Your Shopping Hub</h5>
+                    <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-3 py-1 small">
+                        <i class="bi bi-pin-map-fill me-1"></i>Current: <strong id="modalCurrentHubBadge">${currentLoc}</strong>
+                    </span>
+                </div>
+                <p class="text-muted small mb-3">Search by neighborhood, street, city, or state to see real-time inventory and live wave sessions in your area.</p>
+
+                <!-- Search Input Bar -->
+                <div class="input-group mb-2 shadow-xs">
+                    <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-search"></i></span>
+                    <input type="text" id="hubSearchInput" class="form-control border-start-0 ps-0" placeholder="Search area, street, city or state (e.g. Tanke, Lekki, Wuse, Bodija)..." autocomplete="off">
+                    <button class="btn btn-outline-secondary d-none" type="button" id="btnClearHubSearch" title="Clear search"><i class="bi bi-x-lg"></i></button>
+                </div>
+
+                <!-- Region / Live Wave Filter Pills -->
+                <div class="d-flex flex-wrap align-items-center gap-1 mb-2" id="hubRegionFilterBar">
+                    <button type="button" class="btn btn-xs hub-filter-pill active" data-region="all">All Areas (${AVAILABLE_HUBS.length})</button>
+                    <button type="button" class="btn btn-xs hub-filter-pill" data-region="live"><i class="bi bi-lightning-charge-fill text-danger me-1"></i>Active Wave</button>
+                    <button type="button" class="btn btn-xs hub-filter-pill" data-region="ilorin">Ilorin / Kwara</button>
+                    <button type="button" class="btn btn-xs hub-filter-pill" data-region="lagos">Lagos</button>
+                    <button type="button" class="btn btn-xs hub-filter-pill" data-region="abuja">Abuja</button>
+                    <button type="button" class="btn btn-xs hub-filter-pill" data-region="ph">Port Harcourt</button>
+                    <button type="button" class="btn btn-xs hub-filter-pill" data-region="other">Ibadan / Enugu / Kano</button>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <small class="text-muted fw-semibold" id="hubSearchCountBadge">Showing ${AVAILABLE_HUBS.length} of ${AVAILABLE_HUBS.length} hubs</small>
+                </div>
+
+                <!-- Scrollable Hubs List -->
+                <div class="list-group mb-0 hub-scrollable-list" id="hubsListGroup"></div>
+            `;
+        }
+
+        renderHubListItems();
+    }
+
+    function populateRegistrationHubSelects() {
+        if (typeof document === 'undefined' || !document.querySelectorAll) return;
+        const currentLoc = getLocation();
+        document.querySelectorAll('#reg-hub').forEach(selectEl => {
+            if (!selectEl || selectEl.dataset.hubsPopulated === 'true') return;
+            selectEl.innerHTML = AVAILABLE_HUBS.map(h => {
+                const sel = h.id === currentLoc ? 'selected' : '';
+                const liveTag = h.hasLiveSession ? ' (⚡ Active Wave)' : '';
+                return `<option value="${h.id}" ${sel}>${h.name} — ${h.state}${liveTag}</option>`;
+            }).join('');
+            selectEl.dataset.hubsPopulated = 'true';
+        });
+    }
+
+    function injectStorefrontStyles() {
+        if (typeof document === 'undefined' || !document.head || typeof document.createElement !== 'function') return;
+        if (document.getElementById('ab-storefront-core-styles')) return;
+
+        const styleEl = document.createElement('style');
+        styleEl.id = 'ab-storefront-core-styles';
+        styleEl.textContent = `
+            /* ==========================================================================
+               1. DESKTOP & TABLET NAVIGATION FIXES (NO MULTI-LINE WRAPPING)
+               ========================================================================== */
+            .navbar .navbar-brand {
+                flex-shrink: 0 !important;
+                white-space: nowrap !important;
+            }
+            .navbar-nav .nav-link,
+            .navbar .dropdown-toggle,
+            .navbar .btn,
+            .navbar .nav-pill-btn,
+            .navbar .btn-wallet-badge,
+            #btnNavWallet,
+            #nav-wallet,
+            #nav-cart,
+            #openWalletBtn {
+                white-space: nowrap !important;
+                flex-shrink: 0 !important;
+            }
+            .navbar button[data-bs-target="#cartOffcanvas"],
+            .navbar #btn-login-trigger,
+            .navbar #btn-register-trigger {
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                white-space: nowrap !important;
+                flex-shrink: 0 !important;
+                line-height: 1.2 !important;
+            }
+            /* Desktop lg (992px - 1199px): compact spacing so all nav items & utilities fit on 1 row */
+            @media (min-width: 992px) and (max-width: 1199.98px) {
+                .navbar > .container {
+                    max-width: 100% !important;
+                    padding-left: 1rem !important;
+                    padding-right: 1rem !important;
+                    flex-wrap: nowrap !important;
+                }
+                .navbar .navbar-brand {
+                    margin-right: 0.5rem !important;
+                }
+                .navbar .navbar-brand img {
+                    height: 30px !important;
+                    width: auto !important;
+                }
+                .navbar .navbar-collapse {
+                    flex-wrap: nowrap !important;
+                }
+                .navbar .navbar-nav {
+                    margin-left: 0.4rem !important;
+                    margin-right: auto !important;
+                    flex-wrap: nowrap !important;
+                    gap: 0.1rem !important;
+                }
+                .navbar .navbar-nav .nav-link {
+                    padding-left: 0.45rem !important;
+                    padding-right: 0.45rem !important;
+                    font-size: 0.82rem !important;
+                }
+                #btnNavWallet,
+                .navbar .btn-wallet-badge,
+                .navbar .nav-pill-btn {
+                    padding: 0.35rem 0.65rem !important;
+                    font-size: 0.8rem !important;
+                }
+                .navbar .btn {
+                    padding: 0.35rem 0.65rem !important;
+                    font-size: 0.8rem !important;
+                }
+            }
+            /* Desktop xl (1200px - 1399px): balanced single-row spacing */
+            @media (min-width: 1200px) and (max-width: 1399.98px) {
+                .navbar .navbar-nav {
+                    margin-left: 0.75rem !important;
+                    flex-wrap: nowrap !important;
+                }
+                .navbar .navbar-nav .nav-link {
+                    padding-left: 0.6rem !important;
+                    padding-right: 0.6rem !important;
+                    font-size: 0.88rem !important;
+                }
+                #btnNavWallet,
+                .navbar .btn-wallet-badge,
+                .navbar .nav-pill-btn {
+                    padding: 0.4rem 0.8rem !important;
+                    font-size: 0.85rem !important;
+                }
+            }
+            /* Tablet & Mobile (< 992px): structured card drawer & clean 2-column tablet nav */
+            @media (max-width: 991.98px) {
+                .navbar .navbar-collapse {
+                    background: #ffffff;
+                    border: 1px solid #e2e8f0;
+                    border-radius: 14px;
+                    padding: 0.9rem 1rem;
+                    margin-top: 0.65rem;
+                    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+                }
+                @media (min-width: 576px) and (max-width: 991.98px) {
+                    .navbar .navbar-nav {
+                        display: grid !important;
+                        grid-template-columns: repeat(2, minmax(0, 1fr));
+                        gap: 0.25rem 0.75rem;
+                        margin-bottom: 0.75rem !important;
+                    }
+                }
+                .navbar .navbar-collapse > .d-flex {
+                    flex-wrap: wrap !important;
+                    justify-content: flex-start !important;
+                    padding-top: 0.65rem;
+                    border-top: 1px solid #f1f5f9;
+                    gap: 0.5rem !important;
+                }
+            }
+
+            /* ==========================================================================
+               2. SEARCHABLE LOCATION SWITCHER MODAL STYLES
+               ========================================================================== */
+            .hub-scrollable-list {
+                max-height: 310px;
+                overflow-y: auto;
+                border: 1px solid #e2e8f0;
+                border-radius: 12px;
+            }
+            .hub-scrollable-list .hub-select-item {
+                border-left: none;
+                border-right: none;
+                transition: background-color 0.15s ease;
+            }
+            .hub-scrollable-list .hub-select-item:first-child {
+                border-top: none;
+            }
+            .hub-scrollable-list .hub-select-item:last-child {
+                border-bottom: none;
+            }
+            .hub-scrollable-list .hub-select-item.active-hub-selected {
+                background-color: #f0fdf4;
+                border-left: 4px solid #16a34a !important;
+            }
+            .hub-filter-pill {
+                font-size: 0.75rem;
+                font-weight: 600;
+                padding: 4px 10px;
+                border-radius: 50px;
+                border: 1px solid #cbd5e1;
+                background: #f8fafc;
+                color: #475569;
+                transition: all 0.18s ease;
+            }
+            .hub-filter-pill:hover {
+                border-color: #0f172a;
+                color: #0f172a;
+            }
+            .hub-filter-pill.active {
+                background: #0f172a;
+                color: #ffffff;
+                border-color: #0f172a;
+            }
+
+            /* Hide legacy top sub-nav bar completely */
+            .top-hyperlocal-bar {
+                display: none !important;
+            }
+
+            /* ==========================================================================
+               3. BOTTOM-CORNER FLOATING WIDGETS (LEFT & RIGHT DOCKS)
+               ========================================================================== */
+            .ab-corner-dock-left {
+                position: fixed;
+                bottom: 18px;
+                left: 18px;
+                z-index: 1035;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+                font-family: 'Plus Jakarta Sans', sans-serif;
+            }
+            .ab-corner-dock-right {
+                position: fixed;
+                bottom: 18px;
+                right: 18px;
+                z-index: 1035;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                gap: 8px;
+                font-family: 'Plus Jakarta Sans', sans-serif;
+            }
+            .ab-corner-drawer {
+                background: #ffffff;
+                border: 1px solid #e2e8f0;
+                border-radius: 16px;
+                box-shadow: 0 18px 38px rgba(15, 23, 42, 0.18);
+                padding: 12px;
+                width: 265px;
+                display: none;
+                animation: abSlideUpFade 0.2s ease-out;
+            }
+            .ab-corner-drawer.open {
+                display: block;
+            }
+            @keyframes abSlideUpFade {
+                from { opacity: 0; transform: translateY(8px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            .ab-corner-action-btn {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                width: 100%;
+                text-align: left;
+                background: #f8fafc;
+                border: 1px solid #e2e8f0;
+                border-radius: 10px;
+                padding: 8px 10px;
+                margin-bottom: 6px;
+                font-size: 0.8rem;
+                font-weight: 600;
+                color: #1e293b;
+                text-decoration: none;
+                transition: all 0.18s ease;
+                cursor: pointer;
+            }
+            .ab-corner-action-btn:last-child {
+                margin-bottom: 0;
+            }
+            .ab-corner-action-btn:hover {
+                background: #fff1f2;
+                border-color: #fecdd3;
+                color: #be123c;
+                transform: translateX(2px);
+            }
+            .ab-corner-action-icon {
+                width: 30px;
+                height: 30px;
+                border-radius: 8px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+                font-size: 0.95rem;
+            }
+            .ab-corner-pill-btn {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                background: #0f172a;
+                color: #ffffff;
+                border: 1px solid rgba(255, 255, 255, 0.15);
+                border-radius: 50px;
+                padding: 9px 15px;
+                font-size: 0.82rem;
+                font-weight: 700;
+                box-shadow: 0 10px 24px rgba(15, 23, 42, 0.22);
+                cursor: pointer;
+                transition: all 0.2s ease;
+                white-space: nowrap;
+            }
+            .ab-corner-pill-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 14px 28px rgba(15, 23, 42, 0.3);
+            }
+            .ab-live-dot {
+                width: 9px;
+                height: 9px;
+                border-radius: 50%;
+                background: #94a3b8;
+                display: inline-block;
+            }
+            .ab-live-dot.is-live {
+                background: #22c55e;
+                box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.25);
+            }
+            /* Right Corner Storefronts & Auctions Floating Widget */
+            .ab-storefronts-widget-card {
+                background: rgba(15, 23, 42, 0.96);
+                backdrop-filter: blur(12px);
+                border: 1px solid rgba(255, 255, 255, 0.14);
+                border-radius: 16px;
+                padding: 8px;
+                box-shadow: 0 14px 32px rgba(15, 23, 42, 0.28);
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+                min-width: 195px;
+            }
+            .ab-storefronts-widget-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 2px 6px 4px 6px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                font-size: 0.68rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                color: #94a3b8;
+            }
+            .ab-storefront-chip-link {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 8px;
+                padding: 7px 11px;
+                border-radius: 10px;
+                font-size: 0.8rem;
+                font-weight: 700;
+                text-decoration: none !important;
+                transition: all 0.18s ease;
+                white-space: nowrap;
+            }
+            .ab-storefront-chip-link.chip-auctions {
+                background: linear-gradient(135deg, #dc2626 0%, #ea580c 100%);
+                color: #ffffff !important;
+                box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+            }
+            .ab-storefront-chip-link.chip-thriftz {
+                background: rgba(255, 255, 255, 0.09);
+                color: #f8fafc !important;
+                border: 1px solid rgba(78, 248, 150, 0.25);
+            }
+            .ab-storefront-chip-link.chip-thriftz:hover {
+                background: #0a6810;
+                color: #ffffff !important;
+                border-color: #4ef896;
+            }
+            .ab-storefront-chip-link.chip-betasup {
+                background: rgba(255, 255, 255, 0.09);
+                color: #f8fafc !important;
+                border: 1px solid rgba(255, 140, 0, 0.3);
+            }
+            .ab-storefront-chip-link.chip-betasup:hover {
+                background: #ea580c;
+                color: #ffffff !important;
+                border-color: #fdba74;
+            }
+            .ab-storefront-chip-link.chip-uwanbuy {
+                background: rgba(255, 255, 255, 0.09);
+                color: #f8fafc !important;
+                border: 1px solid rgba(239, 68, 68, 0.3);
+            }
+            .ab-storefront-chip-link.chip-uwanbuy:hover {
+                background: #dc2626;
+                color: #ffffff !important;
+            }
+            .ab-storefront-chip-link:hover {
+                transform: translateX(-2px);
+            }
+            .ab-scroll-top-fab {
+                width: 38px;
+                height: 38px;
+                border-radius: 50%;
+                background: #ffffff;
+                color: #0f172a;
+                border: 1px solid #cbd5e1;
+                box-shadow: 0 6px 16px rgba(15, 23, 42, 0.12);
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: all 0.2s ease;
+            }
+            .ab-scroll-top-fab:hover {
+                background: #0f172a;
+                color: #ffffff;
+                transform: translateY(-2px);
+            }
+            @media (max-width: 575.98px) {
+                .ab-corner-dock-left {
+                    bottom: 12px;
+                    left: 12px;
+                }
+                .ab-corner-dock-right {
+                    bottom: 12px;
+                    right: 12px;
+                }
+                .ab-corner-pill-btn {
+                    padding: 8px 12px;
+                    font-size: 0.76rem;
+                }
+                .ab-storefronts-widget-card {
+                    min-width: 170px;
+                    padding: 6px;
+                }
+                .ab-storefront-chip-link {
+                    padding: 6px 9px;
+                    font-size: 0.74rem;
+                }
+            }
+        `;
+        document.head.appendChild(styleEl);
+    }
+
+    function resolveStorefrontWidgetLinks() {
+        const pathname = (typeof window !== 'undefined' && window.location && window.location.pathname)
+            ? window.location.pathname.replace(/\\/g, '/').toLowerCase()
+            : '';
+        const isInAuctionsSubdir = pathname.includes('/auctions/');
+        const storeName = detectStoreName();
+
+        if (isInAuctionsSubdir) {
+            return {
+                storeName,
+                uwanbuyHref: '../index.html',
+                thriftzHref: '../../thriftz/index.html',
+                betasupHref: '../../betasup/index.html',
+                auctionsHref: 'index.html'
+            };
+        }
+        if (storeName === 'thriftz' || storeName === 'betasup') {
+            return {
+                storeName,
+                uwanbuyHref: '../uwanbuy/index.html',
+                thriftzHref: '../thriftz/index.html',
+                betasupHref: '../betasup/index.html',
+                auctionsHref: '#auctionArenaSection'
+            };
+        }
+        return {
+            storeName,
+            uwanbuyHref: 'index.html',
+            thriftzHref: '../thriftz/index.html',
+            betasupHref: '../betasup/index.html',
+            auctionsHref: 'auctions/index.html'
+        };
+    }
+
+    function injectBottomCornerWidgets() {
+        if (typeof document === 'undefined' || !document.body || typeof document.createElement !== 'function') return;
+        if (document.getElementById('ab-corner-widget-left')) return;
+
+        const currentLoc = getLocation();
+        const activeHubObj = AVAILABLE_HUBS.find(h => h.id.toLowerCase() === currentLoc.toLowerCase());
+        const isLive = activeHubObj && activeHubObj.hasLiveSession;
+        const links = resolveStorefrontWidgetLinks();
+
+        // Bottom-Left Widget: Hyperlocal Hub Location Selector & Support Concierge (NO Include My Area)
+        const leftDock = document.createElement('div');
+        leftDock.id = 'ab-corner-widget-left';
+        leftDock.className = 'ab-corner-dock-left';
+        leftDock.innerHTML = `
+            <div class="ab-corner-drawer" id="abCornerLeftDrawer">
+                <div class="d-flex justify-content-between align-items-center mb-2 pb-2 border-bottom">
+                    <div>
+                        <span class="text-xs fw-bold text-uppercase text-danger d-block">Hyperlocal Hub & Help</span>
+                        <strong class="small text-dark storefront-current-location">${currentLoc}</strong>
+                    </div>
+                    <button type="button" class="btn-close small" id="btnCloseCornerDrawer" style="font-size: 0.65rem;"></button>
+                </div>
+                <button type="button" class="ab-corner-action-btn" id="btnCornerSwitchHub">
+                    <span class="ab-corner-action-icon bg-danger-subtle text-danger"><i class="bi bi-geo-alt-fill"></i></span>
+                    <div>
+                        <div>Switch Shopping Hub</div>
+                        <small class="text-muted fw-normal d-block" style="font-size: 0.7rem;">Search ${AVAILABLE_HUBS.length} available areas</small>
+                    </div>
+                </button>
+                <button type="button" class="ab-corner-action-btn trigger-addMine">
+                    <span class="ab-corner-action-icon bg-warning-subtle text-warning-emphasis"><i class="bi bi-heart-fill"></i></span>
+                    <div>
+                        <div>Add My Favorite</div>
+                        <small class="text-muted fw-normal d-block" style="font-size: 0.7rem;">Suggest an item or soup pot</small>
+                    </div>
+                </button>
+                <button type="button" class="ab-corner-action-btn trigger-askQ">
+                    <span class="ab-corner-action-icon bg-success-subtle text-success"><i class="bi bi-chat-dots-fill"></i></span>
+                    <div>
+                        <div>I Have A Question</div>
+                        <small class="text-muted fw-normal d-block" style="font-size: 0.7rem;">Ask hub support or local agent</small>
+                    </div>
+                </button>
+            </div>
+            <div class="d-flex align-items-center gap-1">
+                <button type="button" class="ab-corner-pill-btn" id="btnChangeLocation" title="Click to search and switch your Hyperlocal Hub">
+                    <span class="ab-live-dot ${isLive ? 'is-live' : ''}" id="abCornerWaveDot"></span>
+                    <i class="bi bi-geo-alt-fill text-danger"></i>
+                    <span id="currentLocationLabel" class="storefront-current-location">${currentLoc}</span>
+                    <i class="bi bi-chevron-up ms-1 text-white-50"></i>
+                </button>
+                <button type="button" class="ab-scroll-top-fab bg-dark text-white border-secondary" id="btnToggleCornerLeft" title="Quick Hub Help">
+                    <i class="bi bi-chat-dots-fill"></i>
+                </button>
+            </div>
+        `;
+
+        // Build cross-store links for Bottom-Right Storefronts & Auctions Widget (replaces floating cart widget)
+        const crossStoreLinksHtml = [];
+        crossStoreLinksHtml.push(`
+            <a href="${links.auctionsHref}" class="ab-storefront-chip-link chip-auctions" id="abWidgetLinkAuctions">
+                <span><i class="bi bi-lightning-charge-fill me-1"></i>Auctions & Deals</span>
+                <i class="bi bi-arrow-up-right small"></i>
+            </a>
+        `);
+        if (links.storeName !== 'uwanbuy') {
+            crossStoreLinksHtml.push(`
+                <a href="${links.uwanbuyHref}" class="ab-storefront-chip-link chip-uwanbuy" id="abWidgetLinkUwanbuy">
+                    <span><i class="bi bi-bag-check-fill text-danger me-1"></i>UwanBuy Market</span>
+                    <i class="bi bi-chevron-right small opacity-75"></i>
+                </a>
+            `);
+        }
+        if (links.storeName !== 'thriftz') {
+            crossStoreLinksHtml.push(`
+                <a href="${links.thriftzHref}" class="ab-storefront-chip-link chip-thriftz" id="abWidgetLinkThriftz">
+                    <span><i class="bi bi-recycle text-success me-1"></i>Thrift-Z Market</span>
+                    <i class="bi bi-chevron-right small opacity-75"></i>
+                </a>
+            `);
+        }
+        if (links.storeName !== 'betasup') {
+            crossStoreLinksHtml.push(`
+                <a href="${links.betasupHref}" class="ab-storefront-chip-link chip-betasup" id="abWidgetLinkBetasup">
+                    <span><i class="bi bi-fire text-warning me-1"></i>Betasup Soups</span>
+                    <i class="bi bi-chevron-right small opacity-75"></i>
+                </a>
+            `);
+        }
+
+        // Bottom-Right Widget: Storefronts & Auctions Switcher (Thrift-Z, Betasup, Auctions & Deals) + Scroll-to-Top
+        const rightDock = document.createElement('div');
+        rightDock.id = 'ab-corner-widget-right';
+        rightDock.className = 'ab-corner-dock-right';
+        rightDock.innerHTML = `
+            <div class="ab-storefronts-widget-card" id="abStorefrontsWidgetCard">
+                <div class="ab-storefronts-widget-header">
+                    <span><i class="bi bi-grid-fill text-danger me-1"></i>Storefronts & Deals</span>
+                    <button type="button" class="btn btn-link p-0 text-white-50 text-decoration-none" id="btnMinimizeStorefrontsWidget" title="Minimize" style="font-size: 0.72rem; line-height: 1;">
+                        <i class="bi bi-dash-lg"></i>
+                    </button>
+                </div>
+                ${crossStoreLinksHtml.join('')}
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <button type="button" class="ab-corner-pill-btn d-none" id="btnExpandStorefrontsWidget" title="Open Storefronts & Auctions">
+                    <i class="bi bi-lightning-charge-fill text-danger"></i>
+                    <span>Storefronts & Deals</span>
+                </button>
+                <button type="button" class="ab-scroll-top-fab scroll-to-top" id="abScrollToTopBtn" title="Scroll to top">
+                    <i class="bi bi-chevron-up fw-bold"></i>
+                </button>
+            </div>
+        `;
+
+        document.body.appendChild(leftDock);
+        document.body.appendChild(rightDock);
+    }
+
+    function openLocationSwitcherModal() {
+        enhanceLocationSwitcherModal();
+        const modalEl = document.getElementById('modal-location-switcher');
+        if (!modalEl) return;
+        if (window.jQuery && $(modalEl).data && $(modalEl).data().iziModal) {
+            $(modalEl).iziModal('open');
+        } else if (window.jQuery && $.fn && $.fn.iziModal) {
+            $(modalEl).iziModal({
+                title: 'Hyperlocal Hub Location',
+                subtitle: 'Search and select your local AreaBazaar fulfillment center',
+                headerColor: '#0f172a',
+                width: 560,
+                radius: 14,
+                padding: 0
+            });
+            $(modalEl).iziModal('open');
+        }
+        setTimeout(() => {
+            enhanceLocationSwitcherModal();
+            const searchInput = document.getElementById('hubSearchInput');
+            if (searchInput) searchInput.focus();
+        }, 120);
+    }
+
+    function triggerQuickFeedbackPrompt(type, prefillValue = '') {
+        if (!window.iziToast) return;
+        const configs = {
+            addMine: {
+                title: "Add Your Favorite Item",
+                message: "What staple product, gadget, or soup pot would you like stocked in your hub?",
+                placeholder1: "Favorite Item / Dish Name",
+                placeholder2: "Your Phone or Email Address",
+                btnText: "Submit Favorite",
+                successMsg: (v1, v2) => `"${v1 || 'Your favorite item'}" has been sent to your local hub inventory team!`
+            },
+            askQ: {
+                title: "Ask Hub Support",
+                message: "Have a question about bulk orders, live waves, or delivery?",
+                placeholder1: "Type your question...",
+                placeholder2: "Your Phone or WhatsApp Number",
+                btnText: "Send Question",
+                successMsg: (v1, v2) => `Thanks! A local AreaBazaar agent will reply to ${v2 || 'you'} shortly.`
+            }
+        };
+        const cfg = configs[type] || configs.askQ;
+        let val1 = prefillValue || '';
+        let val2 = '';
+
+        iziToast.info({
+            timeout: 20000,
+            overlay: true,
+            displayMode: 1,
+            id: 'ab-concierge-' + type,
+            zindex: 99999,
+            title: cfg.title,
+            message: cfg.message,
+            position: 'center',
+            drag: false,
+            inputs: [
+                [`<input type="text" placeholder="${cfg.placeholder1}" value="${val1.replace(/"/g, '&quot;')}">`, 'keyup', function (instance, toast, input) {
+                    val1 = input.value;
+                }, true],
+                [`<input type="text" placeholder="${cfg.placeholder2}">`, 'keyup', function (instance, toast, input) {
+                    val2 = input.value;
+                }, false]
+            ],
+            buttons: [
+                [`<button><b>${cfg.btnText}</b></button>`, function (instance, toast, button, e, inputs) {
+                    const v1 = (inputs && inputs[0] && inputs[0].value) || val1;
+                    const v2 = (inputs && inputs[1] && inputs[1].value) || val2;
+                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                    iziToast.success({
+                        title: 'Received!',
+                        message: cfg.successMsg(v1, v2),
+                        position: 'topRight',
+                        timeout: 4500
+                    });
+                }, false]
+            ]
+        });
+    }
+
+    let globalEventsBound = false;
+    function bindGlobalStorefrontEvents() {
+        if (globalEventsBound || typeof document === 'undefined' || !document.addEventListener) return;
+        globalEventsBound = true;
+
+        // Delegated input handler for #hubSearchInput
+        document.addEventListener('input', function (e) {
+            const target = e.target;
+            if (target && target.id === 'hubSearchInput') {
+                currentHubSearchQuery = target.value || '';
+                const clearBtn = document.getElementById('btnClearHubSearch');
+                if (clearBtn) {
+                    if (currentHubSearchQuery.trim().length > 0) clearBtn.classList.remove('d-none');
+                    else clearBtn.classList.add('d-none');
+                }
+                renderHubListItems();
+            }
+        });
+
+        // Delegated click handler for location switcher, filter pills, and bottom corner widgets
+        document.addEventListener('click', function (e) {
+            const target = e.target;
+            if (!target || typeof target.closest !== 'function') return;
+
+            // 1. Clear hub search button
+            const clearBtn = target.closest('#btnClearHubSearch');
+            if (clearBtn) {
+                e.preventDefault();
+                currentHubSearchQuery = '';
+                const searchInput = document.getElementById('hubSearchInput');
+                if (searchInput) {
+                    searchInput.value = '';
+                    searchInput.focus();
+                }
+                clearBtn.classList.add('d-none');
+                renderHubListItems();
+                return;
+            }
+
+            // 2. Hub region filter pill
+            const filterPill = target.closest('.hub-filter-pill');
+            if (filterPill) {
+                e.preventDefault();
+                currentHubRegionFilter = filterPill.getAttribute('data-region') || 'all';
+                document.querySelectorAll('.hub-filter-pill').forEach(btn => btn.classList.remove('active'));
+                filterPill.classList.add('active');
+                renderHubListItems();
+                return;
+            }
+
+            // 3. Hub selection item (.hub-select-item)
+            const hubItem = target.closest('.hub-select-item');
+            if (hubItem) {
+                e.preventDefault();
+                const hubId = hubItem.getAttribute('data-hub');
+                if (hubId) {
+                    setLocation(hubId);
+                    renderHubListItems();
+                    const modalEl = document.getElementById('modal-location-switcher');
+                    if (modalEl && window.jQuery && $(modalEl).data && $(modalEl).data().iziModal) {
+                        $(modalEl).iziModal('close');
+                    }
+                    if (window.iziToast) {
+                        iziToast.success({
+                            title: 'Shopping Hub Updated',
+                            message: `Fulfillment hub switched to ${hubId}`,
+                            position: 'topRight',
+                            timeout: 3000
+                        });
+                    }
+                    const hubObj = AVAILABLE_HUBS.find(h => h.id.toLowerCase() === hubId.toLowerCase());
+                    const liveBadge = document.getElementById('liveBazaarBannerBadge');
+                    if (liveBadge) {
+                        liveBadge.style.display = (hubObj && hubObj.hasLiveSession) ? 'inline-block' : 'none';
+                    }
+                }
+                return;
+            }
+
+            // 4. Open Location Switcher triggers
+            const changeLocTrigger = target.closest('#btnChangeLocation, #btnFooterChangeLoc, #btnCornerSwitchHub');
+            if (changeLocTrigger) {
+                e.preventDefault();
+                const leftDrawer = document.getElementById('abCornerLeftDrawer');
+                if (leftDrawer) leftDrawer.classList.remove('open');
+                openLocationSwitcherModal();
+                return;
+            }
+
+            // 5. Toggle Bottom-Left Concierge Drawer
+            const toggleLeftBtn = target.closest('#btnToggleCornerLeft');
+            if (toggleLeftBtn) {
+                e.preventDefault();
+                const leftDrawer = document.getElementById('abCornerLeftDrawer');
+                if (leftDrawer) leftDrawer.classList.toggle('open');
+                return;
+            }
+
+            const closeLeftBtn = target.closest('#btnCloseCornerDrawer');
+            if (closeLeftBtn) {
+                e.preventDefault();
+                const leftDrawer = document.getElementById('abCornerLeftDrawer');
+                if (leftDrawer) leftDrawer.classList.remove('open');
+                return;
+            }
+
+            // 6. Concierge triggers (.trigger-addMine, .trigger-askQ)
+            const addMineBtn = target.closest('.trigger-addMine');
+            if (addMineBtn) {
+                e.preventDefault();
+                const leftDrawer = document.getElementById('abCornerLeftDrawer');
+                if (leftDrawer) leftDrawer.classList.remove('open');
+                triggerQuickFeedbackPrompt('addMine');
+                return;
+            }
+
+            const askQBtn = target.closest('.trigger-askQ');
+            if (askQBtn) {
+                e.preventDefault();
+                const leftDrawer = document.getElementById('abCornerLeftDrawer');
+                if (leftDrawer) leftDrawer.classList.remove('open');
+                triggerQuickFeedbackPrompt('askQ');
+                return;
+            }
+
+            // 7. Bottom-Right Storefronts & Auctions Widget minimize / expand
+            const minStorefrontsBtn = target.closest('#btnMinimizeStorefrontsWidget');
+            if (minStorefrontsBtn) {
+                e.preventDefault();
+                const card = document.getElementById('abStorefrontsWidgetCard');
+                const expandBtn = document.getElementById('btnExpandStorefrontsWidget');
+                if (card) card.classList.add('d-none');
+                if (expandBtn) expandBtn.classList.remove('d-none');
+                return;
+            }
+
+            const expandStorefrontsBtn = target.closest('#btnExpandStorefrontsWidget');
+            if (expandStorefrontsBtn) {
+                e.preventDefault();
+                const card = document.getElementById('abStorefrontsWidgetCard');
+                if (card) card.classList.remove('d-none');
+                expandStorefrontsBtn.classList.add('d-none');
+                return;
+            }
+
+            // 8. Scroll to Top Button
+            const scrollTopBtn = target.closest('#abScrollToTopBtn, .scroll-to-top');
+            if (scrollTopBtn) {
+                e.preventDefault();
+                if (typeof window.scrollTo === 'function') {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+                return;
+            }
+
+            // Close corner drawer when clicking outside
+            const leftDrawer = document.getElementById('abCornerLeftDrawer');
+            if (leftDrawer && leftDrawer.classList.contains('open') && !target.closest('#ab-corner-widget-left')) {
+                leftDrawer.classList.remove('open');
+            }
+        });
+    }
+
+    function registerUser(profileData = {}) {
+        const storeName = detectStoreName();
+        const bonusWallet = STORE_DEFAULTS[storeName]?.wallet || 15000;
+        const newUser = {
+            name: profileData.fullName || profileData.name || 'Valued Shopper',
+            phone: profileData.phone || '',
+            email: profileData.email || '',
+            pin: profileData.pin || '1234',
+            hub: profileData.hub || getLocation(),
+            address: {
+                addressLine1: profileData.addressLine1 || '',
+                addressLine2: profileData.addressLine2 || '',
+                landmark: profileData.landmark || '',
+                city: profileData.city || '',
+                state: profileData.state || '',
+                instructions: profileData.instructions || ''
+            },
+            agentCode: profileData.agentCode || '',
+            wallet: bonusWallet
+        };
+        setUser(newUser);
+        if (newUser.hub) setLocation(newUser.hub);
+        return newUser;
+    }
+
+    function loginUser(identifier = '') {
+        let existing = getUser();
+        if (!existing) {
+            const storeName = detectStoreName();
+            existing = {
+                name: identifier.includes('@') ? identifier.split('@')[0] : 'Valued Customer',
+                phone: identifier,
+                email: identifier.includes('@') ? identifier : '',
+                hub: getLocation(),
+                wallet: STORE_DEFAULTS[storeName]?.wallet || 15000
+            };
+        }
+        setUser(existing);
+        return existing;
+    }
+
+    function logoutUser() {
+        setUser(null);
     }
 
     function syncUI() {
@@ -2005,12 +3102,17 @@
         });
 
         // Update Cart Counts
-        const cartSelectors = ['#cart-count-badge', '#cartBadge', '#cartCountBadge', '#boughtBadge'];
+        const cartSelectors = ['#cart-count-badge', '#cartBadge', '#cartCountBadge', '#boughtBadge', '#abFloatingCartBadge'];
         cartSelectors.forEach(sel => {
             document.querySelectorAll(sel).forEach(el => {
                 el.textContent = String(cartCount);
-                if (cartCount > 0) el.classList.remove('d-none');
-                else el.classList.add('d-none');
+                if (sel === '#abFloatingCartBadge') {
+                    el.classList.remove('d-none');
+                } else if (cartCount > 0) {
+                    el.classList.remove('d-none');
+                } else {
+                    el.classList.add('d-none');
+                }
             });
         });
 
@@ -2068,8 +3170,19 @@
         if (document.body) {
             document.body.dataset.store = storeName;
         }
+        injectStorefrontStyles();
+        injectBottomCornerWidgets();
+        enhanceLocationSwitcherModal();
+        populateRegistrationHubSelects();
+        bindGlobalStorefrontEvents();
         syncUI();
         checkActiveBazaarSession();
+        // Re-enhance after page scripts initialize iziModal
+        setTimeout(() => {
+            enhanceLocationSwitcherModal();
+            populateRegistrationHubSelects();
+            syncUI();
+        }, 250);
     }
 
     // Export Storefront Core API
@@ -2079,8 +3192,14 @@
         detectStoreName,
         getUser,
         setUser,
+        register: registerUser,
+        login: loginUser,
+        logout: logoutUser,
         getLocation,
         setLocation,
+        filterHubs,
+        openLocationSwitcherModal,
+        enhanceLocationSwitcherModal,
         getWalletValue,
         getCartCount,
         formatNaira,

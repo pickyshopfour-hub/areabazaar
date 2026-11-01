@@ -256,3 +256,146 @@
     }
 }
 
+/* ==============================================================
+   DESKTOP & TABLET NAVBAR LAYOUT FIXES (NO MULTI-LINE WRAPPING)
+   ============================================================== */
+.navbar-custom .navbar-brand {
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+}
+
+.navbar-custom .navbar-nav .nav-link,
+.navbar-custom .dropdown-toggle,
+.navbar-custom .btn,
+#btnNavWallet {
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+}
+
+.navbar-custom button[data-bs-target="#cartOffcanvas"],
+.navbar-custom #btn-login-trigger,
+.navbar-custom #btn-register-trigger {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+    line-height: 1.2 !important;
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .navbar-custom > .container {
+        max-width: 100% !important;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+        flex-wrap: nowrap !important;
+    }
+    .navbar-custom .navbar-brand {
+        margin-right: 0.5rem !important;
+    }
+    .navbar-custom .navbar-brand img {
+        height: 30px !important;
+        width: auto !important;
+    }
+    .navbar-custom .navbar-collapse {
+        flex-wrap: nowrap !important;
+    }
+    .navbar-custom .navbar-nav {
+        margin-left: 0.4rem !important;
+        margin-right: auto !important;
+        flex-wrap: nowrap !important;
+        gap: 0.1rem !important;
+    }
+    .navbar-custom .navbar-nav .nav-link {
+        padding-left: 0.45rem !important;
+        padding-right: 0.45rem !important;
+        font-size: 0.82rem !important;
+    }
+    #btnNavWallet {
+        padding: 0.35rem 0.65rem !important;
+        font-size: 0.8rem !important;
+    }
+    .navbar-custom .btn {
+        padding: 0.35rem 0.65rem !important;
+        font-size: 0.8rem !important;
+    }
+}
+
+@media (min-width: 1200px) and (max-width: 1399.98px) {
+    .navbar-custom .navbar-nav {
+        margin-left: 0.75rem !important;
+        flex-wrap: nowrap !important;
+    }
+    .navbar-custom .navbar-nav .nav-link {
+        padding-left: 0.6rem !important;
+        padding-right: 0.6rem !important;
+        font-size: 0.88rem !important;
+    }
+    #btnNavWallet {
+        padding: 0.4rem 0.8rem !important;
+        font-size: 0.85rem !important;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .navbar-custom .navbar-collapse {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 14px;
+        padding: 0.9rem 1rem;
+        margin-top: 0.65rem;
+        box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+    }
+    @media (min-width: 576px) and (max-width: 991.98px) {
+        .navbar-custom .navbar-nav {
+            display: grid !important;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.25rem 0.75rem;
+            margin-bottom: 0.75rem !important;
+        }
+    }
+    .navbar-custom .navbar-collapse > .d-flex {
+        flex-wrap: wrap !important;
+        justify-content: flex-start !important;
+        padding-top: 0.65rem;
+        border-top: 1px solid #f1f5f9;
+        gap: 0.5rem !important;
+    }
+}
+
+/* ==============================================================
+   SEARCHABLE LOCATION SWITCHER MODAL & BOTTOM-CORNER WIDGETS
+   ============================================================== */
+.hub-scrollable-list {
+    max-height: 310px;
+    overflow-y: auto;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+}
+
+.hub-scrollable-list .hub-select-item.active-hub-selected {
+    background-color: #f0fdf4;
+    border-left: 4px solid #16a34a !important;
+}
+
+.hub-filter-pill {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 50px;
+    border: 1px solid #cbd5e1;
+    background: #f8fafc;
+    color: #475569;
+    transition: all 0.18s ease;
+}
+
+.hub-filter-pill.active {
+    background: #0f172a;
+    color: #ffffff;
+    border-color: #0f172a;
+}
+
+
+
+/* Hide legacy top sub-nav bar */
+.top-hyperlocal-bar { display: none !important; }

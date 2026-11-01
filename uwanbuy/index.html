@@ -269,30 +269,11 @@
 
 <body data-store="uwanbuy">
 
-    <!-- Top Hyperlocal Strip -->
-    <div class="top-hyperlocal-bar">
-        <div class="container d-flex flex-wrap justify-content-between align-items-center gap-2">
-            <div class="d-flex align-items-center gap-2">
-                <span class="text-white-50"><i class="bi bi-geo-alt-fill text-danger"></i> Hyperlocal Hub:</span>
-                <span class="location-pill" id="btnChangeLocation" title="Click to change your shopping hub">
-                    <span id="currentLocationLabel">Tanke Hub, Ilorin</span>
-                    <i class="bi bi-chevron-down small"></i>
-                </span>
-            </div>
-            <div class="d-flex align-items-center gap-3">
-                <span id="liveBazaarBannerBadge" class="live-bazaar-chip" style="display: none;" id="btnBazaarQuickAlert">
-                    <i class="fa fa-bolt me-1"></i> LIVE BAZAAR ACTIVE IN TANKE
-                </span>
-                <span class="text-white-50 d-none d-md-inline">Hyperlocal Fulfillment Within 2-4 Hours</span>
-            </div>
-        </div>
-    </div>
-
     <!-- Main Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
         <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="index.html">
-                <img src="../assetsecm/images/uwanbuy-logo-long-full-color-01.png" alt="UwanBuy Logo" style="height: 38px; width: auto;">
+            <a class="navbar-brand d-flex align-items-center flex-shrink-0" href="index.html">
+                <img src="../assetsecm/images/uwanbuy-logo-long-full-color-01.png" alt="UwanBuy Logo" style="height: 36px; width: auto;">
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMainCollapse">
@@ -300,12 +281,12 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navMainCollapse">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-3 align-items-lg-center">
                     <li class="nav-item">
-                        <a class="nav-link active fw-bold text-dark" href="index.html">Home</a>
+                        <a class="nav-link active fw-bold text-dark text-nowrap" href="index.html">Home</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle fw-semibold text-dark" href="#" role="button" data-bs-toggle="dropdown">
+                        <a class="nav-link dropdown-toggle fw-semibold text-dark text-nowrap" href="#" role="button" data-bs-toggle="dropdown">
                             Browse Categories
                         </a>
                         <ul class="dropdown-menu shadow-sm border-0 rounded-3">
@@ -315,43 +296,34 @@
                             <li><a class="dropdown-item py-2" href="category.html?category=home"><i class="bi bi-house-door me-2 text-success"></i> Home Essentials</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link fw-semibold text-dark" href="../thriftz/index.html">Thrift-Z Market</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link fw-semibold text-dark" href="../betasup/index.html">Betasup Soups</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link fw-bold text-danger" href="auctions/index.html"><i class="bi bi-lightning-charge-fill me-1"></i>Auctions & Deals</a>
-                    </li>
                 </ul>
 
                 <!-- Right Utilities (Wallet, Cart, Account) -->
-                <div class="d-flex align-items-center gap-2 mt-3 mt-lg-0">
+                <div class="d-flex align-items-center gap-2 mt-3 mt-lg-0 flex-shrink-0">
                     <!-- Wallet Badge -->
-                    <div class="d-flex align-items-center gap-2 px-3 py-2 rounded-pill bg-light border cursor-pointer" id="btnNavWallet">
+                    <div class="d-flex align-items-center gap-2 px-3 py-2 rounded-pill bg-light border cursor-pointer text-nowrap flex-shrink-0" id="btnNavWallet">
                         <i class="bi bi-wallet2 text-danger"></i>
-                        <span class="small fw-semibold text-muted">Wallet:</span>
+                        <span class="small fw-semibold text-muted d-none d-xl-inline">Wallet:</span>
                         <strong class="text-dark" id="wallet-balance-display">₦25,000.00</strong>
                     </div>
 
                     <!-- Cart Trigger -->
-                    <button class="btn btn-brand position-relative shadow-sm px-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+                    <button class="btn btn-brand position-relative shadow-sm px-3 d-inline-flex align-items-center gap-1 text-nowrap flex-shrink-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
                         <i class="bi bi-cart3"></i>
-                        <span class="d-none d-sm-inline ms-1">Cart</span>
+                        <span class="d-none d-sm-inline">Cart</span>
                         <span id="cartBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark d-none">
                             0
                         </span>
                     </button>
 
                     <!-- Auth Dropdown / Buttons -->
-                    <div class="ms-1">
-                        <div class="auth-guest-only d-flex gap-2">
-                            <button class="btn btn-sm btn-outline-secondary rounded-pill px-3" id="btn-login-trigger">Sign In</button>
-                            <button class="btn btn-sm btn-brand rounded-pill px-3" id="btn-register-trigger">Register</button>
+                    <div class="ms-1 flex-shrink-0">
+                        <div class="auth-guest-only d-flex align-items-center gap-2">
+                            <button class="btn btn-sm btn-outline-secondary rounded-pill px-3 text-nowrap" id="btn-login-trigger">Sign In</button>
+                            <button class="btn btn-sm btn-brand rounded-pill px-3 text-nowrap" id="btn-register-trigger">Register</button>
                         </div>
                         <div class="auth-logged-only d-none dropdown">
-                            <button class="btn btn-sm btn-light border rounded-pill px-3 dropdown-toggle d-flex align-items-center gap-1" data-bs-toggle="dropdown">
+                            <button class="btn btn-sm btn-light border rounded-pill px-3 dropdown-toggle d-flex align-items-center gap-1 text-nowrap" data-bs-toggle="dropdown">
                                 <i class="bi bi-person-circle text-danger"></i>
                                 <span class="auth-user-name">Account</span>
                             </button>
@@ -808,14 +780,39 @@
     </div>
 
     <!-- ==============================================================
-         IZIMODAL 4: LOCATION SWITCHER MODAL
+         IZIMODAL 4: LOCATION SWITCHER MODAL (SEARCHABLE & FILTERABLE)
          ============================================================== -->
     <div id="modal-location-switcher">
         <div class="p-4">
-            <h5 class="fw-bold mb-2 text-dark"><i class="bi bi-geo-alt-fill text-danger me-2"></i> Select Your Shopping Hub</h5>
-            <p class="text-muted small mb-4">Choose your nearest AreaBazaar fulfillment center to see real-time inventory and live sessions in your area.</p>
+            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-2">
+                <h5 class="fw-bold mb-0 text-dark"><i class="bi bi-geo-alt-fill text-danger me-2"></i> Select Your Shopping Hub</h5>
+                <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-3 py-1 small">
+                    <i class="bi bi-pin-map-fill me-1"></i>Current: <strong id="modalCurrentHubBadge" class="storefront-current-location">Tanke Hub, Ilorin</strong>
+                </span>
+            </div>
+            <p class="text-muted small mb-3">Search by neighborhood, street, city, or state to see real-time inventory and live sessions in your area.</p>
 
-            <div class="list-group mb-4" id="hubsListGroup">
+            <div class="input-group mb-2 shadow-xs">
+                <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-search"></i></span>
+                <input type="text" id="hubSearchInput" class="form-control border-start-0 ps-0" placeholder="Search area, street, city or state (e.g. Tanke, Lekki, Wuse, Bodija)..." autocomplete="off">
+                <button class="btn btn-outline-secondary d-none" type="button" id="btnClearHubSearch" title="Clear search"><i class="bi bi-x-lg"></i></button>
+            </div>
+
+            <div class="d-flex flex-wrap align-items-center gap-1 mb-2" id="hubRegionFilterBar">
+                <button type="button" class="btn btn-xs hub-filter-pill active" data-region="all">All Areas</button>
+                <button type="button" class="btn btn-xs hub-filter-pill" data-region="live"><i class="bi bi-lightning-charge-fill text-danger me-1"></i>Active Wave</button>
+                <button type="button" class="btn btn-xs hub-filter-pill" data-region="ilorin">Ilorin / Kwara</button>
+                <button type="button" class="btn btn-xs hub-filter-pill" data-region="lagos">Lagos</button>
+                <button type="button" class="btn btn-xs hub-filter-pill" data-region="abuja">Abuja</button>
+                <button type="button" class="btn btn-xs hub-filter-pill" data-region="ph">Port Harcourt</button>
+                <button type="button" class="btn btn-xs hub-filter-pill" data-region="other">Ibadan / Enugu / Kano</button>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <small class="text-muted fw-semibold" id="hubSearchCountBadge">Showing available hubs</small>
+            </div>
+
+            <div class="list-group mb-0 hub-scrollable-list" id="hubsListGroup">
                 <button type="button" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center p-3 hub-select-item" data-hub="Tanke Hub, Ilorin">
                     <div>
                         <div class="fw-bold text-dark">Tanke Hub, Ilorin</div>
@@ -1264,7 +1261,7 @@
                     </div>
 
                     <!-- Channel 2: Direct Bank Details Card -->
-                    <div id="channelDirectCard" class="card border rounded-3 p-3 bg-light mb-3">
+                    <div id="channelDirectCard" class="card border rounded-3 p-3 bg-light mb-3 d-none">
                         <div class="d-flex align-items-center gap-2 mb-2">
                             <i class="bi bi-bank fs-4 text-primary"></i>
                             <div>
@@ -1668,11 +1665,16 @@
 
             $("#modal-location-switcher").iziModal({
                 title: 'Hyperlocal Hub Location',
-                subtitle: 'Select your local AreaBazaar fulfillment center',
+                subtitle: 'Search & select your local AreaBazaar fulfillment center',
                 headerColor: '#0f172a',
-                width: 520,
+                width: 580,
                 radius: 14,
-                padding: 0
+                padding: 0,
+                onOpening: function () {
+                    if (window.AreaBazaarStorefront && typeof window.AreaBazaarStorefront.enhanceLocationSwitcherModal === 'function') {
+                        window.AreaBazaarStorefront.enhanceLocationSwitcherModal();
+                    }
+                }
             });
 
             $("#modal-bazaar-session-alert").iziModal({
